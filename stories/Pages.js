@@ -26,7 +26,7 @@ storiesOf("Pages", module).add("Extensions page", () => (
         switchers={[
         [
           {
-            customClass: "container__col-md-4 container__col-xs-4",
+            customClass: "container__col-md-4 container__col-xs-4 opacity-25",
             switcherTitle: "Status:",
             switcherStatus: "Not installed",
             defaultValue: false,
