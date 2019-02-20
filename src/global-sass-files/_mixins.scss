@@ -87,41 +87,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-// Mixin opacity
-@mixin opacityMixin($opacity) {
-  @if $opacity == 0 {
-    opacity: 0;
+// The opacity @for directive 
+@for $i from 1 through 10 {
+  @for $j from 1 through 10 {
+    .opacity-#{$i}-#{$j} {
+      opacity: $i/$j
+    }
   }
-
-  @else if $opacity == 25 {
-    opacity: 0.25;
-  }
-
-  @else if $opacity == 50 {
-    opacity: 0.5;
-  }
-
-  @else if $opacity == 75 {
-    opacity: 0.75;
-  }
-
-  @else if $opacity == 100 {
-    opacity: 1;
-  }
-}
-
-.opacity-0 {
-  @include opacityMixin(0);
-}
-.opacity-25 {
-  @include opacityMixin(25);
-}
-.opacity-50 {
-  @include opacityMixin(50);
-}
-.opacity-75 {
-  @include opacityMixin(75);
-}
-.opacity-100 {
-  @include opacityMixin(100);
 }
