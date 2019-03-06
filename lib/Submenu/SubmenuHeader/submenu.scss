@@ -25,6 +25,13 @@
     padding: 0;
     margin: 0;
   }
+  a {
+    &:not(:first-of-type) {
+      .submenu-item-title {
+        padding-left: 20px;
+      }
+    }
+  }
   &-item {
     &:not(:first-of-type) {
       .submenu-item-title {
