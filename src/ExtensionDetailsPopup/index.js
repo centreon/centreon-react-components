@@ -63,17 +63,21 @@ class ExtensionDetailPopup extends React.Component {
             color="gray"
             style={{ margin: "15px" }}
           />
-          <Centreon.Button
-            label={modalDetails.license}
-            buttonType="bordered"
-            color="orange"
-          />
+          {modalDetails.license ? (
+            <Centreon.Button
+              label={modalDetails.license}
+              buttonType="bordered"
+              color="orange"
+            />
+          ) : null}
         </div>
         <Centreon.HorizontalLine />
         <div class="popup-body">
-          <Centreon.Description
-            date={`Last update ${modalDetails.last_update}`}
-          />
+          {modalDetails.last_update ? (
+            <Centreon.Description
+              date={`Last update ${modalDetails.last_update}`}
+            />
+          ) : null}
           <Centreon.Description title="Description:" />
           <Centreon.Description text={modalDetails.description} />
         </div>
