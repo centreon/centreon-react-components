@@ -36,6 +36,7 @@
     "cli-color": "^1.4.0",
     "commander": "^2.19.0",
     "fs-extra": "^7.0.1",
+    "loaders.css": "^0.1.2",
     "prop-types": "^15.6.2",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
