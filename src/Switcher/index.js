@@ -63,8 +63,6 @@ class Switcher extends React.Component {
             onClick={this.onChange.bind(this)}
           />
           <span className={classnames(styles["switch-slider"], styles["switch-round"] )}/>
-          <span className={classnames(styles["switch-status"], styles["switch-status-show"])}>on</span>
-          <span className={classnames(styles["switch-status"], styles["switch-status-hide"])}>off</span>
         </label>
       </div>
     );

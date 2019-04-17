@@ -13,77 +13,82 @@ class TopFilters extends Component {
 
     return (
       <div className={styles["container-gray"]}>
-        <Wrapper>
-          <div className={classnames(styles["container__row"])}>
-            {fullText ? (
-              <SearchLive
-                icon={fullText.icon}
-                onChange={onChange}
-                label={fullText.label}
-                value={fullText.value}
-                filterKey={fullText.filterKey}
-              />
-            ) : null}
+        <div className={filterStyles["filters-wrapper"]}>
+          <Wrapper>
+            <div className={classnames(styles["container__row"])}>
+              {fullText ? (
+                <div className={classnames(styles["container__col-md-3"], styles["container__col-xs-12"])}>
+                  <SearchLive
+                    icon={fullText.icon}
+                    onChange={onChange}
+                    label={fullText.label}
+                    value={fullText.value}
+                    filterKey={fullText.filterKey}
+                  />
+                </div>
+              ) : null}
 
-              <div className={classnames(styles["container__row"])}>
-                {switchers
-                  ? switchers.map((switcherColumn, index) => (
-                    <div
-                      key={`switcherSubColumn${index}`}
-                      className={filterStyles["switch-wrapper"]}
-                    >
-                      {switcherColumn.map(
-                        (
-                          {
-                            customClass,
-                            switcherTitle,
-                            switcherStatus,
-                            button,
-                            label,
-                            buttonType,
-                            color,
-                            onClick,
-                            filterKey,
-                            value
-                          },
-                          i
-                        ) =>
-                          !button ? (
-                            <Switcher
-                              key={`switcher${index}${i}`}
-                              customClass={customClass}
-                              {...(switcherTitle ? { switcherTitle } : {})}
-                              switcherStatus={switcherStatus}
-                              filterKey={filterKey}
-                              onChange={onChange}
-                              value={value}
-                            />
-                          ) : (
-                            <div
-                              key={`switcher${index}${i}`}
-                              className={classnames(
-                                styles["container__col-sm-6"],
-                                styles["container__col-xs-4"],
-                                styles["center-vertical"],
-                                styles["mt-1"]
-                              )}
-                            >
-                              <Button
-                                key={`switcherButton${index}${i}`}
-                                label={label}
-                                buttonType={buttonType}
-                                color={color}
-                                onClick={onClick}
+                <div className={classnames(styles["container__row"])}>
+                  {switchers
+                    ? switchers.map((switcherColumn, index) => (
+                      <div
+                        key={`switcherSubColumn${index}`}
+                        className={filterStyles["switch-wrapper"]}
+                      >
+                        {switcherColumn.map(
+                          (
+                            {
+                              customClass,
+                              switcherTitle,
+                              switcherStatus,
+                              button,
+                              label,
+                              buttonType,
+                              color,
+                              onClick,
+                              filterKey,
+                              value
+                            },
+                            i
+                          ) =>
+                            !button ? (
+                              <Switcher
+                                key={`switcher${index}${i}`}
+                                customClass={customClass}
+                                {...(switcherTitle ? { switcherTitle } : {})}
+                                switcherStatus={switcherStatus}
+                                filterKey={filterKey}
+                                onChange={onChange}
+                                value={value}
                               />
-                            </div>
-                          )
-                      )}
-                    </div>
-                  ))
-                : null}
+                            ) : (
+                              <div
+                                key={`switcher${index}${i}`}
+                                className={classnames(
+                                  styles["container__col-sm-6"],
+                                  styles["container__col-xs-4"],
+                                  styles["center-vertical"],
+                                  styles["mt-1"],
+                                  filterStyles["button-wrapper"]
+                                )}
+                              >
+                                <Button
+                                  key={`switcherButton${index}${i}`}
+                                  label={label}
+                                  buttonType={buttonType}
+                                  color={color}
+                                  onClick={onClick}
+                                />
+                              </div>
+                            )
+                        )}
+                      </div>
+                    ))
+                  : null}
+              </div>
             </div>
-          </div>
-        </Wrapper>
+          </Wrapper>
+        </div>
       </div>
     );
   }
