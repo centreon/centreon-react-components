@@ -15,7 +15,8 @@ const Button = ({
   style,
   iconColor,
   iconPosition,
-  position
+  position,
+  ...rest
 }) => {
   const cn = classnames(
     styles.button,
@@ -32,6 +33,7 @@ const Button = ({
       className={cn}
       onClick={onClick}
       style={style}
+      {...rest}
     >
       {iconActionType ? <IconAction iconDirection="icon-position-right" iconColor={iconColor} iconActionType={iconActionType} /> : null}
       {label}
