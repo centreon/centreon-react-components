@@ -18,6 +18,24 @@ class ExtensionsHolder extends React.Component {
     return description.replace(/^centreon\s+(\w+)/i, (_, $1) => $1);
   }
 
+  checkLicense = licenseInfo => {
+    let licenseProps = {};
+
+    if (licenseInfo && licenseInfo.required) {
+      if (!licenseInfo.expiration_date) {
+        licenseProps.itemFooterColor = "red";
+        licenseProps.itemFooterLabel = "Your license is not valid";
+      } else {
+        // @todo store in redux user locale and timezone, then use moment to convert date in the proper format
+        const expirationDate = (new Date(licenseInfo.expiration_date)).toISOString().slice(0,10);
+        licenseProps.itemFooterColor = "green";
+        licenseProps.itemFooterLabel = `Expiration date : ${expirationDate}`;
+      }
+    }
+
+    return licenseProps;
+  }
+
   render() {
     const {
       title,
@@ -54,12 +72,7 @@ class ExtensionsHolder extends React.Component {
                           : "orange"
                         : "gray"
                     }
-                    {...(entity.license && entity.license != "N/A"
-                      ? { itemFooterColor: "red" }
-                      : {})}
-                    {...(entity.license && entity.license != "N/A"
-                      ? { itemFooterLabel: entity.license }
-                      : {})}
+                    {...this.checkLicense(entity.license)}
                   >
                     {entity.version.installed ? (
                       <IconInfo iconPosition="info-icon-position" iconName="state" iconColor="green" />
