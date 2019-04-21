@@ -27,7 +27,7 @@ class ExtensionsHolder extends React.Component {
         licenseProps.itemFooterColor = "red";
         licenseProps.itemFooterLabel = "Your license is not valid";
       } else {
-        // @todo move this logic to centreon
+        // @todo move this logic to centreon. Furthermore, it will facilitate translation
         // @todo use moment to convert date in the proper format (locale and timezone from user)
         const expirationDate = (new Date(licenseInfo.expiration_date)).toISOString().slice(0,10);
         licenseProps.itemFooterColor = "green";
