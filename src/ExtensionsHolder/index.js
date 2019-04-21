@@ -18,7 +18,8 @@ class ExtensionsHolder extends React.Component {
     return description.replace(/^centreon\s+(\w+)/i, (_, $1) => $1);
   }
 
-  checkLicense = licenseInfo => {
+  // get CardItem props to display license information in footer
+  getPropsFromLicense = licenseInfo => {
     let licenseProps = {};
 
     if (licenseInfo && licenseInfo.required) {
@@ -26,7 +27,8 @@ class ExtensionsHolder extends React.Component {
         licenseProps.itemFooterColor = "red";
         licenseProps.itemFooterLabel = "Your license is not valid";
       } else {
-        // @todo store in redux user locale and timezone, then use moment to convert date in the proper format
+        // @todo move this logic to centreon
+        // @todo use moment to convert date in the proper format (locale and timezone from user)
         const expirationDate = (new Date(licenseInfo.expiration_date)).toISOString().slice(0,10);
         licenseProps.itemFooterColor = "green";
         licenseProps.itemFooterLabel = `Expiration date : ${expirationDate}`;
@@ -39,7 +41,6 @@ class ExtensionsHolder extends React.Component {
   render() {
     const {
       title,
-      titleIcon,
       entities,
       onCardClicked,
       onDelete,
@@ -72,7 +73,7 @@ class ExtensionsHolder extends React.Component {
                           : "orange"
                         : "gray"
                     }
-                    {...this.checkLicense(entity.license)}
+                    {...this.getPropsFromLicense(entity.license)}
                   >
                     {entity.version.installed ? (
                       <IconInfo iconPosition="info-icon-position" iconName="state" iconColor="green" />
