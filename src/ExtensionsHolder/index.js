@@ -24,14 +24,23 @@ class ExtensionsHolder extends React.Component {
 
     if (licenseInfo && licenseInfo.required) {
       if (!licenseInfo.expiration_date) {
-        licenseProps.itemFooterColor = "red";
-        licenseProps.itemFooterLabel = "License is not valid";
-      } else {
+        licenseProps = {
+          itemFooterColor: "red",
+          itemFooterLabel: "License is not valid",
+        };
+      } else if (!isNaN(Date.parse(licenseInfo.expiration_date))) {
         // @todo move this logic to centreon. Furthermore, it will facilitate translation
         // @todo use moment to convert date in the proper format (locale and timezone from user)
-        const expirationDate = (new Date(licenseInfo.expiration_date)).toISOString().slice(0,10);
-        licenseProps.itemFooterColor = "green";
-        licenseProps.itemFooterLabel = `License is valid until : ${expirationDate}`;
+        const expirationDate = new Date(licenseInfo.expiration_date);
+        licenseProps = {
+          itemFooterColor: "green",
+          itemFooterLabel: `License is valid until : ${expirationDate.toISOString().slice(0,10)}`,
+        };
+      } else {
+        licenseProps = {
+          itemFooterColor: "red",
+          itemFooterLabel: "Cannot get license expiration date",
+        };
       }
     }
 
@@ -53,6 +62,7 @@ class ExtensionsHolder extends React.Component {
       installing,
       type
     } = this.props;
+
     return (
       <Wrapper>
         <HorizontalLineContent hrColor={hrColor} hrTitleColor={hrTitleColor} hrTitle={title}/>
