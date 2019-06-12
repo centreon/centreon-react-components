@@ -1,18 +1,29 @@
-import React, { Component, Children } from "react";
-import {findDOMNode} from "react-dom";
-import PropTypes from "prop-types";
-import { normalize } from "./helpers";
+/* eslint react/no-find-dom-node: 0 */
+/* eslint react/destructuring-assignment: 0 */
+/* eslint react/no-did-update-set-state: 0 */
+
+/* eslint-disable-next-line no-unused-vars */
+import React, { Component, Children } from 'react';
+import { findDOMNode } from 'react-dom';
+import PropTypes from 'prop-types';
+import { normalize } from './helpers';
 
 export default class BoundingBox extends Component {
+  static roundRectDown(rect) {
+    return {
+      top: Math.floor(rect.top),
+      left: Math.floor(rect.left),
+      bottom: Math.floor(rect.bottom),
+      right: Math.floor(rect.right),
+    };
+  }
 
-  state = {
-    isInViewport: null
-  };
-
-  static propTypes = {
-    onChange: PropTypes.func,
-    children: PropTypes.oneOfType([PropTypes.element, PropTypes.func])
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      isInViewport: null,
+    };
+  }
 
   componentDidMount() {
     this.node = findDOMNode(this);
@@ -21,53 +32,43 @@ export default class BoundingBox extends Component {
     }
   }
 
-  componentWillUnmount() {
-    this.stopWatching();
-  }
-
   componentDidUpdate(prevProps) {
     this.node = findDOMNode(this);
 
     if (this.props.active && !prevProps.active) {
       this.setState({
-        isInViewport: null
+        isInViewport: null,
       });
 
       this.startWatching();
     } else if (!this.props.active) {
       this.stopWatching();
     }
-  } 
+  }
 
-  getContainer = () => {
+  componentWillUnmount() {
+    this.stopWatching();
+  }
+
+  static getContainer() {
     return window;
-  };
+  }
 
-
-  startWatching = () => {
+  startWatching() {
     if (this.interval) {
       return;
     }
 
     this.interval = setInterval(this.isIn, 0);
-  };
+  }
 
-  stopWatching = () => {
+  stopWatching() {
     if (this.interval) {
       this.interval = clearInterval(this.interval);
     }
-  };
-
-  roundRectDown(rect) {
-    return {
-      top: Math.floor(rect.top),
-      left: Math.floor(rect.left),
-      bottom: Math.floor(rect.bottom),
-      right: Math.floor(rect.right)
-    };
   }
 
-  isIn = () => {
+  isIn() {
     const element = this.node;
 
     if (!element) {
@@ -76,12 +77,11 @@ export default class BoundingBox extends Component {
 
     const rect = normalize(this.roundRectDown(element.getBoundingClientRect()));
 
-
     const windowRect = {
-        top: 0,
-        left: 0,
-        bottom: window.innerHeight || document.documentElement.clientHeight,
-        right: window.innerWidth || document.documentElement.clientWidth
+      top: 0,
+      left: 0,
+      bottom: window.innerHeight || document.documentElement.clientHeight,
+      right: window.innerWidth || document.documentElement.clientWidth,
     };
 
     const rectBox = {
@@ -89,40 +89,46 @@ export default class BoundingBox extends Component {
       left: windowRect.left - rect.left,
       bottom: windowRect.bottom - rect.bottom,
       right: windowRect.right - rect.right,
-      offsetHeight: element.offsetHeight
+      offsetHeight: element.offsetHeight,
     };
 
     const isNotHidden = rect.height > 0 && rect.width > 0;
 
-    let isInViewport =
+    const isInViewport =
       isNotHidden &&
       rect.top >= windowRect.top &&
       rect.left >= windowRect.left &&
       rect.bottom <= windowRect.bottom &&
       rect.right <= windowRect.right;
 
-    let state = this.state;
+    let { state } = this;
     if (
       this.state.isInViewport !== isInViewport ||
       this.state.rectBox.top !== rectBox.top ||
       rectBox.bottom !== this.state.rectBox.bottom
     ) {
       state = {
-        rectBox
+        rectBox,
       };
       this.setState(state);
       if (this.props.onChange) this.props.onChange(isInViewport);
     }
 
     return state;
-  };
+  }
 
   render() {
     if (this.props.children instanceof Function) {
       return this.props.children({
-        rectBox: this.state.rectBox
+        rectBox: this.state.rectBox,
       });
     }
     return Children.only(this.props.children);
   }
 }
+
+BoundingBox.propTypes = {
+  active: PropTypes.bool.isRequired,
+  onChange: PropTypes.func.isRequired,
+  children: PropTypes.oneOfType([PropTypes.element, PropTypes.func]).isRequired,
+};
