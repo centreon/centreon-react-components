@@ -118,3 +118,4 @@ export { default as DescriptionOutlinedIcon } from '@material-ui/icons/Descripti
 export { default as UnarchiveOutlinedIcon } from '@material-ui/icons/UnarchiveOutlined';
 export { default as CloudOffOutlinedIcon } from '@material-ui/icons/CloudOffOutlined';
 export { default as CloudUploadOutlinedIcon } from '@material-ui/icons/CloudUploadOutlined';
+export { default as CloudUploadOutlinedIcon } from '@material-ui/icons/CloudUploadOutlined';
