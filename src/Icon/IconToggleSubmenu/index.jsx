@@ -1,8 +1,10 @@
+/* eslint-disable react/prop-types */
+
 import React from 'react';
 import classnames from 'classnames';
 import styles from './icon-toggle-submenu.scss';
 
-const IconToggleSubmenu = ({ iconType, iconPosition, rotate, ...rest }) => {
+function IconToggleSubmenu({ iconType, iconPosition, rotate, ...rest }) {
   const cn = classnames(
     {
       [styles[`icons-toggle-${iconType}`]]: true,
@@ -12,6 +14,6 @@ const IconToggleSubmenu = ({ iconType, iconPosition, rotate, ...rest }) => {
   );
 
   return <span className={cn} {...rest} />;
-};
+}
 
 export default IconToggleSubmenu;

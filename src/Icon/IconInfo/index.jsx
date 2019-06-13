@@ -1,8 +1,10 @@
+/* eslint-disable react/prop-types */
+
 import React from 'react';
 import classnames from 'classnames';
 import styles from './info-state-icon.scss';
 
-const IconInfo = ({ iconName, iconText, iconColor, iconPosition }) => {
+function IconInfo({ iconName, iconText, iconColor, iconPosition }) {
   const cn = classnames(
     styles.info,
     { [styles[`info-${iconName}`]]: true },
@@ -17,6 +19,6 @@ const IconInfo = ({ iconName, iconText, iconColor, iconPosition }) => {
       )}
     </React.Fragment>
   );
-};
+}
 
 export default IconInfo;

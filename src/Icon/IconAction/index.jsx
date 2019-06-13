@@ -1,15 +1,17 @@
+/* eslint-disable react/prop-types */
+
 import React from 'react';
 import classnames from 'classnames';
 import styles from './action-icons.scss';
 
-const IconAction = ({
+function IconAction({
   iconActionType,
   iconColor,
   iconDirection,
   customStyle,
   iconReset,
   ...rest
-}) => {
+}) {
   const cn = classnames(
     styles['icon-action'],
     { [styles[`icon-action-${iconActionType}`]]: true },
@@ -19,6 +21,6 @@ const IconAction = ({
     styles[iconReset || ''],
   );
   return <span className={cn} {...rest} />;
-};
+}
 
 export default IconAction;

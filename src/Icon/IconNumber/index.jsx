@@ -1,8 +1,10 @@
+/* eslint-disable react/prop-types */
+
 import React from 'react';
 import classnames from 'classnames';
 import styles from './icon-number.scss';
 
-const IconNumber = ({ iconColor, iconType, iconNumber }) => {
+function IconNumber({ iconColor, iconType, iconNumber }) {
   return (
     <span
       className={classnames(
@@ -16,6 +18,6 @@ const IconNumber = ({ iconColor, iconType, iconNumber }) => {
       <span className={classnames(styles['number-count'])}>{iconNumber}</span>
     </span>
   );
-};
+}
 
 export default IconNumber;
