@@ -5,6 +5,7 @@ import {
   IconClose,
   IconContent,
   IconInfo,
+  IconModify,
   IconHeader,
   IconNumber,
   IconRound,
@@ -29,6 +30,12 @@ storiesOf("Icon", module).add(
 storiesOf("Icon", module).add(
   "Icon - close small",
   () => <IconClose iconType="small" />,
+  { notes: "A very simple component" }
+);
+
+storiesOf("Icon", module).add(
+  "Icon modify",
+  () => <IconModify/>,
   { notes: "A very simple component" }
 );
 
