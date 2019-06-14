@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Sidebar } from '../src';
@@ -21,7 +23,7 @@ storiesOf('Sidebar', module).add(
       navigationData={mock}
       reactRoutes={reactMock}
       externalHistory={window}
-      onNavigate={(id, url) => {
+      onNavigate={(id) => {
         window.location = `/iframe.html${replaceQueryParam(
           'p',
           id,

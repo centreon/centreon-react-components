@@ -1,3 +1,5 @@
+/* eslint-disable no-alert */
+
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Button, ButtonAction, ButtonActionInput } from '../src';

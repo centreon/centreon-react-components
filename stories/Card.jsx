@@ -1,3 +1,5 @@
+/* eslint-disable no-alert */
+
 import React from 'react';
 import classnames from 'classnames';
 import { storiesOf } from '@storybook/react';

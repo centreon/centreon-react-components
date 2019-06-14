@@ -1,9 +1,11 @@
+/* eslint-disable react/prop-types */
+
 import React from 'react';
 import classnames from 'classnames';
 import IconAction from '../../Icon/IconAction';
 import styles from './table-counter.scss';
 
-const TableCounter = ({ activeClass, number }) => {
+function TableCounter({ activeClass, number }) {
   return (
     <div
       className={classnames(styles['table-counter'], styles[activeClass || ''])}
@@ -33,6 +35,6 @@ const TableCounter = ({ activeClass, number }) => {
       </div>
     </div>
   );
-};
+}
 
 export default TableCounter;

@@ -1,4 +1,5 @@
 /* eslint-disable no-param-reassign */
+/* eslint-disable import/prefer-default-export */
 
 const normalize = (rectangle) => {
   if (rectangle.width === undefined) {

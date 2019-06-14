@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import styles from './list-sortable.scss';
 import Checkbox from '../../Checkbox';
 import InputFieldMultiSelect from '../../InputField/InputFieldMultiSelect';
-import { SwitcherMode } from '../..';
+import SwitcherMode from '../../Switcher/SwitcherMode';
 
 function ListSortable() {
   return (
