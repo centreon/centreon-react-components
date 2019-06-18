@@ -75,7 +75,9 @@ export default class BoundingBox extends Component {
       return this.state;
     }
 
-    const rect = normalize(this.roundRectDown(element.getBoundingClientRect()));
+    const rect = normalize(
+      BoundingBox.roundRectDown(element.getBoundingClientRect()),
+    );
 
     const windowRect = {
       top: 0,
