@@ -26,7 +26,7 @@ class Table extends Component {
                 <th
                   key={`tableHeader${index}`}
                   scope="col"
-                  onClick={this.onHeaderFieldClicked.bind(this, field.key)}
+                  onClick={Table.onHeaderFieldClicked.bind(this, field.key)}
                 >
                   {field.label}
                 </th>

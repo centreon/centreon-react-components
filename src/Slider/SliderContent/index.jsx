@@ -34,7 +34,7 @@ class SliderContent extends Component {
 
     this.setState((prevState) => ({
       currentIndex: prevState.currentIndex - 1,
-      translateValue: prevState.translateValue + this.slideWidth(),
+      translateValue: prevState.translateValue + SliderContent.slideWidth(),
     }));
   }
 
@@ -48,7 +48,7 @@ class SliderContent extends Component {
     // This will not run if we met the if condition above
     this.setState((prevState) => ({
       currentIndex: prevState.currentIndex + 1,
-      translateValue: prevState.translateValue - this.slideWidth(),
+      translateValue: prevState.translateValue - SliderContent.slideWidth(),
     }));
 
     return undefined;
@@ -63,7 +63,7 @@ class SliderContent extends Component {
     if (dotIndex < currentIndex) {
       return this.setState({
         currentIndex: dotIndex,
-        translateValue: -dotIndex * this.slideWidth(),
+        translateValue: -dotIndex * SliderContent.slideWidth(),
       });
     }
 
@@ -71,7 +71,7 @@ class SliderContent extends Component {
     this.setState({
       currentIndex: dotIndex,
       translateValue:
-        translateValue + (currentIndex - dotIndex) * this.slideWidth(),
+        translateValue + (currentIndex - dotIndex) * SliderContent.slideWidth(),
     });
 
     return undefined;

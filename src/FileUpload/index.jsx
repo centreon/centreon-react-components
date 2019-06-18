@@ -13,6 +13,10 @@ import FileUploadItem from './FileUploadItem';
 import IconClose from '../Icon/IconClose';
 
 class FileUpload extends Component {
+  static onFilesError(error) {
+    console.log(`error code ${error.code}: ${error.message}`);
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -24,10 +28,6 @@ class FileUpload extends Component {
     this.setState({
       files,
     });
-  }
-
-  static onFilesError(error) {
-    console.log(`error code ${error.code}: ${error.message}`);
   }
 
   onRemoveFile(idx) {
@@ -96,7 +96,7 @@ class FileUpload extends Component {
                   <Files
                     className={classnames('test')}
                     onChange={this.onFilesChange}
-                    onError={this.onFilesError}
+                    onError={FileUpload.onFilesError}
                     accepts={['.zip', '.license']}
                     multiple
                     maxFiles={5}

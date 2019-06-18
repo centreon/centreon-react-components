@@ -107,11 +107,13 @@ class HorizontalNonLinearStepper extends React.Component {
   }
 
   isLastStep() {
-    return this.state.activeStep === this.totalSteps() - 1;
+    return (
+      this.state.activeStep === HorizontalNonLinearStepper.totalSteps() - 1
+    );
   }
 
   allStepsCompleted() {
-    return this.completedSteps() === this.totalSteps();
+    return this.completedSteps() === HorizontalNonLinearStepper.totalSteps();
   }
 
   render() {
@@ -175,7 +177,8 @@ class HorizontalNonLinearStepper extends React.Component {
                       color="primary"
                       onClick={this.handleComplete}
                     >
-                      {this.completedSteps() === this.totalSteps() - 1
+                      {this.completedSteps() ===
+                      HorizontalNonLinearStepper.totalSteps() - 1
                         ? 'Finish'
                         : 'Complete Step'}
                     </Button>

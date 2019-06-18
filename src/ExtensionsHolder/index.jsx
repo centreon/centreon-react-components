@@ -96,7 +96,7 @@ class ExtensionsHolder extends React.Component {
                           : 'orange'
                         : 'gray'
                     }
-                    {...this.getPropsFromLicense(entity.license)}
+                    {...ExtensionsHolder.getPropsFromLicense(entity.license)}
                   >
                     {entity.version.installed ? (
                       <IconInfo
@@ -109,7 +109,9 @@ class ExtensionsHolder extends React.Component {
                     <Title
                       labelStyle={{ fontSize: '16px' }}
                       titleColor={titleColor}
-                      label={this.parseDescription(entity.description)}
+                      label={ExtensionsHolder.parseDescription(
+                        entity.description,
+                      )}
                       title={entity.description}
                     >
                       <Subtitle label={`by ${entity.label}`} />
