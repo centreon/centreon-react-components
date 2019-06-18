@@ -1,17 +1,59 @@
-import React from "react";
-import { storiesOf } from "@storybook/react";
+import React from 'react';
+import { storiesOf } from '@storybook/react';
 import {
   IconAction,
   IconClose,
   IconContent,
   IconInfo,
-  IconModify,
   IconHeader,
   IconNumber,
   IconRound,
   IconToggleSubmenu,
-  IconLegend
+  IconLegend,
+  DeleteIcon,
+  FlipToFrontIcon,
+  EditIcon,
+  AccessTimeIcon,
+  DoneIcon,
+  ReportProblemIcon,
+  SearchIcon,
+  PlayCircleOutlineIcon,
+  StopOutlinedIcon,
+  UpdateOutlinedIcon,
+  KeyboardArrowRightIcon,
+  KeyboardArrowLeftIcon,
+  DescriptionOutlinedIcon,
+  UnarchiveOutlinedIcon,
+  CloudOffOutlinedIcon,
+  CloudUploadOutlinedIcon
 } from "../src";
+
+
+storiesOf("Icon", module).add(
+  "Icons - MUI",
+() => {
+  return (
+  <React.Fragment>
+    <FlipToFrontIcon/>
+    <EditIcon />
+    <DeleteIcon />
+    <AccessTimeIcon/>
+    <DoneIcon/>
+    <ReportProblemIcon/>
+    <SearchIcon/>
+    <PlayCircleOutlineIcon/>
+    <StopOutlinedIcon/>
+    <UpdateOutlinedIcon/>
+    <KeyboardArrowRightIcon/>
+    <KeyboardArrowLeftIcon/>
+    <DescriptionOutlinedIcon/>
+    <UnarchiveOutlinedIcon/>
+    <CloudOffOutlinedIcon/>
+    <CloudUploadOutlinedIcon/>
+    <p>MUI Icon base : https://material.io/tools/icons/?style=baseline</p>
+  </React.Fragment>)},
+  { notes: "MUI Icon base : https://material.io/tools/icons/?style=baseline" }
+);
 
 storiesOf("Icon", module).add(
   "Icon - action",
@@ -30,12 +72,6 @@ storiesOf("Icon", module).add(
 storiesOf("Icon", module).add(
   "Icon - close small",
   () => <IconClose iconType="small" />,
-  { notes: "A very simple component" }
-);
-
-storiesOf("Icon", module).add(
-  "Icon modify",
-  () => <IconModify/>,
   { notes: "A very simple component" }
 );
 
