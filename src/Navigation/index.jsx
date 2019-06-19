@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 /* eslint-disable react/prop-types */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable prefer-destructuring */
@@ -314,4 +312,3 @@ class Navigation extends Component {
 }
 
 export default Navigation;
->>>>>>> Fix static method calls.
