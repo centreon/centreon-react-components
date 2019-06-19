@@ -72,9 +72,11 @@ class Navigation extends Component {
   }
 
   watchHrefChange(event) {
-    this.setState({
-      hrefOfIframe: event.detail.href,
-    });
+    if (event.detail.href.match(/p=/)) {
+      this.setState({
+        hrefOfIframe: event.detail.href,
+      });
+    }
   }
 
   render() {
@@ -97,7 +99,10 @@ class Navigation extends Component {
       pageId = navigatedPageId;
     } else if (hrefOfIframe) {
       if (hrefOfIframe.match(/p=/)) {
-        pageId = hrefOfIframe.split('p=')[1];
+        pageId = search.split('p=')[1].split('&')[0];
+        if (pageId) {
+          pageId = pageId.split('&')[0];
+        }
       } else {
         pageId = reactRoutes[hrefOfIframe] || hrefOfIframe;
       }
