@@ -1,21 +1,27 @@
-import React, { Component } from "react";
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable eqeqeq */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/no-unused-state */
+
+import React, { Component } from 'react';
 
 class DynamicComponentPosition extends Component {
   state = {
     comp: false,
-    componentLoaded: false
+    componentLoaded: false,
   };
 
-  componentWillReceiveProps = nextProps => {
+  componentWillReceiveProps = (nextProps) => {
     const { componentName } = nextProps;
     if (componentName != this.props.componentName) {
       document.removeEventListener(
         `component${this.props.componentName}Loaded`,
-        this.setComponentLoaded
+        this.setComponentLoaded,
       );
       document.addEventListener(
         `component${componentName}Loaded`,
-        this.setComponentLoaded
+        this.setComponentLoaded,
       );
     }
   };
@@ -24,7 +30,7 @@ class DynamicComponentPosition extends Component {
     if (this.props.componentName) {
       document.addEventListener(
         `component${this.props.componentName}Loaded`,
-        this.setComponentLoaded
+        this.setComponentLoaded,
       );
     }
   };
@@ -33,7 +39,7 @@ class DynamicComponentPosition extends Component {
     const { componentName } = this.props;
     this.setState({
       comp: window[componentName],
-      componentLoaded: true
+      componentLoaded: true,
     });
   };
 
@@ -41,13 +47,13 @@ class DynamicComponentPosition extends Component {
     const { componentName } = this.props;
     document.removeEventListener(
       `component${componentName}Loaded`,
-      this.setComponentLoaded
+      this.setComponentLoaded,
     );
   };
 
   render() {
     const { comp } = this.state;
-    let Comp = comp ? comp : React.Fragment;
+    const Comp = comp || React.Fragment;
     return <Comp />;
   }
 }

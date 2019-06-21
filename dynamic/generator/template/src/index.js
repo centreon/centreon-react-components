@@ -1,13 +1,15 @@
 if (window.parent) {
-  import(/* webpackChunkName: "COMPONENT_CAPITALIZED_NAME" */ process.env
-    .COMPONENT_SOURCE_PATH).then(Component => {
+  import(
+    /* webpackChunkName: "COMPONENT_CAPITALIZED_NAME" */ process.env
+      .COMPONENT_SOURCE_PATH
+  ).then((Component) => {
     window.parent[process.env.COMPONENT_NAME] = Component.default;
-    var elem = window.parent.document;
-    var event = elem.createEvent("Event");
+    const elem = window.parent.document;
+    const event = elem.createEvent('Event');
     event.initEvent(
       `component${process.env.COMPONENT_NAME}Loaded`,
       false,
-      true
+      true,
     );
     elem.dispatchEvent(event);
   });

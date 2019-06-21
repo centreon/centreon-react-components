@@ -1,4 +1,6 @@
-import React from "react";
+/* eslint-disable react/jsx-filename-extension */
+
+import React from 'react';
 import classnames from 'classnames';
 import styles from './regular-horizontal-line.scss';
 

@@ -1,23 +1,35 @@
-import React, { Component } from "react";
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable react/jsx-indent */
+/* eslint-disable react/jsx-indent-props */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/prefer-stateless-function */
+
+import React, { Component } from 'react';
 import classnames from 'classnames';
 import styles from '../global-sass-files/_grid.scss';
 import filterStyles from './top-filters.scss';
-import Wrapper from "../Wrapper";
-import SearchLive from "../Search/SearchLive";
-import Switcher from "../Switcher";
-import Button from "../Button/ButtonRegular";
+import Wrapper from '../Wrapper';
+import SearchLive from '../Search/SearchLive';
+import Switcher from '../Switcher';
+import Button from '../Button/ButtonRegular';
 
 class TopFilters extends Component {
   render() {
-    const { fullText, switchers, onChange, icon } = this.props;
+    const { fullText, switchers, onChange } = this.props;
 
     return (
-      <div className={styles["container-gray"]}>
-        <div className={filterStyles["filters-wrapper"]}>
+      <div className={styles['container-gray']}>
+        <div className={filterStyles['filters-wrapper']}>
           <Wrapper>
-            <div className={classnames(styles["container__row"])}>
+            <div className={classnames(styles.container__row)}>
               {fullText ? (
-                <div className={classnames(styles["container__col-md-3"], styles["container__col-xs-12"])}>
+                <div
+                  className={classnames(
+                    styles['container__col-md-3'],
+                    styles['container__col-xs-12'],
+                  )}
+                >
                   <SearchLive
                     icon={fullText.icon}
                     onChange={onChange}
@@ -28,12 +40,12 @@ class TopFilters extends Component {
                 </div>
               ) : null}
 
-                <div className={classnames(styles["container__row"])}>
-                  {switchers
-                    ? switchers.map((switcherColumn, index) => (
+              <div className={classnames(styles.container__row)}>
+                {switchers
+                  ? switchers.map((switcherColumn, index) => (
                       <div
                         key={`switcherSubColumn${index}`}
-                        className={filterStyles["switch-wrapper"]}
+                        className={filterStyles['switch-wrapper']}
                       >
                         {switcherColumn.map(
                           (
@@ -47,9 +59,9 @@ class TopFilters extends Component {
                               color,
                               onClick,
                               filterKey,
-                              value
+                              value,
                             },
-                            i
+                            i,
                           ) =>
                             !button ? (
                               <Switcher
@@ -65,11 +77,11 @@ class TopFilters extends Component {
                               <div
                                 key={`switcher${index}${i}`}
                                 className={classnames(
-                                  styles["container__col-sm-6"],
-                                  styles["container__col-xs-4"],
-                                  styles["center-vertical"],
-                                  styles["mt-1"],
-                                  filterStyles["button-wrapper"]
+                                  styles['container__col-sm-6'],
+                                  styles['container__col-xs-4'],
+                                  styles['center-vertical'],
+                                  styles['mt-1'],
+                                  filterStyles['button-wrapper'],
                                 )}
                               >
                                 <Button
@@ -80,7 +92,7 @@ class TopFilters extends Component {
                                   onClick={onClick}
                                 />
                               </div>
-                            )
+                            ),
                         )}
                       </div>
                     ))

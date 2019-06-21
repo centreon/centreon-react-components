@@ -1,20 +1,23 @@
-import React, { Component } from "react";
-import axios from "axios";
-import DynamicComponentBundle from "../DynamicComponentBundle";
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable react/prop-types */
+
+import React, { Component } from 'react';
+import axios from 'axios';
+import DynamicComponentBundle from '../DynamicComponentBundle';
 
 class CentreonDynamicComponentGetter extends Component {
   state = {
-    topologyUrl: "",
-    componentName: false
+    topologyUrl: '',
+    componentName: false,
   };
 
   componentWillMount = () => {
     const { topologyInfoApiUrl } = this.props;
 
-    axios.get(topologyInfoApiUrl).then(response => {
+    axios.get(topologyInfoApiUrl).then((response) => {
       this.setState({
         topologyUrl: response.data.topology_url,
-        componentName: response.data.topology_name
+        componentName: response.data.topology_name,
       });
     });
   };

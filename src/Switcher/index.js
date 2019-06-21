@@ -1,28 +1,36 @@
-import React from "react";
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable jsx-a11y/label-has-for */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable eqeqeq */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/prop-types */
+/* eslint-disable camelcase */
+
+import React from 'react';
 import classnames from 'classnames';
 import styles from './switcher.scss';
 
 class Switcher extends React.Component {
   state = {
     value: true,
-    toggled: false
+    toggled: false,
   };
 
   UNSAFE_componentDidMount = () => {
     const { value } = this.props;
     if (value) {
       this.setState({
-        value
+        value,
       });
     }
   };
 
-  UNSAFE_componentWillReceiveProps = nextProps => {
+  UNSAFE_componentWillReceiveProps = (nextProps) => {
     const { value } = nextProps;
     if (this.state.value != value) {
       this.setState({
         toggled: !value,
-        value
+        value,
       });
     }
   };
@@ -32,7 +40,7 @@ class Switcher extends React.Component {
     const { value, toggled } = this.state;
     this.setState({
       value: !value,
-      toggled: !toggled
+      toggled: !toggled,
     });
     if (onChange) {
       onChange(!value, filterKey);
@@ -42,7 +50,7 @@ class Switcher extends React.Component {
   toggled = () => {
     const { toggled } = this.state;
     this.setState({
-      toggled: !toggled
+      toggled: !toggled,
     });
   };
 
@@ -52,17 +60,29 @@ class Switcher extends React.Component {
 
     return (
       <div className={classnames(styles.switcher, styles[customClass])}>
-        <span className={classnames(styles["switcher-title"])}>
-          {switcherTitle ? switcherTitle : " "}
+        <span className={classnames(styles['switcher-title'])}>
+          {switcherTitle || ' '}
         </span>
-        <span className={classnames(styles["switcher-status"])}>{switcherStatus}</span>
-        <label className={classnames(styles.switch, styles[toggled ? "switch-active" : "switch-hide"])}>
+        <span className={classnames(styles['switcher-status'])}>
+          {switcherStatus}
+        </span>
+        <label
+          className={classnames(
+            styles.switch,
+            styles[toggled ? 'switch-active' : 'switch-hide'],
+          )}
+        >
           <input
             type="checkbox"
             checked={!value}
             onClick={this.onChange.bind(this)}
           />
-          <span className={classnames(styles["switch-slider"], styles["switch-round"] )}/>
+          <span
+            className={classnames(
+              styles['switch-slider'],
+              styles['switch-round'],
+            )}
+          />
         </label>
       </div>
     );

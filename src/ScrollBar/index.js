@@ -1,20 +1,27 @@
-import React, {Component} from 'react';
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/prefer-stateless-function */
+
+import React, { Component } from 'react';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import classnames from 'classnames';
-import styles from './scroll-bar.scss';
 import PerfectScrollbar from 'react-perfect-scrollbar';
+import styles from './scroll-bar.scss';
 
 class ScrollBar extends Component {
-  render(){
-    const {children, scrollType, scrollBarCustom} = this.props;
+  render() {
+    const { children, scrollBarCustom } = this.props;
     return (
       <PerfectScrollbar
-        className={classnames(styles["scrollbar-container"], scrollBarCustom ?styles[scrollBarCustom] : '')}
-        onScrollRight={true}
-        >
+        className={classnames(
+          styles['scrollbar-container'],
+          scrollBarCustom ? styles[scrollBarCustom] : '',
+        )}
+        onScrollRight
+      >
         {children}
       </PerfectScrollbar>
-    )
+    );
   }
 }
 

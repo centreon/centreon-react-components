@@ -1,16 +1,18 @@
-import React from "react";
-import { storiesOf } from "@storybook/react";
-import { SearchLive, SearchWithArrow } from "../src";
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable import/no-extraneous-dependencies */
 
-storiesOf("Search", module).add(
-  "Search - live",
+import React from 'react';
+import { storiesOf } from '@storybook/react';
+import { SearchLive, SearchWithArrow } from '../src';
+
+storiesOf('Search', module).add(
+  'Search - live',
   () => <SearchLive label="name" />,
-  { notes: "A very simple component" }
+  { notes: 'A very simple component' },
 );
 
-storiesOf("Search", module).add(
-  "Search - with arrow",
+storiesOf('Search', module).add(
+  'Search - with arrow',
   () => <SearchWithArrow searchLiveCustom="search-live-custom" />,
-  { notes: "A very simple component" }
+  { notes: 'A very simple component' },
 );
-

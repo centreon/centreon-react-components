@@ -1,16 +1,25 @@
-import React, { Component } from "react";
+/* eslint-disable react/jsx-no-bind */
+/* eslint-disable no-unused-vars */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable no-plusplus */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable react/prop-types */
+
+import React, { Component } from 'react';
 import classnames from 'classnames';
 import styles from './pagination.scss';
-import IconAction from "../Icon/IconAction";
+import IconAction from '../Icon/IconAction';
 
 class Pagination extends Component {
   state = {
-    currentPage: 0
+    currentPage: 0,
   };
 
   previousPage = () => {
     const { currentPage } = this.state;
-    console.log(currentPage)
+    console.log(currentPage);
     if (currentPage > 0) {
       this.pageChanged(currentPage - 1);
     }
@@ -19,42 +28,40 @@ class Pagination extends Component {
   nextPage = () => {
     const { pageCount } = this.props;
     const { currentPage } = this.state;
-    console.log(pageCount,currentPage)
+    console.log(pageCount, currentPage);
     if (currentPage < pageCount - 1) {
       this.pageChanged(currentPage + 1);
     }
   };
 
-  pageChanged = page => {
+  pageChanged = (page) => {
     const { onPageChange } = this.props;
     this.setState(
       {
-        currentPage: page
+        currentPage: page,
       },
       () => {
         onPageChange(page);
-      }
+      },
     );
   };
 
-  renderPages = count => {
+  renderPages = (count) => {
     const { currentPage } = this.state;
-    let pages = [];
+    const pages = [];
     for (let i = 0; i < count; i++) {
       pages.push(
         <a
-          key={'paginationPage'+i}
+          key={`paginationPage${i}`}
           onClick={this.pageChanged.bind(this, i)}
-          className={classnames(i === currentPage ? styles["active"] : "")}
+          className={classnames(i === currentPage ? styles.active : '')}
         >
           {i + 1}
-        </a>
+        </a>,
       );
     }
 
-    return (
-      <React.Fragment>{pages}</React.Fragment>
-    )
+    return <React.Fragment>{pages}</React.Fragment>;
   };
 
   render() {

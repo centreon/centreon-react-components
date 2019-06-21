@@ -1,23 +1,29 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+/* eslint-disable no-dupe-keys */
+/* eslint-disable jsx-a11y/iframe-has-title */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable eqeqeq */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Axios from '../Axios';
 
 class DynamicComponentLoader extends Component {
   state = {
     componentLoaded: false,
-    componentExists: false
+    componentExists: false,
   };
 
-  componentWillReceiveProps = nextProps => {
+  componentWillReceiveProps = (nextProps) => {
     const { componentName } = nextProps;
     if (componentName != this.props.componentName) {
       document.removeEventListener(
         `component${this.props.componentName}Loaded`,
-        this.setComponentLoaded
+        this.setComponentLoaded,
       );
       document.addEventListener(
         `component${componentName}Loaded`,
-        this.setComponentLoaded
+        this.setComponentLoaded,
       );
       this.checkFileExists();
     }
@@ -26,27 +32,27 @@ class DynamicComponentLoader extends Component {
   checkFileExists = () => {
     const { componentUrl, xhr } = this.props;
     xhr({
-      requestType: "GET",
+      requestType: 'GET',
       url: componentUrl,
-      check:true
+      check: true,
     })
       .then(() => {
         this.setState({
-          componentExists: true
-        })
+          componentExists: true,
+        });
       })
-      .catch(err => {
+      .catch(() => {
         this.setState({
-          componentExists: false
-        })
+          componentExists: false,
+        });
       });
-  }
+  };
 
   componentWillMount = () => {
     if (this.props.componentName) {
       document.addEventListener(
         `component${this.props.componentName}Loaded`,
-        this.setComponentLoaded
+        this.setComponentLoaded,
       );
       this.checkFileExists();
     }
@@ -54,7 +60,7 @@ class DynamicComponentLoader extends Component {
 
   setComponentLoaded = () => {
     this.setState({
-      componentLoaded: true
+      componentLoaded: true,
     });
   };
 
@@ -62,42 +68,41 @@ class DynamicComponentLoader extends Component {
     const { componentName } = this.props;
     document.removeEventListener(
       `component${componentName}Loaded`,
-      this.setComponentLoaded
+      this.setComponentLoaded,
     );
   };
 
   render() {
+    // eslint-disable-next-line no-unused-vars
     const { componentLoaded, componentExists } = this.state;
     const { componentUrl } = this.props;
 
     return (
       <React.Fragment>
-        {
-          componentExists ?
-            <iframe
-              src={componentUrl}
-              style={{
-                width: 0,
-                height: 0,
-                border: "0",
-                border: "none"
-              }}
-            />
-            : null
-        }
+        {componentExists ? (
+          <iframe
+            src={componentUrl}
+            style={{
+              width: 0,
+              height: 0,
+              border: '0',
+              border: 'none',
+            }}
+          />
+        ) : null}
       </React.Fragment>
     );
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  xhr: data => {
+const mapDispatchToProps = (dispatch) => ({
+  xhr: (data) => {
     const { requestType } = data;
     return Axios(data, dispatch, requestType);
-  }
+  },
 });
 
 export default connect(
   null,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(DynamicComponentLoader);

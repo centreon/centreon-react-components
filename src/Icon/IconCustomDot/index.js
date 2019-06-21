@@ -1,9 +1,11 @@
-import React from "react";
+/* eslint-disable react/jsx-filename-extension */
+
+import React from 'react';
 import classnames from 'classnames';
-import styles from "./icon-custom-dot.scss";
+import styles from './icon-custom-dot.scss';
 
 const IconCustomDot = () => (
-  <span className={classnames(styles["icon-custom-dot"])}></span>
+  <span className={classnames(styles['icon-custom-dot'])} />
 );
 
 export default IconCustomDot;

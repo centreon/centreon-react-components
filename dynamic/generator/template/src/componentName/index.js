@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 class COMPONENT_FUNCTIONAL_NAME extends Component {
   render() {
