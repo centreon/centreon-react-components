@@ -79,6 +79,10 @@ class Navigation extends Component {
     onNavigate(id, url);
   };
 
+  areSamePage = (page, level, imersion) => {
+    return imersion ? (!isNaN(page) && String(page).substring(0,imersion) == level.page) : (!isNaN(page) && page== level.page)
+  }
+
   render() {
     const {
       customStyle,
@@ -129,13 +133,13 @@ class Navigation extends Component {
               [styles[`color-${firstLevel.color}`]]: true,
               [styles[
                 firstLevel.toggled ||
-                (!isNaN(pageId) && String(pageId).charAt(0) == firstLevel.page)
+                this.areSamePage(pageId,firstLevel,1)
                   ? `active-${firstLevel.color}`
                   : ''
               ]]: true,
               [styles[
                 firstLevel.toggled ||
-                (!isNaN(pageId) && String(pageId).charAt(0) == firstLevel.page)
+                this.areSamePage(pageId,firstLevel,1)
                   ? `active`
                   : ''
               ]]: true,
@@ -187,18 +191,22 @@ class Navigation extends Component {
                       [styles[
                         activeSecondLevel == secondLevel.page ||
                         (!activeSecondLevel &&
-                          !isNaN(pageId) &&
-                          String(pageId).substring(0, 3) == secondLevel.page)
+                          this.areSamePage(pageId,secondLevel,3))
                           ? `active`
                           : ''
                       ]]: true,
+                      [styles[
+                        secondLevel.toggled ||
+                        this.areSamePage(pageId,secondLevel,3)
+                          ? `active-${firstLevel.color}`
+                          : ""
+                      ]]: true
                     })}
                     onClick={() => {
                       if (secondLevel.groups.length < 1) {
                         this.onNavigate(secondLevel.page, secondLevelUrl);
                       } else if (
-                        !isNaN(pageId) &&
-                        String(pageId).charAt(0) == firstLevel.page
+                        this.areSamePage(pageId,firstLevel,1)
                       ) {
                         this.activateSecondLevel(secondLevel.page);
                       }
@@ -262,15 +270,13 @@ class Navigation extends Component {
                                         {
                                           [styles[
                                             thirdLevel.toggled ||
-                                            (!isNaN(pageId) &&
-                                              pageId == thirdLevel.page)
+                                            this.areSamePage(pageId,thirdLevel)
                                               ? `active`
                                               : ''
                                           ]]: true,
                                           [styles[
                                             thirdLevel.toggled ||
-                                            (!isNaN(pageId) &&
-                                              pageId == thirdLevel.page)
+                                            this.areSamePage(pageId,thirdLevel)
                                               ? `active-${firstLevel.color}`
                                               : ''
                                           ]]: true,

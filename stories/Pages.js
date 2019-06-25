@@ -1,10 +1,7 @@
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable react/jsx-filename-extension */
-
-import React from 'react';
-import classnames from 'classnames';
-import { storiesOf } from '@storybook/react';
-import styles from '../src/global-sass-files/_grid.scss';
+import React from "react";
+import classnames from "classnames";
+import styles from "../src/global-sass-files/_grid.scss";
+import { storiesOf } from "@storybook/react";
 import {
   Wrapper,
   TopFilters,
@@ -32,17 +29,29 @@ import {
   CustomRow,
   CustomColumn,
   CustomStyles,
-} from '../src';
+  Breadcrumb,
+  Divider,
+  InputFieldSearch,
+  ButtonCustom,
+  TableCustom,
+  IconDelete,
+  IconLibraryAdd,
+  IconPowerSettings,
+  IconInsertChart,
+  BAMListingPage
+} from "../src";
+import Paper from "@material-ui/core/Paper";
+import BAMTableData from "../src/Pages/BAMListingMock";
 
 // Extensions Page
-storiesOf('Pages', module).add(
-  'Extensions page',
+storiesOf("Pages", module).add(
+  "Extensions page",
   () => (
     <React.Fragment>
       <TopFilters
         fullText={{
-          label: 'Search:',
-          onChange: (a) => {
+          label: "Search:",
+          onChange: a => {
             console.log(a);
           },
         }}
@@ -1472,5 +1481,55 @@ storiesOf('Pages', module).add(
       </CustomStyles>
     </CustomStyles>
   ),
-  { notes: 'A very simple component' },
+  { notes: "A very simple component" }
+);
+
+storiesOf("Pages", module).add(
+  "BAM page",
+  () => {
+    return (
+      <BAMListingPage
+        onAddClicked={() => {
+          console.log("Add clicked");
+        }}
+        onSearch={() => {
+          console.log("onSearch clicked");
+        }}
+        onDelete={() => {
+          console.log("onDelete clicked");
+        }}
+        onDuplicate={() => {
+          console.log("onDuplicate clicked");
+        }}
+        onMassiveChange={() => {
+          console.log("onMassiveChange clicked");
+        }}
+        onToggle={() => {
+          console.log("onToggle clicked");
+        }}
+        onPaginate={() => {
+          console.log("onPaginate clicked");
+        }}
+        onSort={() => {
+          console.log("onSort clicked");
+        }}
+        tableData={BAMTableData.result.entities}
+        onTableSelectionChanged={() => {
+          console.log("onTableSelectionChanged");
+        }}
+        onPaginationLimitChanged={() => {
+          console.log("onPaginationLimitChanged");
+        }}
+        paginationLimit={BAMTableData.result.pagination.limit}
+        currentPage={
+          BAMTableData.result.pagination.offset != 0
+            ? BAMTableData.result.pagination.offset /
+              BAMTableData.result.pagination.limit
+            : 0
+        }
+        totalRows={BAMTableData.result.pagination.total}
+      />
+    );
+  },
+  { notes: "A very simple component" }
 );
