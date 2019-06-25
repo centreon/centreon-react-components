@@ -1,16 +1,21 @@
-import React, { Component } from "react";
-import StyledTableCell from "./StyledTableCell";
-import StyledTableSortLabel from "./StyledTableSortLabel";
-import StyledCheckbox from "./StyledCheckbox";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import PropTypes from "prop-types";
+/* eslint-disable react/jsx-no-bind */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable react/prop-types */
+
+import React, { Component } from 'react';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import PropTypes from 'prop-types';
+import StyledTableCell from './StyledTableCell';
+import StyledTableSortLabel from './StyledTableSortLabel';
+import StyledCheckbox from './StyledCheckbox';
 
 class EnhancedTableHead extends Component {
-  createSortHandler = property => event => {
+  createSortHandler = (property) => (event) => {
     const { onRequestSort } = this.props;
     onRequestSort(event, property);
   };
+
   render() {
     const {
       onSelectAllClick,
@@ -19,7 +24,7 @@ class EnhancedTableHead extends Component {
       numSelected,
       rowCount,
       headRows,
-      checkable
+      checkable,
     } = this.props;
     return (
       <TableHead>
@@ -34,18 +39,18 @@ class EnhancedTableHead extends Component {
             </StyledTableCell>
           ) : null}
 
-          {headRows.map(row => (
+          {headRows.map((row) => (
             <StyledTableCell
               key={row.id}
-              align={row.numeric ? "left" : ""}
-              padding={row.disablePadding ? "none" : "default"}
+              align={row.numeric ? 'left' : ''}
+              padding={row.disablePadding ? 'none' : 'default'}
               sortDirection={orderBy === row.id ? order : false}
             >
               <StyledTableSortLabel
                 active={orderBy === row.id}
                 direction={order}
                 onClick={this.createSortHandler.bind(this, row.id)}
-                icon={{ color: "red" }}
+                icon={{ color: 'red' }}
               >
                 {row.label}
               </StyledTableSortLabel>
@@ -63,7 +68,7 @@ EnhancedTableHead.propTypes = {
   onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.string.isRequired,
   orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired
+  rowCount: PropTypes.number.isRequired,
 };
 
 export default EnhancedTableHead;

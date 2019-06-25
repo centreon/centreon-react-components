@@ -41,7 +41,8 @@ class Table extends Component {
           <tbody>
             {data
               ? data.map((row, rowIndex) => (
-                <tr key={`tableRow${rowIndex}`}>
+                  // eslint-disable-next-line react/jsx-indent
+                  <tr key={`tableRow${rowIndex}`}>
                     {fields.map(({ type, key, values }, index) => {
                       let subComponent = (
                         <td key={`tableRow${rowIndex}Cell${index}`} />
@@ -72,7 +73,7 @@ class Table extends Component {
                       return subComponent;
                     })}
                     {pagination ? (
-                    <td key={`tablePagination${rowIndex}`} />
+                      <td key={`tablePagination${rowIndex}`} />
                     ) : null}
                   </tr>
                 ))

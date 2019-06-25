@@ -1,6 +1,9 @@
-import React from "react";
-import Typography from "@material-ui/core/Typography";
-import Link from "@material-ui/core/Link";
+/* eslint-disable react/prop-types */
+/* eslint-disable react/jsx-filename-extension */
+
+import React from 'react';
+import Typography from '@material-ui/core/Typography';
+import Link from '@material-ui/core/Link';
 
 const BreadcrumbLink = ({ index, count, breadcrumb, classes }) => {
   return index === count - 1 ? (

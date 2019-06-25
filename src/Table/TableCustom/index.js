@@ -1,93 +1,88 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { makeStyles, withStyles, useTheme } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TablePagination from "@material-ui/core/TablePagination";
-import StyledTableRow from "./StyledTableRow";
-import TableSortLabel from "@material-ui/core/TableSortLabel";
-import Paper from "@material-ui/core/Paper";
-import IconButton from "@material-ui/core/IconButton";
-import FirstPageIcon from "@material-ui/icons/FirstPage";
-import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
-import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
-import LastPageIcon from "@material-ui/icons/LastPage";
-import Checkbox from "@material-ui/core/Checkbox";
-import IconPowerSettings from "../../MaterialComponents/Icons/IconPowerSettings";
-import StyledCheckbox from "./StyledCheckbox";
-import IconDelete from "../../MaterialComponents/Icons/IconDelete";
-import IconLibraryAdd from "../../MaterialComponents/Icons/IconLibraryAdd";
-import EnhancedTableHead from "./EnhancedTableHead";
-import TABLE_COLUMN_TYPES from "../ColumnTypes";
-import TablePaginationActions from "./TablePaginationActions";
-import StyledTableCell2 from "./StyledTableCell2";
-import TableCellCustom from "./TableCellCustom";
-import StyledPagination from "./StyledPagination";
+/* eslint-disable react/forbid-prop-types */
+/* eslint-disable no-unreachable */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable react/prop-types */
 
-const styles = theme => ({
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import Paper from '@material-ui/core/Paper';
+import StyledTableRow from './StyledTableRow';
+import IconPowerSettings from '../../MaterialComponents/Icons/IconPowerSettings';
+import StyledCheckbox from './StyledCheckbox';
+import IconDelete from '../../MaterialComponents/Icons/IconDelete';
+import IconLibraryAdd from '../../MaterialComponents/Icons/IconLibraryAdd';
+import EnhancedTableHead from './EnhancedTableHead';
+import TABLE_COLUMN_TYPES from '../ColumnTypes';
+import TablePaginationActions from './TablePaginationActions';
+import StyledTableCell2 from './StyledTableCell2';
+import TableCellCustom from './TableCellCustom';
+import StyledPagination from './StyledPagination';
+
+const styles = (theme) => ({
   root: {
-    width: "100%"
+    width: '100%',
   },
   paper: {
-    width: "100%",
-    marginBottom: theme.spacing(2)
+    width: '100%',
+    marginBottom: theme.spacing(2),
   },
   table: {
-    minWidth: 750
+    minWidth: 750,
   },
   tableWrapper: {
-    overflowX: "auto"
-  }
+    overflowX: 'auto',
+  },
 });
 
 class TableCustom extends Component {
   state = {
-    order: "asc",
-    orderBy: "activate",
-    selected: []
+    order: 'asc',
+    orderBy: 'activate',
+    selected: [],
   };
 
   handleRequestSort = (event, property) => {
     const { onSort } = this.props;
     const { orderBy, order } = this.state;
-    const isDesc = orderBy === property && order === "desc";
+    const isDesc = orderBy === property && order === 'desc';
     this.setState(
       {
-        order: isDesc ? "asc" : "desc",
-        orderBy: property
+        order: isDesc ? 'asc' : 'desc',
+        orderBy: property,
       },
       () => {
         onSort({
-          order: isDesc ? "asc" : "desc",
-          orderBy: property
+          order: isDesc ? 'asc' : 'desc',
+          orderBy: property,
         });
-      }
+      },
     );
   };
 
-  handleSelectAllClick = event => {
+  handleSelectAllClick = (event) => {
     const { onTableSelectionChanged, tableData } = this.props;
     if (event.target.checked) {
-      const newSelecteds = tableData.map(n => n.id);
+      const newSelecteds = tableData.map((n) => n.id);
       this.setState(
         {
-          selected: newSelecteds
+          selected: newSelecteds,
         },
         () => {
           onTableSelectionChanged(newSelecteds);
-        }
+        },
       );
       return;
     }
     this.setState(
       {
-        selected: []
+        selected: [],
       },
       () => {
         onTableSelectionChanged([]);
-      }
+      },
     );
   };
 
@@ -106,16 +101,16 @@ class TableCustom extends Component {
     } else if (selectedIndex > 0) {
       newSelected = newSelected.concat(
         selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
+        selected.slice(selectedIndex + 1),
       );
     }
     this.setState(
       {
-        selected: newSelected
+        selected: newSelected,
       },
       () => {
         onTableSelectionChanged(newSelected);
-      }
+      },
     );
   };
 
@@ -133,11 +128,11 @@ class TableCustom extends Component {
       currentPage,
       classes,
       totalRows,
-      onToggle
+      onToggle,
     } = this.props;
     const { order, orderBy, selected } = this.state;
 
-    const isSelected = name => selected.indexOf(name) !== -1;
+    const isSelected = (name) => selected.indexOf(name) !== -1;
 
     const emptyRows = limit - Math.min(limit, totalRows - currentPage * limit);
 
@@ -162,12 +157,12 @@ class TableCustom extends Component {
                 headRows={columnConfiguration}
               />
               <TableBody>
-                {tableData.map(row => {
+                {tableData.map((row) => {
                   const isItemSelected = isSelected(row.id);
                   return (
                     <StyledTableRow
                       hover
-                      onClick={event => this.handleClick(event, row.id)}
+                      onClick={(event) => this.handleClick(event, row.id)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
@@ -187,7 +182,7 @@ class TableCustom extends Component {
                         </StyledTableCell2>
                       ) : null}
 
-                      {columnConfiguration.map(column => {
+                      {columnConfiguration.map((column) => {
                         switch (column.type) {
                           case TABLE_COLUMN_TYPES.number:
                             return (
@@ -195,7 +190,7 @@ class TableCustom extends Component {
                                 align="left"
                                 className={classes.tableCellCustom}
                               >
-                                {row[column.id] || ""}
+                                {row[column.id] || ''}
                               </TableCellCustom>
                             );
                             break;
@@ -205,7 +200,7 @@ class TableCustom extends Component {
                                 align="left"
                                 className={classes.tableCellCustom}
                               >
-                                {row[column.id] || ""}
+                                {row[column.id] || ''}
                               </TableCellCustom>
                             );
                             break;
@@ -226,16 +221,16 @@ class TableCustom extends Component {
                               <StyledTableCell2 hover>
                                 <IconDelete
                                   customStyle={{
-                                    color: "#707070",
-                                    fontSize: 20
+                                    color: '#707070',
+                                    fontSize: 20,
                                   }}
                                   onClick={onDelete}
                                 />
                                 <IconLibraryAdd
                                   customStyle={{
-                                    color: "#707070",
-                                    marginLeft: "14px",
-                                    fontSize: 20
+                                    color: '#707070',
+                                    marginLeft: '14px',
+                                    fontSize: 20,
                                   }}
                                   onClick={onDuplicate}
                                 />
@@ -263,9 +258,9 @@ class TableCustom extends Component {
             count={totalRows}
             rowsPerPage={limit}
             page={currentPage}
-            style={{ display: "flex", flexDirection: "row-reverse" }}
+            style={{ display: 'flex', flexDirection: 'row-reverse' }}
             SelectProps={{
-              native: true
+              native: true,
             }}
             onChangePage={onPaginate}
             onChangeRowsPerPage={onPaginationLimitChanged}
@@ -278,7 +273,7 @@ class TableCustom extends Component {
 }
 
 TableCustom.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles, { withTheme: true })(TableCustom);

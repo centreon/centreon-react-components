@@ -1,8 +1,11 @@
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable react/prop-types */
+
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import LibraryAdd from '@material-ui/icons/LibraryAdd';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   root: {
     display: 'flex',
     justifyContent: 'center',
@@ -14,7 +17,7 @@ const useStyles = makeStyles(theme => ({
   },
   iconLabel: {
     color: '#009fdf',
-    fontSize: 12, 
+    fontSize: 12,
     display: 'inline-block',
     verticalAlign: 'super',
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
@@ -25,10 +28,10 @@ const useStyles = makeStyles(theme => ({
   iconWrap: {
     display: 'inline-block',
     verticalAlign: 'middle',
-  }
+  },
 }));
 
-function IconLibraryAdd({label, customStyle, ...rest}) {
+function IconLibraryAdd({ label, customStyle, ...rest }) {
   const classes = useStyles();
 
   return (

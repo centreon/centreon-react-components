@@ -1,14 +1,15 @@
-import React, { Component } from "react";
+// eslint-disable-next-line no-unused-vars
+import React from 'react';
 import Checkbox from '@material-ui/core/Checkbox';
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles } from '@material-ui/core/styles';
 
 const styles = {
-	root: {
-		'&$checked': {
-		  color: "#232f39",
-		},
-	  },
-	  checked: {},
+  root: {
+    '&$checked': {
+      color: '#232f39',
+    },
+  },
+  checked: {},
 };
 
 export default withStyles(styles)(Checkbox);

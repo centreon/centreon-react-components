@@ -1,18 +1,23 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import IconButton from "@material-ui/core/IconButton";
-import FirstPageIcon from "@material-ui/icons/FirstPage";
-import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
-import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
-import LastPageIcon from "@material-ui/icons/LastPage";
+/* eslint-disable react/forbid-prop-types */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/prefer-stateless-function */
 
-const styles = theme => ({
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import IconButton from '@material-ui/core/IconButton';
+import FirstPageIcon from '@material-ui/icons/FirstPage';
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
+import LastPageIcon from '@material-ui/icons/LastPage';
+
+const styles = (theme) => ({
   root: {
     flexShrink: 0,
     color: theme.palette.text.secondary,
-    marginLeft: theme.spacing(2.5)
-  }
+    marginLeft: theme.spacing(2.5),
+  },
 });
 
 class TablePaginationActions extends Component {
@@ -20,13 +25,13 @@ class TablePaginationActions extends Component {
     const {
       classes,
       count,
-	  page,
-	  theme,
+      page,
+      theme,
       rowsPerPage,
       handleFirstPageButtonClick,
       handleBackButtonClick,
       handleNextButtonClick,
-      handleLastPageButtonClick
+      handleLastPageButtonClick,
     } = this.props;
     return (
       <div className={classes.root}>
@@ -35,14 +40,14 @@ class TablePaginationActions extends Component {
           disabled={page === 0}
           aria-label="First Page"
         >
-          {theme.direction === "rtl" ? <LastPageIcon /> : <FirstPageIcon />}
+          {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
         </IconButton>
         <IconButton
           onClick={handleBackButtonClick}
           disabled={page === 0}
           aria-label="Previous Page"
         >
-          {theme.direction === "rtl" ? (
+          {theme.direction === 'rtl' ? (
             <KeyboardArrowRight />
           ) : (
             <KeyboardArrowLeft />
@@ -53,7 +58,7 @@ class TablePaginationActions extends Component {
           disabled={page >= Math.ceil(count / rowsPerPage) - 1}
           aria-label="Next Page"
         >
-          {theme.direction === "rtl" ? (
+          {theme.direction === 'rtl' ? (
             <KeyboardArrowLeft />
           ) : (
             <KeyboardArrowRight />
@@ -64,7 +69,7 @@ class TablePaginationActions extends Component {
           disabled={page >= Math.ceil(count / rowsPerPage) - 1}
           aria-label="Last Page"
         >
-          {theme.direction === "rtl" ? <FirstPageIcon /> : <LastPageIcon />}
+          {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
         </IconButton>
       </div>
     );
@@ -76,7 +81,7 @@ TablePaginationActions.propTypes = {
   page: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
   theme: PropTypes.object.isRequired,
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles, { withTheme: true })(TablePaginationActions);

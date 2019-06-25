@@ -24,7 +24,6 @@ storiesOf('Sidebar', module).add(
       navigationData={mock}
       externalHistory={window}
       reactRoutes={reactMock}
-      externalHistory={window}
       onNavigate={(id) => {
         window.location = `/iframe.html${replaceQueryParam(
           'p',

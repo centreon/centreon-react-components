@@ -165,29 +165,17 @@ class CustomPaginationActionsTable extends React.Component {
         <div className={classes.tableWrapper}>
           <Table className={classes.table}>
             <TableBody>
-<<<<<<< variant A
               {rows
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row) => (
                   <TableRow key={row.id}>
-                    <TableCell component="th" scope="row">
+                    <TableCell align="right" component="th" scope="row">
                       {row.name}
                     </TableCell>
                     <TableCell align="right">{row.calories}</TableCell>
                     <TableCell align="right">{row.fat}</TableCell>
                   </TableRow>
                 ))}
->>>>>>> variant B
-              {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
-                <TableRow key={row.id}>
-                  <TableCell align="right" component="th" scope="row">
-                    {row.name}
-                  </TableCell>
-                  <TableCell align="right">{row.calories}</TableCell>
-                  <TableCell align="right">{row.fat}</TableCell>
-                </TableRow>
-              ))}
-======= end
               {emptyRows > 0 && (
                 <TableRow style={{ height: 48 * emptyRows }}>
                   <TableCell align="right" colSpan={6} />

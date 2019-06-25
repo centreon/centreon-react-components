@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-filename-extension */
+/* eslint-disable prettier/prettier */
 
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
@@ -34,13 +35,13 @@ function Breadcrumb(props) {
           {breadcrumbs
             ? breadcrumbs.map((breadcrumb, index) => (
               <BreadcrumbLink
-                  breadcrumb={breadcrumb}
-                  index={index}
-                  count={breadcrumbs.length}
-                  classes={classes}
-                />
-              ))
-            : null}
+                breadcrumb={breadcrumb}
+                index={index}
+                count={breadcrumbs.length}
+                classes={classes}
+              />
+            ))
+          : null}
         </Breadcrumbs>
       </Paper>
     </div>

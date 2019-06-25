@@ -1,4 +1,8 @@
-import React, { Component } from "react";
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/prefer-stateless-function */
+import React, { Component } from 'react';
+import Paper from '@material-ui/core/Paper';
 import {
   CustomRow,
   CustomColumn,
@@ -10,64 +14,62 @@ import {
   IconDelete,
   IconLibraryAdd,
   IconPowerSettings,
-  IconInsertChart
-} from "../index";
+  IconInsertChart,
+} from '../index';
 
-import TABLE_COLUMN_TYPES from "../Table/ColumnTypes";
-
-import Paper from "@material-ui/core/Paper";
+import TABLE_COLUMN_TYPES from '../Table/ColumnTypes';
 
 const breadcrumbs = [
   {
-    label: "Configuration",
-    link: ""
+    label: 'Configuration',
+    link: '',
   },
   {
-    label: "Business Activity",
-    link: ""
+    label: 'Business Activity',
+    link: '',
   },
   {
-    label: "Activities",
-    link: ""
-  }
+    label: 'Activities',
+    link: '',
+  },
 ];
 
 const tableConfiguration = [
   {
-    id: "name",
+    id: 'name',
     numeric: false,
     disablePadding: true,
-    label: "Name",
-    type: TABLE_COLUMN_TYPES.string
+    label: 'Name',
+    type: TABLE_COLUMN_TYPES.string,
   },
   {
-    id: "#",
+    id: '#',
     numeric: true,
     disablePadding: false,
-    label: "",
-    type: TABLE_COLUMN_TYPES.hoverActions
+    label: '',
+    type: TABLE_COLUMN_TYPES.hoverActions,
   },
   {
-    id: "activate",
+    id: 'activate',
     numeric: true,
     disablePadding: false,
-    label: "Activate",
-    type: TABLE_COLUMN_TYPES.toggler
+    label: 'Activate',
+    type: TABLE_COLUMN_TYPES.toggler,
   },
   {
-    id: "level_c",
+    id: 'level_c',
     numeric: true,
     disablePadding: false,
-    label: "Calculation method",
-    type: TABLE_COLUMN_TYPES.number
+    label: 'Calculation method',
+    type: TABLE_COLUMN_TYPES.number,
   },
   {
-    id: "description",
+    id: 'description',
     numeric: true,
     disablePadding: false,
-    label: "Description",
-    type: TABLE_COLUMN_TYPES.number
-  }
+    label: 'Description',
+    type: TABLE_COLUMN_TYPES.number,
+  },
 ];
 
 class BAMListingPage extends Component {
@@ -86,51 +88,51 @@ class BAMListingPage extends Component {
       onPaginationLimitChanged,
       paginationLimit,
       totalRows,
-      currentPage
+      currentPage,
     } = this.props;
     return (
       <React.Fragment>
         <Breadcrumb breadcrumbs={breadcrumbs} />
         <Divider />
-        <Paper elevation={0} style={{ overflow: "hidden" }}>
+        <Paper elevation={0} style={{ overflow: 'hidden' }}>
           <CustomRow>
             <CustomColumn
               customColumn="md-4"
               additionalStyles={[
-                "flex-none",
-                "container__col-xs-12",
-                "m-0",
-                "mr-2"
+                'flex-none',
+                'container__col-xs-12',
+                'm-0',
+                'mr-2',
               ]}
             >
               <InputFieldSearch onChange={onSearch} />
             </CustomColumn>
             <CustomColumn
               customColumn="md-4"
-              additionalStyles={["flex-none", "container__col-xs-12", "m-0"]}
+              additionalStyles={['flex-none', 'container__col-xs-12', 'm-0']}
             >
               <ButtonCustom label="ADD" onClick={onAddClicked} />
             </CustomColumn>
           </CustomRow>
         </Paper>
         <Divider />
-        <Paper elevation={0} style={{ padding: "8px 16px" }}>
+        <Paper elevation={0} style={{ padding: '8px 16px' }}>
           <CustomRow>
             <CustomColumn
               customColumn="md-3"
-              additionalStyles={["flex-none", "container__col-xs-12"]}
+              additionalStyles={['flex-none', 'container__col-xs-12']}
             >
               <IconDelete label="Delete" onClick={onDelete} />
             </CustomColumn>
             <CustomColumn
               customColumn="md-3"
-              additionalStyles={["flex-none", "container__col-xs-12"]}
+              additionalStyles={['flex-none', 'container__col-xs-12']}
             >
               <IconLibraryAdd label="Duplicate" onClick={onDuplicate} />
             </CustomColumn>
             <CustomColumn
               customColumn="md-3"
-              additionalStyles={["flex-none", "container__col-xs-12"]}
+              additionalStyles={['flex-none', 'container__col-xs-12']}
             >
               <IconInsertChart
                 label="Massive change"
@@ -139,17 +141,17 @@ class BAMListingPage extends Component {
             </CustomColumn>
             <CustomColumn
               customColumn="md-3"
-              additionalStyles={["flex-none", "container__col-xs-12"]}
+              additionalStyles={['flex-none', 'container__col-xs-12']}
             >
               <IconPowerSettings
-                customStyle={{ backgroundColor: "#009fdf", marginTop: 2 }}
+                customStyle={{ backgroundColor: '#009fdf', marginTop: 2 }}
                 label="Enable/Disable"
                 onClick={onToggle}
               />
             </CustomColumn>
           </CustomRow>
         </Paper>
-        <Paper elevation={0} style={{ padding: "8px 16px", paddingTop: 0 }}>
+        <Paper elevation={0} style={{ padding: '8px 16px', paddingTop: 0 }}>
           <TableCustom
             columnConfiguration={tableConfiguration}
             tableData={tableData}
@@ -162,7 +164,7 @@ class BAMListingPage extends Component {
             limit={paginationLimit}
             currentPage={currentPage}
             totalRows={totalRows}
-            checkable={true}
+            checkable
             onToggle={onToggle}
           />
         </Paper>

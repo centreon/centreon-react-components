@@ -1,18 +1,18 @@
-import React, { Component } from "react";
-import TableSortLabel from "@material-ui/core/TableSortLabel";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
+// eslint-disable-next-line no-unused-vars
+import React, { Component } from 'react';
+import TableSortLabel from '@material-ui/core/TableSortLabel';
+import { withStyles } from '@material-ui/core/styles';
 
 const styles = {
   root: {
-    color: "#fff !important"
+    color: '#fff !important',
   },
   icon: {
-    color: "#fff !important"
+    color: '#fff !important',
   },
   active: {
-    color: "#fff !important"
-  }
+    color: '#fff !important',
+  },
 };
 
 export default withStyles(styles)(TableSortLabel);
