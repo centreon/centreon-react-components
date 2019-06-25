@@ -20,9 +20,7 @@ storiesOf('Table', module).add('Table - custom', () => <TableCustom />, {
 });
 storiesOf('Table', module).add(
   'Table Dynamic - custom',
-  () => (
-    (
-      <React.Fragment>
+  () => <React.Fragment>
         <Title titleColor="host" label="Resource discovry wizard" />
         <TableDynamic />
         <div className={classnames(styles['text-right'], styles['mt-2'])}>
@@ -41,8 +39,6 @@ storiesOf('Table', module).add(
             />
           </div>
         </div>
-      </React.Fragment>
-    ),
+      </React.Fragment>,
     { notes: 'A very simple component' }
-  ),
 );
