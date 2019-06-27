@@ -5,9 +5,10 @@ import { withStyles } from '@material-ui/core/styles';
 
 const styles = {
   root: {
-    padding: '3px 24px 3px 16px',
-    fontSize: '13px',
-  },
+    padding: "3px 24px 3px 16px",
+    fontSize: "13px",
+    position: 'relative',
+  }
 };
 
 export default withStyles(styles)(TableCell);

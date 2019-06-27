@@ -49,8 +49,8 @@ class EnhancedTableHead extends Component {
               <StyledTableSortLabel
                 active={orderBy === row.id}
                 direction={order}
-                onClick={this.createSortHandler.bind(this, row.id)}
-                icon={{ color: 'red' }}
+                onClick={this.createSortHandler(row.id)}
+                icon={{ color: "red" }}
               >
                 {row.label}
               </StyledTableSortLabel>

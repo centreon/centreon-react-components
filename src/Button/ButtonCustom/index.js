@@ -13,14 +13,17 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#1174cb',
     color: '#fff',
     fontSize: 12,
-    padding: '5px 10px',
-    '&:hover': {
-      backgroundColor: '#1e68a9',
-    },
+    margin: 0,
+    padding: "7px 10px",
+    "&:hover": {
+      backgroundColor: "#1e68a9"
+    }
   },
   leftIcon: {
     marginRight: theme.spacing(1),
-  },
+    width: "0.8em",
+    height: "0.8em",
+  }
 }));
 
 function ButtonCustom({ label, onClick }) {

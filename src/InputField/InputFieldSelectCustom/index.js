@@ -124,14 +124,15 @@ class InputFieldSelectCustom extends Component {
 
   render() {
     const { active, selected, options } = this.state;
-    const { size, error, icons, domainPath } = this.props;
+    const { size, label, error, icons, domainPath, customStyle } = this.props;
     return (
       <div
         className={classnames(
-          styles['input-select'],
-          styles[size || ''],
-          styles[active ? 'active' : ''],
-          error ? styles['has-danger'] : '',
+          styles["input-select"],
+          styles[size ? size : ""],
+          styles[active ? "active" : ""],
+          error ? styles["has-danger"] : "",
+          customStyle ? styles[customStyle] : "",
         )}
         ref={(select) => (this.select = select)}
       >

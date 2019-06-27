@@ -23,13 +23,7 @@ class Sidebar extends Component {
   };
 
   render() {
-    const {
-      navigationData,
-      reactRoutes,
-      handleDirectClick,
-      onNavigate,
-      externalHistory,
-    } = this.props;
+    const { navigationData, reactRoutes, handleDirectClick, onNavigate, externalHistory, style } = this.props;
     const { active } = this.state;
     return (
       <nav
@@ -38,6 +32,7 @@ class Sidebar extends Component {
           styles[active ? 'active' : 'mini'],
         )}
         id="sidebar"
+        style={style}
       >
         <div className={classnames(styles['sidebar-inner'])}>
           {active ? (

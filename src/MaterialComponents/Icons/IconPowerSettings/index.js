@@ -7,60 +7,43 @@ import PowerSettings from '@material-ui/icons/PowerSettingsNew';
 
 const useStyles = makeStyles(() => ({
   root: {
-    display: 'flex',
-    alignItems: 'center',
-    textAlign: 'left',
+    display: "flex",
+    alignItems: "center",
+    textAlign: "left"
   },
   icon: {
-    color: '#fff',
-    cursor: 'pointer',
-    backgroundColor: '#009fdf',
-    borderRadius: '50%',
+    color: "#fff",
+    cursor: "pointer",
+    backgroundColor: "#707070",
+    borderRadius: "50%",
     fontSize: 15,
-    padding: 3,
-  },
-  iconLabel: {
-    color: '#009fdf',
-    fontSize: 12,
-    display: 'inline-block',
-    verticalAlign: 'super',
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-    fontWeight: 'bold',
-    cursor: 'pointer',
-    marginLeft: 5,
+    padding: 3
   },
   iconNormal: {
-    color: '#fff',
-    cursor: 'pointer',
-    backgroundColor: '#707070',
-    borderRadius: '50%',
+    color: "#fff",
+    cursor: "pointer",
+    backgroundColor: "#707070",
+    borderRadius: "50%",
     fontSize: 15,
-    padding: 3,
-  },
-  iconActive: {
-    color: '#fff',
-    cursor: 'pointer',
-    backgroundColor: '#89b72b',
-    borderRadius: '50%',
-    fontSize: 15,
-    padding: 3,
+    padding: 3
   },
   iconWrap: {
-    display: 'inline-block',
-    verticalAlign: 'middle',
-  },
+    display: "inline-block",
+    verticalAlign: "middle",
+    height: 23,
+    width: 23
+  }
 }));
 
-function IconPowerSettings({ label, active, customStyle, ...rest }) {
+function IconPowerSettings({ active, customStyle, ...rest }) {
   const classes = useStyles();
 
   return (
     <span {...rest} className={classes.iconWrap}>
       <PowerSettings
         style={customStyle}
-        className={active ? classes.iconActive : classes.iconNormal}
+        className={classes.iconNormal}
       />
-      {label && <span className={classes.iconLabel}>{label}</span>}
     </span>
   );
 }
