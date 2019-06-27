@@ -7,19 +7,19 @@ import LibraryAdd from '@material-ui/icons/LibraryAdd';
 
 const useStyles = makeStyles(() => ({
   root: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center"
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   icon: {
-    color: "#707070",
-    cursor: "pointer"
+    color: '#707070',
+    cursor: 'pointer',
   },
   iconWrap: {
-    display: "inline-block",
-    verticalAlign: "middle",
-    height: 24
-  }
+    display: 'inline-block',
+    verticalAlign: 'middle',
+    height: 24,
+  },
 }));
 
 function IconLibraryAdd({ customStyle, ...rest }) {

@@ -32,21 +32,9 @@ import {
   CustomRow,
   CustomColumn,
   CustomStyles,
-  Breadcrumb,
-  Divider,
-  InputFieldSearch,
-  ButtonCustom,
-  TableCustom,
-  IconDelete,
-  IconLibraryAdd,
-  IconPowerSettings,
-  IconInsertChart,  
-  Panels,
-  BAMListingPageStory
-} from "../src";
-import BAMTableData from "../src/Pages/BAMListingMock";
-
-import Paper from '@material-ui/core/Paper';
+  BAMListingPageStory,
+} from '../src';
+import BAMTableData from '../src/Pages/BAMListingMock';
 
 // Extensions Page
 storiesOf('Pages', module).add(
@@ -1490,9 +1478,7 @@ storiesOf('Pages', module).add(
 storiesOf('Pages', module).add(
   'BAM page',
   () => {
-    return (
-      <BAMListingPageStory BAMTableData={BAMTableData}/>
-    );
+    return <BAMListingPageStory BAMTableData={BAMTableData} />;
   },
   { notes: 'A very simple component' },
 );

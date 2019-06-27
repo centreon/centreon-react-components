@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/prefer-stateless-function */
+
 import React, { Component } from 'react';
 import Paper from '@material-ui/core/Paper';
 import {
@@ -16,9 +17,8 @@ import {
   IconPowerSettings,
   IconPowerSettingsDisable,
   IconInsertChart,
-  Panels,
-  Tooltip
-} from "../index";
+  Tooltip,
+} from '../index';
 
 import TABLE_COLUMN_TYPES from '../Table/ColumnTypes';
 
@@ -77,17 +77,20 @@ const tableConfiguration = [
 
 class BAMListingPage extends Component {
   state = {
-    selectedElementsCount:0
-  }
+    selectedElementsCount: 0,
+  };
 
   onTableSelection = (selected) => {
-    const {onTableSelectionChanged} = this.props;
-    this.setState({
-      selectedElementsCount:selected.length
-    },()=>{
-      onTableSelectionChanged(selected)
-    })
-  }
+    const { onTableSelectionChanged } = this.props;
+    this.setState(
+      {
+        selectedElementsCount: selected.length,
+      },
+      () => {
+        onTableSelectionChanged(selected);
+      },
+    );
+  };
 
   render() {
     const {
@@ -105,12 +108,12 @@ class BAMListingPage extends Component {
       totalRows,
       currentPage,
     } = this.props;
-    const {selectedElementsCount} = this.state;
+    const { selectedElementsCount } = this.state;
     return (
       <React.Fragment>
         <Breadcrumb breadcrumbs={breadcrumbs} />
         <Divider />
-        <Paper elevation={0} style={{ padding: "8px 16px" }}>
+        <Paper elevation={0} style={{ padding: '8px 16px' }}>
           <CustomRow>
             <CustomColumn
               customColumn="md-4"
@@ -130,7 +133,7 @@ class BAMListingPage extends Component {
           <CustomRow>
             <CustomColumn
               customColumn="md-4"
-              additionalStyles={["flex-none", "container__col-xs-12", "m-0"]}
+              additionalStyles={['flex-none', 'container__col-xs-12', 'm-0']}
             >
               <ButtonCustom label="ADD" onClick={onAddClicked} />
             </CustomColumn>
@@ -139,10 +142,10 @@ class BAMListingPage extends Component {
                 <CustomColumn
                   customColumn="md-3"
                   additionalStyles={[
-                    "flex-none",
-                    "container__col-xs-12",
-                    "m-0",
-                    "pr-05"
+                    'flex-none',
+                    'container__col-xs-12',
+                    'm-0',
+                    'pr-05',
                   ]}
                 >
                   <Tooltip label="Delete">
@@ -152,11 +155,11 @@ class BAMListingPage extends Component {
                 <CustomColumn
                   customColumn="md-3"
                   additionalStyles={[
-                    "flex-none",
-                    "container__col-xs-12",
-                    "m-0",
-                    "pr-05",
-                    "pl-05"
+                    'flex-none',
+                    'container__col-xs-12',
+                    'm-0',
+                    'pr-05',
+                    'pl-05',
                   ]}
                 >
                   <Tooltip label="Duplicate">
@@ -166,16 +169,16 @@ class BAMListingPage extends Component {
                 <CustomColumn
                   customColumn="md-3"
                   additionalStyles={[
-                    "flex-none",
-                    "container__col-xs-12",
-                    "m-0",
-                    "pr-05",
-                    "pl-05"
+                    'flex-none',
+                    'container__col-xs-12',
+                    'm-0',
+                    'pr-05',
+                    'pl-05',
                   ]}
                 >
                   <Tooltip label="Enable">
                     <IconPowerSettings
-                      active={true}
+                      active
                       label="Enable"
                       onClick={onToggle}
                     />
@@ -184,17 +187,17 @@ class BAMListingPage extends Component {
                 <CustomColumn
                   customColumn="md-3"
                   additionalStyles={[
-                    "flex-none",
-                    "container__col-xs-12",
-                    "m-0",
-                    "pl-05",
-                    "pr-2",
-                    "border-right"
+                    'flex-none',
+                    'container__col-xs-12',
+                    'm-0',
+                    'pl-05',
+                    'pr-2',
+                    'border-right',
                   ]}
                 >
                   <Tooltip label="Disable">
                     <IconPowerSettingsDisable
-                      active={true}
+                      active
                       label="Disable"
                       onClick={onToggle}
                     />
@@ -203,10 +206,10 @@ class BAMListingPage extends Component {
                 <CustomColumn
                   customColumn="md-3"
                   additionalStyles={[
-                    "flex-none",
-                    "container__col-xs-12",
-                    "m-0",
-                    "pl-2"
+                    'flex-none',
+                    'container__col-xs-12',
+                    'm-0',
+                    'pl-2',
                   ]}
                 >
                   <Tooltip label="Massive change">

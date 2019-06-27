@@ -12,14 +12,14 @@ const useStyles = makeStyles(() => ({
     alignItems: 'center',
   },
   icon: {
-    color: "#707070",
-    cursor: "pointer"
+    color: '#707070',
+    cursor: 'pointer',
   },
   iconWrap: {
-    display: "inline-block",
-    verticalAlign: "middle",
-    height: 24
-  }
+    display: 'inline-block',
+    verticalAlign: 'middle',
+    height: 24,
+  },
 }));
 
 function IconDelete({ customStyle, ...rest }) {

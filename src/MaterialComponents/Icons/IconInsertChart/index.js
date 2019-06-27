@@ -7,19 +7,19 @@ import InsertChart from '@material-ui/icons/InsertChart';
 
 const useStyles = makeStyles(() => ({
   root: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center"
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   icon: {
-    color: "#707070",
-    cursor: "pointer"
+    color: '#707070',
+    cursor: 'pointer',
   },
   iconWrap: {
-    display: "inline-block",
-    verticalAlign: "middle",
-    height: 24
-  }
+    display: 'inline-block',
+    verticalAlign: 'middle',
+    height: 24,
+  },
 }));
 
 function IconInsertChart({ ...rest }) {

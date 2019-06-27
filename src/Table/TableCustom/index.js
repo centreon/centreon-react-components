@@ -1,26 +1,27 @@
+/* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable no-unreachable */
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/prop-types */
 
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import StyledTableRow from "./StyledTableRow";
-import Paper from "@material-ui/core/Paper";
-import IconPowerSettings from "../../MaterialComponents/Icons/IconPowerSettings";
-import IconPowerSettingsDisable from "../../MaterialComponents/Icons/IconPowerSettingsDisable";
-import StyledCheckbox from "./StyledCheckbox";
-import IconDelete from "../../MaterialComponents/Icons/IconDelete";
-import IconLibraryAdd from "../../MaterialComponents/Icons/IconLibraryAdd";
-import EnhancedTableHead from "./EnhancedTableHead";
-import TABLE_COLUMN_TYPES from "../ColumnTypes";
-import TablePaginationActions from "./TablePaginationActions";
-import StyledTableCell2 from "./StyledTableCell2";
-import TableCellCustom from "./TableCellCustom";
-import StyledPagination from "./StyledPagination";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import Paper from '@material-ui/core/Paper';
+import StyledTableRow from './StyledTableRow';
+import IconPowerSettings from '../../MaterialComponents/Icons/IconPowerSettings';
+import IconPowerSettingsDisable from '../../MaterialComponents/Icons/IconPowerSettingsDisable';
+import StyledCheckbox from './StyledCheckbox';
+import IconDelete from '../../MaterialComponents/Icons/IconDelete';
+import IconLibraryAdd from '../../MaterialComponents/Icons/IconLibraryAdd';
+import EnhancedTableHead from './EnhancedTableHead';
+import TABLE_COLUMN_TYPES from '../ColumnTypes';
+import TablePaginationActions from './TablePaginationActions';
+import StyledTableCell2 from './StyledTableCell2';
+import TableCellCustom from './TableCellCustom';
+import StyledPagination from './StyledPagination';
 
 const styles = (theme) => ({
   root: {
@@ -40,9 +41,9 @@ const styles = (theme) => ({
 
 class TableCustom extends Component {
   state = {
-    order: "",
-    orderBy: "",
-    selected: []
+    order: '',
+    orderBy: '',
+    selected: [],
   };
 
   handleRequestSort = (event, property) => {
@@ -119,7 +120,7 @@ class TableCustom extends Component {
 
   rowHovered = (id, value) => {
     this.setState({
-      hovered: value ? id : null
+      hovered: value ? id : null,
     });
   };
 
@@ -137,7 +138,7 @@ class TableCustom extends Component {
       classes,
       totalRows,
       onToggle,
-      onRowClick
+      onRowClick,
     } = this.props;
     const { order, orderBy, selected, hovered } = this.state;
 
@@ -166,8 +167,8 @@ class TableCustom extends Component {
                 className={classes.tableWrapper}
                 headRows={columnConfiguration}
               />
-              <TableBody onMouseLeave={this.rowHovered.bind(this, "", false)}>
-                {tableData.map(row => {
+              <TableBody onMouseLeave={this.rowHovered.bind(this, '', false)}>
+                {tableData.map((row) => {
                   const isItemSelected = isSelected(row.id);
                   return (
                     <StyledTableRow
@@ -182,7 +183,7 @@ class TableCustom extends Component {
                       {checkable ? (
                         <StyledTableCell2
                           align="left"
-                          onClick={event => this.handleClick(event, row.id)}
+                          onClick={(event) => this.handleClick(event, row.id)}
                           className={classes.tableCell}
                           padding="checkbox"
                         >
@@ -223,11 +224,11 @@ class TableCustom extends Component {
                                     onClick={() => {
                                       onToggle([row.id]);
                                     }}
-                                    active={true}
+                                    active
                                   />
                                 ) : (
                                   <IconPowerSettingsDisable
-                                    active={true}
+                                    active
                                     label="Disable"
                                     onClick={onToggle}
                                   />
@@ -237,12 +238,14 @@ class TableCustom extends Component {
                             break;
                           case TABLE_COLUMN_TYPES.hoverActions:
                             return (
-                              <StyledTableCell2 style={{paddingTop: 0, paddingBottom: 0}}>
-                                {hovered == row.id ? (
+                              <StyledTableCell2
+                                style={{ paddingTop: 0, paddingBottom: 0 }}
+                              >
+                                {hovered === row.id ? (
                                   <React.Fragment>
                                     <IconDelete
                                       customStyle={{
-                                        color: "#707070",
+                                        color: '#707070',
                                         fontSize: 20,
                                         position: 'absolute',
                                         left: 15,
@@ -252,8 +255,8 @@ class TableCustom extends Component {
                                     />
                                     <IconLibraryAdd
                                       customStyle={{
-                                        color: "#707070",
-                                        marginLeft: "14px",
+                                        color: '#707070',
+                                        marginLeft: '14px',
                                         fontSize: 20,
                                         position: 'absolute',
                                         left: 30,
@@ -263,7 +266,7 @@ class TableCustom extends Component {
                                     />
                                   </React.Fragment>
                                 ) : (
-                                  " "
+                                  ' '
                                 )}
                               </StyledTableCell2>
                             );

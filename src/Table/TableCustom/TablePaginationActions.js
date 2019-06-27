@@ -22,32 +22,27 @@ const styles = (theme) => ({
 
 class TablePaginationActions extends Component {
   handleFirstPageButtonClick = (event) => {
-    const {onChangePage} = this.props;
+    const { onChangePage } = this.props;
     onChangePage(event, 0);
-  }
+  };
 
   handleBackButtonClick = (event) => {
-    const {onChangePage, page} = this.props;
+    const { onChangePage, page } = this.props;
     onChangePage(event, page - 1);
-  }
+  };
 
   handleNextButtonClick = (event) => {
-    const {onChangePage, page} = this.props;
+    const { onChangePage, page } = this.props;
     onChangePage(event, page + 1);
-  }
+  };
 
   handleLastPageButtonClick = (event) => {
-    const { count,rowsPerPage,onChangePage} = this.props;
+    const { count, rowsPerPage, onChangePage } = this.props;
     onChangePage(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
-  }
+  };
+
   render() {
-    const {
-      classes,
-      count,
-      page,
-      theme,
-      rowsPerPage
-    } = this.props;
+    const { classes, count, page, theme, rowsPerPage } = this.props;
     return (
       <div className={classes.root}>
         <IconButton

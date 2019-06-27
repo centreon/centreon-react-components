@@ -1,14 +1,17 @@
-import React, { Component } from "react";
-import BAMListingPage from "./BAMListing";
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable react/prop-types */
+import React, { Component } from 'react';
+import BAMListingPage from './BAMListing';
 
 class BAMListingPageStory extends Component {
   state = {
-    panelActive: false
+    panelActive: false,
   };
+
   togglePanel = () => {
     const { panelActive } = this.state;
     this.setState({
-      panelActive: !panelActive
+      panelActive: !panelActive,
     });
   };
 
@@ -21,36 +24,36 @@ class BAMListingPageStory extends Component {
           this.togglePanel();
         }}
         onSearch={() => {
-          console.log("onSearch clicked");
+          console.log('onSearch clicked');
         }}
         onDelete={() => {
-          console.log("onDelete clicked");
+          console.log('onDelete clicked');
         }}
         onDuplicate={() => {
-          console.log("onDuplicate clicked");
+          console.log('onDuplicate clicked');
         }}
         onMassiveChange={() => {
-          console.log("onMassiveChange clicked");
+          console.log('onMassiveChange clicked');
         }}
         onToggle={() => {
-          console.log("onToggle clicked");
+          console.log('onToggle clicked');
         }}
         onPaginate={() => {
-          console.log("onPaginate clicked");
+          console.log('onPaginate clicked');
         }}
         onSort={() => {
-          console.log("onSort clicked");
+          console.log('onSort clicked');
         }}
         tableData={BAMTableData.result.entities}
         onTableSelectionChanged={() => {
-          console.log("onTableSelectionChanged");
+          console.log('onTableSelectionChanged');
         }}
         onPaginationLimitChanged={() => {
-          console.log("onPaginationLimitChanged");
+          console.log('onPaginationLimitChanged');
         }}
         paginationLimit={BAMTableData.result.pagination.limit}
         currentPage={
-          BAMTableData.result.pagination.offset != 0
+          BAMTableData.result.pagination.offset !== 0
             ? BAMTableData.result.pagination.offset /
               BAMTableData.result.pagination.limit
             : 0

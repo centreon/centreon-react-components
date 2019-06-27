@@ -94,23 +94,22 @@ function EnhancedTableHead(props) {
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
-  
-const StyledTableCell = withStyles({
-  head: {
-    backgroundColor: "#009fdf",
-    color: "#fff",
-    height: '24px',
-    padding: '6px 24px 6px 16px',
-    '&:hover': {
-      color: "#fff",
-   },
-  },
-  body: {
-    fontSize: 12,
-    textAlign: "left"
 
-  }
-})(TableCell);
+  const StyledTableCell = withStyles({
+    head: {
+      backgroundColor: '#009fdf',
+      color: '#fff',
+      height: '24px',
+      padding: '6px 24px 6px 16px',
+      '&:hover': {
+        color: '#fff',
+      },
+    },
+    body: {
+      fontSize: 12,
+      textAlign: 'left',
+    },
+  })(TableCell);
 
   const StyledTableSortLabel = withStyles({
     root: {

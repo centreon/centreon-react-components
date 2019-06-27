@@ -13,7 +13,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import SearchIcon from '@material-ui/icons/Search';
 
-const useStyles = (theme) => ({
+const useStyles = () => ({
   root: {
     padding: '0px 4px',
     display: 'flex',
