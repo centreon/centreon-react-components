@@ -24,26 +24,28 @@ class InputFieldMultiSelectEmpty extends React.Component {
       multiSelectCount,
       multiSelectLabel,
       children,
-      error
+      error,
     } = this.props;
     const { isHovered } = this.state;
     return (
       <div
         className={classnames(
-          styles["multi-select-holder"],
-          isEmpty ? styles["multi-select-holder-empty"] : "",
-          error ? styles["has-danger"] : ""
+          styles['multi-select-holder'],
+          isEmpty ? styles['multi-select-holder-empty'] : '',
+          error ? styles['has-danger'] : '',
         )}
         onMouseEnter={this.toggleHover.bind(this)}
         onMouseLeave={this.toggleHover.bind(this)}
       >
-        {(multiSelectLabel && multiSelectCount) && <span
-          className={classnames(styles["multi-select-holder-label"])}
-        >{`${multiSelectLabel} (${multiSelectCount})`}</span>}
-        <div className={classnames(styles["multi-select-holder-inner"])}>
+        {multiSelectLabel && multiSelectCount && (
+          <span className={classnames(styles['multi-select-holder-label'])}>
+            {`${multiSelectLabel} (${multiSelectCount})`}
+          </span>
+        )}
+        <div className={classnames(styles['multi-select-holder-inner'])}>
           {isEmpty && (
             <React.Fragment>
-              <span className={classnames(styles["multi-select-holder-add"])}>
+              <span className={classnames(styles['multi-select-holder-add'])}>
                 + Click to link an extra indicators time periods
               </span>
             </React.Fragment>
@@ -52,7 +54,7 @@ class InputFieldMultiSelectEmpty extends React.Component {
           {isHovered ? <IconEdit /> : null}
         </div>
         {error ? (
-          <div className={classnames(styles["form-error"])}>{error}</div>
+          <div className={classnames(styles['form-error'])}>{error}</div>
         ) : null}
       </div>
     );

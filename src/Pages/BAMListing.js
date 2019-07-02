@@ -17,14 +17,11 @@ import {
   IconPowerSettings,
   IconPowerSettingsDisable,
   IconInsertChart,
-  Panels,
   Tooltip,
   MassiveChangeDialog,
   ConfirmationDialog,
-  PromptDialog
-} from "../index";
-
-import TABLE_COLUMN_TYPES from "../Table/ColumnTypes";
+  PromptDialog,
+} from '../index';
 
 import TABLE_COLUMN_TYPES from '../Table/ColumnTypes';
 
@@ -66,23 +63,23 @@ const tableConfiguration = [
     type: TABLE_COLUMN_TYPES.toggler,
   },
   {
-    id: "level_w & level_c",
+    id: 'level_w & level_c',
     numeric: true,
     disablePadding: false,
     columns: [
       {
-        id: "level_w",
-        label: "Warning:",
-        type: "percentage"
+        id: 'level_w',
+        label: 'Warning:',
+        type: 'percentage',
       },
       {
-        id: "level_c",
-        label: "Critical:",
-        type: "percentage"
-      }
+        id: 'level_c',
+        label: 'Critical:',
+        type: 'percentage',
+      },
     ],
-    label: "Calculation method",
-    type: TABLE_COLUMN_TYPES.multicolumn
+    label: 'Calculation method',
+    type: TABLE_COLUMN_TYPES.multicolumn,
   },
   {
     id: 'description',
@@ -102,43 +99,43 @@ class BAMListingPage extends Component {
   };
 
   toggleDeleteModal = (selected) => {
-    const {deleteActive} = this.state;
+    const { deleteActive } = this.state;
     const { onTableSelectionChanged } = this.props;
     this.setState({
-      deleteActive:!deleteActive
-    })
-    if(selected[0]){
+      deleteActive: !deleteActive,
+    });
+    if (selected[0]) {
       onTableSelectionChanged(selected);
     }
-  }
+  };
 
   toggleMassiveChangeModal = () => {
-    const {massiveChangeActive} = this.state;
+    const { massiveChangeActive } = this.state;
     this.setState({
-      massiveChangeActive:!massiveChangeActive
-    })
-  }
+      massiveChangeActive: !massiveChangeActive,
+    });
+  };
 
   toggleDuplicateModal = (selected) => {
-    const {duplicateActive} = this.state;
+    const { duplicateActive } = this.state;
     const { onTableSelectionChanged } = this.props;
     this.setState({
-      duplicateActive:!duplicateActive
-    })
-    if(selected[0]){
+      duplicateActive: !duplicateActive,
+    });
+    if (selected[0]) {
       onTableSelectionChanged(selected);
     }
-  }
+  };
 
-  onTableSelection = selected => {
+  onTableSelection = (selected) => {
     const { onTableSelectionChanged } = this.props;
     this.setState(
       {
-        selectedElementsCount: selected.length
+        selectedElementsCount: selected.length,
       },
       () => {
         onTableSelectionChanged(selected);
-      }
+      },
     );
   };
 
@@ -158,13 +155,13 @@ class BAMListingPage extends Component {
       paginationLimit,
       totalRows,
       currentPage,
-      currentlySelected
+      currentlySelected,
     } = this.props;
     const {
       selectedElementsCount,
       massiveChangeActive,
       deleteActive,
-      duplicateActive
+      duplicateActive,
     } = this.state;
     return (
       <React.Fragment>
@@ -199,38 +196,44 @@ class BAMListingPage extends Component {
                 <CustomColumn
                   customColumn="md-3"
                   additionalStyles={[
-                    "flex-none",
-                    "container__col-xs-12",
-                    "m-0",
-                    "pr-09"
+                    'flex-none',
+                    'container__col-xs-12',
+                    'm-0',
+                    'pr-09',
                   ]}
                 >
                   <Tooltip label="Delete">
-                    <IconDelete label="Delete" onClick={this.toggleDeleteModal} />
+                    <IconDelete
+                      label="Delete"
+                      onClick={this.toggleDeleteModal}
+                    />
                   </Tooltip>
                 </CustomColumn>
                 <CustomColumn
                   customColumn="md-3"
                   additionalStyles={[
-                    "flex-none",
-                    "container__col-xs-12",
-                    "m-0",
-                    "pr-10",
-                    "pl-05"
+                    'flex-none',
+                    'container__col-xs-12',
+                    'm-0',
+                    'pr-10',
+                    'pl-05',
                   ]}
                 >
                   <Tooltip label="Duplicate">
-                    <IconLibraryAdd label="Duplicate" onClick={this.toggleDuplicateModal} />
+                    <IconLibraryAdd
+                      label="Duplicate"
+                      onClick={this.toggleDuplicateModal}
+                    />
                   </Tooltip>
                 </CustomColumn>
                 <CustomColumn
                   customColumn="md-3"
                   additionalStyles={[
-                    "flex-none",
-                    "container__col-xs-12",
-                    "m-0",
-                    "pr-10",
-                    "pl-05"
+                    'flex-none',
+                    'container__col-xs-12',
+                    'm-0',
+                    'pr-10',
+                    'pl-05',
                   ]}
                 >
                   <Tooltip label="Enable">
@@ -244,12 +247,12 @@ class BAMListingPage extends Component {
                 <CustomColumn
                   customColumn="md-3"
                   additionalStyles={[
-                    "flex-none",
-                    "container__col-xs-12",
-                    "m-0",
-                    "pl-05",
-                    "pr-24",
-                    "border-right"
+                    'flex-none',
+                    'container__col-xs-12',
+                    'm-0',
+                    'pl-05',
+                    'pr-24',
+                    'border-right',
                   ]}
                 >
                   <Tooltip label="Disable">
@@ -263,10 +266,10 @@ class BAMListingPage extends Component {
                 <CustomColumn
                   customColumn="md-3"
                   additionalStyles={[
-                    "flex-none",
-                    "container__col-xs-12",
-                    "m-0",
-                    "pl-22"
+                    'flex-none',
+                    'container__col-xs-12',
+                    'm-0',
+                    'pl-22',
                   ]}
                 >
                   <Tooltip label="Massive change">
@@ -293,17 +296,15 @@ class BAMListingPage extends Component {
             limit={paginationLimit}
             currentPage={currentPage}
             totalRows={totalRows}
-            checkable={true}
+            checkable
             onEnable={onEnable}
             onDisable={onDisable}
             selected={currentlySelected}
           />
         </Paper>
         <MassiveChangeDialog
-          header={"Massive calculation method change"}
-          info={
-            "Input value of critical and warning threshold for selected BAs"
-          }
+          header="Massive calculation method change"
+          info="Input value of critical and warning threshold for selected BAs"
           active={massiveChangeActive}
           onNoClicked={this.toggleMassiveChangeModal}
           onClose={this.toggleMassiveChangeModal}
@@ -311,15 +312,14 @@ class BAMListingPage extends Component {
         />
         <ConfirmationDialog
           active={deleteActive}
-          info={"Delete selected business activities?"}
+          info="Delete selected business activities?"
           onNoClicked={this.toggleDeleteModal}
           onClose={this.toggleDeleteModal}
           onYesClicked={onDelete}
-
         />
         <PromptDialog
-          customStyle={{padding: "25px 20px"}}
-          info={"How many times would you like to duplicate selected BAs?"}
+          customStyle={{ padding: '25px 20px' }}
+          info="How many times would you like to duplicate selected BAs?"
           active={duplicateActive}
           onNoClicked={this.toggleDuplicateModal}
           onClose={this.toggleDuplicateModal}

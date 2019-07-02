@@ -1,22 +1,9 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import StyledTableRow from "./StyledTableRow";
-import Paper from "@material-ui/core/Paper";
-import IconPowerSettings from "../../MaterialComponents/Icons/IconPowerSettings";
-import IconPowerSettingsDisable from "../../MaterialComponents/Icons/IconPowerSettingsDisable";
-import StyledCheckbox from "./StyledCheckbox";
-import IconDelete from "../../MaterialComponents/Icons/IconDelete";
-import IconLibraryAdd from "../../MaterialComponents/Icons/IconLibraryAdd";
-import EnhancedTableHead from "./EnhancedTableHead";
-import TABLE_COLUMN_TYPES from "../ColumnTypes";
-import TablePaginationActions from "./TablePaginationActions";
-import StyledTableCell2 from "./StyledTableCell2";
-import TableCellCustom from "./TableCellCustom";
-import StyledPagination from "./StyledPagination";
-import Tooltip from "../../MaterialComponents/Tooltip";
+/* eslint-disable react/forbid-prop-types */
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable no-unreachable */
+/* eslint-disable react/jsx-no-bind */
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable react/prop-types */
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
@@ -36,6 +23,7 @@ import TablePaginationActions from './TablePaginationActions';
 import StyledTableCell2 from './StyledTableCell2';
 import TableCellCustom from './TableCellCustom';
 import StyledPagination from './StyledPagination';
+import Tooltip from '../../MaterialComponents/Tooltip';
 
 const styles = (theme) => ({
   root: {
@@ -52,8 +40,8 @@ const styles = (theme) => ({
 
 class TableCustom extends Component {
   state = {
-    order: "",
-    orderBy: ""
+    order: '',
+    orderBy: '',
   };
 
   handleRequestSort = (event, property) => {
@@ -77,7 +65,7 @@ class TableCustom extends Component {
   handleSelectAllClick = (event) => {
     const { onTableSelectionChanged, tableData } = this.props;
     if (event.target.checked) {
-      const newSelecteds = tableData.map(n => n.id);
+      const newSelecteds = tableData.map((n) => n.id);
       onTableSelectionChanged(newSelecteds);
       return;
     }
@@ -129,7 +117,7 @@ class TableCustom extends Component {
       onEnable,
       onDisable,
       onRowClick,
-      selected
+      selected,
     } = this.props;
     const { order, orderBy, hovered } = this.state;
 
@@ -215,27 +203,27 @@ class TableCustom extends Component {
                                     onClick={() => {
                                       onDisable([row.id]);
                                     }}
-                                    active={true}
+                                    active
                                     customStyle={{
                                       fontSize: 19,
-                                      boxSizing: "border-box",
-                                      marginTop: 2
+                                      boxSizing: 'border-box',
+                                      marginTop: 2,
                                     }}
                                   />
                                 ) : (
-                                    <IconPowerSettingsDisable
-                                      active={true}
-                                      label="Disable"
-                                      onClick={() => {
-                                        onEnable([row.id]);
-                                      }}
-                                      customStyle={{
-                                        fontSize: 18,
-                                        boxSizing: "border-box",
-                                        marginTop: 2
-                                      }}
-                                    />
-                                  )}
+                                  <IconPowerSettingsDisable
+                                    active
+                                    label="Disable"
+                                    onClick={() => {
+                                      onEnable([row.id]);
+                                    }}
+                                    customStyle={{
+                                      fontSize: 18,
+                                      boxSizing: 'border-box',
+                                      marginTop: 2,
+                                    }}
+                                  />
+                                )}
                               </StyledTableCell2>
                             );
                             break;
@@ -245,13 +233,13 @@ class TableCustom extends Component {
                                 align="left"
                                 className={classes.tableCellCustom}
                               >
-                                {column.columns.map(subColumn => (
+                                {column.columns.map((subColumn) => (
                                   <React.Fragment>
                                     {subColumn.label} {row[subColumn.id]}
-                                    {subColumn.type == "percentage"
-                                      ? "%"
+                                    {subColumn.type === 'percentage'
+                                      ? '%'
                                       : null}
-                                    {"   "}
+                                    {'   '}
                                   </React.Fragment>
                                 ))}
                               </TableCellCustom>
@@ -264,25 +252,25 @@ class TableCustom extends Component {
                                   paddingTop: 0,
                                   paddingBottom: 0,
                                   minWidth: 94,
-                                  boxSizing: "border-box"
+                                  boxSizing: 'border-box',
                                 }}
                               >
-                                {hovered == row.id ? (
+                                {hovered === row.id ? (
                                   <React.Fragment>
                                     <Tooltip
                                       label="More action"
-                                      position={{ left: "50px" }}
+                                      position={{ left: '50px' }}
                                       customStyle={{
-                                        position: "absolute",
+                                        position: 'absolute',
                                         left: 0,
                                         top: 0,
-                                        padding: "3px 5px"
+                                        padding: '3px 5px',
                                       }}
                                     >
                                       <IconDelete
                                         customStyle={{
-                                          color: "#707070",
-                                          fontSize: 21
+                                          color: '#707070',
+                                          fontSize: 21,
                                         }}
                                         onClick={() => {
                                           onDelete([row.id]);
@@ -291,18 +279,18 @@ class TableCustom extends Component {
                                     </Tooltip>
                                     <Tooltip
                                       label="More action"
-                                      position={{ left: "50px" }}
+                                      position={{ left: '50px' }}
                                       customStyle={{
-                                        position: "absolute",
+                                        position: 'absolute',
                                         left: 35,
                                         top: 0,
-                                        padding: "3px 5px"
+                                        padding: '3px 5px',
                                       }}
                                     >
                                       <IconLibraryAdd
                                         customStyle={{
-                                          color: "#707070",
-                                          fontSize: 20
+                                          color: '#707070',
+                                          fontSize: 20,
                                         }}
                                         onClick={() => {
                                           onDuplicate([row.id]);
@@ -311,8 +299,8 @@ class TableCustom extends Component {
                                     </Tooltip>
                                   </React.Fragment>
                                 ) : (
-                                    " "
-                                  )}
+                                  ' '
+                                )}
                               </StyledTableCell2>
                             );
                             break;

@@ -7,8 +7,6 @@
 import React from 'react';
 import classnames from 'classnames';
 import Button from '@material-ui/core/Button';
-import ArrowForward from '@material-ui/icons/ArrowForwardIos';
-import ArrowBack from '@material-ui/icons/ArrowBackIos';
 import styles from './panels.scss';
 import styles2 from './PanelItem/panel-item.scss';
 import PanelItem from './PanelItem';
@@ -86,17 +84,21 @@ class Panels extends React.Component {
                   )}
                   onClick={this.toggleSecondPanel.bind(this)}
                 >
-                  <div className={classnames(styles2["panel-item-inner"])}>
-                    <h3 className={classnames(styles2["panel-item-title"])}>
+                  <div className={classnames(styles2['panel-item-inner'])}>
+                    <h3 className={classnames(styles2['panel-item-title'])}>
                       Manage Business View
                     </h3>
                     <InputFieldSearch
-                      style={{ width: "100%", marginBottom: 15, boxSizing: 'border-box' }}
+                      style={{
+                        width: '100%',
+                        marginBottom: 15,
+                        boxSizing: 'border-box',
+                      }}
                     />
-                    <TableDefault style={{minWidth: 'auto'}} />
+                    <TableDefault style={{ minWidth: 'auto' }} />
                   </div>
-                </PanelItem>
-              </div>
+                </span>
+              </PanelItem>
             </div>
           </div>
         </div>

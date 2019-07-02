@@ -4,6 +4,7 @@
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-restricted-globals */
+
 import React from 'react';
 import cardStyles from '../Card/card.scss';
 import Wrapper from '../Wrapper';
@@ -30,21 +31,23 @@ class ExtensionsHolder extends React.Component {
     if (licenseInfo && licenseInfo.required) {
       if (!licenseInfo.expiration_date) {
         licenseProps = {
-          itemFooterColor: "red",
-          itemFooterLabel: "License required",
+          itemFooterColor: 'red',
+          itemFooterLabel: 'License required',
         };
       } else if (!isNaN(Date.parse(licenseInfo.expiration_date))) {
         // @todo move this logic to centreon. Furthermore, it will facilitate translation
         // @todo use moment to convert date in the proper format (locale and timezone from user)
         const expirationDate = new Date(licenseInfo.expiration_date);
         licenseProps = {
-          itemFooterColor: "green",
-          itemFooterLabel: `License expires ${expirationDate.toISOString().slice(0,10)}`,
+          itemFooterColor: 'green',
+          itemFooterLabel: `License expires ${expirationDate
+            .toISOString()
+            .slice(0, 10)}`,
         };
       } else {
         licenseProps = {
-          itemFooterColor: "red",
-          itemFooterLabel: "License not valid",
+          itemFooterColor: 'red',
+          itemFooterLabel: 'License not valid',
         };
       }
     }

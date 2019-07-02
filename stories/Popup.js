@@ -1,14 +1,15 @@
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable no-dupe-keys */
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable import/no-extraneous-dependencies */
 
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import classnames from 'classnames';
+import ButtonCustom from '@material-ui/core/Button';
 import styles from '../src/Popup/popup.scss';
 import styles2 from '../src/Popup/PopupNew/popup.scss';
-import  classnames from 'classnames';
-import ButtonCustom from "@material-ui/core/Button";
-import IconCloseNew from "../src/MaterialComponents/Icons/IconClose";
+import IconCloseNew from '../src/MaterialComponents/Icons/IconClose';
 import {
   Popup,
   PopupNew,
@@ -30,8 +31,8 @@ import {
   MessageStatus,
   ConfirmationDialog,
   PromptDialog,
-  MassiveChangeDialog
-} from "../src";
+  MassiveChangeDialog,
+} from '../src';
 
 storiesOf('Popup', module).add(
   'Popup - small',
@@ -545,23 +546,25 @@ storiesOf('Popup Extensions Delete', module).add(
   { notes: 'A very simple component' },
 );
 
-storiesOf("Popup", module).add(
-  "Popup - new",
+storiesOf('Popup', module).add(
+  'Popup - new',
   () => (
     <PopupNew popupType="small">
-      <div className={classnames(styles2["popup-header"])}>
-        <h3 className={classnames(styles2["popup-title"])}>Warning</h3>
+      <div className={classnames(styles2['popup-header'])}>
+        <h3 className={classnames(styles2['popup-title'])}>Warning</h3>
       </div>
-      <div className={classnames(styles2["popup-body"])}>
-        <p className={classnames(styles2["popup-info"])}>Mandatory fields are not filled!</p>
+      <div className={classnames(styles2['popup-body'])}>
+        <p className={classnames(styles2['popup-info'])}>
+          Mandatory fields are not filled!
+        </p>
         <ButtonCustom
           variant="contained"
           color="primary"
           style={{
-            backgroundColor: "#0072CE",
+            backgroundColor: '#0072CE',
             fontSize: 11,
-            textAlign: "center",
-            padding: "5px 25px"
+            textAlign: 'center',
+            padding: '5px 25px',
           }}
         >
           COMPLETE
@@ -570,57 +573,61 @@ storiesOf("Popup", module).add(
       <IconCloseNew />
     </PopupNew>
   ),
-  { notes: "A very simple component" }
+  { notes: 'A very simple component' },
 );
 
-storiesOf("Popup",module).add(
-  "Dialog - Confirmation",
+storiesOf('Popup', module).add(
+  'Dialog - Confirmation',
   () => (
-    <ConfirmationDialog 
-    active={true}
-    info={"Delete selected business activities?"}/>
+    <ConfirmationDialog active info="Delete selected business activities?" />
   ),
-  { notes: "Confirmation dialog component" }
-)
+  { notes: 'Confirmation dialog component' },
+);
 
-storiesOf("Popup",module).add(
-  "Dialog - Promt",
+storiesOf('Popup', module).add(
+  'Dialog - Promt',
   () => (
-    <PromptDialog 
-    active={true}
-    info={"How many times would you like to duplicate selected BAs?"}/>
+    <PromptDialog
+      active
+      info="How many times would you like to duplicate selected BAs?"
+    />
   ),
-  { notes: "Promt dialog with input" }
-)
+  { notes: 'Promt dialog with input' },
+);
 
-storiesOf("Popup",module).add(
-  "Dialog - Massive change",
+storiesOf('Popup', module).add(
+  'Dialog - Massive change',
   () => (
-    <MassiveChangeDialog 
-    active={true}
-    header={"Massive calculation method change"}
-    info={"Input value of critical and warning threshold for selected BAs"}/>
+    <MassiveChangeDialog
+      active
+      header="Massive calculation method change"
+      info="Input value of critical and warning threshold for selected BAs"
+    />
   ),
-  { notes: "Massive change dialog with two inputs" }
-)
+  { notes: 'Massive change dialog with two inputs' },
+);
 
-storiesOf("Popup", module).add(
-  "Popup - new validate",
+storiesOf('Popup', module).add(
+  'Popup - new validate',
   () => (
     <PopupNew popupType="small">
-      <div className={classnames(styles2["popup-header"])}>
-        <h3 className={classnames(styles2["popup-title"])}>Changes have been made</h3>
+      <div className={classnames(styles2['popup-header'])}>
+        <h3 className={classnames(styles2['popup-title'])}>
+          Changes have been made
+        </h3>
       </div>
-      <div className={classnames(styles2["popup-body"])}>
-        <p className={classnames(styles2["popup-info"])}>Would you like to save before closing?</p>
+      <div className={classnames(styles2['popup-body'])}>
+        <p className={classnames(styles2['popup-info'])}>
+          Would you like to save before closing?
+        </p>
         <ButtonCustom
           variant="contained"
           color="primary"
           style={{
-            backgroundColor: "#0072CE",
+            backgroundColor: '#0072CE',
             fontSize: 11,
-            textAlign: "center",
-            border: '1px solid #0072CE'
+            textAlign: 'center',
+            border: '1px solid #0072CE',
           }}
         >
           SAVE
@@ -629,14 +636,14 @@ storiesOf("Popup", module).add(
           variant="contained"
           color="primary"
           style={{
-            backgroundColor: "#0072CE",
+            backgroundColor: '#0072CE',
             fontSize: 11,
-            textAlign: "center",
+            textAlign: 'center',
             marginLeft: 30,
             backgroundColor: 'transparent',
             color: '#0072CE',
             border: '1px solid #0072CE',
-            boxSizing: 'border-box'
+            boxSizing: 'border-box',
           }}
         >
           DON'T SAVE
@@ -645,5 +652,5 @@ storiesOf("Popup", module).add(
       <IconCloseNew />
     </PopupNew>
   ),
-  { notes: "A very simple component" }
+  { notes: 'A very simple component' },
 );

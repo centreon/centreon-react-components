@@ -1,10 +1,13 @@
-import React, { Component } from "react";
-import StyledTableCell from "./StyledTableCell";
-import StyledTableSortLabel from "./StyledTableSortLabel";
-import StyledCheckbox from "./StyledCheckbox";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import PropTypes from "prop-types";
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable react/prop-types */
+
+import React, { Component } from 'react';
+import TableHead from '@material-ui/core/TableHead';
+import PropTypes from 'prop-types';
+import TableRow from '@material-ui/core/TableRow';
+import StyledTableCell from './StyledTableCell';
+import StyledTableSortLabel from './StyledTableSortLabel';
+import StyledCheckbox from './StyledCheckbox';
 import TABLE_COLUMN_TYPES from '../ColumnTypes';
 
 class EnhancedTableHead extends Component {
@@ -50,7 +53,7 @@ class EnhancedTableHead extends Component {
                   active={orderBy === row.id}
                   direction={order}
                   onClick={this.createSortHandler(row.id)}
-                  icon={{ color: "red" }}
+                  icon={{ color: 'red' }}
                 >
                   {row.label}
                 </StyledTableSortLabel>
