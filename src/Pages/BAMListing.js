@@ -17,8 +17,14 @@ import {
   IconPowerSettings,
   IconPowerSettingsDisable,
   IconInsertChart,
+  Panels,
   Tooltip,
-} from '../index';
+  MassiveChangeDialog,
+  ConfirmationDialog,
+  PromptDialog
+} from "../index";
+
+import TABLE_COLUMN_TYPES from "../Table/ColumnTypes";
 
 import TABLE_COLUMN_TYPES from '../Table/ColumnTypes';
 
@@ -60,11 +66,23 @@ const tableConfiguration = [
     type: TABLE_COLUMN_TYPES.toggler,
   },
   {
-    id: 'level_c',
+    id: "level_w & level_c",
     numeric: true,
     disablePadding: false,
-    label: 'Calculation method',
-    type: TABLE_COLUMN_TYPES.number,
+    columns: [
+      {
+        id: "level_w",
+        label: "Warning:",
+        type: "percentage"
+      },
+      {
+        id: "level_c",
+        label: "Critical:",
+        type: "percentage"
+      }
+    ],
+    label: "Calculation method",
+    type: TABLE_COLUMN_TYPES.multicolumn
   },
   {
     id: 'description',
@@ -78,17 +96,49 @@ const tableConfiguration = [
 class BAMListingPage extends Component {
   state = {
     selectedElementsCount: 0,
+    massiveChangeActive: false,
+    deleteActive: false,
+    duplicateActive: false,
   };
 
-  onTableSelection = (selected) => {
+  toggleDeleteModal = (selected) => {
+    const {deleteActive} = this.state;
+    const { onTableSelectionChanged } = this.props;
+    this.setState({
+      deleteActive:!deleteActive
+    })
+    if(selected[0]){
+      onTableSelectionChanged(selected);
+    }
+  }
+
+  toggleMassiveChangeModal = () => {
+    const {massiveChangeActive} = this.state;
+    this.setState({
+      massiveChangeActive:!massiveChangeActive
+    })
+  }
+
+  toggleDuplicateModal = (selected) => {
+    const {duplicateActive} = this.state;
+    const { onTableSelectionChanged } = this.props;
+    this.setState({
+      duplicateActive:!duplicateActive
+    })
+    if(selected[0]){
+      onTableSelectionChanged(selected);
+    }
+  }
+
+  onTableSelection = selected => {
     const { onTableSelectionChanged } = this.props;
     this.setState(
       {
-        selectedElementsCount: selected.length,
+        selectedElementsCount: selected.length
       },
       () => {
         onTableSelectionChanged(selected);
-      },
+      }
     );
   };
 
@@ -99,7 +149,8 @@ class BAMListingPage extends Component {
       onDelete,
       onDuplicate,
       onMassiveChange,
-      onToggle,
+      onEnable,
+      onDisable,
       onPaginate,
       onSort,
       tableData,
@@ -107,8 +158,14 @@ class BAMListingPage extends Component {
       paginationLimit,
       totalRows,
       currentPage,
+      currentlySelected
     } = this.props;
-    const { selectedElementsCount } = this.state;
+    const {
+      selectedElementsCount,
+      massiveChangeActive,
+      deleteActive,
+      duplicateActive
+    } = this.state;
     return (
       <React.Fragment>
         <Breadcrumb breadcrumbs={breadcrumbs} />
@@ -142,80 +199,80 @@ class BAMListingPage extends Component {
                 <CustomColumn
                   customColumn="md-3"
                   additionalStyles={[
-                    'flex-none',
-                    'container__col-xs-12',
-                    'm-0',
-                    'pr-05',
+                    "flex-none",
+                    "container__col-xs-12",
+                    "m-0",
+                    "pr-09"
                   ]}
                 >
                   <Tooltip label="Delete">
-                    <IconDelete label="Delete" onClick={onDelete} />
+                    <IconDelete label="Delete" onClick={this.toggleDeleteModal} />
                   </Tooltip>
                 </CustomColumn>
                 <CustomColumn
                   customColumn="md-3"
                   additionalStyles={[
-                    'flex-none',
-                    'container__col-xs-12',
-                    'm-0',
-                    'pr-05',
-                    'pl-05',
+                    "flex-none",
+                    "container__col-xs-12",
+                    "m-0",
+                    "pr-10",
+                    "pl-05"
                   ]}
                 >
                   <Tooltip label="Duplicate">
-                    <IconLibraryAdd label="Duplicate" onClick={onDuplicate} />
+                    <IconLibraryAdd label="Duplicate" onClick={this.toggleDuplicateModal} />
                   </Tooltip>
                 </CustomColumn>
                 <CustomColumn
                   customColumn="md-3"
                   additionalStyles={[
-                    'flex-none',
-                    'container__col-xs-12',
-                    'm-0',
-                    'pr-05',
-                    'pl-05',
+                    "flex-none",
+                    "container__col-xs-12",
+                    "m-0",
+                    "pr-10",
+                    "pl-05"
                   ]}
                 >
                   <Tooltip label="Enable">
                     <IconPowerSettings
                       active
                       label="Enable"
-                      onClick={onToggle}
+                      onClick={onEnable}
                     />
                   </Tooltip>
                 </CustomColumn>
                 <CustomColumn
                   customColumn="md-3"
                   additionalStyles={[
-                    'flex-none',
-                    'container__col-xs-12',
-                    'm-0',
-                    'pl-05',
-                    'pr-2',
-                    'border-right',
+                    "flex-none",
+                    "container__col-xs-12",
+                    "m-0",
+                    "pl-05",
+                    "pr-24",
+                    "border-right"
                   ]}
                 >
                   <Tooltip label="Disable">
                     <IconPowerSettingsDisable
                       active
                       label="Disable"
-                      onClick={onToggle}
+                      onClick={onDisable}
                     />
                   </Tooltip>
                 </CustomColumn>
                 <CustomColumn
                   customColumn="md-3"
                   additionalStyles={[
-                    'flex-none',
-                    'container__col-xs-12',
-                    'm-0',
-                    'pl-2',
+                    "flex-none",
+                    "container__col-xs-12",
+                    "m-0",
+                    "pl-22"
                   ]}
                 >
                   <Tooltip label="Massive change">
                     <IconInsertChart
                       label="Massive change"
-                      onClick={onMassiveChange}
+                      onClick={this.toggleMassiveChangeModal}
                     />
                   </Tooltip>
                 </CustomColumn>
@@ -228,18 +285,46 @@ class BAMListingPage extends Component {
             columnConfiguration={tableConfiguration}
             tableData={tableData}
             onTableSelectionChanged={this.onTableSelection}
-            onDelete={onDelete}
+            onDelete={this.toggleDeleteModal}
             onPaginate={onPaginate}
             onSort={onSort}
-            onDuplicate={onDuplicate}
+            onDuplicate={this.toggleDuplicateModal}
             onPaginationLimitChanged={onPaginationLimitChanged}
             limit={paginationLimit}
             currentPage={currentPage}
             totalRows={totalRows}
-            checkable
-            onToggle={onToggle}
+            checkable={true}
+            onEnable={onEnable}
+            onDisable={onDisable}
+            selected={currentlySelected}
           />
         </Paper>
+        <MassiveChangeDialog
+          header={"Massive calculation method change"}
+          info={
+            "Input value of critical and warning threshold for selected BAs"
+          }
+          active={massiveChangeActive}
+          onNoClicked={this.toggleMassiveChangeModal}
+          onClose={this.toggleMassiveChangeModal}
+          onYesClicked={onMassiveChange}
+        />
+        <ConfirmationDialog
+          active={deleteActive}
+          info={"Delete selected business activities?"}
+          onNoClicked={this.toggleDeleteModal}
+          onClose={this.toggleDeleteModal}
+          onYesClicked={onDelete}
+
+        />
+        <PromptDialog
+          customStyle={{padding: "25px 20px"}}
+          info={"How many times would you like to duplicate selected BAs?"}
+          active={duplicateActive}
+          onNoClicked={this.toggleDuplicateModal}
+          onClose={this.toggleDuplicateModal}
+          onYesClicked={onDuplicate}
+        />
       </React.Fragment>
     );
   }

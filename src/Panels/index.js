@@ -86,27 +86,17 @@ class Panels extends React.Component {
                   )}
                   onClick={this.toggleSecondPanel.bind(this)}
                 >
-                  {panelItemActive ? <ArrowForward /> : <ArrowBack />}
-                </span>
-              </PanelItem>
-              <PanelItem
-                panelItemType="small"
-                panelItemShow={panelItemActive ? 'panel-item-show' : ''}
-              >
-                <div className={classnames(styles2['panel-item-inner'])}>
-                  <h3 className={classnames(styles2['panel-item-title'])}>
-                    Manage Business View
-                  </h3>
-                  <InputFieldSearch
-                    style={{
-                      width: '100%',
-                      marginBottom: 15,
-                      boxSizing: 'border-box',
-                    }}
-                  />
-                  <TableDefault />
-                </div>
-              </PanelItem>
+                  <div className={classnames(styles2["panel-item-inner"])}>
+                    <h3 className={classnames(styles2["panel-item-title"])}>
+                      Manage Business View
+                    </h3>
+                    <InputFieldSearch
+                      style={{ width: "100%", marginBottom: 15, boxSizing: 'border-box' }}
+                    />
+                    <TableDefault style={{minWidth: 'auto'}} />
+                  </div>
+                </PanelItem>
+              </div>
             </div>
           </div>
         </div>

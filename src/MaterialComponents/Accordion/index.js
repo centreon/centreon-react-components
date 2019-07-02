@@ -151,11 +151,8 @@ class Accordion extends React.Component {
             </CustomRow>
           </ExpansionPanelDetails>
           <ExpansionPanelDetails className={classes.additionalStyles}>
-            <MultiSelectHolder>
-              <CustomRow additionalStyles={['mb-0']}>
-                <CustomColumn customColumn="md-12" additionalStyles={['mb-1']}>
-                  <IconInfo iconText="Number of indicators (5)" />
-                </CustomColumn>
+            <MultiSelectHolder multiSelectLabel="Number of indicators" multiSelectCount="5">
+              <CustomRow additionalStyles={["mb-0"]}>
                 <CustomColumn customColumn="md-6">
                   <InputFieldMultiSelectNew placeholder="BA-CIO-Indicator 1" />
                 </CustomColumn>
@@ -187,11 +184,8 @@ class Accordion extends React.Component {
             <Typography className={classes.heading}>Business View</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails className={classes.additionalStyles}>
-            <MultiSelectHolder>
+            <MultiSelectHolder multiSelectLabel="Number of views" multiSelectCount="5">
               <CustomRow>
-                <CustomColumn customColumn="md-12" additionalStyles={['mb-1']}>
-                  <IconInfo iconText="Number of views (5)" />
-                </CustomColumn>
                 <CustomColumn customColumn="md-6">
                   <InputFieldMultiSelectNew placeholder="BA-CIO-Indicator 1" />
                 </CustomColumn>
@@ -263,11 +257,8 @@ class Accordion extends React.Component {
             </CustomRow>
           </ExpansionPanelDetails>
           <ExpansionPanelDetails className={classes.additionalStyles}>
-            <MultiSelectHolder>
-              <CustomRow additionalStyles={['mb-0']}>
-                <CustomColumn customColumn="md-12" additionalStyles={['mb-1']}>
-                  <IconInfo iconText="Number of notifications (2)" />
-                </CustomColumn>
+            <MultiSelectHolder multiSelectLabel="Number of notifications" multiSelectCount="2">
+              <CustomRow additionalStyles={["mb-0"]}>
                 <CustomColumn customColumn="md-6">
                   <InputFieldMultiSelectNew placeholder="BA-CIO-Indicator 1" />
                 </CustomColumn>
@@ -338,11 +329,8 @@ class Accordion extends React.Component {
             <Typography className={classes.heading}>Escalation</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails className={classes.additionalStyles}>
-            <MultiSelectHolder>
+            <MultiSelectHolder multiSelectLabel="Number of escalations" multiSelectCount="2">
               <CustomRow>
-                <CustomColumn customColumn="md-12" additionalStyles={['mb-1']}>
-                  <IconInfo iconText="Number of escalations (2)" />
-                </CustomColumn>
                 <CustomColumn customColumn="md-6">
                   <InputFieldMultiSelectNew placeholder="BA-CIO-Indicator 1" />
                 </CustomColumn>
@@ -382,8 +370,8 @@ class Accordion extends React.Component {
               </CustomColumn>
             </CustomRow>
             <MultiSelectHolder
-              isEmpty
-              multiSelectLabel="Indicators"
+              isEmpty={true}
+              multiSelectLabel="Extra reporting time periods used in Centreon BI indicators"
               multiSelectCount="0"
             />
           </ExpansionPanelDetails>
