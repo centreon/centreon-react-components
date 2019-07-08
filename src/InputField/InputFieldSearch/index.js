@@ -80,6 +80,7 @@ class InputFieldSearch extends Component {
             inputProps={{ 'aria-label': 'Search' }}
             onChange={this.onSearchInputChanged}
             value={searchText}
+            {...rest}
           />
           {searchText.length > 0 ? (
             <IconButton

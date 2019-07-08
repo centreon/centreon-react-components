@@ -162,7 +162,7 @@ class BAMListingPage extends Component {
                 'mr-2',
               ]}
             >
-              <InputFieldSearch onChange={onSearch} />
+              <InputFieldSearch onChange={onSearch} id={"searchBA"}/>
             </CustomColumn>
           </CustomRow>
         </Paper>
@@ -173,7 +173,7 @@ class BAMListingPage extends Component {
               customColumn="md-4"
               additionalStyles={['flex-none', 'container__col-xs-12', 'm-0']}
             >
-              <ButtonCustom label="ADD" onClick={onAddClicked} />
+              <ButtonCustom label="ADD" onClick={onAddClicked} id={"addBA"}/>
             </CustomColumn>
             {currentlySelected.length > 0 ? (
               <React.Fragment>
