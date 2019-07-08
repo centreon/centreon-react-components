@@ -66,7 +66,7 @@ class InputFieldSearch extends Component {
   };
 
   render() {
-    const { classes, style } = this.props;
+    const { classes, style, ...rest } = this.props;
     const { searchText } = this.state;
     return (
       <Paper elevation={0} className={classes.paper}>

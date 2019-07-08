@@ -33,7 +33,6 @@ function ButtonCustom({ label, onClick }) {
       color="secondary"
       className={classes.button}
       onClick={onClick}
-      {...rest}
     >
       <AddIcon className={classes.leftIcon} iconsize="small" />
       {label}
