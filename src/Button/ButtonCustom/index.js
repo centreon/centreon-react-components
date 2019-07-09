@@ -24,16 +24,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ButtonCustom({ label, onClick }) {
+function ButtonCustom({ label, onClick, id }) {
   const classes = useStyles();
-  const {...rest} = this.props;
   return (
     <Button
       variant="contained"
       color="secondary"
       className={classes.button}
       onClick={onClick}
-      {...rest}
+      id={id}
     >
       <AddIcon className={classes.leftIcon} iconsize="small" />
       {label}
