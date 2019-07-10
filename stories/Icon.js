@@ -13,6 +13,12 @@ import {
   IconRound,
   IconToggleSubmenu,
   IconLegend,
+  IconLibraryAdd,
+  IconDelete,
+  IconAttach,
+  IconInsertChart,
+  IconPowerSettings,
+  IconPowerSettingsDisable,
 } from '../src';
 
 storiesOf('Icon', module).add(
@@ -262,3 +268,16 @@ storiesOf('Icon', module).add(
   },
   { notes: 'A very simple component' },
 );
+
+storiesOf('Icon', module).add('Icon - Material', () => {
+  return (
+    <>
+      <IconDelete />
+      <IconLibraryAdd />
+      <IconPowerSettings />
+      <IconPowerSettingsDisable />
+      <IconAttach />
+      <IconInsertChart />
+    </>
+  );
+});
