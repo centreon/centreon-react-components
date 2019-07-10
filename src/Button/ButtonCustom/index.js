@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ButtonCustom({ label, onClick, id }) {
+function ButtonCustom({ label, onClick, ...rest }) {
   const classes = useStyles();
   return (
     <Button
