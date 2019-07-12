@@ -6,6 +6,7 @@ import { storiesOf } from '@storybook/react';
 import {
   IconAction,
   IconClose,
+  IconCloseNew,
   IconContent,
   IconInfo,
   IconHeader,
@@ -16,6 +17,7 @@ import {
   IconLibraryAdd,
   IconDelete,
   IconAttach,
+  IconEdit,
   IconInsertChart,
   IconPowerSettings,
   IconPowerSettingsDisable,
@@ -273,6 +275,8 @@ storiesOf('Icon', module).add('Icon - Material', () => {
   return (
     <>
       <IconDelete />
+      <IconEdit />
+      <IconCloseNew />
       <IconLibraryAdd />
       <IconPowerSettings />
       <IconPowerSettingsDisable />
