@@ -37,7 +37,7 @@
   "dependencies": {
     "@emotion/core": "^10.0.14",
     "@emotion/styled": "^10.0.14",
-    "@material-ui/core": "4.0.1",
+    "@material-ui/core": "^4.2.0",
     "@material-ui/icons": "4.0.1",
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
@@ -95,9 +95,11 @@
     "eslint-plugin-react": "^7.13.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.8.0",
+    "jest-emotion": "^10.0.14",
     "jest-enzyme": "^7.0.2",
     "node-sass": "^4.10.0",
     "prettier": "^1.18.2",
+    "react-test-renderer": "^16.8.6",
     "uikit": "^3.0.0-rc.11"
   }
 }
