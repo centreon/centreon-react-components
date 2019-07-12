@@ -2,15 +2,11 @@
 
 import React from 'react';
 import { create } from 'react-test-renderer';
-import MaterialIcon from '.';
+import IconClose from '.';
 
-describe('MaterialIcon', () => {
+describe('IconClose', () => {
   it('renders', () => {
-    const wrapper = create(
-      <MaterialIcon>
-        <i />
-      </MaterialIcon>,
-    );
+    const wrapper = create(<IconClose />);
 
     expect(wrapper.toJSON()).toMatchSnapshot();
   });

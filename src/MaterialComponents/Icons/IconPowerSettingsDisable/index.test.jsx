@@ -2,15 +2,11 @@
 
 import React from 'react';
 import { create } from 'react-test-renderer';
-import MaterialIcon from '.';
+import IconPowerSettingsDisable from '.';
 
-describe('MaterialIcon', () => {
+describe('IconPowerSettingsDisable', () => {
   it('renders', () => {
-    const wrapper = create(
-      <MaterialIcon>
-        <i />
-      </MaterialIcon>,
-    );
+    const wrapper = create(<IconPowerSettingsDisable />);
 
     expect(wrapper.toJSON()).toMatchSnapshot();
   });

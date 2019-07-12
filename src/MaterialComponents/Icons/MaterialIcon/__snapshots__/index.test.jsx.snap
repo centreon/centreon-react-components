@@ -1,3 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MaterialIcon renders 1`] = `ShallowWrapper {}`;
+exports[`MaterialIcon renders 1`] = `
+.emotion-0 {
+  display: inline-block;
+  vertical-align: middle;
+  height: 24px;
+  cursor: pointer;
+  color: #707070;
+}
+
+<span
+  className="emotion-0"
+>
+  <i />
+</span>
+`;

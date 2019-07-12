@@ -1,13 +1,13 @@
 import React from 'react';
-import LibraryAdd from '@material-ui/icons/LibraryAdd';
+import Delete from '@material-ui/icons/Delete';
 import MaterialIcon from '../MaterialIcon';
 
-function IconLibraryAdd(props) {
+function IconDelete(props) {
   return (
     <MaterialIcon {...props}>
-      <LibraryAdd />
+      <Delete />
     </MaterialIcon>
   );
 }
 
-export default IconLibraryAdd;
+export default IconDelete;

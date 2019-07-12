@@ -1,34 +1,21 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import StylePropType from 'react-style-proptype';
 import PropTypes from 'prop-types';
 
 const Wrapper = styled.span(() => ({
   display: 'inline-block',
   verticalAlign: 'middle',
   height: 24,
-}));
-
-const Icon = styled.div(() => ({
-  color: '#707070',
   cursor: 'pointer',
+  color: '#707070',
 }));
 
-function MaterialIcon({ children, customStyle, ...rest }) {
-  return (
-    <Wrapper {...rest}>
-      <Icon style={customStyle}>{children}</Icon>
-    </Wrapper>
-  );
+function MaterialIcon({ children, ...props }) {
+  return <Wrapper {...props}>{children}</Wrapper>;
 }
 
 MaterialIcon.propTypes = {
-  customStyle: StylePropType,
   children: PropTypes.node.isRequired,
-};
-
-MaterialIcon.defaultProps = {
-  customStyle: {},
 };
 
 export default MaterialIcon;
