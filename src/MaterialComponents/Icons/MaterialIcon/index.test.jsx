@@ -6,12 +6,12 @@ import MaterialIcon from '.';
 
 describe('MaterialIcon', () => {
   it('renders', () => {
-    const { asFragment } = render(
+    const { container } = render(
       <MaterialIcon>
         <i />
       </MaterialIcon>,
     );
 
-    expect(asFragment()).toMatchSnapshot();
+    expect(container.firstChild).toMatchSnapshot();
   });
 });

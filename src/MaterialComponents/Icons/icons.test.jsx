@@ -24,9 +24,9 @@ import IconPowerSettingsDisable from './IconPowerSettingsDisable';
   const componentName = Symbol(IconComponent).toString();
   describe(componentName, () => {
     it('renders', () => {
-      const { asFragment } = render(<IconComponent />);
+      const { container } = render(<IconComponent />);
 
-      expect(asFragment()).toMatchSnapshot();
+      expect(container.firstChild).toMatchSnapshot();
     });
   });
 });

@@ -1,8 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MaterialIcon renders 1`] = `
-<DocumentFragment>
-  .emotion-0 {
+.emotion-0 {
   display: inline-block;
   vertical-align: middle;
   height: 24px;
@@ -11,9 +10,8 @@ exports[`MaterialIcon renders 1`] = `
 }
 
 <span
-    class="emotion-0"
-  >
-    <i />
-  </span>
-</DocumentFragment>
+  class="emotion-0"
+>
+  <i />
+</span>
 `;
