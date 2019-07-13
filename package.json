@@ -78,6 +78,7 @@
     "@storybook/addon-notes": "^5.1.9",
     "@storybook/react": "^5.1.9",
     "@svgr/cli": "^2.1.0",
+    "@testing-library/react": "^8.0.5",
     "babel-eslint": "^10.0.2",
     "babel-jest": "^24.8.0",
     "docz": "^0.5.2",
@@ -100,6 +101,7 @@
     "node-sass": "^4.10.0",
     "prettier": "^1.18.2",
     "react-test-renderer": "^16.8.6",
+    "react-testing-library": "^8.0.1",
     "uikit": "^3.0.0-rc.11"
   }
 }

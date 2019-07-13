@@ -1,17 +1,17 @@
 /* eslint-disable no-undef */
 
 import React from 'react';
-import { create } from 'react-test-renderer';
+import { render } from '@testing-library/react';
 import MaterialIcon from '.';
 
 describe('MaterialIcon', () => {
   it('renders', () => {
-    const wrapper = create(
+    const { asFragment } = render(
       <MaterialIcon>
         <i />
       </MaterialIcon>,
     );
 
-    expect(wrapper.toJSON()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 });
