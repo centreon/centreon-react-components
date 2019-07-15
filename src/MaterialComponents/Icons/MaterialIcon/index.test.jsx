@@ -15,3 +15,13 @@ describe('MaterialIcon', () => {
     expect(container.firstChild).toMatchSnapshot();
   });
 });
+
+describe('Hello World', () => {
+  it('renders', () => {
+    const HelloWorld = () => <h1>Hello World!</h1>;
+
+    const { container } = render(<HelloWorld />);
+
+    expect(container.firstChild).toMatchSnapshot();
+  });
+});

@@ -10,6 +10,8 @@ import IconInsertChart from './IconInsertChart';
 import IconLibraryAdd from './IconLibraryAdd';
 import IconPowerSettings from './IconPowerSettings';
 import IconPowerSettingsDisable from './IconPowerSettingsDisable';
+import IconVisible from './IconVisible';
+import IconInvisible from './IconInvisible';
 
 [
   IconAttach,
@@ -20,6 +22,8 @@ import IconPowerSettingsDisable from './IconPowerSettingsDisable';
   IconLibraryAdd,
   IconPowerSettings,
   IconPowerSettingsDisable,
+  IconVisible,
+  IconInvisible,
 ].forEach((IconComponent) => {
   const componentName = Symbol(IconComponent).toString();
   describe(componentName, () => {

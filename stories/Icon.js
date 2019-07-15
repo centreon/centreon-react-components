@@ -21,6 +21,8 @@ import {
   IconInsertChart,
   IconPowerSettings,
   IconPowerSettingsDisable,
+  IconVisible,
+  IconInvisible,
 } from '../src';
 
 storiesOf('Icon', module).add(
@@ -282,6 +284,8 @@ storiesOf('Icon', module).add('Icon - Material', () => {
       <IconPowerSettingsDisable />
       <IconAttach />
       <IconInsertChart />
+      <IconVisible />
+      <IconInvisible />
     </>
   );
 });
