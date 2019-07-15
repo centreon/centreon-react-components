@@ -25,4 +25,3 @@ describe('Subtitle', () => {
     expect(getByText(label)).toBeInTheDocument();
   });
 });
-
