@@ -34,6 +34,7 @@ const styles = (theme) => ({
   },
   tableWrapper: {
     overflowX: 'auto',
+    overflowY: 'hidden',
   },
   rowDisabled: {
     backgroundColor: 'rgba(0, 0, 0, 0.07) !important',
@@ -103,6 +104,20 @@ class TableCustom extends Component {
     });
   };
 
+  addConditionalRowBackground = (
+    row,
+    column,
+    backgroundClass,
+    attribute,
+    classes,
+  ) => {
+    return column
+      ? {
+          [attribute]: !row[column] ? classes[backgroundClass] : '',
+        }
+      : {};
+  };
+
   render() {
     const {
       columnConfiguration,
@@ -161,11 +176,13 @@ class TableCustom extends Component {
                       key={row.id}
                       selected={isItemSelected}
                       onMouseEnter={this.rowHovered.bind(this, row.id, true)}
-                      {...(enabledColumn && {
-                        className: !row[enabledColumn]
-                          ? classes.rowDisabled
-                          : '',
-                      })}
+                      {...this.addConditionalRowBackground(
+                        row,
+                        enabledColumn,
+                        'rowDisabled',
+                        'className',
+                        classes,
+                      )}
                     >
                       {checkable ? (
                         <StyledTableCell2
