@@ -25,8 +25,7 @@ import IconInvisible from './IconInvisible';
   IconVisible,
   IconInvisible,
 ].forEach((IconComponent) => {
-  const componentName = Symbol(IconComponent).toString();
-  describe(componentName, () => {
+  describe(IconComponent, () => {
     it('renders', () => {
       const { container } = render(<IconComponent />);
 
