@@ -58,7 +58,7 @@ exports[`Symbol(function IconClose(_ref) {
   var label = _ref.label,
       rest = _objectWithoutProperties(_ref, ["label"]);
 
-  return _react["default"].createElement(FloatingIcon, rest, _react["default"].createElement(GreyClose, null), label && _react["default"].createElement(Label, null));
+  return _react["default"].createElement(FloatingIcon, rest, _react["default"].createElement(GreyClose, null), label && _react["default"].createElement(Label, null, label));
 }) renders 1`] = `
 .emotion-1 {
   display: inline-block;
