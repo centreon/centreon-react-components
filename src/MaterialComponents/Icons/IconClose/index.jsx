@@ -46,7 +46,7 @@ function IconClose({ label, ...rest }) {
   return (
     <FloatingIcon {...rest}>
       <GreyClose />
-      {label && <Label />}
+      {label && <Label>{label}</Label>}
     </FloatingIcon>
   );
 }
