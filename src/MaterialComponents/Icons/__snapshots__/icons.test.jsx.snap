@@ -1,8 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Symbol(function IconAttach(props) {
-  return _react["default"].createElement(AttachMaterial, props, _react["default"].createElement(MiniAttach, null), _react["default"].createElement(Label, null, "ICON"));
-}) renders 1`] = `
+exports[`IconAttach renders 1`] = `
 .emotion-2 {
   display: inline-block;
   vertical-align: middle;
@@ -54,12 +52,7 @@ exports[`Symbol(function IconAttach(props) {
 </span>
 `;
 
-exports[`Symbol(function IconClose(_ref) {
-  var label = _ref.label,
-      rest = _objectWithoutProperties(_ref, ["label"]);
-
-  return _react["default"].createElement(FloatingIcon, rest, _react["default"].createElement(GreyClose, null), label && _react["default"].createElement(Label, null, label));
-}) renders 1`] = `
+exports[`IconClose renders 1`] = `
 .emotion-1 {
   display: inline-block;
   vertical-align: middle;
@@ -114,9 +107,7 @@ exports[`Symbol(function IconClose(_ref) {
 </span>
 `;
 
-exports[`Symbol(function IconDelete(props) {
-  return _react["default"].createElement(_MaterialIcon["default"], props, _react["default"].createElement(_Delete["default"], null));
-}) renders 1`] = `
+exports[`IconDelete renders 1`] = `
 .emotion-0 {
   display: inline-block;
   vertical-align: middle;
@@ -146,9 +137,7 @@ exports[`Symbol(function IconDelete(props) {
 </span>
 `;
 
-exports[`Symbol(function IconEdit(props) {
-  return _react["default"].createElement(_MaterialIcon["default"], props, _react["default"].createElement(FloatingEdit, null));
-}) renders 1`] = `
+exports[`IconEdit renders 1`] = `
 .emotion-1 {
   display: inline-block;
   vertical-align: middle;
@@ -185,9 +174,7 @@ exports[`Symbol(function IconEdit(props) {
 </span>
 `;
 
-exports[`Symbol(function IconInsertChart() {
-  return _react["default"].createElement(_MaterialIcon["default"], null, _react["default"].createElement(_InsertChart["default"], null));
-}) renders 1`] = `
+exports[`IconInsertChart renders 1`] = `
 .emotion-0 {
   display: inline-block;
   vertical-align: middle;
@@ -217,9 +204,7 @@ exports[`Symbol(function IconInsertChart() {
 </span>
 `;
 
-exports[`Symbol(function IconInvisible(props) {
-  return _react["default"].createElement(_MaterialIcon["default"], props, _react["default"].createElement(_VisibilityOff["default"], null));
-}) renders 1`] = `
+exports[`IconInvisible renders 1`] = `
 .emotion-0 {
   display: inline-block;
   vertical-align: middle;
@@ -249,9 +234,7 @@ exports[`Symbol(function IconInvisible(props) {
 </span>
 `;
 
-exports[`Symbol(function IconLibraryAdd(props) {
-  return _react["default"].createElement(_MaterialIcon["default"], props, _react["default"].createElement(_LibraryAdd["default"], null));
-}) renders 1`] = `
+exports[`IconLibraryAdd renders 1`] = `
 .emotion-0 {
   display: inline-block;
   vertical-align: middle;
@@ -281,9 +264,7 @@ exports[`Symbol(function IconLibraryAdd(props) {
 </span>
 `;
 
-exports[`Symbol(function IconPowerSettings(props) {
-  return _react["default"].createElement(_MaterialIcon["default"], props, _react["default"].createElement(InvertedPowerSettingsIcon, null));
-}) renders 1`] = `
+exports[`IconPowerSettings renders 1`] = `
 .emotion-1 {
   display: inline-block;
   vertical-align: middle;
@@ -321,9 +302,7 @@ exports[`Symbol(function IconPowerSettings(props) {
 </span>
 `;
 
-exports[`Symbol(function IconPowerSettings(props) {
-  return _react["default"].createElement(DisablingMaterialIcon, props, _react["default"].createElement(RoundedPowerSettings, null));
-}) renders 1`] = `
+exports[`IconPowerSettings renders 2`] = `
 .emotion-1 {
   display: inline-block;
   vertical-align: middle;
@@ -395,9 +374,7 @@ exports[`Symbol(function IconPowerSettings(props) {
 </span>
 `;
 
-exports[`Symbol(function IconVisible(props) {
-  return _react["default"].createElement(_MaterialIcon["default"], props, _react["default"].createElement(_Visibility["default"], null));
-}) renders 1`] = `
+exports[`IconVisible renders 1`] = `
 .emotion-0 {
   display: inline-block;
   vertical-align: middle;
