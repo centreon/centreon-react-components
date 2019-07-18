@@ -83,7 +83,6 @@ export {default as MaterialButton} from './MaterialComponents/Button';
 /**
  * Custom icons :
  */
-
 export { default as IconAction } from './Icon/IconAction';
 export { default as IconClose } from './Icon/IconClose';
 export { default as IconContent } from './Icon/IconContent';
@@ -100,7 +99,6 @@ export { default as IconToggleSubmenu } from './Icon/IconToggleSubmenu';
  * It is recommended to add an 'Icon' suffix to default as variable to let others know it's an icon:
  * Example : export { default as AccessAlarmIcon } instead of export { default as AccessAlarm }
  */
-
 export { default as FlipToFrontIcon } from '@material-ui/icons/FlipToFront';
 export { default as DeleteIcon  } from '@material-ui/icons/Delete';
 export { default as AccessTimeIcon } from '@material-ui/icons/AccessTime';
