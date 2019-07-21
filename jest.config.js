@@ -7,4 +7,5 @@ module.exports = {
   moduleNameMapper: {
     '\\.(s?css)$': 'identity-obj-proxy',
   },
+  testPathIgnorePatterns: ['/node_modules/', '/lib/'],
 };
