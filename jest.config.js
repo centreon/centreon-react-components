@@ -1,6 +1,7 @@
 module.exports = {
   setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
   snapshotSerializers: ['jest-emotion'],
+  roots: ['<rootDir>/src/'],
   transform: {
     '^.+\\.jsx?$': 'babel-jest',
   },
