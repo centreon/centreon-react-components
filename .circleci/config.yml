@@ -22,4 +22,4 @@ jobs:
           command: npm run eslint
       - run:
           name: Run Tests
-          command: npm test
+          command: npm test -- -u
