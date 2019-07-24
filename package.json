@@ -55,6 +55,7 @@
     "react-perfect-scrollbar": "^1.4.4",
     "react-portal": "^4.1.5",
     "react-redux": "^6.0.1",
+    "react-router-dom": "^5.0.1",
     "react-select": "^2.4.1",
     "react-style-proptype": "^3.2.2",
     "redux": "^4.0.1",
