@@ -9,6 +9,8 @@ const SmallLink = styled(Link)(() => ({
 }));
 
 const BreadcrumbLink = ({ index, count, breadcrumb }) => {
+  const isLastLink = index === count - 1;
+  
   return (
     <SmallLink
       color={index !== count - 1 ? 'inherit' : 'textPrimary'}
