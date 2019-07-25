@@ -10,10 +10,10 @@ const SmallLink = styled(Link)(() => ({
 
 const BreadcrumbLink = ({ index, count, breadcrumb }) => {
   const isLastLink = index === count - 1;
-  
+
   return (
     <SmallLink
-      color={isLastLink ? 'textPrimary': 'inherit' }
+      color={isLastLink ? 'textPrimary' : 'inherit'}
       component={RouterLink}
       to={breadcrumb.link}
     >
