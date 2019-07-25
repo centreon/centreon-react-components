@@ -13,7 +13,7 @@ const BreadcrumbLink = ({ index, count, breadcrumb }) => {
   
   return (
     <SmallLink
-      color={index !== count - 1 ? 'inherit' : 'textPrimary'}
+      color={isLastLink ? 'textPrimary': 'inherit' }
       component={RouterLink}
       to={breadcrumb.link}
     >
