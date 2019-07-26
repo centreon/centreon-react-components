@@ -2,7 +2,7 @@
 
 exports[`Breadcrumb renders 1`] = `
 .emotion-2 {
-  padding: 0px 16px;
+  padding: 4px 16px;
 }
 
 .emotion-2 .MuiBreadcrumbs-li {
