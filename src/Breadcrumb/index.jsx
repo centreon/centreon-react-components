@@ -6,7 +6,7 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import BreadcrumbLink from './Link';
 
 const StyledBreadcrumb = styled(Breadcrumbs)(() => ({
-  padding: '0px 16px',
+  padding: '4px 16px',
   '.MuiBreadcrumbs-li': {
     display: 'flex',
   },
