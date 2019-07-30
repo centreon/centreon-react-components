@@ -1,4 +1,8 @@
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable no-undef */
 
-Enzyme.configure({ adapter: new Adapter() });
+import '@testing-library/react/cleanup-after-each';
+import '@testing-library/jest-dom/extend-expect';
+import emotionSerializer from 'jest-emotion';
+
+expect.addSnapshotSerializer(emotionSerializer);

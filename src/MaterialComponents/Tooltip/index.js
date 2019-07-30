@@ -1,3 +1,7 @@
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable react/prop-types */
+/* eslint-disable react/prefer-stateless-function */
+
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
@@ -12,9 +16,9 @@ const styles = () => ({
 
 class TooltipMaterial extends React.Component {
   render() {
-    const { label, classes, children, customStyle } = this.props;
+    const { label, classes, children, onClick, customStyle } = this.props;
     return (
-      <Tooltip title={label} className={classes.tooltipStyle}>
+      <Tooltip title={label} className={classes.tooltipStyle} onClick={onClick}>
         <IconButton
           style={customStyle}
           aria-label={label}

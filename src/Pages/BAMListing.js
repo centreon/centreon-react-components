@@ -1,3 +1,6 @@
+/* eslint-disable react/jsx-filename-extension */
+/* eslint-disable react/prop-types */
+
 import React, { Component } from 'react';
 import Paper from '@material-ui/core/Paper';
 import {
@@ -13,7 +16,6 @@ import {
   IconPowerSettings,
   IconPowerSettingsDisable,
   IconInsertChart,
-  Panels,
   Tooltip,
   MassiveChangeDialog,
   ConfirmationDialog,
@@ -33,7 +35,7 @@ const breadcrumbs = [
   },
   {
     label: 'Activities',
-    link: '',
+    link: './configuration/bam/bas',
   },
 ];
 
@@ -284,6 +286,7 @@ class BAMListingPage extends Component {
             onEnable={onEnable}
             onDisable={onDisable}
             selected={currentlySelected}
+            enabledColumn="activate"
           />
         </Paper>
         <MassiveChangeDialog
@@ -328,7 +331,9 @@ class BAMListingPage extends Component {
               {
                 duplicateActive: false,
               },
-              ()=>{onDuplicate(times)},
+              () => {
+                onDuplicate(times);
+              },
             );
           }}
         />

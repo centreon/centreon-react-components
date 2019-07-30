@@ -1,3 +1,6 @@
+/* eslint-disable react/jsx-no-bind */
+/* eslint-disable react/jsx-filename-extension */
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -28,6 +31,10 @@ const styles = (theme) => ({
   },
   tableWrapper: {
     overflowX: 'auto',
+    overflowY: 'hidden',
+  },
+  rowDisabled: {
+    backgroundColor: 'rgba(0, 0, 0, 0.07) !important',
   },
 });
 
@@ -94,6 +101,20 @@ class TableCustom extends Component {
     });
   };
 
+  addConditionalRowBackground = (
+    row,
+    column,
+    backgroundClass,
+    attribute,
+    classes,
+  ) => {
+    return column
+      ? {
+          [attribute]: !row[column] ? classes[backgroundClass] : '',
+        }
+      : {};
+  };
+
   render() {
     const {
       columnConfiguration,
@@ -111,6 +132,7 @@ class TableCustom extends Component {
       onDisable,
       onRowClick,
       selected,
+      enabledColumn,
     } = this.props;
     const { order, orderBy, hovered } = this.state;
 
@@ -152,6 +174,13 @@ class TableCustom extends Component {
                       selected={isItemSelected}
                       onMouseEnter={this.rowHovered.bind(this, row.id, true)}
                       className="trow"
+                      {...this.addConditionalRowBackground(
+                        row,
+                        enabledColumn,
+                        'rowDisabled',
+                        'className',
+                        classes,
+                      )}
                     >
                       {checkable ? (
                         <StyledTableCell2
@@ -169,68 +198,82 @@ class TableCustom extends Component {
 
                       {columnConfiguration.map((column) => {
                         switch (column.type) {
+                          case TABLE_COLUMN_TYPES.string:
                           case TABLE_COLUMN_TYPES.number:
                             return (
                               <TableCellCustom
+                                key={column.id}
                                 align="left"
                                 className={classes.tableCellCustom}
                               >
                                 {row[column.id] || ''}
                               </TableCellCustom>
                             );
-                            break;
-                          case TABLE_COLUMN_TYPES.string:
-                            return (
-                              <TableCellCustom
-                                align="left"
-                                className={classes.tableCellCustom}
-                              >
-                                {row[column.id] || ''}
-                              </TableCellCustom>
-                            );
-                            break;
                           case TABLE_COLUMN_TYPES.toggler:
                             return (
-                              <StyledTableCell2 align="left">
+                              <StyledTableCell2 key={column.id} align="left">
                                 {row[column.id] ? (
-                                  <IconPowerSettings
+                                  <Tooltip
+                                    label="Enable/Disable"
+                                    customStyle={{
+                                      position: 'absolute',
+                                      top: -1,
+                                      width: 31,
+                                      height: 31,
+                                    }}
                                     onClick={() => {
                                       onDisable([row.id]);
                                     }}
-                                    active
-                                    customStyle={{
-                                      fontSize: 19,
-                                      boxSizing: 'border-box',
-                                      marginTop: 2,
-                                    }}
-                                  />
+                                  >
+                                    <IconPowerSettings
+                                      label="Disable"
+                                      active
+                                      customStyle={{
+                                        fontSize: 18,
+                                        boxSizing: 'border-box',
+                                        position: 'relative',
+                                        top: -2,
+                                      }}
+                                    />
+                                  </Tooltip>
                                 ) : (
-                                  <IconPowerSettingsDisable
-                                    active
-                                    label="Disable"
+                                  <Tooltip
+                                    label="Enable/Disable"
+                                    customStyle={{
+                                      position: 'absolute',
+                                      top: -1,
+                                      width: 31,
+                                      height: 31,
+                                    }}
                                     onClick={() => {
                                       onEnable([row.id]);
                                     }}
-                                    customStyle={{
-                                      fontSize: 18,
-                                      boxSizing: 'border-box',
-                                      marginTop: 2,
-                                    }}
-                                  />
+                                  >
+                                    <IconPowerSettingsDisable
+                                      active
+                                      label="Disable"
+                                      customStyle={{
+                                        fontSize: 18,
+                                        boxSizing: 'border-box',
+                                        position: 'relative',
+                                        top: -2,
+                                      }}
+                                    />
+                                  </Tooltip>
                                 )}
                               </StyledTableCell2>
                             );
-                            break;
                           case TABLE_COLUMN_TYPES.multicolumn:
                             return (
                               <TableCellCustom
+                                key={column.id}
                                 align="left"
                                 className={classes.tableCellCustom}
                               >
                                 {column.columns.map((subColumn) => (
                                   <React.Fragment>
-                                    {subColumn.label} {row[subColumn.id]}
-                                    {subColumn.type == 'percentage'
+                                    {`${subColumn.label} ${row[subColumn.id]}`}
+                                    {subColumn.type === 'percentage'
                                       ? '%'
                                       : null}
                                     {'   '}
@@ -238,36 +281,37 @@ class TableCustom extends Component {
                                 ))}
                               </TableCellCustom>
                             );
-                            break;
                           case TABLE_COLUMN_TYPES.hoverActions:
                             return (
                               <StyledTableCell2
+                                key={column.id}
                                 style={{
                                   paddingTop: 0,
                                   paddingBottom: 0,
-                                  minWidth: 94,
+                                  width: 60,
                                   boxSizing: 'border-box',
+                                  padding: '0 !important',
                                 }}
                               >
-                                {hovered == row.id ? (
+                                {hovered === row.id ? (
                                   <React.Fragment>
                                     <Tooltip
                                       label="Delete"
                                       position={{ left: '50px' }}
                                       customStyle={{
                                         position: 'absolute',
-                                        left: 0,
+                                        right: 28,
                                         top: 0,
                                         padding: '3px 5px',
+                                      }}
+                                      onClick={() => {
+                                        onDelete([row.id]);
                                       }}
                                     >
                                       <IconDelete
                                         customStyle={{
                                           color: '#707070',
                                           fontSize: 21,
-                                        }}
-                                        onClick={() => {
-                                          onDelete([row.id]);
                                         }}
                                       />
                                     </Tooltip>
@@ -276,18 +320,18 @@ class TableCustom extends Component {
                                       position={{ left: '50px' }}
                                       customStyle={{
                                         position: 'absolute',
-                                        left: 35,
+                                        right: -5,
                                         top: 0,
                                         padding: '3px 5px',
+                                      }}
+                                      onClick={() => {
+                                        onDuplicate([row.id]);
                                       }}
                                     >
                                       <IconLibraryAdd
                                         customStyle={{
                                           color: '#707070',
                                           fontSize: 20,
-                                        }}
-                                        onClick={() => {
-                                          onDuplicate([row.id]);
                                         }}
                                       />
                                     </Tooltip>
@@ -297,7 +341,6 @@ class TableCustom extends Component {
                                 )}
                               </StyledTableCell2>
                             );
-                            break;
                           default:
                             return null;
                         }
@@ -309,7 +352,7 @@ class TableCustom extends Component {
             </Table>
           </div>
           <StyledPagination
-            rowsPerPageOptions={[5, 10, 25, 50, 100]}
+            rowsPerPageOptions={[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
             colSpan={3}
             count={totalRows}
             rowsPerPage={limit}
@@ -328,8 +371,35 @@ class TableCustom extends Component {
   }
 }
 
+TableCustom.defaultProps = {
+  enabledColumn: '',
+  onRowClick: () => {},
+};
+
+const anyObject = PropTypes.objectOf(
+  PropTypes.oneOfType([PropTypes.bool, PropTypes.string, PropTypes.number]),
+);
+const anyArray = PropTypes.arrayOf(anyObject);
+
 TableCustom.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: anyObject.isRequired,
+  onSort: PropTypes.func.isRequired,
+  onTableSelectionChanged: PropTypes.func.isRequired,
+  columnConfiguration: anyArray.isRequired,
+  tableData: anyArray.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  onPaginate: PropTypes.func.isRequired,
+  onDuplicate: PropTypes.func.isRequired,
+  onPaginationLimitChanged: PropTypes.func.isRequired,
+  limit: PropTypes.number.isRequired,
+  checkable: PropTypes.bool.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  totalRows: PropTypes.number.isRequired,
+  onEnable: PropTypes.func.isRequired,
+  onDisable: PropTypes.func.isRequired,
+  onRowClick: PropTypes.func,
+  selected: anyArray.isRequired,
+  enabledColumn: PropTypes.string,
 };
 
 export default withStyles(styles, { withTheme: true })(TableCustom);
