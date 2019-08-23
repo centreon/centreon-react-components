@@ -27,6 +27,7 @@ import {
   IconReportProblem,
   IconVisible,
   IconInvisible,
+  IconError,
 } from '../src';
 
 storiesOf('Icon', module).add(
@@ -294,6 +295,7 @@ storiesOf('Icon', module).add('Icon - Material', () => {
       <IconAccessTime />
       <IconDone />
       <IconReportProblem />
+      <IconError />
     </>
   );
 });
