@@ -27,7 +27,6 @@ class Sidebar extends Component {
       navigationData,
       reactRoutes,
       handleDirectClick,
-      onNavigate,
       externalHistory,
       style,
     } = this.props;
@@ -52,7 +51,6 @@ class Sidebar extends Component {
             navigationData={navigationData || []}
             reactRoutes={reactRoutes || {}}
             sidebarActive={active}
-            onNavigate={onNavigate}
             handleDirectClick={handleDirectClick}
             externalHistory={externalHistory}
           />

@@ -11,6 +11,8 @@
 
 import React, { Component } from 'react';
 import classnames from 'classnames';
+import Link from '@material-ui/core/Link';
+import { Link as RouterLink } from 'react-router-dom';
 import styles from './navigation.scss';
 import BoundingBox from '../BoundingBox';
 
@@ -128,192 +130,189 @@ class Navigation extends Component {
           styles[customStyle || ''],
         )}
       >
-        {navigationData.map((firstLevel, firstLevelIndex) => (
-          <li
-            className={classnames(styles['menu-item'], {
-              [styles[`color-${firstLevel.color}`]]: true,
-              [styles[
-                firstLevel.toggled || this.areSamePage(pageId, firstLevel, 1)
-                  ? `active-${firstLevel.color}`
-                  : ''
-              ]]: true,
-              [styles[
-                firstLevel.toggled || this.areSamePage(pageId, firstLevel, 1)
-                  ? `active`
-                  : ''
-              ]]: true,
-            })}
-            key={`firstLevel-${firstLevel.page}`}
-          >
-            <span
-              className={classnames(styles['menu-item-link'])}
-              onDoubleClick={() => {
-                this.setState({
-                  hrefOfIframe: false,
-                });
-                handleDirectClick(firstLevel.page, firstLevel);
-              }}
+        {navigationData.map((firstLevel, firstLevelIndex) => {
+          const secondLevelIsActive =
+            firstLevel.toggled || this.areSamePage(pageId, firstLevel, 1);
+          return (
+            <li
+              className={classnames(styles['menu-item'], {
+                [styles[`color-${firstLevel.color}`]]: true,
+                [styles.active]: secondLevelIsActive,
+                [styles[`active-${firstLevel.color}`]]: secondLevelIsActive,
+              })}
+              key={`firstLevel-${firstLevel.page}`}
             >
               <span
-                className={classnames(styles.iconmoon, {
-                  [styles[`icon-${firstLevel.icon}`]]: true,
-                })}
+                className={classnames(styles['menu-item-link'])}
+                onDoubleClick={() => {
+                  this.setState({
+                    hrefOfIframe: false,
+                  });
+                  handleDirectClick(firstLevel.page, firstLevel);
+                }}
               >
-                <span className={classnames(styles['menu-item-name'])}>
-                  {firstLevel.label}
+                <span
+                  className={classnames(styles.iconmoon, {
+                    [styles[`icon-${firstLevel.icon}`]]: true,
+                  })}
+                >
+                  <span className={classnames(styles['menu-item-name'])}>
+                    {firstLevel.label}
+                  </span>
                 </span>
               </span>
-            </span>
-            <ul
-              className={classnames(
-                styles.collapse,
-                styles['collapsed-items'],
-                styles['list-unstyled'],
-                {
-                  [styles[`border-${firstLevel.color}`]]: true,
-                  [styles[
-                    activeIndex !== -1 &&
-                    firstLevelIndex > activeIndex &&
-                    sidebarActive &&
-                    navigationData[activeIndex].children.length >= 5
-                      ? 'towards-down'
-                      : 'towards-up'
-                  ]]: true,
-                },
-              )}
-            >
-              {firstLevel.children.map((secondLevel) => {
-                const secondLevelUrl = this.getUrlFromEntry(secondLevel);
-                return (
-                  <li
-                    className={classnames(styles['collapsed-item'], {
-                      [styles[
-                        activeSecondLevel === secondLevel.page ||
-                        (!activeSecondLevel &&
-                          this.areSamePage(pageId, secondLevel, 3))
-                          ? `active`
-                          : ''
-                      ]]: true,
-                      [styles[
-                        secondLevel.toggled ||
-                        this.areSamePage(pageId, secondLevel, 3)
-                          ? `active-${firstLevel.color}`
-                          : ''
-                      ]]: true,
-                    })}
-                    onClick={() => {
-                      if (secondLevel.groups.length < 1) {
-                        this.onNavigate(secondLevel.page, secondLevelUrl);
-                      } else if (this.areSamePage(pageId, firstLevel, 1)) {
-                        this.activateSecondLevel(secondLevel.page);
-                      }
-                    }}
-                    key={`secondLevel-${secondLevel.page}`}
-                  >
-                    <span
-                      className={classnames(
-                        styles['collapsed-item-level-link'],
-                        {
-                          [styles[`color-${firstLevel.color}`]]: true,
-                          [styles[
-                            secondLevel.groups.length < 1 ? 'img-none' : ''
-                          ]]: true,
-                        },
-                      )}
+              <ul
+                className={classnames(
+                  styles.collapse,
+                  styles['collapsed-items'],
+                  styles['list-unstyled'],
+                  {
+                    [styles[`border-${firstLevel.color}`]]: true,
+                    [styles[
+                      activeIndex !== -1 &&
+                      firstLevelIndex > activeIndex &&
+                      sidebarActive &&
+                      navigationData[activeIndex].children.length >= 5
+                        ? 'towards-down'
+                        : 'towards-up'
+                    ]]: true,
+                  },
+                )}
+              >
+                {firstLevel.children.map((secondLevel) => {
+                  const secondLevelUrl = this.getUrlFromEntry(secondLevel);
+                  return (
+                    <li
+                      className={classnames(styles['collapsed-item'], {
+                        [styles[
+                          activeSecondLevel === secondLevel.page ||
+                          (!activeSecondLevel &&
+                            this.areSamePage(pageId, secondLevel, 3))
+                            ? `active`
+                            : ''
+                        ]]: true,
+                        [styles[
+                          secondLevel.toggled ||
+                          this.areSamePage(pageId, secondLevel, 3)
+                            ? `active-${firstLevel.color}`
+                            : ''
+                        ]]: true,
+                      })}
+                      key={`secondLevel-${secondLevel.page}`}
                     >
-                      {secondLevel.label}
-                    </span>
-                    <BoundingBox active>
-                      {({ rectBox }) => {
-                        let styleFor3rdLevel = {};
-                        if (rectBox && rectBox.bottom < 1) {
-                          styleFor3rdLevel = {
-                            height: rectBox.offsetHeight + rectBox.bottom,
-                            overflowY: 'scroll',
-                          };
-                        }
-                        return (
-                          <ul
-                            className={classnames(
-                              styles['collapse-level'],
-                              styles['collapsed-level-items'],
-                              styles['first-level'],
-                              styles['list-unstyled'],
-                              styles['towards-up'],
-                            )}
-                            style={styleFor3rdLevel}
-                          >
-                            {secondLevel.groups.map((group) => (
-                              <React.Fragment
-                                key={`thirdLevelFragment-${group.label}`}
-                              >
-                                {secondLevel.groups.length > 1 ? (
-                                  <span
-                                    className={classnames(
-                                      styles['collapsed-level-title'],
-                                    )}
-                                  >
-                                    <span>{group.label}</span>
-                                  </span>
-                                ) : null}
-                                {group.children.map((thirdLevel) => {
-                                  const thirdLevelUrl = this.getUrlFromEntry(
-                                    thirdLevel,
-                                  );
-                                  return (
-                                    <li
+                      <Link
+                        className={classnames(
+                          styles['collapsed-item-level-link'],
+                          styles[`color-${firstLevel.color}`],
+                          {
+                            [styles['img-none']]: secondLevel.groups.length < 1,
+                          },
+                        )}
+                        onClick={(e) => {
+                          if (secondLevel.groups.length < 1) {
+                            this.setState({
+                              navigatedPageId: secondLevel.page,
+                              hrefOfIframe: false,
+                            });
+                          } else {
+                            // do not redirect if level 2 has children
+                            e.preventDefault();
+
+                            if (this.areSamePage(pageId, firstLevel, 1)) {
+                              this.activateSecondLevel(secondLevel.page);
+                            }
+                          }
+                        }}
+                        component={RouterLink}
+                        to={secondLevelUrl.url}
+                      >
+                        {secondLevel.label}
+                      </Link>
+                      <BoundingBox active>
+                        {({ rectBox }) => {
+                          let styleFor3rdLevel = {};
+                          if (rectBox && rectBox.bottom < 1) {
+                            styleFor3rdLevel = {
+                              height: rectBox.offsetHeight + rectBox.bottom,
+                              overflowY: 'scroll',
+                            };
+                          }
+                          return (
+                            <ul
+                              className={classnames(
+                                styles['collapse-level'],
+                                styles['collapsed-level-items'],
+                                styles['first-level'],
+                                styles['list-unstyled'],
+                                styles['towards-up'],
+                              )}
+                              style={styleFor3rdLevel}
+                            >
+                              {secondLevel.groups.map((group) => (
+                                <React.Fragment
+                                  key={`thirdLevelFragment-${group.label}`}
+                                >
+                                  {secondLevel.groups.length > 1 ? (
+                                    <span
                                       className={classnames(
-                                        styles['collapsed-level-item'],
-                                        {
-                                          [styles[
-                                            thirdLevel.toggled ||
-                                            this.areSamePage(pageId, thirdLevel)
-                                              ? `active`
-                                              : ''
-                                          ]]: true,
-                                          [styles[
-                                            thirdLevel.toggled ||
-                                            this.areSamePage(pageId, thirdLevel)
-                                              ? `active-${firstLevel.color}`
-                                              : ''
-                                          ]]: true,
-                                        },
+                                        styles['collapsed-level-title'],
                                       )}
-                                      key={`thirdLevel-${thirdLevel.page}`}
                                     >
-                                      <a
-                                        onClick={() => {
-                                          this.onNavigate(
-                                            thirdLevel.page,
-                                            thirdLevelUrl,
-                                          );
-                                        }}
+                                      <span>{group.label}</span>
+                                    </span>
+                                  ) : null}
+                                  {group.children.map((thirdLevel) => {
+                                    const thirdLevelUrl = this.getUrlFromEntry(
+                                      thirdLevel,
+                                    );
+                                    const thirdLevelIsActive =
+                                      thirdLevel.toggled ||
+                                      this.areSamePage(pageId, thirdLevel);
+                                    return (
+                                      <li
                                         className={classnames(
-                                          styles['collapsed-item-level-link'],
+                                          styles['collapsed-level-item'],
                                           {
+                                            [styles.active]: thirdLevelIsActive,
                                             [styles[
-                                              `color-${firstLevel.color}`
-                                            ]]: true,
+                                              `active-${firstLevel.color}`
+                                            ]]: thirdLevelIsActive,
                                           },
                                         )}
+                                        key={`thirdLevel-${thirdLevel.page}`}
                                       >
-                                        <span>{thirdLevel.label}</span>
-                                      </a>
-                                    </li>
-                                  );
-                                })}
-                              </React.Fragment>
-                            ))}
-                          </ul>
-                        );
-                      }}
-                    </BoundingBox>
-                  </li>
-                );
-              })}
-            </ul>
-          </li>
-        ))}
+                                        <Link
+                                          className={classnames(
+                                            styles['collapsed-item-level-link'],
+                                            styles[`color-${firstLevel.color}`],
+                                          )}
+                                          onClick={() => {
+                                            this.setState({
+                                              navigatedPageId: thirdLevel.page,
+                                              hrefOfIframe: false,
+                                            });
+                                          }}
+                                          component={RouterLink}
+                                          to={thirdLevelUrl.url}
+                                        >
+                                          {thirdLevel.label}
+                                        </Link>
+                                      </li>
+                                    );
+                                  })}
+                                </React.Fragment>
+                              ))}
+                            </ul>
+                          );
+                        }}
+                      </BoundingBox>
+                    </li>
+                  );
+                })}
+              </ul>
+            </li>
+          );
+        })}
       </ul>
     );
   }
