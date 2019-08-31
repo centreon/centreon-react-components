@@ -25,7 +25,6 @@
     &-link {
       border-bottom: 1px solid $white-color;
       text-align: left;
-      text-decoration: none;
       display: block;
       position: relative;
       cursor: pointer;
@@ -188,7 +187,6 @@
           background-color: $turquoise-centreon-darken;
         }
       }
-     
     }
     &.color-85B446 {
       .menu-item-link {
@@ -276,7 +274,6 @@
         &-level-link {
           border-bottom: 1px solid $grey-classic;
           text-align: left;
-          text-decoration: none;
           font-size: 0.7rem;
           color: $centreon-graphit;
           font-family: $primary-font-regular;
@@ -390,7 +387,6 @@
           &-link {
             border-bottom: 1px solid #f6f6f6;
             text-align: left;
-            text-decoration: none;
             font-size: .7rem;
             color: #242f3b;
             font-family: $primary-font-regular;

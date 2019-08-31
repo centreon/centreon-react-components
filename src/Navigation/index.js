@@ -12,13 +12,19 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
 import Link from '@material-ui/core/Link';
+import { styled } from '@material-ui/styles';
 import { Link as RouterLink } from 'react-router-dom';
 import styles from './navigation.scss';
 import BoundingBox from '../BoundingBox';
 
+const StyledLink = styled(Link)(() => ({
+  textDecoration: 'none',
+}));
+
 class Navigation extends Component {
   state = {
     activeSecondLevel: null,
+    doubleClickedLevel: null,
     navigatedPageId: false,
     hrefOfIframe: false,
   };
@@ -44,17 +50,8 @@ class Navigation extends Component {
       entryProps.page + (entryProps.options !== null ? entryProps.options : '');
     const url = entryProps.is_react
       ? entryProps.url
-      : `${'/main.php' + '?p='}${urlOptions}`;
-    return { url, urlOptions };
-  };
-
-  activateSecondLevel = (secondLevelPage) => {
-    const { activeSecondLevel } = this.state;
-
-    this.setState({
-      activeSecondLevel:
-        activeSecondLevel === secondLevelPage ? true : secondLevelPage,
-    });
+      : `/main.php?p=${urlOptions}`;
+    return url;
   };
 
   getActiveTopLevelIndex = (pageId) => {
@@ -86,20 +83,28 @@ class Navigation extends Component {
       : !isNaN(page) && page === level.page;
   };
 
+  activateSecondLevel = (secondLevelPage) => {
+    const { activeSecondLevel } = this.state;
+
+    this.setState({
+      activeSecondLevel:
+        activeSecondLevel === secondLevelPage ? true : secondLevelPage,
+    });
+  };
+
   render() {
     const {
-      customStyle,
       navigationData,
       sidebarActive,
-      handleDirectClick,
-      externalHistory,
+      location: { pathname, search },
       reactRoutes,
     } = this.props;
-    const { activeSecondLevel, navigatedPageId, hrefOfIframe } = this.state;
-    if (!externalHistory) {
-      return null;
-    }
-    const { pathname, search } = externalHistory.location;
+    const {
+      activeSecondLevel,
+      doubleClickedLevel,
+      navigatedPageId,
+      hrefOfIframe,
+    } = this.state;
     let pageId = '';
 
     if (navigatedPageId && !hrefOfIframe) {
@@ -127,80 +132,95 @@ class Navigation extends Component {
           styles.menu,
           styles['menu-items'],
           styles['list-unstyled'],
-          styles[customStyle || ''],
+          styles[sidebarActive ? 'menu-big' : 'menu-small'],
         )}
       >
         {navigationData.map((firstLevel, firstLevelIndex) => {
-          const secondLevelIsActive =
+          const firstLevelIsActive =
             firstLevel.toggled || this.areSamePage(pageId, firstLevel, 1);
           return (
             <li
-              className={classnames(styles['menu-item'], {
-                [styles[`color-${firstLevel.color}`]]: true,
-                [styles.active]: secondLevelIsActive,
-                [styles[`active-${firstLevel.color}`]]: secondLevelIsActive,
-              })}
+              className={classnames(
+                styles['menu-item'],
+                styles[`color-${firstLevel.color}`],
+                {
+                  [styles.active]: firstLevelIsActive,
+                  [styles[`active-${firstLevel.color}`]]: firstLevelIsActive,
+                },
+              )}
               key={`firstLevel-${firstLevel.page}`}
             >
-              <span
-                className={classnames(styles['menu-item-link'])}
-                onDoubleClick={() => {
-                  this.setState({
-                    hrefOfIframe: false,
-                  });
-                  handleDirectClick(firstLevel.page, firstLevel);
-                }}
-              >
-                <span
-                  className={classnames(styles.iconmoon, {
-                    [styles[`icon-${firstLevel.icon}`]]: true,
-                  })}
+              <span className={classnames(styles['menu-item-link'])}>
+                <StyledLink
+                  className={classnames(
+                    styles.iconmoon,
+                    styles[`icon-${firstLevel.icon}`],
+                  )}
+                  onClick={(e) => {
+                    if (doubleClickedLevel) {
+                      this.setState({
+                        doubleClickedLevel: null,
+                        hrefOfIframe: false,
+                      });
+                    } else {
+                      e.preventDefault();
+                    }
+                  }}
+                  onDoubleClick={(e) => {
+                    const target = e.target;
+                    this.setState(
+                      {
+                        hrefOfIframe: false,
+                        doubleClickedLevel: firstLevel,
+                      },
+                      () => {
+                        target.click();
+                      },
+                    );
+                  }}
+                  component={RouterLink}
+                  to={this.getUrlFromEntry(firstLevel)}
                 >
                   <span className={classnames(styles['menu-item-name'])}>
                     {firstLevel.label}
                   </span>
-                </span>
+                </StyledLink>
               </span>
               <ul
                 className={classnames(
                   styles.collapse,
                   styles['collapsed-items'],
                   styles['list-unstyled'],
-                  {
-                    [styles[`border-${firstLevel.color}`]]: true,
-                    [styles[
-                      activeIndex !== -1 &&
-                      firstLevelIndex > activeIndex &&
-                      sidebarActive &&
-                      navigationData[activeIndex].children.length >= 5
-                        ? 'towards-down'
-                        : 'towards-up'
-                    ]]: true,
-                  },
+                  styles[`border-${firstLevel.color}`],
+                  styles[
+                    activeIndex !== -1 &&
+                    firstLevelIndex > activeIndex &&
+                    sidebarActive &&
+                    navigationData[activeIndex].children.length >= 5
+                      ? 'towards-down'
+                      : 'towards-up'
+                  ],
                 )}
               >
                 {firstLevel.children.map((secondLevel) => {
-                  const secondLevelUrl = this.getUrlFromEntry(secondLevel);
+                  const secondLevelIsActive =
+                    activeSecondLevel === secondLevel.page ||
+                    (!activeSecondLevel &&
+                      this.areSamePage(pageId, secondLevel, 3));
+                  const secondLevelIsColored =
+                    secondLevel.toggled ||
+                    this.areSamePage(pageId, secondLevel, 3);
                   return (
                     <li
                       className={classnames(styles['collapsed-item'], {
+                        [styles.active]: secondLevelIsActive,
                         [styles[
-                          activeSecondLevel === secondLevel.page ||
-                          (!activeSecondLevel &&
-                            this.areSamePage(pageId, secondLevel, 3))
-                            ? `active`
-                            : ''
-                        ]]: true,
-                        [styles[
-                          secondLevel.toggled ||
-                          this.areSamePage(pageId, secondLevel, 3)
-                            ? `active-${firstLevel.color}`
-                            : ''
-                        ]]: true,
+                          `active-${firstLevel.color}`
+                        ]]: secondLevelIsColored,
                       })}
                       key={`secondLevel-${secondLevel.page}`}
                     >
-                      <Link
+                      <StyledLink
                         className={classnames(
                           styles['collapsed-item-level-link'],
                           styles[`color-${firstLevel.color}`],
@@ -209,25 +229,21 @@ class Navigation extends Component {
                           },
                         )}
                         onClick={(e) => {
-                          if (secondLevel.groups.length < 1) {
+                          if (secondLevel.groups.length > 0) {
+                            e.preventDefault(); // do not redirect if level 2 has children
+                            this.activateSecondLevel(secondLevel.page);
+                          } else {
                             this.setState({
                               navigatedPageId: secondLevel.page,
                               hrefOfIframe: false,
                             });
-                          } else {
-                            // do not redirect if level 2 has children
-                            e.preventDefault();
-
-                            if (this.areSamePage(pageId, firstLevel, 1)) {
-                              this.activateSecondLevel(secondLevel.page);
-                            }
                           }
                         }}
                         component={RouterLink}
-                        to={secondLevelUrl.url}
+                        to={this.getUrlFromEntry(secondLevel)}
                       >
                         {secondLevel.label}
-                      </Link>
+                      </StyledLink>
                       <BoundingBox active>
                         {({ rectBox }) => {
                           let styleFor3rdLevel = {};
@@ -262,9 +278,6 @@ class Navigation extends Component {
                                     </span>
                                   ) : null}
                                   {group.children.map((thirdLevel) => {
-                                    const thirdLevelUrl = this.getUrlFromEntry(
-                                      thirdLevel,
-                                    );
                                     const thirdLevelIsActive =
                                       thirdLevel.toggled ||
                                       this.areSamePage(pageId, thirdLevel);
@@ -281,7 +294,7 @@ class Navigation extends Component {
                                         )}
                                         key={`thirdLevel-${thirdLevel.page}`}
                                       >
-                                        <Link
+                                        <StyledLink
                                           className={classnames(
                                             styles['collapsed-item-level-link'],
                                             styles[`color-${firstLevel.color}`],
@@ -293,10 +306,10 @@ class Navigation extends Component {
                                             });
                                           }}
                                           component={RouterLink}
-                                          to={thirdLevelUrl.url}
+                                          to={this.getUrlFromEntry(thirdLevel)}
                                         >
                                           {thirdLevel.label}
-                                        </Link>
+                                        </StyledLink>
                                       </li>
                                     );
                                   })}
