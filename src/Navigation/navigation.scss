@@ -260,13 +260,6 @@
       &.border-319ED5 {
         border-left: 5px solid $lightblue-centreon-primary;
       }
-      &.towards-up {
-        top: 0;
-      }
-      &.towards-down {
-        top: auto;
-        bottom: 0;
-      }
     }
     .collapsed {
       &-item {
@@ -365,13 +358,6 @@
           box-shadow: 3px 3px 3px 0 rgba(70,75,82,.5);
           background-color: $white-color;
           z-index: 99;
-          &.towards-up {
-            top: 0;
-          }
-          &.towards-down {
-            top: auto;
-            bottom: 0;
-          }
           &.full {
             position: fixed;
             top: 0;
