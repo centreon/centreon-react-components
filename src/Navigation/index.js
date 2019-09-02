@@ -54,6 +54,20 @@ class Navigation extends Component {
     return url;
   };
 
+  getActiveTopLevelIndex = (pageId) => {
+    const { navigationData } = this.props;
+    let index = -1;
+    for (let i = 0; i < navigationData.length; i++) {
+      if (
+        !isNaN(pageId) &&
+        String(pageId).charAt(0) === navigationData[i].page
+      ) {
+        index = i;
+      }
+    }
+    return index;
+  };
+
   onNavigate = (id, url) => {
     const { onNavigate } = this.props;
     this.setState({
@@ -106,6 +120,8 @@ class Navigation extends Component {
       pageId = reactRoutes[pathname] || pathname;
     }
 
+    const activeIndex = this.getActiveTopLevelIndex(pageId);
+
     return (
       <ul
         className={classnames(
@@ -115,7 +131,7 @@ class Navigation extends Component {
           styles[sidebarActive ? 'menu-big' : 'menu-small'],
         )}
       >
-        {navigationData.map((firstLevel) => {
+        {navigationData.map((firstLevel, firstLevelIndex) => {
           const firstLevelIsActive =
             firstLevel.toggled || this.areSamePage(pageId, firstLevel, 1);
           return (
@@ -172,6 +188,14 @@ class Navigation extends Component {
                   styles['collapsed-items'],
                   styles['list-unstyled'],
                   styles[`border-${firstLevel.color}`],
+                  styles[
+                    activeIndex !== -1 &&
+                    firstLevelIndex > activeIndex &&
+                    sidebarActive &&
+                    navigationData[activeIndex].children.length >= 5
+                      ? 'towards-down'
+                      : 'towards-up'
+                  ],
                 )}
               >
                 {firstLevel.children.map((secondLevel) => {
