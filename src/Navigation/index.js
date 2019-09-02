@@ -54,6 +54,15 @@ class Navigation extends Component {
     return url;
   };
 
+  activateSecondLevel = (secondLevelPage) => {
+    const { activeSecondLevel } = this.state;
+
+    this.setState({
+      activeSecondLevel:
+        activeSecondLevel === secondLevelPage ? true : secondLevelPage,
+    });
+  };
+
   getActiveTopLevelIndex = (pageId) => {
     const { navigationData } = this.props;
     let index = -1;
@@ -81,15 +90,6 @@ class Navigation extends Component {
     return imersion
       ? !isNaN(page) && String(page).substring(0, imersion) === level.page
       : !isNaN(page) && page === level.page;
-  };
-
-  activateSecondLevel = (secondLevelPage) => {
-    const { activeSecondLevel } = this.state;
-
-    this.setState({
-      activeSecondLevel:
-        activeSecondLevel === secondLevelPage ? true : secondLevelPage,
-    });
   };
 
   render() {
