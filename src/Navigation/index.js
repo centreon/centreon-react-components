@@ -222,15 +222,12 @@ class Navigation extends Component {
                           if (rectBox && rectBox.bottom < 1) {
                             styleFor3rdLevel = {
                               height: rectBox.offsetHeight + rectBox.bottom,
-                              overflowY: 'scroll',
                             };
                           }
                           return (
                             <ul
                               className={classnames(
-                                styles['collapse-level'],
                                 styles['collapsed-level-items'],
-                                styles['first-level'],
                                 styles['list-unstyled'],
                               )}
                               style={styleFor3rdLevel}

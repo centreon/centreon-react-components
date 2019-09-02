@@ -229,7 +229,6 @@
             color: $white-color;
           }
         }
-       
       }
     }
   }
@@ -358,15 +357,7 @@
           box-shadow: 3px 3px 3px 0 rgba(70,75,82,.5);
           background-color: $white-color;
           z-index: 99;
-          &.full {
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            overflow-y: scroll;
-            left: 208px;
-            height: 100vh;
-            width: 150px;
-          }
+          overflow-y: auto;
         }
         &-item {
           position: relative;
@@ -494,18 +485,6 @@
             background-image: none !important;
             color: $white-color !important;
           }
-        }
-      }
-    }
-    .collapsed-level-items {
-      &.full {
-        max-height: 350px;
-      }
-    }
-    .collapse {
-      .collapsed-level-items {
-        &.full {
-          left: 328px;
         }
       }
     }
