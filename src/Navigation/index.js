@@ -93,12 +93,7 @@ class Navigation extends Component {
   };
 
   render() {
-    const {
-      navigationData,
-      sidebarActive,
-      location: { pathname, search },
-      reactRoutes,
-    } = this.props;
+    const { navigationData, sidebarActive, reactRoutes } = this.props;
     const {
       activeSecondLevel,
       doubleClickedLevel,
@@ -106,6 +101,7 @@ class Navigation extends Component {
       hrefOfIframe,
     } = this.state;
     let pageId = '';
+    const { pathname, search } = window.location;
 
     if (navigatedPageId && !hrefOfIframe) {
       pageId = navigatedPageId;

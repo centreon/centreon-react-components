@@ -23,8 +23,9 @@ class Sidebar extends Component {
   };
 
   render() {
-    const { navigationData, reactRoutes, location, style } = this.props;
+    const { navigationData, reactRoutes, style } = this.props;
     const { active } = this.state;
+
     return (
       <nav
         className={classnames(
@@ -44,7 +45,6 @@ class Sidebar extends Component {
             navigationData={navigationData || []}
             reactRoutes={reactRoutes || {}}
             sidebarActive={active}
-            location={location}
           />
           <div
             className={classnames(styles['sidebar-toggle-wrap'])}
