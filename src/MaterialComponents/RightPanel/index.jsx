@@ -11,8 +11,8 @@ import IconClose from '../Icons/IconClose';
 import ExpandableSection from './ExpandableSection';
 
 const panelWidth = 560;
-const openAnimationDurationMs = 300;
-const closeAnimationDurationMs = 200;
+const inAnimationDurationMs = 300;
+const outAnimationDurationMs = 200;
 
 const Header = styled(Box)({
   paddingRight: 140,
@@ -113,8 +113,8 @@ const RightPanel = ({
       in={active}
       direction="left"
       timeout={{
-        enter: openAnimationDurationMs,
-        exit: closeAnimationDurationMs,
+        enter: inAnimationDurationMs,
+        exit: outAnimationDurationMs,
       }}
     >
       <Container>
