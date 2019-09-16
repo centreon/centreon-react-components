@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import classnames from 'classnames';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Typography from '@material-ui/core/Typography';
+
 import InputFieldSearch from '../InputField/InputFieldSearch';
 import PanelItem from '../Panels/PanelItem';
 import TableCustom from '../Table/TableCustom';
@@ -46,7 +47,7 @@ class MultiselectPanel extends Component {
       styles,
       onlySelectedSwitcher = false,
       onlySelectedFilter = false,
-      onlySelectedChange = () => { },
+      onlySelectedChange = () => {},
     } = this.props;
     let currentlySelectedFromKey = currentlySelected;
     if (nameIdPaired) {
@@ -67,12 +68,13 @@ class MultiselectPanel extends Component {
           style={{ padding: '5px' }}
           aria-label={title}
         >
-          <h3
+          <Typography
+            variant="h6"
             className={classnames(styles['panel-item-title'])}
-            style={{ marginBottom: '5px' }}
           >
             {title}
-          </h3>
+          </Typography>
+
           <CustomRow
             style={{
               maxWidth: '100%',
@@ -86,7 +88,7 @@ class MultiselectPanel extends Component {
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
               }}
             >
               <InputFieldSearch
@@ -101,22 +103,23 @@ class MultiselectPanel extends Component {
               <CustomColumn customColumn="md-6">
                 <FormControlLabel
                   labelPlacement="top"
-                  control={
-                    <MaterialSwitch
+                  control={(
+<MaterialSwitch
                       size="small"
                       value={onlySelectedFilter}
                       checked={onlySelectedFilter}
                       onChange={onlySelectedChange}
                     />
-                  }
-                  label={
-                    <Typography style={{
-                      fontSize: '13px',
-                    }}
+)}
+                  label={(
+<Typography
+  style={{
+                        fontSize: '13px',
+                      }}
                     >
                       Selected items only
                     </Typography>
-                  }
+)}
                 />
               </CustomColumn>
             ) : null}
@@ -144,7 +147,7 @@ class MultiselectPanel extends Component {
             selected={currentlySelectedFromKey}
             impacts={impacts}
             paginated={!onlySelectedFilter}
-            ariaLabel={title + " Table"}
+            ariaLabel={`${title} Table`}
             enabledColumn="activate"
           />
         </div>
