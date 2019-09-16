@@ -10,7 +10,9 @@ import Slide from '@material-ui/core/Slide';
 import IconClose from '../Icons/IconClose';
 import ExpandableSection from './ExpandableSection';
 
-const PANEL_WIDTH = 560;
+const panelWidth = 560;
+const openAnimationDurationMs = 300;
+const closeAnimationDurationMs = 200;
 
 const Header = styled(Box)({
   paddingRight: 140,
@@ -27,7 +29,7 @@ const Container = styled('div')({
   right: 0,
   bottom: 30,
   backgroundColor: '#ededed',
-  minWidth: PANEL_WIDTH,
+  minWidth: panelWidth,
   position: 'absolute',
   pointerEvents: 'all',
   outline: 'none',
@@ -107,7 +109,14 @@ const RightPanel = ({
   };
 
   return (
-    <Slide in={active} direction="left" timeout={{ enter: 200, exit: 100 }}>
+    <Slide
+      in={active}
+      direction="left"
+      timeout={{
+        enter: openAnimationDurationMs,
+        exit: closeAnimationDurationMs,
+      }}
+    >
       <Container>
         <Header display="flex" flexDirection="row">
           <Box flexGrow={1}>{headerComponent}</Box>
