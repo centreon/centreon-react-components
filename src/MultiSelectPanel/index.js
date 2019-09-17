@@ -105,7 +105,7 @@ class MultiselectPanel extends Component {
                 <FormControlLabel
                   labelPlacement="top"
                   control={
-                                        <MaterialSwitch
+                    <MaterialSwitch
                       size="small"
                       value={onlySelectedFilter}
                       checked={onlySelectedFilter}
@@ -113,7 +113,7 @@ class MultiselectPanel extends Component {
                     />
                   }
                   label={
-                                        <Typography
+                    <Typography
                       style={{
                         fontSize: '13px',
                       }}
