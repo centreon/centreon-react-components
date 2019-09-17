@@ -74,7 +74,7 @@ class InputFieldSearch extends Component {
     const { searchText } = this.state;
     return (
       <Paper elevation={0} className={classes.paper}>
-        <Paper className={classes.root} style={style}>
+        <Paper className={classes.root}>
           <IconButton className={classes.iconButton} aria-label="Search">
             <SearchIcon fontSize="small" />
           </IconButton>

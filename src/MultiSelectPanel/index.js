@@ -48,6 +48,7 @@ class MultiselectPanel extends Component {
       onlySelectedSwitcher = false,
       onlySelectedFilter = false,
       onlySelectedChange = () => {},
+      enabledColumn,
     } = this.props;
     let currentlySelectedFromKey = currentlySelected;
     if (nameIdPaired) {
@@ -103,23 +104,23 @@ class MultiselectPanel extends Component {
               <CustomColumn customColumn="md-6">
                 <FormControlLabel
                   labelPlacement="top"
-                  control={(
-                    <MaterialSwitch
+                  control={
+                                        <MaterialSwitch
                       size="small"
                       value={onlySelectedFilter}
                       checked={onlySelectedFilter}
                       onChange={onlySelectedChange}
                     />
-                  )}
-                  label={(
-                    <Typography
+                  }
+                  label={
+                                        <Typography
                       style={{
                         fontSize: '13px',
                       }}
                     >
                       Selected items only
                     </Typography>
-                  )}
+                  }
                 />
               </CustomColumn>
             ) : null}
@@ -148,7 +149,7 @@ class MultiselectPanel extends Component {
             impacts={impacts}
             paginated={!onlySelectedFilter}
             ariaLabel={`${title} Table`}
-            enabledColumn="activate"
+            {...(enabledColumn ? { enabledColumn } : {})}
           />
         </div>
       </PanelItem>
