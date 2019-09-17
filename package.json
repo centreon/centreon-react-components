@@ -9,7 +9,7 @@
     "prepublishOnly": "npm run bundle",
     "bundle": "babel ./src --out-dir ./lib --copy-files",
     "start:dev": "npm run bundle -- --watch --source-maps",
-    "storybook": "start-storybook -p 9001 -c .storybook -s ./dynamic/compiled-components/components",
+    "storybook": "start-storybook -p 9001 -c .storybook",
     "test": "jest"
   },
   "repository": {
@@ -28,11 +28,7 @@
   "homepage": "https://github.com/centreon/centreon-react-components#readme",
   "peerDependencies": {
     "react": "^16.0.0",
-    "react-dom": "^16.0.0",
-    "uikit": "^3.*"
-  },
-  "bin": {
-    "centreon-compgen": "./dynamic/generator/index.js"
+    "react-dom": "^16.0.0"
   },
   "dependencies": {
     "@babel/runtime": "^7.5.5",
@@ -81,14 +77,10 @@
     "@storybook/addon-actions": "^5.1.9",
     "@storybook/addon-notes": "^5.1.9",
     "@storybook/react": "^5.1.9",
-    "@svgr/cli": "^2.1.0",
     "@testing-library/jest-dom": "^4.0.0",
     "@testing-library/react": "^8.0.5",
     "babel-eslint": "^10.0.2",
     "babel-jest": "^24.8.0",
-    "docz": "^0.5.2",
-    "docz-core": "^0.5.2",
-    "enzyme-adapter-react-16": "^1.14.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^4.3.0",
@@ -102,10 +94,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.8.0",
     "jest-emotion": "^10.0.14",
-    "jest-enzyme": "^7.0.2",
     "node-sass": "^4.10.0",
-    "prettier": "^1.18.2",
-    "react-testing-library": "^8.0.1",
-    "uikit": "^3.0.0-rc.11"
+    "prettier": "^1.18.2"
   }
 }
