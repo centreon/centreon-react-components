@@ -119,7 +119,10 @@ const RightPanel = ({
         <Header display="flex" flexDirection="row">
           <Box flexGrow={1}>{headerComponent}</Box>
           <Box>
-            <IconClose onClick={close} style={{ height: 39, padding: 5 }} />
+            <IconClose
+              onClick={close}
+              style={{ width: 39, height: 39, padding: 5 }}
+            />
           </Box>
         </Header>
         <Body display="flex" flexDirection="row" flexGrow={1}>
