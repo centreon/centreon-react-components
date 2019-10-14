@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/jsx-filename-extension */
 
@@ -11,6 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import DefaultTooltip from '@material-ui/core/Tooltip';
 import Box from '@material-ui/core/Box';
+import TableCell from '@material-ui/core/TableCell';
 import StyledTableRow from './StyledTableRow';
 import IconPowerSettings from '../../MaterialComponents/Icons/IconPowerSettings';
 import IconPowerSettingsDisable from '../../MaterialComponents/Icons/IconPowerSettingsDisable';
@@ -20,8 +22,6 @@ import IconLibraryAdd from '../../MaterialComponents/Icons/IconLibraryAdd';
 import EnhancedTableHead from './EnhancedTableHead';
 import TABLE_COLUMN_TYPES from '../ColumnTypes';
 import TablePaginationActions from './TablePaginationActions';
-import StyledTableCell2 from './StyledTableCell2';
-import TableCellCustom from './TableCellCustom';
 import StyledPagination from './StyledPagination';
 import Tooltip from '../../MaterialComponents/Tooltip';
 import InputFieldSelectTableCell from '../../InputField/InputFieldSelectTableCell';
@@ -29,6 +29,13 @@ import InputFieldTableCell from '../../InputField/InputFieldTableCell';
 import IndicatorsEditor from './IndicatorsEditorRow';
 
 const loadingIndicatorHeight = 3;
+
+const BodyTableCell = withStyles({
+  root: {
+    fontSize: 13,
+    lineHeight: 1.4,
+  },
+})(TableCell);
 
 const styles = () => ({
   root: {
@@ -122,9 +129,9 @@ class TableCustom extends Component {
     const selectedIndex = indicatorsEditor
       ? selected
           .map(({ object, type }) => {
-            return object.id + type + "Typed";
+            return `${object.id + type}Typed`;
           })
-          .indexOf(value.object.id + value.type + "Typed")
+          .indexOf(`${value.object.id + value.type}Typed`)
       : selected.indexOf(value);
     let newSelected = [];
 
@@ -203,11 +210,12 @@ class TableCustom extends Component {
     const { order, orderBy, hovered } = this.state;
 
     const isSelected = (value) => {
-      // eslint-disable-next-line
       for (let i = 0; i < selected.length; i++) {
-        // eslint-disable-next-line
         if (indicatorsEditor) {
-          if (selected[i].object.id === value.object.id && selected[i].type === value.type) {
+          if (
+            selected[i].object.id === value.object.id &&
+            selected[i].type === value.type
+          ) {
             return {
               bool: true,
               obj: selected[i],
@@ -303,7 +311,7 @@ class TableCustom extends Component {
                       <StyledTableRow
                         hover
                         tabIndex={-1}
-                        key={index+ariaLabel}
+                        key={row.id}
                         onMouseEnter={this.rowHovered.bind(this, row.id, true)}
                         {...this.addConditionalRowBackground(
                           row,
@@ -317,10 +325,9 @@ class TableCustom extends Component {
                         }}
                       >
                         {checkable ? (
-                          <StyledTableCell2
+                          <BodyTableCell
                             align="left"
                             onClick={(event) => this.handleClick(event, row)}
-                            className={classes.tableCell}
                             padding="checkbox"
                             style={
                               indicatorsEditor
@@ -334,16 +341,15 @@ class TableCustom extends Component {
                               checked={isItemSelected.bool}
                               color="primary"
                             />
-                          </StyledTableCell2>
+                          </BodyTableCell>
                         ) : null}
 
                         {columnConfiguration.map((column) => {
                           switch (column.type) {
                             case TABLE_COLUMN_TYPES.number:
                               return (
-                                <TableCellCustom
+                                <BodyTableCell
                                   align="left"
-                                  className={classes.tableCellCustom}
                                   style={
                                     indicatorsEditor
                                       ? {
@@ -353,15 +359,13 @@ class TableCustom extends Component {
                                   }
                                 >
                                   {row[column.id] || ''}
-                                </TableCellCustom>
+                                </BodyTableCell>
                               );
                             case TABLE_COLUMN_TYPES.string:
-                            case TABLE_COLUMN_TYPES.number:
                               return (
-                                <TableCellCustom
+                                <BodyTableCell
                                   key={column.id}
                                   align="left"
-                                  className={classes.tableCellCustom}
                                   style={
                                     indicatorsEditor
                                       ? {
@@ -372,6 +376,7 @@ class TableCustom extends Component {
                                 >
                                   {column.image && (
                                     <img
+                                      alt=""
                                       src={row.iconPath}
                                       style={{
                                         maxWidth: 21,
@@ -384,11 +389,11 @@ class TableCustom extends Component {
                                   {column.subkey
                                     ? row[column.subkey][column.id] || ''
                                     : row[column.id] || ''}
-                                </TableCellCustom>
+                                </BodyTableCell>
                               );
                             case TABLE_COLUMN_TYPES.boolean:
                               return (
-                                <StyledTableCell2
+                                <BodyTableCell
                                   align="left"
                                   style={
                                     indicatorsEditor
@@ -441,11 +446,11 @@ class TableCustom extends Component {
                                       />
                                     </IconButton>
                                   )}
-                                </StyledTableCell2>
+                                </BodyTableCell>
                               );
                             case TABLE_COLUMN_TYPES.toggler:
                               return (
-                                <StyledTableCell2
+                                <BodyTableCell
                                   align="left"
                                   style={
                                     indicatorsEditor
@@ -506,11 +511,11 @@ class TableCustom extends Component {
                                       />
                                     </Tooltip>
                                   )}
-                                </StyledTableCell2>
+                                </BodyTableCell>
                               );
                             case TABLE_COLUMN_TYPES.input:
                               return (
-                                <StyledTableCell2
+                                <BodyTableCell
                                   align="left"
                                   style={
                                     indicatorsEditor
@@ -521,11 +526,11 @@ class TableCustom extends Component {
                                   }
                                 >
                                   <InputFieldTableCell />
-                                </StyledTableCell2>
+                                </BodyTableCell>
                               );
                             case TABLE_COLUMN_TYPES.select:
                               return (
-                                <StyledTableCell2
+                                <BodyTableCell
                                   align="left"
                                   style={
                                     indicatorsEditor
@@ -544,14 +549,13 @@ class TableCustom extends Component {
                                     }
                                     active="active"
                                   />
-                                </StyledTableCell2>
+                                </BodyTableCell>
                               );
                             case TABLE_COLUMN_TYPES.widthVariation:
                               return (
-                                <TableCellCustom
+                                <BodyTableCell
                                   key={column.id}
                                   align="left"
-                                  className={classes.tableCellCustom}
                                   colSpan={isItemSelected.bool ? 1 : 5}
                                   style={
                                     indicatorsEditor
@@ -574,14 +578,13 @@ class TableCustom extends Component {
                                       })`}
                                     </span>
                                   </DefaultTooltip>
-                                </TableCellCustom>
+                                </BodyTableCell>
                               );
                             case TABLE_COLUMN_TYPES.multicolumn:
                               return (
-                                <TableCellCustom
+                                <BodyTableCell
                                   key={column.id}
                                   align="left"
-                                  className={classes.tableCellCustom}
                                   style={
                                     indicatorsEditor
                                       ? {
@@ -591,7 +594,7 @@ class TableCustom extends Component {
                                   }
                                 >
                                   {column.columns.map((subColumn) => (
-                                    <React.Fragment>
+                                    <>
                                       {`${subColumn.label} ${
                                         row[subColumn.id]
                                       }`}
@@ -599,21 +602,18 @@ class TableCustom extends Component {
                                         ? '%'
                                         : null}
                                       {'   '}
-                                    </React.Fragment>
+                                    </>
                                   ))}
-                                </TableCellCustom>
+                                </BodyTableCell>
                               );
                             case TABLE_COLUMN_TYPES.hoverActions:
                               return (
-                                <StyledTableCell2
+                                <BodyTableCell
                                   align="right"
                                   key={column.id}
                                   style={{
-                                    paddingTop: 0,
-                                    paddingBottom: 0,
-                                    width: 100,
-                                    boxSizing: 'border-box',
-                                    padding: '0 !important',
+                                    width: 90,
+                                    position: 'relative',
                                   }}
                                 >
                                   {hovered === row.id ? (
@@ -621,10 +621,10 @@ class TableCustom extends Component {
                                       flexDirection="row"
                                       display="flex"
                                       style={{
-                                        marginRight: -18,
+                                        marginRight: -10,
                                         position: 'absolute',
-                                        top: 3,
-                                        right: 5,
+                                        top: 6,
+                                        right: 0,
                                       }}
                                     >
                                       <Box>
@@ -671,7 +671,7 @@ class TableCustom extends Component {
                                   ) : (
                                     ' '
                                   )}
-                                </StyledTableCell2>
+                                </BodyTableCell>
                               );
                             default:
                               return null;
@@ -691,13 +691,9 @@ class TableCustom extends Component {
                   })}
                   {tableData.length < 1 && (
                     <StyledTableRow tabIndex={-1}>
-                      <TableCellCustom
-                        className={classes.tableCellCustom}
-                        colSpan={6}
-                        align="center"
-                      >
+                      <BodyTableCell colSpan={6} align="center">
                         {loading ? loadingDataMessage : emptyDataMessage}
-                      </TableCellCustom>
+                      </BodyTableCell>
                     </StyledTableRow>
                   )}
                 </TableBody>
