@@ -70,9 +70,11 @@ class TableCustom extends Component {
   tableBodyRef = React.createRef();
 
   componentDidMount() {
+    const { y, height } = this.tableBodyRef.current.getBoundingClientRect();
+    
     this.setState({
-      tableTopOffset: this.tableBodyRef.current.getBoundingClientRect().y,
-      tableHeight: this.tableBodyRef.current.getBoundingClientRect().height,
+      tableTopOffset: y,
+      tableHeight: height,
     });
   }
 
