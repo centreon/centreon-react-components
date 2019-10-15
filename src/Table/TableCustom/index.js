@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/jsx-filename-extension */
@@ -71,7 +72,7 @@ class TableCustom extends Component {
 
   componentDidMount() {
     const { y, height } = this.tableBodyRef.current.getBoundingClientRect();
-    
+
     this.setState({
       tableTopOffset: y,
       tableHeight: height,
@@ -244,7 +245,7 @@ class TableCustom extends Component {
 
     const emptyRows = limit - Math.min(limit, totalRows - currentPage * limit);
 
-    const tableHeight = () => {
+    const tableMaxHeight = () => {
       const { tableHeight, tableTopOffset } = this.state;
 
       return `calc(100vh - ${tableHeight}px - ${tableTopOffset}px - 5px)`;
@@ -281,7 +282,7 @@ class TableCustom extends Component {
           <div
             style={{
               overflow: 'auto',
-              maxHeight: tableHeight(),
+              maxHeight: tableMaxHeight(),
             }}
           >
             <Table
@@ -722,6 +723,7 @@ class TableCustom extends Component {
 
 TableCustom.defaultProps = {
   enabledColumn: '',
+  ariaLabel: '',
   onRowClick: () => {},
   labelDisplayedRows: ({ from, to, count }) => `${from}-${to} of ${count}`,
   labelRowsPerPage: 'Rows per page',
@@ -732,6 +734,8 @@ TableCustom.defaultProps = {
   emptyDataMessage: 'No results found',
   loadingDataMessage: 'Loading data',
   loading: false,
+  paginated: true,
+  impacts: [],
 };
 
 const anyObject = PropTypes.objectOf(
@@ -740,6 +744,7 @@ const anyObject = PropTypes.objectOf(
 const anyArray = PropTypes.arrayOf(anyObject);
 
 TableCustom.propTypes = {
+  ariaLabel: PropTypes.string,
   classes: anyObject.isRequired,
   onSort: PropTypes.func.isRequired,
   onEntitiesSelected: PropTypes.func,
@@ -766,6 +771,8 @@ TableCustom.propTypes = {
   emptyDataMessage: PropTypes.string,
   loadingDataMessage: PropTypes.string,
   loading: PropTypes.bool,
+  paginated: PropTypes.bool,
+  impacts: anyArray,
 };
 
 export default withStyles(styles, { withTheme: true })(TableCustom);
