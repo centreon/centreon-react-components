@@ -14,6 +14,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import DefaultTooltip from '@material-ui/core/Tooltip';
 import Box from '@material-ui/core/Box';
 import TableCell from '@material-ui/core/TableCell';
+import ResizeObserver from 'resize-observer-polyfill';
 import StyledTableRow from './StyledTableRow';
 import IconPowerSettings from '../../MaterialComponents/Icons/IconPowerSettings';
 import IconPowerSettingsDisable from '../../MaterialComponents/Icons/IconPowerSettingsDisable';
@@ -60,23 +61,31 @@ const styles = () => ({
   },
 });
 
+function cumulativeOffset(element) {
+  if (!element.offsetParent) {
+    return 0;
+  }
+
+  return cumulativeOffset(element.offsetParent) + element.offsetTop;
+}
+
 class TableCustom extends Component {
   state = {
     order: '',
     orderBy: '',
-    tableHeight: 0,
     tableTopOffset: 0,
   };
 
   tableBodyRef = React.createRef();
 
   componentDidMount() {
-    const { y, height } = this.tableBodyRef.current.getBoundingClientRect();
-
-    this.setState({
-      tableTopOffset: y,
-      tableHeight: height,
+    const ro = new ResizeObserver(() => {
+      this.setState({
+        tableTopOffset: cumulativeOffset(this.tableBodyRef.current),
+      });
     });
+
+    ro.observe(this.tableBodyRef.current);
   }
 
   handleRequestSort = (event, property) => {
@@ -246,9 +255,9 @@ class TableCustom extends Component {
     const emptyRows = limit - Math.min(limit, totalRows - currentPage * limit);
 
     const tableMaxHeight = () => {
-      const { tableHeight, tableTopOffset } = this.state;
+      const { tableTopOffset } = this.state;
 
-      return `calc(100vh - ${tableHeight}px - ${tableTopOffset}px - 5px)`;
+      return `calc(100vh - ${tableTopOffset}px - 25px)`;
     };
 
     return (
