@@ -1,0 +1,7 @@
+{
+	"eslint.enable": true,
+	"eslint.alwaysShowStatus": true,
+	"eslint.options": {
+		"configFile" : "C:/Users/Daxx/centreon-react-components/.eslintrc.js"
+	}
+}

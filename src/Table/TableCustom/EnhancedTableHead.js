@@ -36,7 +36,6 @@ const EnhancedTableHead = ({
   onRequestSort,
   indicatorsEditor,
 }) => {
-
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -170,6 +169,11 @@ EnhancedTableHead.propTypes = {
     ),
   ).isRequired,
   checkable: PropTypes.bool.isRequired,
+  indicatorsEditor: PropTypes.bool,
+};
+
+EnhancedTableHead.defaultProps = {
+  indicatorsEditor: null,
 };
 
 export default EnhancedTableHead;
