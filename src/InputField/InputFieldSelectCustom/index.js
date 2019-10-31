@@ -71,7 +71,7 @@ class InputFieldSelectCustom extends Component {
     }
   };
 
-  UNSAFE_componentWillMount() {
+  componentDidMount() {
     window.addEventListener('mousedown', this.handleClickOutside, false);
   }
 
