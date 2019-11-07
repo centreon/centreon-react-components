@@ -173,9 +173,9 @@ class InputFieldSelectCustom extends Component {
                       >
                         {option.name}
                       </span>
-                  )}
-                </React.Fragment>
-              ))
+                    )}
+                  </React.Fragment>
+                ))
               : null}
           </div>
         ) : null}
