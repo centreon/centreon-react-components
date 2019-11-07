@@ -16,7 +16,7 @@ class InputFieldSelectCustom extends Component {
     active: false,
     allOptions: [],
     options: [],
-    selected: {},
+    selected: null,
   };
 
   componentWillUnmount() {
@@ -24,7 +24,8 @@ class InputFieldSelectCustom extends Component {
   }
 
   componentWillMount = () => {
-    const { value, options } = this.props;
+    const { value, options, onChange } = this.props;
+    const { selected } = this.state;
     let found = false;
     if (options) {
       for (let i = 0; i < options.length; i += 1) {
@@ -38,13 +39,17 @@ class InputFieldSelectCustom extends Component {
       this.setState({
         options,
         allOptions: options,
-        ...(!found && { selected: {} }),
+        ...(!found && { selected: null }),
       });
+      if (!found && selected !== null) {
+        onChange(null);
+      }
     }
   };
 
   componentWillReceiveProps = (nextProps) => {
-    const { value, options } = nextProps;
+    const { value, options, onChange } = nextProps;
+    const { selected } = this.state;
     let found = false;
     if (options) {
       for (let i = 0; i < options.length; i += 1) {
@@ -58,12 +63,15 @@ class InputFieldSelectCustom extends Component {
       this.setState({
         options,
         allOptions: options,
-        ...(!found && { selected: {} }),
+        ...(!found && { selected: null }),
       });
+      if (!found && selected !== null) {
+        onChange(null);
+      }
     }
   };
 
-  UNSAFE_componentWillMount() {
+  componentDidMount() {
     window.addEventListener('mousedown', this.handleClickOutside, false);
   }
 
@@ -157,7 +165,7 @@ class InputFieldSelectCustom extends Component {
               className={classnames(styles['input-select-field'])}
               onClick={this.toggleSelect.bind(this)}
             >
-              {selected.name}
+              {selected ? selected.name : ''}
             </span>
           )}
           <IconToggleSubmenu
