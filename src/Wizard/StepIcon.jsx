@@ -40,7 +40,7 @@ function StepIcon({ active, completed, icon }) {
   return (
     <div className={classes.root}>
       {completed ? (
-        <Avatar className={${classes.avatar}  ${classes.avatarCompleted}}>
+        <Avatar className={`${classes.avatar} ${classes.avatarCompleted}`}>
           <Check className={classes.completed} />
         </Avatar>
       ) : (
