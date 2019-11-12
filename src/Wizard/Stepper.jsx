@@ -30,7 +30,7 @@ function Stepper({ activeStep, children }) {
       activeStep={activeStep}
     >
       {React.Children.toArray(children).map((child, index) => (
-        <Step key={child.props.label ? child.props.label : index}>
+        <Step key={child.props.label ||  index}>
           <StepLabel
             classes={{
               alternativeLabel: classes.label,
