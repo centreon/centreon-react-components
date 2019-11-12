@@ -24,9 +24,6 @@ function isReactElement(element) {
 function cloneElement(element, props) {
   const forwardedProps = isReactElement(element) ? props : {};
 
-  console.log(isReactElement(element))
-  console.log(React.isValidElement(element))
-
   return React.cloneElement(element, { ...forwardedProps });
 }
 
