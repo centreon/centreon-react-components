@@ -24,7 +24,7 @@ function Alert({
   return (
     <Dialog open={open}>
       <DialogTitle>{labelTitle}</DialogTitle>
-      {labelTitle && (
+      {labelMessage && (
         <DialogContent>
           <DialogContentText>{labelMessage}</DialogContentText>
         </DialogContent>
