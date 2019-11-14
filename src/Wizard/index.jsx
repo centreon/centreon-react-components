@@ -146,7 +146,7 @@ function Wizard(props) {
                     isLastPage={isLastPage}
                     isSubmitting={isSubmitting}
                     onPrevious={previous}
-                    {...actionBarProps}
+                    actionBarProps={actionBarProps}
                   />
                 )}
               </form>
@@ -167,12 +167,12 @@ function Wizard(props) {
 Wizard.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func,
-  initialValues: PropTypes.objectOf(PropTypes.object),
+  initialValues: PropTypes.objectOf(PropTypes.any),
   onSubmit: PropTypes.func,
   width: PropTypes.string,
   fullHeight: PropTypes.bool,
-  actionBarProps: PropTypes.objectOf(PropTypes.object),
-  exitConfirmProps: PropTypes.objectOf(PropTypes.object),
+  actionBarProps: PropTypes.objectOf(PropTypes.any),
+  exitConfirmProps: PropTypes.objectOf(PropTypes.any),
   children: PropTypes.node.isRequired,
 };
 
