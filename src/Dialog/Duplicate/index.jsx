@@ -30,7 +30,6 @@ function Duplicate({
       onCancel={onCancel}
       onConfirm={handleConfirm}
       labelTitle={labelTitle}
-      labelInput={labelInput}
       labelCancel={labelCancel}
       labelConfirm={labelConfirm}
       maxWidth="xs"

@@ -6,9 +6,15 @@ describe('Wizard', () => {
   it('displays step labels', () => {
     const { getByText } = render(
       <Wizard open>
-        <Page label="step label 1"><div>Step 1</div></Page>
-        <Page label="step label 2"><div>Step 2</div></Page>
-        <Page label="step label 3"><div>Step 3</div></Page>
+        <Page label="step label 1">
+          <div>Step 1</div>
+        </Page>
+        <Page label="step label 2">
+          <div>Step 2</div>
+        </Page>
+        <Page label="step label 3">
+          <div>Step 3</div>
+        </Page>
       </Wizard>,
     );
 
