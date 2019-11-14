@@ -1,32 +1,13 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
-import Alert from './Alert';
+import DialogConfirm from '.';
 
-describe('Alert', () => {
-  it('overrides icons', () => {
-    const { getByText } = render(
-      <Alert
-        open
-        labelTitle="title"
-        labelMessage="message"
-        labelCancel="cancel"
-        labelConfirm="confirm"
-        onCancel={jest.fn()}
-        onConfirm={jest.fn()}
-      />,
-    );
-
-    expect(getByText('title')).toBeInTheDocument();
-    expect(getByText('message')).toBeInTheDocument();
-    expect(getByText('cancel')).toBeInTheDocument();
-    expect(getByText('confirm')).toBeInTheDocument();
-  });
-
+describe('DialogConfirm', () => {
   it('confirms', () => {
     const mockConfirm = jest.fn();
 
     const { getByText } = render(
-      <Alert
+      <DialogConfirm
         open
         labelTitle="title"
         labelMessage="message"
@@ -46,7 +27,7 @@ describe('Alert', () => {
     const mockCancel = jest.fn();
 
     const { getByText } = render(
-      <Alert
+      <DialogConfirm
         open
         labelTitle="title"
         labelMessage="message"

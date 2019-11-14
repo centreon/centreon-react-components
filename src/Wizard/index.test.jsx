@@ -1,6 +1,5 @@
 import React from 'react';
 import { act, render, fireEvent } from '@testing-library/react';
-import Typography from '@material-ui/core/Typography';
 import Wizard, { Page } from '.';
 
 describe('Wizard', () => {

@@ -7,7 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import Box from '@material-ui/core/Box';
 import Stepper from './Stepper';
 import ActionBar from './ActionBar';
-import Alert from './Alert';
+import Confirm from '../Dialog/Confirm';
 
 function isReactElement(element) {
   if (
@@ -51,26 +51,26 @@ function Wizard(props) {
     width,
     fullHeight,
     actionBarProps,
-    exitAlertProps,
+    exitConfirmProps,
     children,
   } = props;
   const classes = useWizardStyles(props);
   const [page, setPage] = useState(0);
   const [values, setValues] = useState(initialValues);
-  const [openAlert, setOpenAlert] = useState(false);
+  const [openConfirm, setOpenConfirm] = useState(false);
 
   const handleClose = (event, reason) => {
     // close wizard without confirmation if it's the first page
     if (page === 0) {
       onClose('cancel');
     } else {
-      setOpenAlert(true);
+      setOpenConfirm(true);
       onClose(reason);
     }
   };
 
-  const handleCloseAlert = (confirm) => {
-    setOpenAlert(false);
+  const handleCloseConfirm = (confirm) => {
+    setOpenConfirm(false);
 
     if (confirm === true) {
       onClose('cancel');
@@ -137,8 +137,8 @@ function Wizard(props) {
                   onPrevious: previous,
                   onNext: next,
                   values,
-                  setFieldValueAction: setFieldValue,
-                  submitFormAction: submitForm,
+                  setFieldValue,
+                  submitForm,
                 })}
                 {!activePage.props.noActionBar && (
                   <ActionBar
@@ -154,11 +154,11 @@ function Wizard(props) {
           </Formik>
         </DialogContent>
       </Dialog>
-      <Alert
-        open={openAlert}
-        onCancel={() => handleCloseAlert(false)}
-        onConfirm={() => handleCloseAlert(true)}
-        {...exitAlertProps}
+      <Confirm
+        open={openConfirm}
+        onCancel={() => handleCloseConfirm(false)}
+        onConfirm={() => handleCloseConfirm(true)}
+        {...exitConfirmProps}
       />
     </>
   );
@@ -172,7 +172,7 @@ Wizard.propTypes = {
   width: PropTypes.string,
   fullHeight: PropTypes.bool,
   actionBarProps: PropTypes.objectOf(PropTypes.object),
-  exitAlertProps: PropTypes.objectOf(PropTypes.object),
+  exitConfirmProps: PropTypes.objectOf(PropTypes.object),
   children: PropTypes.node.isRequired,
 };
 
@@ -183,7 +183,7 @@ Wizard.defaultProps = {
   fullHeight: false,
   width: 'md',
   actionBarProps: null,
-  exitAlertProps: null,
+  exitConfirmProps: null,
 };
 
 export const Page = ({ children, ...props }) => (

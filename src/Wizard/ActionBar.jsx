@@ -4,10 +4,6 @@ import { styled } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 
-const StepButton = styled(Button)({
-  color: '#009fdf',
-});
-
 function ActionBar(props) {
   const {
     page,
@@ -27,30 +23,36 @@ function ActionBar(props) {
     <Grid container direction="row" justify="space-between" alignItems="center">
       <Grid item>
         {onCancel && (
-          <StepButton
+          <Button
             type="button"
+            color="primary"
             onClick={(event) => onCancel(event, 'cancel')}
           >
             {labelCancel}
-          </StepButton>
+          </Button>
         )}
       </Grid>
 
       <Grid item>
         {page > 0 && (
-          <StepButton type="button" onClick={onPrevious}>
+          <Button type="button" color="primary" onClick={onPrevious}>
             {labelPrevious}
-          </StepButton>
+          </Button>
         )}
 
         {isLastPage ? (
-          <StepButton type="submit" disabled={isSubmitting} onClick={onFinish}>
+          <Button
+            type="submit"
+            color="primary"
+            disabled={isSubmitting}
+            onClick={onFinish}
+          >
             {labelFinish}
-          </StepButton>
+          </Button>
         ) : (
-          <StepButton type="submit" onClick={onNext}>
+          <Button type="submit" color="primary" onClick={onNext}>
             {labelNext}
-          </StepButton>
+          </Button>
         )}
       </Grid>
     </Grid>

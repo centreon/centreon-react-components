@@ -11,7 +11,7 @@ exports[`ActionBar renders correctly 1`] = `
     class="MuiGrid-root MuiGrid-item"
   >
     <button
-      class="MuiButtonBase-root MuiButton-root MuiButton-text WithStyles(ForwardRef(Button))-root-104"
+      class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary"
       tabindex="0"
       type="submit"
     >

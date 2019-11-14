@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Check from '@material-ui/icons/Check';
 
-const useStepIconStyles = makeStyles({
+const useStepIconStyles = makeStyles((theme) => ({
   root: {
     color: '#000000',
     display: 'flex',
@@ -21,18 +21,18 @@ const useStepIconStyles = makeStyles({
   },
   avatarActive: {
     color: '#ffffff',
-    backgroundColor: '#009fdf',
-    boxShadow: '0 3px 2px 1px rgba(0,0,0,.25)',
+    backgroundColor: theme.palette.primary.main,
+    boxShadow: '0 1px 2px 1px rgba(0,0,0,.25)',
   },
   avatarCompleted: {
-    backgroundColor: '#009fdf',
+    backgroundColor: theme.palette.primary.main,
   },
   completed: {
     color: '#ffffff',
     zIndex: 1,
     fontSize: 18,
   },
-});
+}));
 
 function StepIcon({ active, completed, icon }) {
   const classes = useStepIconStyles();
