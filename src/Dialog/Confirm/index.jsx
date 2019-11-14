@@ -3,26 +3,9 @@ import PropTypes from 'prop-types';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import Dialog from '..';
 
-function Confirm({
-  open,
-  onClose,
-  onCancel,
-  onConfirm,
-  labelTitle,
-  labelMessage,
-  labelCancel,
-  labelConfirm,
-}) {
+function Confirm({ labelMessage, ...rest }) {
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      onCancel={onCancel}
-      onConfirm={onConfirm}
-      labelTitle={labelTitle}
-      labelCancel={labelCancel}
-      labelConfirm={labelConfirm}
-    >
+    <Dialog {...rest}>
       {labelMessage && <DialogContentText>{labelMessage}</DialogContentText>}
     </Dialog>
   );

@@ -3,16 +3,7 @@ import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '..';
 
-function Duplicate({
-  open,
-  onClose,
-  onCancel,
-  onConfirm,
-  labelTitle,
-  labelInput,
-  labelCancel,
-  labelConfirm,
-}) {
+function Duplicate({ labelInput, onConfirm, ...rest }) {
   const [value, setValue] = useState(1);
 
   const handleChange = ({ target }) => {
@@ -24,16 +15,7 @@ function Duplicate({
   };
 
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      onCancel={onCancel}
-      onConfirm={handleConfirm}
-      labelTitle={labelTitle}
-      labelCancel={labelCancel}
-      labelConfirm={labelConfirm}
-      maxWidth="xs"
-    >
+    <Dialog maxWidth="xs" onConfirm={handleConfirm} {...rest}>
       <TextField
         type="number"
         color="primary"
