@@ -63,7 +63,7 @@ const styles = () => ({
 });
 
 function cumulativeOffset(element) {
-  if (!element.offsetParent) {
+  if (!element || !element.offsetParent) {
     return 0;
   }
 
@@ -274,7 +274,7 @@ class TableCustom extends Component {
                         classes,
                       )}
                       onClick={() => {
-                        onRowClick(row.id);
+                        onRowClick(row);
                       }}
                     >
                       {checkable ? (
@@ -375,7 +375,7 @@ class TableCustom extends Component {
                                     onClick={(e) => {
                                       e.preventDefault();
                                       e.stopPropagation();
-                                      onDisable([row.id]);
+                                      onDisable([row]);
                                     }}
                                   >
                                     <IconPowerSettings
@@ -383,7 +383,7 @@ class TableCustom extends Component {
                                       onClick={(e) => {
                                         e.preventDefault();
                                         e.stopPropagation();
-                                        onDisable([row.id]);
+                                        onDisable([row]);
                                       }}
                                       active
                                       customStyle={{
@@ -400,7 +400,7 @@ class TableCustom extends Component {
                                     onClick={(e) => {
                                       e.preventDefault();
                                       e.stopPropagation();
-                                      onEnable([row.id]);
+                                      onEnable([row]);
                                     }}
                                   >
                                     <IconPowerSettingsDisable
@@ -409,7 +409,7 @@ class TableCustom extends Component {
                                       onClick={(e) => {
                                         e.preventDefault();
                                         e.stopPropagation();
-                                        onEnable([row.id]);
+                                        onEnable([row]);
                                       }}
                                       customStyle={{
                                         fontSize: 18,
@@ -507,7 +507,7 @@ class TableCustom extends Component {
                                       <Tooltip
                                         label="Delete"
                                         onClick={() => {
-                                          onDelete([row.id]);
+                                          onDelete([row]);
                                         }}
                                       >
                                         <IconDelete
@@ -518,7 +518,7 @@ class TableCustom extends Component {
                                           onClick={(e) => {
                                             e.preventDefault();
                                             e.stopPropagation();
-                                            onDelete([row.id]);
+                                            onDelete([row]);
                                           }}
                                         />
                                       </Tooltip>
@@ -527,7 +527,7 @@ class TableCustom extends Component {
                                       <Tooltip
                                         label="Duplicate"
                                         onClick={() => {
-                                          onDuplicate([row.id]);
+                                          onDuplicate([row]);
                                         }}
                                       >
                                         <IconLibraryAdd
@@ -538,7 +538,7 @@ class TableCustom extends Component {
                                           onClick={(e) => {
                                             e.preventDefault();
                                             e.stopPropagation();
-                                            onDuplicate([row.id]);
+                                            onDuplicate([row]);
                                           }}
                                         />
                                       </Tooltip>
