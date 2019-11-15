@@ -16,7 +16,7 @@ describe('Table', () => {
     },
   ];
 
-  const tableData = [{ name: 'My First Row' }, { name: 'My Second Row'}];
+  const tableData = [{ name: 'My First Row' }, { name: 'My Second Row' }];
   const onSelectRows = jest.fn();
 
   it('selects a row when the corresponding checkbox is clicked', () => {
@@ -91,5 +91,5 @@ describe('Table', () => {
     fireEvent.click(selectAllCheckbox);
 
     expect(onSelectRows).toHaveBeenCalledWith([]);
-  })
+  });
 });
