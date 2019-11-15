@@ -558,7 +558,10 @@ class TableCustom extends Component {
                           row={row}
                           index={index}
                           impacts={impacts}
-                          selected={isRowSelected}
+                          selected={{
+                            bool: isRowSelected,
+                            obj: row,
+                          }}
                           onImpactEdit={this.selectRow}
                         />
                       ) : null}
