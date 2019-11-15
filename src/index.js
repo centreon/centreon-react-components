@@ -94,6 +94,8 @@ export { default as ExtensionDetailsPopup } from './ExtensionDetailsPopup';
 export { default as ExtensionDeletePopup } from './ExtensionDeletePopup';
 export { default as Axios } from './Axios';
 export { default as Loader } from './Loader';
+export { default as ThemeProvider } from './ThemeProvider';
+export { default as Wizard, Page as WizardPage } from './Wizard';
 
 export { default as IconAccessTime } from './MaterialComponents/Icons/IconAccessTime';
 export { default as IconDelete } from './MaterialComponents/Icons/IconDelete';
@@ -120,7 +122,9 @@ export { default as Tooltip } from './MaterialComponents/Tooltip';
 export { default as Dialog } from './Dialog';
 export { default as ConfirmDialog } from './Dialog/Confirm';
 export { default as DuplicateDialog } from './Dialog/Duplicate';
-export { default as MassiveChangeThresholds } from './Dialog/MassiveChange/Thresholds';
+export {
+  default as MassiveChangeThresholds,
+} from './Dialog/MassiveChange/Thresholds';
 
 export { default as IconVisible } from './MaterialComponents/Icons/IconVisible';
 export { default as IconInvisible } from './MaterialComponents/Icons/IconInvisible';
