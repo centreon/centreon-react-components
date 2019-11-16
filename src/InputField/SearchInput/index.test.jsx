@@ -19,7 +19,7 @@ describe('SearchInput', () => {
     );
 
     const input = getByPlaceholderText('Search');
-    fireEvent.change(input, { target: { value: 'my search' } })
+    fireEvent.change(input, { target: { value: 'my search' } });
 
     expect(mockOnChange).toBeCalled();
   });
