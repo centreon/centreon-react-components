@@ -4,6 +4,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable camelcase */
 /* eslint-disable react/sort-comp */
+
 import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
 import classnames from 'classnames';
@@ -13,6 +14,7 @@ import IconToggleSubmenu from '../../Icon/IconToggleSubmenu';
 
 class InputFieldSelectCustom extends Component {
   state = {
+    initialValue: null,
     active: false,
     allOptions: [],
     options: [],
@@ -24,39 +26,23 @@ class InputFieldSelectCustom extends Component {
   }
 
   componentWillMount = () => {
-    const { value, options, onChange } = this.props;
-    const { selected } = this.state;
-    let found = false;
-    if (options) {
-      for (let i = 0; i < options.length; i += 1) {
-        if (options[i].id == value) {
-          this.setState({
-            selected: options[i],
-          });
-          found = true;
-        }
-      }
-      this.setState({
-        options,
-        allOptions: options,
-        ...(!found && { selected: null }),
-      });
-      if (!found && selected !== null) {
-        onChange(null);
-      }
-    }
+    const { value } = this.props;
+    this.setState({ initialValue: value });
   };
 
   componentWillReceiveProps = (nextProps) => {
     const { value, options, onChange } = nextProps;
-    const { selected } = this.state;
+    const { initialValue, selected } = this.state;
     let found = false;
     if (options) {
       for (let i = 0; i < options.length; i += 1) {
-        if (options[i].id == value) {
-          this.setState({
-            selected: options[i],
-          });
+        if (options[i].id == initialValue) {
+          if (value === initialValue) {
+            this.setState({
+              selected: options[i],
+            });
+          }
+
           found = true;
         }
       }
@@ -100,6 +86,7 @@ class InputFieldSelectCustom extends Component {
 
   optionChecked = (option) => {
     const { onChange } = this.props;
+
     this.setState(
       {
         selected: option,
