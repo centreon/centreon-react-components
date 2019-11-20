@@ -1,5 +1,6 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/prop-types */
+
 import React, { Component } from 'react';
 import TableCell from '@material-ui/core/TableCell';
 import InputFieldSelectTableCell from '../../InputField/InputFieldSelectTableCell';
@@ -15,7 +16,7 @@ class IndicatorsEditorRow extends Component {
         : 'word';
     }
     rowObject.impact[key] = value;
-    onImpactEdit(event, rowObject, true);
+    onImpactEdit(rowObject);
   };
 
   onImpactInputChanged = (event, key) => {
@@ -23,7 +24,7 @@ class IndicatorsEditorRow extends Component {
     const { onImpactEdit, selected } = this.props;
     const rowObject = selected.obj;
     rowObject.impact[key] = value;
-    onImpactEdit(event, rowObject, true);
+    onImpactEdit(rowObject);
   };
 
   render() {
