@@ -562,7 +562,19 @@ class TableCustom extends Component {
                             bool: isRowSelected,
                             obj: row,
                           }}
-                          onImpactEdit={this.selectRow}
+                          onImpactEdit={(updatedRow) => {
+                            const { onSelectRows } = this.props;
+
+                            const newSelection = [
+                              ...selectedRows.filter(
+                                (selectedRow) =>
+                                  selectedRow.id !== updatedRow.id,
+                              ),
+                              updatedRow,
+                            ];
+
+                            onSelectRows(newSelection);
+                          }}
                         />
                       ) : null}
                     </StyledTableRow>
