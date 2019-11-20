@@ -7,7 +7,7 @@ import InputFieldSelectTableCell from '../../InputField/InputFieldSelectTableCel
 import InputFieldTableCell from '../../InputField/InputFieldTableCell';
 
 class IndicatorsEditorRow extends Component {
-  onImpactChanged = (value, key, event) => {
+  onImpactChanged = (value, key) => {
     const { onImpactEdit, selected } = this.props;
     const rowObject = selected.obj;
     if (key !== 'type') {
