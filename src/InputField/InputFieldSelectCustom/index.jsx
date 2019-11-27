@@ -94,7 +94,7 @@ class InputFieldSelectCustom extends Component {
       },
       () => {
         if (onChange) {
-          onChange(option.id);
+          onChange(option);
         }
       },
     );
