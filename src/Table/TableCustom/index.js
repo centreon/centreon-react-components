@@ -32,6 +32,8 @@ import IndicatorsEditor from './IndicatorsEditorRow';
 
 const loadingIndicatorHeight = 3;
 
+const deepEqual = (a, b) => a.id === b.id;
+
 const BodyTableCell = withStyles({
   root: {
     fontSize: 13,
@@ -89,6 +91,12 @@ class TableCustom extends Component {
     ro.observe(this.tableBodyRef.current);
   }
 
+  selectedRowsInclude = (row) => {
+    const { selectedRows } = this.props;
+
+    return !!selectedRows.find((includedRow) => deepEqual(includedRow, row));
+  };
+
   handleRequestSort = (event, property) => {
     const { onSort } = this.props;
     const { orderBy, order } = this.state;
@@ -122,8 +130,8 @@ class TableCustom extends Component {
     event.stopPropagation();
     const { onSelectRows, selectedRows } = this.props;
 
-    if (selectedRows.includes(row)) {
-      onSelectRows(selectedRows.filter((entity) => entity !== row));
+    if (this.selectedRowsInclude(row)) {
+      onSelectRows(selectedRows.filter((entity) => !deepEqual(entity, row)));
       return;
     }
     onSelectRows([...selectedRows, row]);
@@ -179,8 +187,8 @@ class TableCustom extends Component {
     } = this.props;
     const { order, orderBy, hovered } = this.state;
 
-    const isSelected = (value) => {
-      return selectedRows.includes(value);
+    const isSelected = (row) => {
+      return this.selectedRowsInclude(row);
     };
 
     const emptyRows = limit - Math.min(limit, totalRows - currentPage * limit);
@@ -565,13 +573,12 @@ class TableCustom extends Component {
                           onImpactEdit={(updatedRow) => {
                             const { onSelectRows } = this.props;
 
-                            const newSelection = [
-                              ...selectedRows.filter(
-                                (selectedRow) =>
-                                  selectedRow.id !== updatedRow.id,
-                              ),
-                              updatedRow,
-                            ];
+                            const newSelection = selectedRows.map(
+                              (selectedRow) =>
+                                selectedRow.id === updatedRow.id
+                                  ? updatedRow
+                                  : selectedRow,
+                            );
 
                             onSelectRows(newSelection);
                           }}
