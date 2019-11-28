@@ -14,48 +14,34 @@ import IconToggleSubmenu from '../../Icon/IconToggleSubmenu';
 
 class InputFieldSelectCustom extends Component {
   state = {
-    initialValue: null,
     active: false,
-    allOptions: [],
-    options: [],
+    filteredOptions: [],
     selected: null,
   };
+
+  componentWillMount() {
+    const { options } = this.props;
+    this.setState({ filteredOptions: options });
+  }
 
   componentWillUnmount() {
     window.removeEventListener('mousedown', this.handleClickOutside, false);
   }
 
-  componentWillMount = () => {
-    const { value } = this.props;
-    this.setState({ initialValue: value });
-  };
+  componentWillReceiveProps(nextProps) {
+    const { value, options, onChange = () => {} } = nextProps;
 
-  componentWillReceiveProps = (nextProps) => {
-    const { value, options, onChange } = nextProps;
-    const { initialValue, selected } = this.state;
-    let found = false;
-    if (options) {
-      for (let i = 0; i < options.length; i += 1) {
-        if (options[i].id == initialValue) {
-          if (value === initialValue) {
-            this.setState({
-              selected: options[i],
-            });
-          }
+    const optionIds = options.map(({ id }) => id);
 
-          found = true;
-        }
-      }
-      this.setState({
-        options,
-        allOptions: options,
-        ...(!found && { selected: null }),
-      });
-      if (!found && selected !== null) {
-        onChange(null);
-      }
+    if (value && !optionIds.includes(value.id)) {
+      onChange(null);
+      return;
     }
-  };
+
+    this.setState({
+      selected: value,
+    });
+  }
 
   componentDidMount() {
     window.addEventListener('mousedown', this.handleClickOutside, false);
@@ -72,9 +58,9 @@ class InputFieldSelectCustom extends Component {
 
   searchTextChanged = (e) => {
     const searchString = e.target.value;
-    const { allOptions } = this.state;
+    const { options } = this.props;
     this.setState({
-      options: allOptions.filter((option) => {
+      filteredOptions: options.filter((option) => {
         return (
           String(option.name)
             .toLowerCase()
@@ -89,7 +75,6 @@ class InputFieldSelectCustom extends Component {
 
     this.setState(
       {
-        selected: option,
         active: false,
       },
       () => {
@@ -110,10 +95,10 @@ class InputFieldSelectCustom extends Component {
   };
 
   focusInput = (component) => {
-    const { allOptions } = this.state;
+    const { options } = this.props;
     if (component) {
       this.setState({
-        options: allOptions,
+        filteredOptions: options,
       });
       // eslint-disable-next-line react/no-find-dom-node
       findDOMNode(component).focus();
@@ -125,7 +110,7 @@ class InputFieldSelectCustom extends Component {
   };
 
   render() {
-    const { active, selected, options } = this.state;
+    const { active, selected, filteredOptions } = this.state;
     const { size, error, icons, domainPath, customStyle } = this.props;
     return (
       <div
@@ -163,8 +148,8 @@ class InputFieldSelectCustom extends Component {
         </div>
         {active ? (
           <div className={classnames(styles['input-select-dropdown'])}>
-            {options
-              ? options.map((option) => (
+            {filteredOptions
+              ? filteredOptions.map((option) => (
                   // eslint-disable-next-line react/jsx-indent
                   <React.Fragment>
                     {icons ? (
