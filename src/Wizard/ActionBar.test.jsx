@@ -4,7 +4,9 @@ import ActionBar from './ActionBar';
 
 describe('ActionBar', () => {
   it('renders correctly', () => {
-    const { container } = render(<ActionBar />);
+    const { container } = render(
+      <ActionBar bag={{ isSubmitting: false, isValid: true }} />,
+    );
 
     expect(container.firstChild).toMatchSnapshot();
   });
@@ -13,11 +15,23 @@ describe('ActionBar', () => {
     const mockCancel = jest.fn();
 
     const { getByText } = render(
-      <ActionBar onCancel={mockCancel} labelCancel="Exit" />,
+      <ActionBar
+        bag={{ isSubmitting: false, isValid: true }}
+        onCancel={mockCancel}
+        labelCancel="Exit"
+      />,
     );
 
     fireEvent.click(getByText('Exit').parentNode);
 
     expect(mockCancel).toBeCalled();
+  });
+
+  it('cannot finish if form is not valid', () => {
+    const { getByText } = render(
+      <ActionBar bag={{ isSubmitting: false, isValid: false }} />,
+    );
+
+    expect(getByText('Finish').parentNode).toHaveAttribute('disabled');
   });
 });
