@@ -229,7 +229,7 @@ class TableCustom extends Component {
           ) : null}
           <div
             style={{
-              overflow: 'auto',
+              overflow: indicatorsEditor ? 'visible' : 'auto',
               maxHeight: tableMaxHeight(),
             }}
           >
@@ -238,13 +238,6 @@ class TableCustom extends Component {
               aria-label={ariaLabel}
               size="small"
               stickyHeader
-              style={
-                indicatorsEditor
-                  ? {
-                      overflow: 'initial',
-                    }
-                  : {}
-              }
             >
               <EnhancedTableHead
                 numSelected={selectedRows.length}
@@ -566,10 +559,7 @@ class TableCustom extends Component {
                           row={row}
                           index={index}
                           impacts={impacts}
-                          selected={{
-                            bool: isRowSelected,
-                            obj: row,
-                          }}
+                          selected={isRowSelected}
                           onImpactEdit={(updatedRow) => {
                             const { onSelectRows } = this.props;
 
