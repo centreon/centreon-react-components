@@ -31,6 +31,10 @@ class InputFieldSelectCustom extends Component {
   componentWillReceiveProps(nextProps) {
     const { value, options, onChange = () => {} } = nextProps;
 
+    if (options.length === 0) {
+      return;
+    }
+
     const optionIds = options.map(({ id }) => id);
 
     if (value && !optionIds.includes(value.id)) {
