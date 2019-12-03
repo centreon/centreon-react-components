@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 
 function ActionBar({
-  bag: { isSubmitting, isValid },
+  disabledNext,
   page,
   isLastPage,
   onCancel,
@@ -16,8 +16,6 @@ function ActionBar({
   labelNext,
   labelFinish,
 }) {
-  const canSubmit = isValid && !isSubmitting;
-
   return (
     <Grid container direction="row" justify="space-between" alignItems="center">
       <Grid item>
@@ -43,7 +41,7 @@ function ActionBar({
           <Button
             type="submit"
             color="primary"
-            disabled={!canSubmit}
+            disabled={disabledNext}
             onClick={onFinish}
           >
             {labelFinish}
@@ -53,7 +51,7 @@ function ActionBar({
             type="submit"
             color="primary"
             onClick={onNext}
-            disabled={!canSubmit}
+            disabled={disabledNext}
           >
             {labelNext}
           </Button>
@@ -64,10 +62,7 @@ function ActionBar({
 }
 
 ActionBar.propTypes = {
-  bag: PropTypes.shape({
-    isSubmitting: PropTypes.bool,
-    isValid: PropTypes.bool,
-  }).isRequired,
+  disabledNext: PropTypes.bool,
   page: PropTypes.number,
   isLastPage: PropTypes.bool,
   onCancel: PropTypes.func,
@@ -81,6 +76,7 @@ ActionBar.propTypes = {
 };
 
 ActionBar.defaultProps = {
+  disabledNext: false,
   page: 0,
   isLastPage: true,
   onCancel: null,

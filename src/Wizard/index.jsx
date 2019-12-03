@@ -144,7 +144,7 @@ function Wizard(props) {
                 })}
                 {!activePage.props.noActionBar && (
                   <ActionBar
-                    bag={bag}
+                    disabledNext={!bag.isValid || bag.isSubmitting}
                     page={page}
                     isLastPage={isLastPage}
                     onPrevious={previous}
