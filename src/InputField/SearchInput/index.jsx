@@ -8,11 +8,7 @@ import SearchIcon from '@material-ui/icons/Search';
 const useAdornmentStyles = makeStyles((theme) => ({
   searchIcon: {
     color: theme.palette.grey[400],
-    '& > input$focused': {
-      color: theme.palette.primary.main,
-    },
   },
-  focused: {},
 }));
 
 function StartAdornment() {
