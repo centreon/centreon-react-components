@@ -9,7 +9,7 @@ exports[`SearchInput renders correctly 1`] = `
   >
     <svg
       aria-hidden="true"
-      class="MuiSvgIcon-root makeStyles-searchIcon-39"
+      class="MuiSvgIcon-root makeStyles-searchIcon-38"
       focusable="false"
       role="presentation"
       viewBox="0 0 24 24"
