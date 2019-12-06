@@ -74,8 +74,6 @@ function cumulativeOffset(element) {
 
 class TableCustom extends Component {
   state = {
-    order: '',
-    orderBy: '',
     tableTopOffset: 0,
   };
 
@@ -97,22 +95,14 @@ class TableCustom extends Component {
     return !!selectedRows.find((includedRow) => deepEqual(includedRow, row));
   };
 
-  handleRequestSort = (event, property) => {
-    const { onSort } = this.props;
-    const { orderBy, order } = this.state;
-    const isDesc = orderBy === property && order === 'desc';
-    this.setState(
-      {
-        order: isDesc ? 'asc' : 'desc',
-        orderBy: property,
-      },
-      () => {
-        onSort({
-          order: isDesc ? 'asc' : 'desc',
-          orderBy: property,
-        });
-      },
-    );
+  handleRequestSort = (_, property) => {
+    const { onSort, sorto, sortf } = this.props;
+    const isDesc = sortf === property && sorto === 'desc';
+
+    onSort({
+      order: isDesc ? 'asc' : 'desc',
+      orderBy: property,
+    });
   };
 
   selectAllRows = (event) => {
@@ -185,7 +175,8 @@ class TableCustom extends Component {
       paginated = true,
       loading,
     } = this.props;
-    const { order, orderBy, hovered } = this.state;
+    const { hovered } = this.state;
+    const { sorto, sortf } = this.props;
 
     const isSelected = (row) => {
       return this.selectedRowsInclude(row);
@@ -241,9 +232,9 @@ class TableCustom extends Component {
             >
               <EnhancedTableHead
                 numSelected={selectedRows.length}
-                order={order}
+                order={sorto}
                 checkable={checkable}
-                orderBy={orderBy}
+                orderBy={sortf}
                 onSelectAllClick={this.selectAllRows}
                 onRequestSort={this.handleRequestSort}
                 rowCount={limit - emptyRows}
@@ -608,6 +599,10 @@ TableCustom.defaultProps = {
   paginated: true,
   impacts: [],
   selectedRows: [],
+  sorto: undefined,
+  sortf: undefined,
+  onEnable: () => undefined,
+  onDisable: () => undefined,
 };
 
 const anyObject = PropTypes.objectOf(
@@ -627,14 +622,16 @@ TableCustom.propTypes = {
   onPaginate: PropTypes.func.isRequired,
   onDuplicate: PropTypes.func.isRequired,
   onPaginationLimitChanged: PropTypes.func.isRequired,
+  order: PropTypes.string,
+  orderBy: PropTypes.string,
   labelDisplayedRows: PropTypes.func,
   labelRowsPerPage: PropTypes.string,
   limit: PropTypes.number.isRequired,
   checkable: PropTypes.bool.isRequired,
   currentPage: PropTypes.number.isRequired,
   totalRows: PropTypes.number.isRequired,
-  onEnable: PropTypes.func.isRequired,
-  onDisable: PropTypes.func.isRequired,
+  onEnable: PropTypes.func,
+  onDisable: PropTypes.func,
   onRowClick: PropTypes.func,
   selectedRows: anyArray,
   enabledColumn: PropTypes.string,
