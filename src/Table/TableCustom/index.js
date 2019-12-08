@@ -363,7 +363,7 @@ class TableCustom extends Component {
                               <BodyTableCell align="left">
                                 {row[column.id] ? (
                                   <Tooltip
-                                    label="Enable/Disable"
+                                    label={labelEnableDisable}
                                     onClick={(e) => {
                                       e.preventDefault();
                                       e.stopPropagation();
@@ -388,7 +388,7 @@ class TableCustom extends Component {
                                   </Tooltip>
                                 ) : (
                                   <Tooltip
-                                    label="Enable/Disable"
+                                    label={labelEnableDisable}
                                     onClick={(e) => {
                                       e.preventDefault();
                                       e.stopPropagation();
@@ -497,7 +497,7 @@ class TableCustom extends Component {
                                   >
                                     <Box>
                                       <Tooltip
-                                        label="Delete"
+                                        label={labelDelete}
                                         onClick={() => {
                                           onDelete([row]);
                                         }}
@@ -517,7 +517,7 @@ class TableCustom extends Component {
                                     </Box>
                                     <Box>
                                       <Tooltip
-                                        label="Duplicate"
+                                        label={labelDuplicate}
                                         onClick={() => {
                                           onDuplicate([row]);
                                         }}
@@ -603,6 +603,9 @@ TableCustom.defaultProps = {
   sortf: undefined,
   onEnable: () => undefined,
   onDisable: () => undefined,
+  labelEnableDisable: 'Enable / Disable',
+  labelDelete: 'Delete',
+  labelDuplicate: 'Duplicate',
 };
 
 const anyObject = PropTypes.objectOf(
@@ -641,6 +644,9 @@ TableCustom.propTypes = {
   loading: PropTypes.bool,
   paginated: PropTypes.bool,
   impacts: anyArray,
+  labelEnableDisable,
+  labelDelete,
+  labelDuplicate,
 };
 
 export default withStyles(styles, { withTheme: true })(TableCustom);
