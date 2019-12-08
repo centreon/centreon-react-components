@@ -176,7 +176,7 @@ class TableCustom extends Component {
       loading,
     } = this.props;
     const { hovered } = this.state;
-    const { sorto, sortf } = this.props;
+    const { sorto, sortf, labelEnableDisable, labelDuplicate, labelDelete } = this.props;
 
     const isSelected = (row) => {
       return this.selectedRowsInclude(row);
@@ -644,9 +644,9 @@ TableCustom.propTypes = {
   loading: PropTypes.bool,
   paginated: PropTypes.bool,
   impacts: anyArray,
-  labelEnableDisable,
-  labelDelete,
-  labelDuplicate,
+  labelEnableDisable: PropTypes.string,
+  labelDelete: PropTypes.string,
+  labelDuplicate: PropTypes.string,
 };
 
 export default withStyles(styles, { withTheme: true })(TableCustom);
