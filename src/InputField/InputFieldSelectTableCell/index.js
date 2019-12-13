@@ -34,24 +34,6 @@ class InputFieldSelectCustom extends Component {
     });
   };
 
-  componentWillMount = () => {
-    const { value, options } = this.props;
-    if (options) {
-      for (let i = 0; i < options.length; i++) {
-        // eslint-disable-next-line
-      if (options[i].id == value) {
-          this.setState({
-            selected: options[i],
-          });
-        }
-      }
-      this.setState({
-        options,
-        allOptions: options,
-      });
-    }
-  };
-
   componentWillReceiveProps = (nextProps) => {
     const { value, options } = nextProps;
     if (options) {
