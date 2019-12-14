@@ -277,6 +277,7 @@ class TableCustom extends Component {
                         >
                           <StyledCheckbox
                             checked={isRowSelected}
+                            inputProps={{ 'aria-label': `Select row ${row.id}` }}
                             color="primary"
                           />
                         </BodyTableCell>
