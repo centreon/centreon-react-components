@@ -23,7 +23,7 @@ const withErrorSnackbar = (Component) => {
         (acc, current) => [...acc, `${current}: ${errors[current]}`],
         [],
       );
-  
+
       showError(
         <div style={{ display: 'block' }}>
           {formattedErrors.map((err, index) => (
