@@ -176,7 +176,13 @@ class TableCustom extends Component {
       loading,
     } = this.props;
     const { hovered } = this.state;
-    const { sorto, sortf, labelEnableDisable, labelDuplicate, labelDelete } = this.props;
+    const {
+      sorto,
+      sortf,
+      labelEnableDisable,
+      labelDuplicate,
+      labelDelete,
+    } = this.props;
 
     const isSelected = (row) => {
       return this.selectedRowsInclude(row);
@@ -277,7 +283,9 @@ class TableCustom extends Component {
                         >
                           <StyledCheckbox
                             checked={isRowSelected}
-                            inputProps={{ 'aria-label': `Select row ${row.id}` }}
+                            inputProps={{
+                              'aria-label': `Select row ${row.id}`,
+                            }}
                             color="primary"
                           />
                         </BodyTableCell>
@@ -605,7 +613,7 @@ TableCustom.defaultProps = {
   onEnable: () => undefined,
   onDisable: () => undefined,
   labelEnableDisable: 'Enable / Disable',
-  labelDelete: 'Delete',
+  labelDelete: 'Delete',
   labelDuplicate: 'Duplicate',
 };
 
@@ -626,8 +634,8 @@ TableCustom.propTypes = {
   onPaginate: PropTypes.func.isRequired,
   onDuplicate: PropTypes.func.isRequired,
   onPaginationLimitChanged: PropTypes.func.isRequired,
-  order: PropTypes.string,
-  orderBy: PropTypes.string,
+  sorto: PropTypes.string,
+  sortf: PropTypes.string,
   labelDisplayedRows: PropTypes.func,
   labelRowsPerPage: PropTypes.string,
   limit: PropTypes.number.isRequired,
