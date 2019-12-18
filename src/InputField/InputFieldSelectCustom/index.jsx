@@ -104,7 +104,14 @@ class InputFieldSelectCustom extends Component {
 
   render() {
     const { active, selected, filteredOptions } = this.state;
-    const { ariaLabel, size, error, icons, domainPath, customStyle } = this.props;
+    const {
+      ariaLabel,
+      size,
+      error,
+      icons,
+      domainPath,
+      customStyle,
+    } = this.props;
     return (
       <div
         className={classnames(

@@ -151,7 +151,7 @@ class IndicatorsEditorRow extends Component {
             >
               <InputFieldTableCell
                 value={warning}
-                ariaLabel={'Warning value'}
+                ariaLabel="Warning value"
                 inputSize="extrasmall"
                 disabled={!selected}
                 onChange={(event) => {
@@ -167,7 +167,7 @@ class IndicatorsEditorRow extends Component {
             >
               <InputFieldTableCell
                 value={critical}
-                ariaLabel={'Critical value'}
+                ariaLabel="Critical value"
                 inputSize="extrasmall"
                 disabled={!selected}
                 onChange={(event) => {
@@ -183,7 +183,7 @@ class IndicatorsEditorRow extends Component {
             >
               <InputFieldTableCell
                 value={unknown}
-                ariaLabel={'Unknown value'}
+                ariaLabel="Unknown value"
                 inputSize="extrasmall"
                 disabled={!selected}
                 onChange={(event) => {

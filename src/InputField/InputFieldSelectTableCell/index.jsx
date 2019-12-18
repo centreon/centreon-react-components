@@ -23,7 +23,7 @@ class InputFieldSelectCustom extends Component {
   componentWillMount = () => {
     const { value, options } = this.props;
     if (options) {
-      for (const i = 0; i < options.length; i += 1) {
+      for (let i = 0; i < options.length; i += 1) {
         // eslint-disable-next-line
         if (options[i].id == value) {
           this.setState({
