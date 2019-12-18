@@ -19,15 +19,6 @@ class InputFieldSelectCustom extends Component {
     selected: {},
   };
 
-  toggleSelect = () => {
-    const { disabled } = this.props;
-    if (disabled) return;
-    const { active } = this.state;
-    this.setState({
-      active: !active,
-    });
-  };
-  
   componentWillMount = () => {
     const { value, options } = this.props;
     if (options) {
