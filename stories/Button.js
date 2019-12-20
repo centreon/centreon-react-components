@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable import/no-extraneous-dependencies */
 
@@ -5,7 +6,7 @@ import React, { useState } from 'react';
 
 import { storiesOf } from '@storybook/react';
 import { Button, ButtonAction, ButtonActionInput } from '../src';
-import SaveButton from '../src/MaterialComponents/Button/Save';
+import SaveButton from '../src/Button/Save';
 
 storiesOf('Button', module).add(
   'Button - regular',

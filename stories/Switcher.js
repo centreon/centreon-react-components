@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { Switcher, SwitcherInputField, SwitcherMode } from '../src';
+import { Switcher } from '../src';
 
 storiesOf('Switcher', module).add('Switcher - regular', () => <Switcher />, {
   notes: 'A very simple component',
@@ -20,13 +20,3 @@ storiesOf('Switcher', module).add(
   () => <Switcher switcherStatus="Not Installed" />,
   { notes: 'A very simple component' },
 );
-
-storiesOf('Switcher', module).add(
-  'Switcher - input field',
-  () => <SwitcherInputField />,
-  { notes: 'A very simple component' },
-);
-
-storiesOf('Switcher', module).add('Switcher - mode', () => <SwitcherMode />, {
-  notes: 'A very simple component',
-});
