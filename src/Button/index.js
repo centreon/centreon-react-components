@@ -4,7 +4,7 @@
 
 import React from 'react';
 import classnames from 'classnames';
-import IconAction from '../../Icon/IconAction';
+import IconAction from '../Icon/IconAction';
 import styles from './button.scss';
 
 const Button = ({

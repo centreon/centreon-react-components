@@ -83,19 +83,12 @@ exports[`IconDone renders 1`] = `
 `;
 
 exports[`IconEdit renders 1`] = `
-.emotion-0 {
-  color: #0072CE;
-  font-size: 21px;
-  position: absolute;
-  right: 3px;
-}
-
 <span
   class="span-root-43 span-root-44"
 >
   <svg
     aria-hidden="true"
-    class="MuiSvgIcon-root emotion-0"
+    class="MuiSvgIcon-root css-110y00n"
     focusable="false"
     role="presentation"
     viewBox="0 0 24 24"
@@ -166,23 +159,13 @@ exports[`IconLibraryAdd renders 1`] = `
 `;
 
 exports[`IconPowerSettings renders 1`] = `
-.emotion-0 {
-  color: #fff;
-  background-color: #707070;
-  border-radius: 50%;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  padding: 4px;
-}
-
 <span
   aria-label="icon enable disable"
   class="span-root-87 span-root-88"
 >
   <svg
     aria-hidden="true"
-    class="MuiSvgIcon-root emotion-0"
+    class="MuiSvgIcon-root css-tb2ytd"
     focusable="false"
     role="presentation"
     viewBox="0 0 24 24"
@@ -195,59 +178,13 @@ exports[`IconPowerSettings renders 1`] = `
 `;
 
 exports[`IconPowerSettings renders 2`] = `
-.emotion-0 {
-  color: #fff;
-  background-color: #707070;
-  border-radius: 50%;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  padding: 4px;
-}
-
-.emotion-1 {
-  display: inline-block;
-  vertical-align: middle;
-  height: 23px;
-  width: 23px;
-  position: relative;
-}
-
-.emotion-1::after {
-  content: '';
-  position: absolute;
-  width: 2px;
-  height: 30px;
-  background: #7f7f7f;
-  -webkit-transform: rotate(140deg);
-  -ms-transform: rotate(140deg);
-  transform: rotate(140deg);
-  left: 9px;
-  top: -2px;
-  z-index: 1;
-}
-
-.emotion-1::before {
-  content: '';
-  position: absolute;
-  width: 4px;
-  height: 30px;
-  background: #fff;
-  -webkit-transform: rotate(140deg);
-  -ms-transform: rotate(140deg);
-  transform: rotate(140deg);
-  left: 9px;
-  top: -3px;
-  z-index: 1;
-}
-
 <span
   aria-label="icon enable disable inactive"
-  class="span-root-98 span-root-99 emotion-1"
+  class="span-root-98 span-root-99 css-oedykk"
 >
   <svg
     aria-hidden="true"
-    class="MuiSvgIcon-root emotion-0"
+    class="MuiSvgIcon-root css-tb2ytd"
     focusable="false"
     role="presentation"
     viewBox="0 0 24 24"

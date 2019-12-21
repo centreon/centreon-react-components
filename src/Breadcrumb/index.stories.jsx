@@ -1,11 +1,12 @@
-/* eslint-disable import/no-extraneous-dependencies */
-
 import React from 'react';
-import { storiesOf } from '@storybook/react';
-import { MemoryRouter } from 'react-router-dom';
-import { Breadcrumb } from '../src';
 
-storiesOf('Breadcrumb', module).add('with three levels', () => (
+import { MemoryRouter } from 'react-router-dom';
+
+import Breadcrumb from '.';
+
+export default { title: 'Breadcrumb' };
+
+export const normal = () => (
   <MemoryRouter>
     <Breadcrumb
       breadcrumbs={[
@@ -24,4 +25,4 @@ storiesOf('Breadcrumb', module).add('with three levels', () => (
       ]}
     />
   </MemoryRouter>
-));
+);

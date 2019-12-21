@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ButtonCustom({ label, onClick, ...rest }) {
+function ButtonAdd({ label, onClick, ...rest }) {
   const classes = useStyles();
   return (
     <Button
@@ -43,4 +43,4 @@ function ButtonCustom({ label, onClick, ...rest }) {
   );
 }
 
-export default ButtonCustom;
+export default ButtonAdd;
