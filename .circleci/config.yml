@@ -1,4 +1,6 @@
 version: 2.1
+orbs:
+    puppeteer: threetreeslight/puppeteer@0.1.2
 jobs:
   build:
     docker:
@@ -23,9 +25,6 @@ jobs:
       - run:
           name: Check Linting
           command: npm run eslint
-      - run:
-          name: Install Chrome Headless
-          command: ./install-chrome-headless.sh
       - run:
           name: Run Tests
           command: npm test
