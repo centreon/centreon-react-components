@@ -1,4 +1,4 @@
 
 #!/bin/bash
 
-sudo apt-get install chromium
+chromium-browser --headless
