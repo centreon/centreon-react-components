@@ -17,7 +17,9 @@ const beforeScreenshot = () => {
 
 initStoryshots({
   suite: 'Image StoryShots',
-  test: imageSnapshot({ storybookUrl: `file://${__dirname}/../.out` }),
-  getMatchOptions,
-  beforeScreenshot,
+  test: imageSnapshot({
+    storybookUrl: `file://${__dirname}/../.out`,
+    getMatchOptions,
+    beforeScreenshot,
+  }),
 });
