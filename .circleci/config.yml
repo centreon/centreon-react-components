@@ -1,10 +1,9 @@
 version: 2.1
-orbs:
-    puppeteer: threetreeslight/puppeteer@0.1.2
+
 jobs:
   build:
     docker:
-      - image: circleci/node:8
+      - image: ghostbee/node-chrome-headless:latest
     steps:
       - checkout
       - restore_cache:
