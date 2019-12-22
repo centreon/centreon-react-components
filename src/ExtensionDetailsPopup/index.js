@@ -11,7 +11,7 @@ import Slider from '../Slider/SliderContent';
 import IconContent from '../Icon/IconContent';
 import Title from '../Title';
 import Button from '../Button';
-import HorizontalLine from '../HorizontalLines/HorizontalLineRegular';
+import HorizontalLine from '../HorizontalLines';
 import Description from '../Description';
 import IconClose from '../Icon/IconClose';
 

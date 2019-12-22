@@ -8,7 +8,7 @@ export { default as CardItem } from './Card/CardItem';
 export { default as CustomIconWithText } from './Custom/CustomIconWithText';
 export { default as Description } from './Description';
 export { default as FileUpload } from './FileUpload';
-export { default as HorizontalLine } from './HorizontalLines/HorizontalLineRegular';
+export { default as HorizontalLine } from './HorizontalLines';
 export { default as HorizontalLineContent } from './HorizontalLines/HorizontalLineContent';
 export { default as IconAction } from './Icon/IconAction';
 export { default as IconClose } from './Icon/IconClose';

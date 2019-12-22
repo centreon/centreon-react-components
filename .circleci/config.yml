@@ -18,6 +18,9 @@ jobs:
           name: Build
           command: npm run bundle
       - run:
+          name: Build
+          command: npm run build:storybook
+      - run:
           name: Check Linting
           command: npm run eslint
       - run:
