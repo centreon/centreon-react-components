@@ -24,5 +24,8 @@ jobs:
           name: Check Linting
           command: npm run eslint
       - run:
+          name: Install Chrome Headless
+          command: ./.circleci/install-chrome-headless.sh
+      - run:
           name: Run Tests
           command: npm test
