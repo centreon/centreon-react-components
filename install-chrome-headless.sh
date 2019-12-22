@@ -1,10 +1,7 @@
-
 #!/bin/bash
-# from https://chromium.woolyss.com/
-# and https://gist.github.com/addyosmani/5336747
-# and https://chromium.googlesource.com/chromium/src/+/lkgr/headless/README.md
-sudo apt-get update
-sudo apt-get install software-properties-common
-sudo add-apt-repository ppa:canonical-chromium-builds/stage
-sudo apt-get update
-sudo apt-get install chromium-browser 
+
+curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
+    && sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
+    && apt-get update \
+    && apt-get install -y google-chrome-stable build-essential jq git openssh-server \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
