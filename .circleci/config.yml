@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: ghostbee/node-chrome-headless:latest
+      - image: circleci/node:8
     steps:
       - checkout
       - restore_cache:
@@ -24,6 +24,9 @@ jobs:
       - run:
           name: Check Linting
           command: npm run eslint
+      - run:
+          name: Install Chrome Headless
+          command: ./install-chrome-headless.sh
       - run:
           name: Run Tests
           command: npm test
