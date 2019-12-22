@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react';
 
-import ErrorSnackbar from '../Error';
+import ErrorSnackbar from '.';
 
 const Context = createContext({});
 
