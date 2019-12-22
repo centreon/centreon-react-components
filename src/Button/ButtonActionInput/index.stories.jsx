@@ -1,7 +1,3 @@
-/* eslint-disable no-alert */
-/* eslint-disable react/jsx-filename-extension */
-/* eslint-disable import/no-extraneous-dependencies */
-
 import React from 'react';
 
 import ButtonActionInput from '.';
