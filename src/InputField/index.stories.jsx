@@ -4,7 +4,7 @@ import InputField from '.';
 
 export default { title: 'InputField' };
 
-export const smalWithTitle = () => (
+export const smallWithTitle = () => (
   <InputField
     type="text"
     label="Input field with title"
