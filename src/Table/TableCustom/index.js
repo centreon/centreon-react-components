@@ -301,7 +301,9 @@ class TableCustom extends Component {
         </BodyTableCell>
       ),
       [TABLE_COLUMN_TYPES.component]: () => (
-        <column.Component row={row} isRowSelected={this.isSelected(row)} />
+        <BodyTableCell>
+          <column.Component row={row} isRowSelected={this.isSelected(row)} />
+        </BodyTableCell>
       ),
     };
 
