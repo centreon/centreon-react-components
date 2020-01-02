@@ -4,7 +4,11 @@
 /* eslint-disable react/jsx-filename-extension */
 
 import React, { Component } from 'react';
+
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
+import ResizeObserver from 'resize-observer-polyfill';
+
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -14,7 +18,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import DefaultTooltip from '@material-ui/core/Tooltip';
 import Box from '@material-ui/core/Box';
 import TableCell from '@material-ui/core/TableCell';
-import ResizeObserver from 'resize-observer-polyfill';
+
 import StyledTableRow from './StyledTableRow';
 import IconPowerSettings from '../../Icon/IconPowerSettings';
 import IconPowerSettingsDisable from '../../Icon/IconPowerSettingsDisable';
@@ -27,12 +31,11 @@ import TablePaginationActions from './TablePaginationActions';
 import StyledPagination from './StyledPagination';
 import Tooltip from '../../Tooltip';
 import InputFieldSelectTableCell from '../../InputField/InputFieldSelectTableCell';
-import InputFieldTableCell from '../../InputField/InputFieldTableCell';
 import IndicatorsEditor from './IndicatorsEditorRow';
 
 const loadingIndicatorHeight = 3;
 
-const deepEqual = (a, b) => a.id === b.id;
+const haveSameIds = (a, b) => a.id === b.id;
 
 const BodyTableCell = withStyles({
   root: {
@@ -92,7 +95,7 @@ class TableCustom extends Component {
   selectedRowsInclude = (row) => {
     const { selectedRows } = this.props;
 
-    return !!selectedRows.find((includedRow) => deepEqual(includedRow, row));
+    return !!selectedRows.find((includedRow) => haveSameIds(includedRow, row));
   };
 
   handleRequestSort = (_, property) => {
@@ -121,7 +124,7 @@ class TableCustom extends Component {
     const { onSelectRows, selectedRows } = this.props;
 
     if (this.selectedRowsInclude(row)) {
-      onSelectRows(selectedRows.filter((entity) => !deepEqual(entity, row)));
+      onSelectRows(selectedRows.filter((entity) => !haveSameIds(entity, row)));
       return;
     }
     onSelectRows([...selectedRows, row]);
@@ -131,20 +134,6 @@ class TableCustom extends Component {
     this.setState({
       hovered: value ? id : null,
     });
-  };
-
-  addConditionalRowBackground = (
-    row,
-    column,
-    backgroundClass,
-    attribute,
-    classes,
-  ) => {
-    return column
-      ? {
-          [attribute]: !row[column] ? classes[backgroundClass] : '',
-        }
-      : {};
   };
 
   render() {
@@ -166,7 +155,7 @@ class TableCustom extends Component {
       onDisable,
       onRowClick = () => {},
       selectedRows,
-      enabledColumn,
+      grayRowCondition,
       indicatorsEditor,
       emptyDataMessage,
       loadingDataMessage,
@@ -264,13 +253,9 @@ class TableCustom extends Component {
                       tabIndex={-1}
                       key={row.id}
                       onMouseEnter={this.rowHovered.bind(this, row.id, true)}
-                      {...this.addConditionalRowBackground(
-                        row,
-                        enabledColumn,
-                        'rowDisabled',
-                        'className',
-                        classes,
-                      )}
+                      className={clsx({
+                        [classes.rowDisabled]: grayRowCondition(row),
+                      })}
                       onClick={() => {
                         onRowClick(row);
                       }}
@@ -421,12 +406,6 @@ class TableCustom extends Component {
                                     />
                                   </Tooltip>
                                 )}
-                              </BodyTableCell>
-                            );
-                          case TABLE_COLUMN_TYPES.input:
-                            return (
-                              <BodyTableCell align="left">
-                                <InputFieldTableCell />
                               </BodyTableCell>
                             );
                           case TABLE_COLUMN_TYPES.select:
@@ -594,10 +573,10 @@ class TableCustom extends Component {
 }
 
 TableCustom.defaultProps = {
-  enabledColumn: '',
+  grayRowCondition: () => false,
   ariaLabel: '',
-  dense: false,
-  onRowClick: () => {},
+  onRowClick: () => undefined,
+  checkable: false,
   labelDisplayedRows: ({ from, to, count }) => `${from}-${to} of ${count}`,
   labelRowsPerPage: 'Rows per page',
   onSelectRows: () => {},
@@ -625,7 +604,6 @@ const anyArray = PropTypes.arrayOf(anyObject);
 TableCustom.propTypes = {
   ariaLabel: PropTypes.string,
   classes: anyObject.isRequired,
-  dense: PropTypes.bool,
   onSort: PropTypes.func.isRequired,
   onSelectRows: PropTypes.func,
   columnConfiguration: anyArray.isRequired,
@@ -639,14 +617,14 @@ TableCustom.propTypes = {
   labelDisplayedRows: PropTypes.func,
   labelRowsPerPage: PropTypes.string,
   limit: PropTypes.number.isRequired,
-  checkable: PropTypes.bool.isRequired,
+  checkable: PropTypes.bool,
   currentPage: PropTypes.number.isRequired,
   totalRows: PropTypes.number.isRequired,
   onEnable: PropTypes.func,
   onDisable: PropTypes.func,
   onRowClick: PropTypes.func,
   selectedRows: anyArray,
-  enabledColumn: PropTypes.string,
+  grayRowCondition: PropTypes.func,
   indicatorsEditor: PropTypes.bool,
   emptyDataMessage: PropTypes.string,
   loadingDataMessage: PropTypes.string,
