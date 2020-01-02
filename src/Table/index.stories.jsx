@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+
 import React from 'react';
 
 import EntityTable from './TableCustom';
@@ -5,10 +7,30 @@ import ColumnTypes from './ColumnTypes';
 
 export default { title: 'EntityTable' };
 
+const ComponentColumn = ({ row, isRowSelected }) => (
+  <>
+    <span>
+      {'I am '}
+      <b>{`${isRowSelected ? 'selected' : 'not selected'}`}</b>
+      {' / '}
+    </span>
+    <span>
+      {'I am '}
+      <b>{`${row.active ? 'active' : 'not active'}`}</b>
+    </span>
+  </>
+);
+
 const configuration = [
   { id: 'name', label: 'Name', type: ColumnTypes.string },
   { id: 'active', label: 'Active', type: ColumnTypes.toggler },
   { id: 'description', label: 'Description', type: ColumnTypes.string },
+  {
+    id: '#',
+    label: 'Custom',
+    type: ColumnTypes.component,
+    Component: ComponentColumn,
+  },
 ];
 
 const noOp = () => undefined;
