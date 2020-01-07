@@ -1,14 +1,13 @@
 /* eslint-disable react/prop-types */
 
 import React from 'react';
-import styles from './stories.scss';
 
 import IconNumber from '.';
 
 export default { title: 'Icon/Number' };
 
 const HeaderBackground = ({ children }) => (
-  <div className={styles.headerBgColor}>{children}</div>
+  <div style={{ backgroundColor: '#232f39' }}>{children}</div>
 );
 
 export const normal = () => (

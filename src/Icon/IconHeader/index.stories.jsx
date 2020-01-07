@@ -2,7 +2,6 @@
 /* eslint-disable react/prop-types */
 
 import React from 'react';
-import styles from './stories.scss';
 
 import IconHeader from '.';
 
@@ -20,7 +19,7 @@ const alertOnClick = (name) => {
 };
 
 const HeaderBackground = ({ children }) => (
-  <div className={styles.headerBgColor}>{children}</div>
+  <div style={{ backgroundColor: '#232f39' }}>{children}</div>
 );
 
 export const home = () => (
@@ -127,7 +126,7 @@ export const homeWithCustomStyle = () => (
 export const homeWithChildren = () => (
   <HeaderBackground>
     <IconHeader iconType="home" onClick={() => alertOnClick('Home')}>
-      <p className={styles.whiteText}>
+      <p style={{ color: 'white' }}>
         Hey!
         <br />
         I&apos;m a children node
