@@ -3,7 +3,7 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/jsx-filename-extension */
 
-import React, { Component } from 'react';
+import React from 'react';
 
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -73,7 +73,7 @@ function cumulativeOffset(element) {
   return cumulativeOffset(element.offsetParent) + element.offsetTop;
 }
 
-class TableCustom extends Component {
+class TableCustom extends React.Component {
   state = {
     tableTopOffset: 0,
   };
@@ -300,11 +300,20 @@ class TableCustom extends Component {
           )}
         </BodyTableCell>
       ),
-      [TABLE_COLUMN_TYPES.component]: () => (
-        <BodyTableCell>
-          <column.Component row={row} isRowSelected={this.isSelected(row)} />
-        </BodyTableCell>
-      ),
+      [TABLE_COLUMN_TYPES.component]: () => {
+        const Component = column.Component({
+          row,
+          isRowSelected: this.isSelected(row),
+        });
+
+        return (
+          Component && (
+            <BodyTableCell align="left" key={column.id}>
+              {Component}
+            </BodyTableCell>
+          )
+        );
+      },
     };
 
     return cellByColumnType[column.type]();
