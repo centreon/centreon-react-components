@@ -149,15 +149,17 @@ class IndicatorsEditorRow extends Component {
                 padding: '3px 4px',
               }}
             >
-              <InputFieldTableCell
-                value={warning}
-                ariaLabel="Warning value"
-                inputSize="extrasmall"
-                disabled={!selected}
-                onChange={(event) => {
-                  this.onImpactInputChanged(event, 'warning');
-                }}
-              />
+              {row.type !== 'B' && (
+                <InputFieldTableCell
+                  value={warning}
+                  ariaLabel="Warning value"
+                  inputSize="extrasmall"
+                  disabled={!selected}
+                  onChange={(event) => {
+                    this.onImpactInputChanged(event, 'warning');
+                  }}
+                />
+              )}
             </TableCell>
             <TableCell
               align="left"
@@ -181,15 +183,17 @@ class IndicatorsEditorRow extends Component {
                 padding: '3px 4px',
               }}
             >
-              <InputFieldTableCell
-                value={unknown}
-                ariaLabel="Unknown value"
-                inputSize="extrasmall"
-                disabled={!selected}
-                onChange={(event) => {
-                  this.onImpactInputChanged(event, 'unknown');
-                }}
-              />
+              {row.type !== 'B' && (
+                <InputFieldTableCell
+                  value={unknown}
+                  ariaLabel="Unknown value"
+                  inputSize="extrasmall"
+                  disabled={!selected}
+                  onChange={(event) => {
+                    this.onImpactInputChanged(event, 'unknown');
+                  }}
+                />
+              )}
             </TableCell>
           </React.Fragment>
         )}
