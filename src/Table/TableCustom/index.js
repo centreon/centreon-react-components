@@ -29,7 +29,6 @@ import TABLE_COLUMN_TYPES from '../ColumnTypes';
 import TablePaginationActions from './TablePaginationActions';
 import StyledPagination from './StyledPagination';
 import Tooltip from '../../Tooltip';
-import IndicatorsEditor from './IndicatorsEditorRow';
 
 const loadingIndicatorHeight = 3;
 
@@ -335,11 +334,9 @@ class TableCustom extends React.Component {
       onRowClick = () => {},
       selectedRows,
       grayRowCondition,
-      indicatorsEditor,
       emptyDataMessage,
       loadingDataMessage,
       ariaLabel,
-      impacts,
       paginated = true,
       loading,
     } = this.props;
@@ -383,7 +380,7 @@ class TableCustom extends React.Component {
           ) : null}
           <div
             style={{
-              overflow: indicatorsEditor ? 'visible' : 'auto',
+              overflow: 'visible',
               maxHeight: tableMaxHeight(),
             }}
           >
@@ -402,7 +399,6 @@ class TableCustom extends React.Component {
                 onRequestSort={this.handleRequestSort}
                 rowCount={limit - emptyRows}
                 headRows={columnConfiguration}
-                indicatorsEditor={indicatorsEditor}
               />
 
               <TableBody
@@ -447,25 +443,6 @@ class TableCustom extends React.Component {
                       {columnConfiguration.map((column) =>
                         this.getColumnCell({ column, row }),
                       )}
-                      {indicatorsEditor ? (
-                        <IndicatorsEditor
-                          row={row}
-                          impacts={impacts}
-                          selected={isRowSelected}
-                          onImpactEdit={(updatedRow) => {
-                            const { onSelectRows } = this.props;
-
-                            const newSelection = selectedRows.map(
-                              (selectedRow) =>
-                                selectedRow.id === updatedRow.id
-                                  ? updatedRow
-                                  : selectedRow,
-                            );
-
-                            onSelectRows(newSelection);
-                          }}
-                        />
-                      ) : null}
                     </StyledTableRow>
                   );
                 })}
@@ -493,12 +470,10 @@ TableCustom.defaultProps = {
   labelDisplayedRows: ({ from, to, count }) => `${from}-${to} of ${count}`,
   labelRowsPerPage: 'Rows per page',
   onSelectRows: () => {},
-  indicatorsEditor: false,
   emptyDataMessage: 'No results found',
   loadingDataMessage: 'Loading data',
   loading: false,
   paginated: true,
-  impacts: [],
   selectedRows: [],
   sorto: undefined,
   sortf: undefined,
@@ -538,12 +513,10 @@ TableCustom.propTypes = {
   onRowClick: PropTypes.func,
   selectedRows: anyArray,
   grayRowCondition: PropTypes.func,
-  indicatorsEditor: PropTypes.bool,
   emptyDataMessage: PropTypes.string,
   loadingDataMessage: PropTypes.string,
   loading: PropTypes.bool,
   paginated: PropTypes.bool,
-  impacts: anyArray,
   labelEnableDisable: PropTypes.string,
   labelDelete: PropTypes.string,
   labelDuplicate: PropTypes.string,

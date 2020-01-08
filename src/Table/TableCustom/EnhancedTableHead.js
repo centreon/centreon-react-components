@@ -29,7 +29,6 @@ const EnhancedTableHead = ({
   headRows,
   checkable,
   onRequestSort,
-  indicatorsEditor,
 }) => {
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
@@ -71,22 +70,6 @@ const EnhancedTableHead = ({
             )}
           </HeaderCell>
         ))}
-        {indicatorsEditor && numSelected > 0 ? (
-          <>
-            <HeaderCell key="modeKpi" align="left" padding="none">
-              Mode
-            </HeaderCell>
-            <HeaderCell key="warningKpi" align="left" padding="none">
-              Warning
-            </HeaderCell>
-            <HeaderCell key="criticalKpi" align="left" padding="none">
-              Critical
-            </HeaderCell>
-            <HeaderCell key="unknownKpi" align="left" padding="none">
-              Unknown
-            </HeaderCell>
-          </>
-        ) : null}
       </TableRow>
     </TableHead>
   );
