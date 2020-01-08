@@ -86,10 +86,12 @@ function Wizard(props) {
     setPage(Math.max(page - 1, 0));
   };
 
-  const validate = () => {
+  const validate = (valuesToValidate) => {
     const activePage = React.Children.toArray(children)[page];
 
-    return activePage.props.validate ? activePage.props.validate(values) : {};
+    return activePage.props.validate
+      ? activePage.props.validate(valuesToValidate)
+      : {};
   };
 
   const validationSchema = () => {
