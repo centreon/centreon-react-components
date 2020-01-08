@@ -18,8 +18,8 @@ const alertOnClick = (name) => {
   alert(`${name} clicked`);
 };
 
-const HeaderBackground = ({ children }) => (
-  <div style={{ backgroundColor: '#232f39' }}>{children}</div>
+const HeaderBackground = ({ children, color }) => (
+  <div style={{ backgroundColor: color || '#232f39' }}>{children}</div>
 );
 
 export const home = () => (
@@ -52,7 +52,7 @@ export const configuration = () => (
   </HeaderBackground>
 );
 export const administration = () => (
-  <HeaderBackground>
+  <HeaderBackground color="#BDC0C3">
     <IconHeader
       iconType="administration"
       onClick={() => alertOnClick('Administration')}
