@@ -64,21 +64,6 @@ export const poller = () => (
     <IconHeader iconType="poller" onClick={() => alertOnClick('Poller')} />
   </HeaderBackground>
 );
-export const link = () => (
-  <HeaderBackground>
-    <IconHeader iconType="link" onClick={() => alertOnClick('Link')} />
-  </HeaderBackground>
-);
-export const clock = () => (
-  <HeaderBackground>
-    <IconHeader iconType="clock" onClick={() => alertOnClick('Clock')} />
-  </HeaderBackground>
-);
-export const database = () => (
-  <HeaderBackground>
-    <IconHeader iconType="database" onClick={() => alertOnClick('Database')} />
-  </HeaderBackground>
-);
 export const hosts = () => (
   <HeaderBackground>
     <IconHeader iconType="hosts" onClick={() => alertOnClick('Hosts')} />
