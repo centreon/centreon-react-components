@@ -56,7 +56,8 @@ const EnhancedTableHead = ({
             padding={row.disablePadding ? 'none' : 'default'}
             sortDirection={orderBy === row.id ? order : false}
           >
-            {row.type === TABLE_COLUMN_TYPES.multicolumn || !row.sortable ? (
+            {row.type === TABLE_COLUMN_TYPES.multicolumn ||
+            row.sortable === false ? (
               row.label
             ) : (
               <StyledTableSortLabel
