@@ -90,7 +90,7 @@ function Wizard(props) {
     const activePage = React.Children.toArray(children)[page];
 
     return activePage.props.validate
-      ? activePage.props.validate(valuesToValidate)
+      ? activePage.props.validate(currentValues)
       : {};
   };
 
