@@ -88,11 +88,6 @@ ListingHeader.propTypes = {
     ),
   ).isRequired,
   checkable: PropTypes.bool.isRequired,
-  indicatorsEditor: PropTypes.bool,
-};
-
-ListingHeader.defaultProps = {
-  indicatorsEditor: null,
 };
 
 export default ListingHeader;
