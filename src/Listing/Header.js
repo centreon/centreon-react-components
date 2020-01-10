@@ -6,9 +6,9 @@ import TableRow from '@material-ui/core/TableRow';
 import PropTypes from 'prop-types';
 import TableCell from '@material-ui/core/TableCell';
 import { withStyles } from '@material-ui/core/styles';
-import StyledTableSortLabel from './StyledTableSortLabel';
-import StyledCheckbox from './StyledCheckbox';
-import TABLE_COLUMN_TYPES from '../ColumnTypes';
+import StyledTableSortLabel from './SortLabel';
+import StyledCheckbox from './Checkbox';
+import TABLE_COLUMN_TYPES from './ColumnTypes';
 
 const HeaderCell = withStyles({
   root: {
@@ -20,7 +20,7 @@ const HeaderCell = withStyles({
   },
 })(TableCell);
 
-const EnhancedTableHead = ({
+const ListingHeader = ({
   onSelectAllClick,
   order,
   orderBy,
@@ -75,7 +75,7 @@ const EnhancedTableHead = ({
   );
 };
 
-EnhancedTableHead.propTypes = {
+ListingHeader.propTypes = {
   numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
   onSelectAllClick: PropTypes.func.isRequired,
@@ -91,8 +91,8 @@ EnhancedTableHead.propTypes = {
   indicatorsEditor: PropTypes.bool,
 };
 
-EnhancedTableHead.defaultProps = {
+ListingHeader.defaultProps = {
   indicatorsEditor: null,
 };
 
-export default EnhancedTableHead;
+export default ListingHeader;

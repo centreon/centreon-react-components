@@ -18,17 +18,17 @@ import DefaultTooltip from '@material-ui/core/Tooltip';
 import Box from '@material-ui/core/Box';
 import TableCell from '@material-ui/core/TableCell';
 
-import StyledTableRow from './StyledTableRow';
-import IconPowerSettings from '../../Icon/IconPowerSettings';
-import IconPowerSettingsDisable from '../../Icon/IconPowerSettingsDisable';
-import StyledCheckbox from './StyledCheckbox';
-import IconDelete from '../../Icon/IconDelete';
-import IconLibraryAdd from '../../Icon/IconLibraryAdd';
-import EnhancedTableHead from './EnhancedTableHead';
-import TABLE_COLUMN_TYPES from '../ColumnTypes';
-import TablePaginationActions from './TablePaginationActions';
-import StyledPagination from './StyledPagination';
-import Tooltip from '../../Tooltip';
+import StyledTableRow from './Row';
+import IconPowerSettings from '../Icon/IconPowerSettings';
+import IconPowerSettingsDisable from '../Icon/IconPowerSettingsDisable';
+import StyledCheckbox from './Checkbox';
+import IconDelete from '../Icon/IconDelete';
+import IconLibraryAdd from '../Icon/IconLibraryAdd';
+import ListingHeader from './Header';
+import TABLE_COLUMN_TYPES from './ColumnTypes';
+import PaginationActions from './PaginationActions';
+import StyledPagination from './Pagination';
+import Tooltip from '../Tooltip';
 
 const loadingIndicatorHeight = 3;
 
@@ -72,7 +72,7 @@ function cumulativeOffset(element) {
   return cumulativeOffset(element.offsetParent) + element.offsetTop;
 }
 
-class TableCustom extends React.Component {
+class Listing extends React.Component {
   state = {
     tableTopOffset: 0,
   };
@@ -375,7 +375,7 @@ class TableCustom extends React.Component {
               }}
               onChangePage={onPaginate}
               onChangeRowsPerPage={onPaginationLimitChanged}
-              ActionsComponent={TablePaginationActions}
+              ActionsComponent={PaginationActions}
             />
           ) : null}
           <div
@@ -390,7 +390,7 @@ class TableCustom extends React.Component {
               size="small"
               stickyHeader
             >
-              <EnhancedTableHead
+              <ListingHeader
                 numSelected={selectedRows.length}
                 order={sorto}
                 checkable={checkable}
@@ -462,7 +462,7 @@ class TableCustom extends React.Component {
   }
 }
 
-TableCustom.defaultProps = {
+Listing.defaultProps = {
   grayRowCondition: () => false,
   ariaLabel: '',
   onRowClick: () => undefined,
@@ -489,7 +489,7 @@ const anyObject = PropTypes.objectOf(
 );
 const anyArray = PropTypes.arrayOf(anyObject);
 
-TableCustom.propTypes = {
+Listing.propTypes = {
   ariaLabel: PropTypes.string,
   classes: anyObject.isRequired,
   onSort: PropTypes.func.isRequired,
@@ -522,4 +522,4 @@ TableCustom.propTypes = {
   labelDuplicate: PropTypes.string,
 };
 
-export default withStyles(styles, { withTheme: true })(TableCustom);
+export default withStyles(styles, { withTheme: true })(Listing);
