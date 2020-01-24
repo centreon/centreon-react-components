@@ -40,11 +40,7 @@ class ExtensionDeletePopup extends React.Component {
                 }}
               />
             </div>
-            <div
-              className={clsx(styles['container__col-xs-6'], [
-                'text-left',
-              ])}
-            >
+            <div className={clsx(styles['container__col-xs-6'], ['text-left'])}>
               <Button
                 label="Cancel"
                 buttonType="regular"

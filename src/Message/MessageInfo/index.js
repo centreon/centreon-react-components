@@ -7,9 +7,7 @@ import styles from './message-info.scss';
 
 const MessageInfo = ({ messageInfo, text }) => {
   return (
-    <span
-      className={clsx(styles['message-info'], styles[messageInfo || ''])}
-    >
+    <span className={clsx(styles['message-info'], styles[messageInfo || ''])}>
       {text}
     </span>
   );

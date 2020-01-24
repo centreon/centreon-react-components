@@ -19,17 +19,11 @@ class FileUploadItem extends Component {
           <span className={cnFileUploadTitle}>{title}</span>
           <div className={clsx(styles.progress)}>
             <span
-              className={clsx(
-                styles['progress-bar'],
-                styles[progressBar],
-              )}
+              className={clsx(styles['progress-bar'], styles[progressBar])}
             />
           </div>
           <span
-            className={clsx(
-              styles['file-upload-item-info'],
-              styles.percentage,
-            )}
+            className={clsx(styles['file-upload-item-info'], styles.percentage)}
           >
             {`${uploadedPercentage}%/100%`}
           </span>

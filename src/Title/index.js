@@ -35,10 +35,7 @@ const Title = ({
     ) : null}
     <div className={styles['custom-title-label-container']}>
       <span
-        className={clsx(
-          styles['custom-title-label'],
-          styles[titleColor || ''],
-        )}
+        className={clsx(styles['custom-title-label'], styles[titleColor || ''])}
         style={labelStyle}
         title={title || label}
       >

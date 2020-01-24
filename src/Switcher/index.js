@@ -77,10 +77,7 @@ class Switcher extends React.Component {
             onClick={this.onChange.bind(this)}
           />
           <span
-            className={clsx(
-              styles['switch-slider'],
-              styles['switch-round'],
-            )}
+            className={clsx(styles['switch-slider'], styles['switch-round'])}
           />
         </label>
       </div>

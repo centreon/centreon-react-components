@@ -28,10 +28,7 @@ class Sidebar extends Component {
 
     return (
       <nav
-        className={clsx(
-          styles.sidebar,
-          styles[active ? 'active' : 'mini'],
-        )}
+        className={clsx(styles.sidebar, styles[active ? 'active' : 'mini'])}
         id="sidebar"
         style={style}
       >

@@ -9,14 +9,10 @@ import styles from './content-description.scss';
 const DescriptionContent = ({ date, title, text, note, link }) => (
   <React.Fragment>
     {date ? (
-      <span className={clsx(styles['content-description-date'])}>
-        {date}
-      </span>
+      <span className={clsx(styles['content-description-date'])}>{date}</span>
     ) : null}
     {title ? (
-      <h3 className={clsx(styles['content-description-title'])}>
-        {title}
-      </h3>
+      <h3 className={clsx(styles['content-description-title'])}>{title}</h3>
     ) : null}
     {text ? (
       <p className={clsx(styles['content-description-text'])}>

@@ -50,19 +50,13 @@ class FileUploadItem extends Component {
           ) : null}
           {!uploading ? (
             <span
-              className={clsx(
-                styles['icon-close'],
-                styles['icon-close-small'],
-              )}
+              className={clsx(styles['icon-close'], styles['icon-close-small'])}
               onClick={onDeleteFile}
             />
           ) : null}
           <div className={clsx(styles.progress)}>
             <span
-              className={clsx(
-                styles['progress-bar'],
-                styles[progressBar],
-              )}
+              className={clsx(styles['progress-bar'], styles[progressBar])}
               style={{
                 width: `${progressPercentage}%`,
               }}

@@ -51,9 +51,7 @@ const InputField = ({
         ref={reference}
         {...rest}
       />
-      {error ? (
-        <div className={clsx(styles['form-error'])}>{error}</div>
-      ) : null}
+      {error ? <div className={clsx(styles['form-error'])}>{error}</div> : null}
     </div>
   );
 };

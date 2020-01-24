@@ -15,10 +15,7 @@ export default ({ fullContent }) => (
     )}
   >
     <div
-      className={clsx(
-        styles['loader-inner'],
-        loaderStyles['ball-grid-pulse'],
-      )}
+      className={clsx(styles['loader-inner'], loaderStyles['ball-grid-pulse'])}
     >
       <div />
       <div />

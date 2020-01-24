@@ -71,10 +71,7 @@ class FileUpload extends Component {
                 <div className={clsx(styles.file, styles['file-upload'])}>
                   <span className={clsx(styles['file-upload-title'])}>
                     <span
-                      className={clsx(
-                        styles['file-upload-icon'],
-                        styles.white,
-                      )}
+                      className={clsx(styles['file-upload-icon'], styles.white)}
                     />
                     {isSuccessfull ? 'File Upload' : 'No valid file uploaded.'}
                   </span>

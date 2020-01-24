@@ -19,10 +19,7 @@ class SearchLive extends Component {
     const { label, value, icon } = this.props;
     return (
       <div
-        className={clsx(
-          styles['search-live'],
-          styles[icon ? 'custom' : ''],
-        )}
+        className={clsx(styles['search-live'], styles[icon ? 'custom' : ''])}
       >
         {label && <label>{label}</label>}
         <input type="text" value={value} onChange={this.onChange.bind(this)} />
