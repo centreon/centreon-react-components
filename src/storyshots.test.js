@@ -14,6 +14,12 @@ const beforeScreenshot = () => {
     }, 600),
   );
 };
+const getScreenshotOptions = () => {
+  return {
+    encoding: 'base64',
+    fullPage: false,
+  };
+};
 
 initStoryshots({
   suite: 'Image StoryShots',
@@ -21,5 +27,6 @@ initStoryshots({
     storybookUrl: `file://${__dirname}/../.out`,
     getMatchOptions,
     beforeScreenshot,
+    getScreenshotOptions,
   }),
 });
