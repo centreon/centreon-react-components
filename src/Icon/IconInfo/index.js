@@ -2,11 +2,11 @@
 /* eslint-disable react/prop-types */
 
 import React from 'react';
-import classnames from 'classnames';
+import clsx from 'clsx';
 import styles from './info-state-icon.scss';
 
 const IconInfo = ({ iconName, iconText, iconColor, iconPosition }) => {
-  const cn = classnames(
+  const cn = clsx(
     styles.info,
     { [styles[`info-${iconName}`]]: true },
     styles[iconPosition || ''],
@@ -16,7 +16,7 @@ const IconInfo = ({ iconName, iconText, iconColor, iconPosition }) => {
     <React.Fragment>
       {iconName && <span className={cn} />}
       {iconText && (
-        <span className={classnames(styles['info-text'])}>{iconText}</span>
+        <span className={clsx(styles['info-text'])}>{iconText}</span>
       )}
     </React.Fragment>
   );

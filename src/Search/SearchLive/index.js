@@ -4,7 +4,7 @@
 /* eslint-disable react/prop-types */
 
 import React, { Component } from 'react';
-import classnames from 'classnames';
+import clsx from 'clsx';
 import styles from './search-live.scss';
 import ButtonActionInput from '../../Button/ButtonActionInput';
 import '../SearchWithArrow/search-with-arrow.scss';
@@ -19,7 +19,7 @@ class SearchLive extends Component {
     const { label, value, icon } = this.props;
     return (
       <div
-        className={classnames(
+        className={clsx(
           styles['search-live'],
           styles[icon ? 'custom' : ''],
         )}
