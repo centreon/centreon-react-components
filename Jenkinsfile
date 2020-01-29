@@ -34,9 +34,15 @@ try {
       sh 'setup_centreon_build.sh'
       sh "./centreon-build/jobs/ui/ui-unittest.sh"
     }
+    junit 'ut.xml'
     if ((currentBuild.result ?: 'SUCCESS') != 'SUCCESS') {
       error('Unit tests stage failure.');
     }
+    recordIssues(
+      enabledForFailure: true,
+      tools: [tsLint(pattern: 'codestyle.xml')],
+      referenceJobName: 'centreon-ui/master'
+    )
   }
 
   stage('Bundle') {
