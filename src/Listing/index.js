@@ -64,13 +64,13 @@ const styles = () => ({
   },
 });
 
-function cumulativeOffset(element) {
+const cumulativeOffset = (element) => {
   if (!element || !element.offsetParent) {
     return 0;
   }
 
   return cumulativeOffset(element.offsetParent) + element.offsetTop;
-}
+};
 
 class Listing extends React.Component {
   state = {

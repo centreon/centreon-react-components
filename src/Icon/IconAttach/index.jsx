@@ -44,14 +44,14 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-function IconAttach({
+const IconAttach = ({
   onClick,
   defaultImage,
   uploadedImage,
   imgSource,
   title,
   labelNoIcon = 'NO ICON',
-}) {
+}) => {
   const classes = useStyles();
 
   return (
@@ -71,6 +71,6 @@ function IconAttach({
       )}
     </span>
   );
-}
+};
 
 export default IconAttach;
