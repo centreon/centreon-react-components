@@ -2,7 +2,7 @@
   "name": "@centreon/ui",
   "version": "20.4.0",
   "description": "Centreon UI Components",
-  "main": "lib",
+  "main": "src",
   "scripts": {
     "eslint": "eslint . --ext .js,.jsx",
     "eslint:fix": "npm run eslint -- --fix",
@@ -13,6 +13,7 @@
     "build:storybook": "build-storybook -c .storybook -o .out",
     "test": "jest"
   },
+  "sideEffects": false,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/centreon/centreon-ui.git"
@@ -79,6 +80,7 @@
     "eslint-plugin-react-hooks": "^1.7.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.9.0",
+    "jest-junit": "^10.0.0",
     "node-sass": "^4.10.0",
     "prettier": "^1.18.2",
     "puppeteer": "^2.0.0",
