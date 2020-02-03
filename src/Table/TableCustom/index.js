@@ -64,13 +64,13 @@ const styles = () => ({
   },
 });
 
-function cumulativeOffset(element) {
+const cumulativeOffset = (element) => {
   if (!element || !element.offsetParent) {
     return 0;
   }
 
   return cumulativeOffset(element.offsetParent) + element.offsetTop;
-}
+};
 
 class TableCustom extends Component {
   state = {
@@ -472,15 +472,15 @@ class TableCustom extends Component {
                           case TABLE_COLUMN_TYPES.multicolumn:
                             return (
                               <BodyTableCell key={column.id} align="left">
-                                {column.columns.map((subColumn) => (
-                                  <>
-                                    {`${subColumn.label} ${row[subColumn.id]}`}
-                                    {subColumn.type === 'percentage'
-                                      ? '%'
-                                      : null}
-                                    {'   '}
-                                  </>
-                                ))}
+                                {column.columns.map(({ label, id, type }) => {
+                                  const value = row[id];
+                                  const suffix =
+                                    type === 'percentage' ? '%' : '';
+
+                                  return value
+                                    ? `${label} ${value}${suffix} `
+                                    : null;
+                                })}
                               </BodyTableCell>
                             );
                           case TABLE_COLUMN_TYPES.hoverActions:
