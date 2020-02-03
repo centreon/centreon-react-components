@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { render, fireEvent } from '@testing-library/react';
 
 import Table from '.';
@@ -91,5 +92,42 @@ describe('Table', () => {
     fireEvent.click(selectAllCheckbox);
 
     expect(onSelectRows).toHaveBeenCalledWith([]);
+  });
+
+  it('displays multicolumn Column Type correctly', () => {
+    const multiColumnConfiguration = [
+      {
+        id: 'level_w & level_c',
+        columns: [
+          {
+            id: 'warning',
+            label: `Warning:`,
+            type: 'percentage',
+          },
+          {
+            id: 'critical',
+            label: `Critical:`,
+            type: 'percentage',
+          },
+        ],
+        label: 'Calculation method',
+        type: ColumnTypes.multicolumn,
+      },
+    ];
+
+    const multiColumnData = [
+      { warning: 80, critical: 70 },
+      { warning: null, critical: 70 },
+    ];
+
+    const { getByText } = render(
+      <Table
+        columnConfiguration={multiColumnConfiguration}
+        tableData={multiColumnData}
+      />,
+    );
+
+    expect(getByText('Warning: 80% Critical: 70%')).toBeInTheDocument();
+    expect(getByText('Critical: 70%')).toBeInTheDocument();
   });
 });
