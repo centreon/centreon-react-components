@@ -472,15 +472,17 @@ class TableCustom extends Component {
                           case TABLE_COLUMN_TYPES.multicolumn:
                             return (
                               <BodyTableCell key={column.id} align="left">
-                                {column.columns.map(({ label, id, type }) => {
-                                  const value = row[id];
-                                  const suffix =
-                                    type === 'percentage' ? '%' : '';
+                                {column.columns
+                                  .map(({ label, id, type }) => {
+                                    const value = row[id];
+                                    const suffix =
+                                      type === 'percentage' ? '%' : '';
 
-                                  return value
-                                    ? `${label} ${value}${suffix} `
-                                    : null;
-                                })}
+                                    return value !== null
+                                      ? `${label} ${value}${suffix}`
+                                      : null;
+                                  })
+                                  .join(' ')}
                               </BodyTableCell>
                             );
                           case TABLE_COLUMN_TYPES.hoverActions:
