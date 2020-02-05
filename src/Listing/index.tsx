@@ -1,11 +1,9 @@
-/* eslint-disable no-plusplus */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/jsx-filename-extension */
 
 import React, { useState, useRef, useEffect } from 'react';
 
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import ResizeObserver from 'resize-observer-polyfill';
 
@@ -32,7 +30,7 @@ import Tooltip from '../Tooltip';
 
 const loadingIndicatorHeight = 3;
 
-const haveSameIds = (a, b) => a.id === b.id;
+const haveSameIds = (a, b): boolean => a.id === b.id;
 
 const BodyTableCell = withStyles({
   root: {
@@ -42,7 +40,7 @@ const BodyTableCell = withStyles({
   },
 })(TableCell);
 
-const styles = () => ({
+const styles = (): {} => ({
   paper: {
     width: '100%',
     height: '100%',
@@ -115,9 +113,10 @@ const Listing = ({
   ariaLabel = '',
   checkable = false,
   emptyDataMessage = 'No results found',
-  grayRowCondition = () => false,
+  grayRowCondition = (): boolean => false,
   labelDelete = 'Delete',
-  labelDisplayedRows = ({ from, to, count }) => `${from}-${to} of ${count}`,
+  labelDisplayedRows = ({ from, to, count }): string =>
+    `${from}-${to} of ${count}`,
   labelDuplicate = 'Duplicate',
   labelEnableDisable = 'Enable / Disable',
   labelRowsPerPage = 'Rows per page',
@@ -130,7 +129,7 @@ const Listing = ({
   onPaginate = (): void => undefined,
   onPaginationLimitChanged = (): void => undefined,
   onRowClick = (): void => undefined,
-  onSelectRows = (): void => {},
+  onSelectRows = (): void => undefined,
   onSort = (): void => undefined,
   paginated = true,
   selectedRows = [],
@@ -147,14 +146,14 @@ const Listing = ({
       setTableTopOffset(cumulativeOffset(tableBody.current));
     });
 
-    ro.observe(tableBody.current);
+    ro.observe(tableBody.current as Element);
   }, []);
 
   const selectedRowsInclude = (row): boolean => {
     return !!selectedRows.find((includedRow) => haveSameIds(includedRow, row));
   };
 
-  const handleRequestSort = (_, property) => {
+  const handleRequestSort = (_, property): void => {
     const isDesc = sortf === property && sorto === 'desc';
 
     onSort({
@@ -163,7 +162,7 @@ const Listing = ({
     });
   };
 
-  const selectAllRows = (event) => {
+  const selectAllRows = (event): void => {
     if (event.target.checked) {
       onSelectRows(tableData);
       return;
@@ -172,7 +171,7 @@ const Listing = ({
     onSelectRows([]);
   };
 
-  const selectRow = (event, row) => {
+  const selectRow = (event, row): void => {
     event.preventDefault();
     event.stopPropagation();
 
@@ -183,7 +182,7 @@ const Listing = ({
     onSelectRows([...selectedRows, row]);
   };
 
-  const hoverRow = (id) => () => {
+  const hoverRow = (id) => (): void => {
     setHovered(id);
   };
 
@@ -197,12 +196,12 @@ const Listing = ({
     return selectedRowsInclude(row);
   };
 
-  const getColumnCell = ({ row, column }) => {
+  const getColumnCell = ({ row, column }): JSX.Element => {
     const cellByColumnType = {
-      [TABLE_COLUMN_TYPES.number]: () => (
+      [TABLE_COLUMN_TYPES.number]: (): JSX.Element => (
         <BodyTableCell align="left">{row[column.id] || ''}</BodyTableCell>
       ),
-      [TABLE_COLUMN_TYPES.string]: () => (
+      [TABLE_COLUMN_TYPES.string]: (): JSX.Element => (
         <BodyTableCell key={column.id} align="left">
           {column.image && (
             <img
@@ -219,19 +218,19 @@ const Listing = ({
           {row[column.id] || ''}
         </BodyTableCell>
       ),
-      [TABLE_COLUMN_TYPES.toggler]: () => (
+      [TABLE_COLUMN_TYPES.toggler]: (): JSX.Element => (
         <BodyTableCell align="left">
           {row[column.id] ? (
             <Tooltip
               label={labelEnableDisable}
-              onClick={(e) => {
+              onClick={(e): void => {
                 e.preventDefault();
                 e.stopPropagation();
                 onDisable([row]);
               }}
             >
               <IconPowerSettings
-                onClick={(e) => {
+                onClick={(e): void => {
                   e.preventDefault();
                   e.stopPropagation();
                   onDisable([row]);
@@ -241,7 +240,7 @@ const Listing = ({
           ) : (
             <Tooltip
               label={labelEnableDisable}
-              onClick={(e) => {
+              onClick={(e): void => {
                 e.preventDefault();
                 e.stopPropagation();
                 onEnable([row]);
@@ -249,7 +248,7 @@ const Listing = ({
             >
               <IconPowerSettingsDisable
                 active
-                onClick={(e) => {
+                onClick={(e): void => {
                   e.preventDefault();
                   e.stopPropagation();
                   onEnable([row]);
@@ -259,7 +258,7 @@ const Listing = ({
           )}
         </BodyTableCell>
       ),
-      [TABLE_COLUMN_TYPES.widthVariation]: () => (
+      [TABLE_COLUMN_TYPES.widthVariation]: (): JSX.Element => (
         <BodyTableCell
           key={column.id}
           align="left"
@@ -278,7 +277,7 @@ const Listing = ({
           </DefaultTooltip>
         </BodyTableCell>
       ),
-      [TABLE_COLUMN_TYPES.multicolumn]: () => (
+      [TABLE_COLUMN_TYPES.multicolumn]: (): JSX.Element => (
         <BodyTableCell key={column.id} align="left">
           {column.columns.map((subColumn) => (
             <>
@@ -289,7 +288,7 @@ const Listing = ({
           ))}
         </BodyTableCell>
       ),
-      [TABLE_COLUMN_TYPES.hoverActions]: () => (
+      [TABLE_COLUMN_TYPES.hoverActions]: (): JSX.Element => (
         <BodyTableCell
           align="right"
           key={column.id}
@@ -312,12 +311,12 @@ const Listing = ({
               <Box>
                 <Tooltip
                   label={labelDelete}
-                  onClick={() => {
+                  onClick={(): void => {
                     onDelete([row]);
                   }}
                 >
                   <IconDelete
-                    onClick={(e) => {
+                    onClick={(e): void => {
                       e.preventDefault();
                       e.stopPropagation();
                       onDelete([row]);
@@ -328,12 +327,12 @@ const Listing = ({
               <Box>
                 <Tooltip
                   label={labelDuplicate}
-                  onClick={() => {
+                  onClick={(): void => {
                     onDuplicate([row]);
                   }}
                 >
                   <IconLibraryAdd
-                    onClick={(e) => {
+                    onClick={(e): void => {
                       e.preventDefault();
                       e.stopPropagation();
                       onDuplicate([row]);
@@ -347,7 +346,7 @@ const Listing = ({
           )}
         </BodyTableCell>
       ),
-      [TABLE_COLUMN_TYPES.component]: () => {
+      [TABLE_COLUMN_TYPES.component]: (): JSX.Element => {
         const Component = column.Component({
           row,
           isRowSelected: isSelected(row),
@@ -368,7 +367,7 @@ const Listing = ({
 
   const emptyRows = limit - Math.min(limit, totalRows - currentPage * limit);
 
-  const tableMaxHeight = () => {
+  const tableMaxHeight = (): string => {
     return `calc(100vh - ${tableTopOffset}px - 25px)`;
   };
 
@@ -442,14 +441,14 @@ const Listing = ({
                     className={clsx({
                       [classes.rowDisabled]: grayRowCondition(row),
                     })}
-                    onClick={() => {
+                    onClick={(): void => {
                       onRowClick(row);
                     }}
                   >
                     {checkable ? (
                       <BodyTableCell
                         align="left"
-                        onClick={(event) => selectRow(event, row)}
+                        onClick={(event): void => selectRow(event, row)}
                         padding="checkbox"
                       >
                         <StyledCheckbox
