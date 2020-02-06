@@ -16,21 +16,25 @@ module.exports = {
         {
           test: /\.jsx?$/,
           include: path.resolve(__dirname, '..'),
-          exclude: /node_modules/,
           use: [{ loader: 'babel-loader' }],
         },
         {
           test: /\.tsx?$/,
           include: path.resolve(__dirname, '..'),
-          exclude: /node_modules/,
           use: ['babel-loader', 'awesome-typescript-loader'],
         },
         {
           test: /\.s?[ac]ss$/i,
-          include: path.resolve(__dirname, '..'),
           use: [
             'style-loader',
-            'css-loader',
+            {
+              loader: 'css-loader',
+              options: {
+                modules: {
+                  localIdentName: '[local]__[hash:base64:5]',
+                },
+              },
+            },
             'sass-loader',
           ],
         },
