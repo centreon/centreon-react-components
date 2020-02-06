@@ -57,9 +57,9 @@ const IconAttach = ({
   return (
     <span onClick={onClick} className={classes.iconAttach}>
       {defaultImage && (
-        <React.Fragment>
+        <>
           <span className={classes.iconAttachLabel}>{labelNoIcon}</span>
-        </React.Fragment>
+        </>
       )}
       {uploadedImage && (
         <img
