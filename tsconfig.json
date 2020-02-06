@@ -1,13 +1,4 @@
 {
-  "compilerOptions": {
-    "esModuleInterop": true,
-    "target": "es5",
-    "module": "commonjs",
-    "jsx": "react",
-    "strict": true,
-    "noImplicitAny": false,
-    "skipLibCheck": true,
-    "baseUrl": "./src",
-    "typeRoots": ["./types", "./node_modules/@types"],                       /* List of folders to include type definitions from. */
-  }
+  "extends": "./node_modules/@centreon/frontend-core/tsconfig/index",
+  "baseUrl": "./src",
 }
