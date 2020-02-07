@@ -40,6 +40,7 @@ try {
         referenceJobName: 'centreon-ui/master'
       )
       archiveArtifacts allowEmptyArchive: true, artifacts: 'snapshots/*.png'
+      stash includes: 'storybook/**', name: 'storybook'
     }
     if ((currentBuild.result ?: 'SUCCESS') != 'SUCCESS') {
       error('Unit tests stage failure.');
@@ -49,6 +50,7 @@ try {
   stage('Bundle') {
     node {
       sh 'setup_centreon_build.sh'
+      unstash 'storybook'
       sh "./centreon-build/jobs/ui/ui-bundle.sh"
     }
     if ((currentBuild.result ?: 'SUCCESS') != 'SUCCESS') {
