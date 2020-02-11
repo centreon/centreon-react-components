@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     cursor: 'pointer',
     outline: 'none',
+    width: '100%',
   },
   hovered: {
     backgroundColor: theme.palette.grey[400],
@@ -91,8 +92,8 @@ const MultiSelectEntries = ({
         </Box>
       </Box>
       <Grid container justify="flex-start">
-        {values.slice(1, maxChips + 1).map(({ name }) => (
-          <Entry label={name} />
+        {values.slice(0, maxChips).map(({ id, name }) => (
+          <Entry key={id} label={name} />
         ))}
         {count > maxChips && <Entry label="..." />}
       </Grid>
