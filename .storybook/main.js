@@ -1,6 +1,6 @@
 const merge = require('lodash/merge');
 const webpackMerge = require('webpack-merge');
-const baseConfig = require('@centreon/frontend-core').webpackTypeScript;
+const baseConfig = require('@centreon/frontend-core/webpack/base/typescript');
 
 const storiesPath = '../src/**/*.stories';
 

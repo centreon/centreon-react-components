@@ -97,7 +97,7 @@ interface Props {
   onSort?: (sortParams) => void;
   paginated?: boolean;
   selectedRows?;
-  sorto?: string;
+  sorto?: 'asc' | 'desc';
   sortf?: string;
   tableData;
   totalRows: number;
