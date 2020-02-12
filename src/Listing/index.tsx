@@ -8,13 +8,15 @@ import clsx from 'clsx';
 import ResizeObserver from 'resize-observer-polyfill';
 
 import { withStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import Paper from '@material-ui/core/Paper';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import DefaultTooltip from '@material-ui/core/Tooltip';
-import Box from '@material-ui/core/Box';
-import TableCell from '@material-ui/core/TableCell';
+import {
+  Table,
+  TableBody,
+  Paper,
+  LinearProgress,
+  Tooltip as DefaultTooltip,
+  Box,
+  TableCell,
+} from '@material-ui/core';
 
 import StyledTableRow from './Row';
 import IconPowerSettings from '../Icon/IconPowerSettings';
