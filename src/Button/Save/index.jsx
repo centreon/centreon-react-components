@@ -14,7 +14,7 @@ const SaveButton = ({ succeeded, loading, tooltipLabel, ...rest }) => {
     }
 
     if (loading) {
-      return <CircularProgress size={30} color="white" />;
+      return <CircularProgress size={30} />;
     }
 
     return <SaveIcon />;
