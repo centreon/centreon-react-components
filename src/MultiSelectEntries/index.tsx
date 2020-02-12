@@ -4,7 +4,14 @@ import React, { Ref } from 'react';
 
 import clsx from 'clsx';
 
-import { Box, Chip, Grid, Typography, makeStyles } from '@material-ui/core';
+import {
+  Box,
+  Chip,
+  Grid,
+  FormHelperText,
+  Typography,
+  makeStyles,
+} from '@material-ui/core';
 import { Create } from '@material-ui/icons';
 
 import useHover from './useHover';
@@ -34,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
     borderWidth: 2,
     borderColor: theme.palette.grey[600],
     borderStyle: 'dashed',
+    textAlign: 'center',
   },
 }));
 
@@ -50,8 +58,16 @@ const Entry = ({ label }): JSX.Element => {
 const EmptyEntry = ({ label }): JSX.Element => {
   const classes = useStyles();
 
-  return <div className={classes.emptyChip}>{label}</div>;
+  return (
+    <div className={classes.emptyChip}>
+      <Caption>{label}</Caption>
+    </div>
+  );
 };
+
+const Caption = ({ children }): JSX.Element => (
+  <Typography variant="caption">{children}</Typography>
+);
 
 const MultiSelectEntries = ({
   label,
@@ -59,6 +75,7 @@ const MultiSelectEntries = ({
   emptyLabel,
   onClick,
   values = [],
+  error = undefined,
 }): JSX.Element => {
   const classes = useStyles();
 
@@ -82,7 +99,7 @@ const MultiSelectEntries = ({
     >
       <Box display="flex">
         <Box flexGrow={1}>
-          <Typography variant="caption">{caption}</Typography>
+          <Caption>{caption}</Caption>
         </Box>
         <Box>
           <Create
@@ -98,6 +115,7 @@ const MultiSelectEntries = ({
         {count > maxChips && <Entry label="..." />}
       </Grid>
       {count === 0 && <EmptyEntry label={emptyLabel} />}
+      {error && <FormHelperText error>{JSON.stringify(error)}</FormHelperText>}
     </div>
   );
 };
