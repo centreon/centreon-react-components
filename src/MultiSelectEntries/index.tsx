@@ -129,7 +129,7 @@ const MultiSelectEntries = ({
         {count > maxChips && <Entry label="..." />}
       </Grid>
       {count === 0 && <EmptyEntry label={emptyLabel} />}
-      {error && <FormHelperText error>{JSON.stringify(error)}</FormHelperText>}
+      {error && <FormHelperText error>{error}</FormHelperText>}
     </div>
   );
 };
