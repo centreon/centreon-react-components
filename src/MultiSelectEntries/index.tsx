@@ -69,14 +69,28 @@ const Caption = ({ children }): JSX.Element => (
   <Typography variant="caption">{children}</Typography>
 );
 
+interface Value {
+  id: number;
+  name: string;
+}
+
+interface Props {
+  label: string;
+  highlight?: boolean;
+  emptyLabel: string;
+  onClick: () => void;
+  values?: Array<Value>;
+  error?;
+}
+
 const MultiSelectEntries = ({
   label,
-  highlight,
   emptyLabel,
   onClick,
   values = [],
+  highlight = false,
   error = undefined,
-}): JSX.Element => {
+}: Props): JSX.Element => {
   const classes = useStyles();
 
   const [hoverRef, isHovered] = useHover();
