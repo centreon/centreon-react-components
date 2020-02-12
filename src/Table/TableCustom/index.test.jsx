@@ -128,6 +128,6 @@ describe('Table', () => {
     );
 
     expect(getByText('Warning: 80% Critical: 70%')).toBeInTheDocument();
-    expect(getByText('Critical: 70%')).toBeInTheDocument();
+    expect(getByText('Warning: - Critical: 70%')).toBeInTheDocument();
   });
 });

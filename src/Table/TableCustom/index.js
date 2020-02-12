@@ -480,7 +480,7 @@ class TableCustom extends Component {
 
                                     return value !== null
                                       ? `${label} ${value}${suffix}`
-                                      : null;
+                                      : `${label} -`;
                                   })
                                   .join(' ')}
                               </BodyTableCell>
