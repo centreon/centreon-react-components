@@ -1,9 +1,3 @@
-const merge = require('lodash/merge');
-const webpackMerge = require('webpack-merge');
-const baseConfig = require('@centreon/frontend-core/webpack/base/typescript');
-
-const storiesPath = '../src/**/*.stories';
-
 module.exports = {
   stories: ['../src/**/*.stories.(jsx|tsx)'],
   addons: [],
