@@ -19,9 +19,9 @@ const idxStoryArg = process.argv.indexOf('-story');
 let regexp = null;
 if (idxStoryArg !== -1) {
   const storyComponents = process.argv.slice(idxStoryArg + 1);
-  const componentsToTest = storyComponents.length > 0 ?
-    storyComponents[0].split(' ').join('|') : '';
-  regexp = componentsToTest ? new RegExp(`^(${componentsToTest})$`, "g") : null;
+  const componentsToTest =
+    storyComponents.length > 0 ? storyComponents[0].replace(/ /g, '|') : '';
+  regexp = componentsToTest ? new RegExp(`^(${componentsToTest})$`, 'g') : null;
 }
 
 initStoryshots({
@@ -31,5 +31,5 @@ initStoryshots({
     storybookUrl: `file://${__dirname}/../.out`,
     getMatchOptions,
     beforeScreenshot,
-  })
+  }),
 });
