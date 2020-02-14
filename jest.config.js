@@ -1,11 +1,8 @@
-module.exports = {
-  setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
+const jestConfig = require('@centreon/frontend-core/jest');
+const merge = require('lodash/merge');
+
+module.exports = merge(jestConfig, {
   roots: ['<rootDir>/src/'],
-  transform: {
-    '^.+\\.[jt]sx?$': 'babel-jest',
-  },
-  moduleNameMapper: {
-    '\\.(s?css|png|svg)$': 'identity-obj-proxy',
-  },
   testPathIgnorePatterns: ['/node_modules/', '/lib/'],
-};
+  setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
+});
