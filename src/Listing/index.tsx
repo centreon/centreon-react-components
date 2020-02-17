@@ -51,10 +51,6 @@ const styles = (): {} => ({
     boxShadow: 'none',
     background: 'none',
   },
-  table: {
-    boxShadow:
-      '0px 1px 3px 0px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 2px 1px -1px rgba(0,0,0,0.12)',
-  },
   rowDisabled: {
     backgroundColor: 'rgba(0, 0, 0, 0.07) !important',
   },
@@ -268,17 +264,6 @@ const Listing = ({
           </DefaultTooltip>
         </BodyTableCell>
       ),
-      [TABLE_COLUMN_TYPES.multicolumn]: (): JSX.Element => (
-        <BodyTableCell key={column.id} align="left">
-          {column.columns.map((subColumn) => (
-            <>
-              {`${subColumn.label} ${row[subColumn.id]}`}
-              {subColumn.type === 'percentage' ? '%' : null}
-              {'   '}
-            </>
-          ))}
-        </BodyTableCell>
-      ),
       [TABLE_COLUMN_TYPES.hoverActions]: (): JSX.Element => (
         <BodyTableCell
           align="right"
@@ -388,12 +373,7 @@ const Listing = ({
             maxHeight: tableMaxHeight(),
           }}
         >
-          <Table
-            className={classes.table}
-            aria-label={ariaLabel}
-            size="small"
-            stickyHeader
-          >
+          <Table aria-label={ariaLabel} size="small" stickyHeader>
             <ListingHeader
               numSelected={selectedRows.length}
               order={sorto}
