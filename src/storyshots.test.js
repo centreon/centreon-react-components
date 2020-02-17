@@ -19,8 +19,7 @@ const idxStoryArg = process.argv.indexOf('-story');
 let regexp = null;
 if (idxStoryArg !== -1) {
   const storyComponents = process.argv.slice(idxStoryArg + 1);
-  const componentsToTest =
-    storyComponents.length > 0 ? storyComponents[0].replace(/ /g, '|') : '';
+  const componentsToTest = storyComponents[0] || '';
   regexp = componentsToTest ? new RegExp(`^(${componentsToTest})$`, 'g') : null;
 }
 
