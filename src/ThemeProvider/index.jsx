@@ -8,7 +8,7 @@ import {
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#009fdf',
+      main: '#00006F',
     },
   },
 });
