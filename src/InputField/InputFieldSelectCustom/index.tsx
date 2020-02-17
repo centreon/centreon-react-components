@@ -24,7 +24,7 @@ interface Props {
   error?: string;
   icons?: boolean;
   domainPath?: string;
-  customStyle?;
+  customStyle?: string;
 }
 
 const InputFieldSelectCustom = ({
