@@ -15,17 +15,22 @@ const beforeScreenshot = () => {
   );
 };
 
-const idxStoryArg = process.argv.indexOf('-story');
-let regexp = null;
-if (idxStoryArg !== -1) {
-  const storyComponents = process.argv.slice(idxStoryArg + 1);
-  const componentsToTest = storyComponents[0] || '';
-  regexp = componentsToTest ? new RegExp(`^(${componentsToTest})$`, 'g') : null;
-}
+const getStoryKindRegex = () => {
+  const singleStoryArgumentIndex = process.argv.indexOf('-story');
+  const givenStories = process.argv.slice(singleStoryArgumentIndex + 1);
+
+  if (singleStoryArgumentIndex === -1 || givenStories.length === 0) {
+    return null;
+  }
+
+  const [componentsToTest] = givenStories;
+
+  return new RegExp(`^(${componentsToTest || ''})$`, 'g');
+};
 
 initStoryshots({
   suite: 'Image StoryShots',
-  storyKindRegex: regexp,
+  storyKindRegex: getStoryKindRegex(),
   test: imageSnapshot({
     storybookUrl: `file://${__dirname}/../.out`,
     getMatchOptions,
