@@ -13,7 +13,6 @@ import StyledCheckbox from './Checkbox';
 
 const HeaderCell = withStyles((theme) => ({
   root: {
-    // color: theme.palette.common.black,
     backgroundColor: theme.palette.common.white,
     lineHeight: 1.4,
     height: 24,
