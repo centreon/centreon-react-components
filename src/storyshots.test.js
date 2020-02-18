@@ -16,16 +16,12 @@ const beforeScreenshot = () => {
 };
 
 const getStoryKindRegex = () => {
-  const singleStoryArgumentIndex = process.argv.indexOf('-story');
-  const givenStories = process.argv.slice(singleStoryArgumentIndex + 1);
-
-  if (singleStoryArgumentIndex === -1 || givenStories.length === 0) {
+  const config = JSON.parse(process.env.TEST_CONFIGURATION);
+  if (!config.story) {
     return null;
   }
 
-  const [componentsToTest] = givenStories;
-
-  return new RegExp(`^(${componentsToTest || ''})$`, 'g');
+  return new RegExp(`^(${config.story || ''})$`, 'g');
 };
 
 initStoryshots({
