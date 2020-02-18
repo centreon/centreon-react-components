@@ -10,6 +10,9 @@ const theme = createMuiTheme({
     primary: {
       main: '#00006F',
     },
+    background: {
+      default: '#EDEDED',
+    },
   },
 });
 

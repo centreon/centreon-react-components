@@ -18,7 +18,7 @@ import {
   TableCell,
 } from '@material-ui/core';
 
-import StyledTableRow from './Row';
+import ListingRow from './Row';
 import IconPowerSettings from '../Icon/IconPowerSettings';
 import IconPowerSettingsDisable from '../Icon/IconPowerSettingsDisable';
 import StyledCheckbox from './Checkbox';
@@ -48,11 +48,10 @@ const styles = (): {} => ({
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
-    boxShadow: 'none',
     background: 'none',
   },
   rowDisabled: {
-    backgroundColor: 'rgba(0, 0, 0, 0.07) !important',
+    backgroundColor: 'rgba(0, 0, 0, 0.07)',
   },
   loadingIndicator: {
     width: '100%',
@@ -196,11 +195,6 @@ const Listing = ({
 
   const getColumnCell = ({ row, column }): JSX.Element => {
     const cellByColumnType = {
-      [TABLE_COLUMN_TYPES.number]: (): JSX.Element => (
-        <BodyTableCell key={column.id} align="left">
-          {row[column.id] || ''}
-        </BodyTableCell>
-      ),
       [TABLE_COLUMN_TYPES.string]: (): JSX.Element => (
         <BodyTableCell key={column.id} align="left">
           {column.image && (
@@ -320,10 +314,14 @@ const Listing = ({
           isRowSelected: isSelected(row),
         });
 
+        const { ComponentOnHover } = column;
+
+        const isHovered = hovered === row.id;
+
         return (
           Component && (
             <BodyTableCell align="left" key={column.id}>
-              {Component}
+              {ComponentOnHover && isHovered ? <ComponentOnHover /> : Component}
             </BodyTableCell>
           )
         );
@@ -343,7 +341,7 @@ const Listing = ({
     <>
       {loading && <LinearProgress className={classes.loadingIndicator} />}
       {!loading && <div className={classes.loadingIndicator} />}
-      <Paper className={classes.paper}>
+      <Paper className={classes.paper} elevation={2}>
         {paginated ? (
           <StyledPagination
             rowsPerPageOptions={[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
@@ -357,7 +355,6 @@ const Listing = ({
               display: 'flex',
               flexDirection: 'row-reverse',
               padding: 0,
-              background: '#fff',
             }}
             SelectProps={{
               native: true,
@@ -396,8 +393,7 @@ const Listing = ({
                 const isRowSelected = isSelected(row);
 
                 return (
-                  <StyledTableRow
-                    hover
+                  <ListingRow
                     tabIndex={-1}
                     key={row.id}
                     onMouseEnter={hoverRow(row.id)}
@@ -427,15 +423,15 @@ const Listing = ({
                     {columnConfiguration.map((column) =>
                       getColumnCell({ column, row }),
                     )}
-                  </StyledTableRow>
+                  </ListingRow>
                 );
               })}
               {tableData.length < 1 && (
-                <StyledTableRow tabIndex={-1}>
+                <ListingRow tabIndex={-1}>
                   <BodyTableCell colSpan={6} align="center">
                     {loading ? loadingDataMessage : emptyDataMessage}
                   </BodyTableCell>
-                </StyledTableRow>
+                </ListingRow>
               )}
             </TableBody>
           </Table>
