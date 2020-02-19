@@ -38,7 +38,7 @@ const SelectField = ({
   const classes = useStyles();
 
   return (
-    <FormControl variant="filled">
+    <FormControl variant="filled" size="small">
       {label && <InputLabel>{label}</InputLabel>}
       <Select
         inputProps={{
