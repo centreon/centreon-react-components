@@ -341,7 +341,7 @@ const Listing = ({
     <>
       {loading && <LinearProgress className={classes.loadingIndicator} />}
       {!loading && <div className={classes.loadingIndicator} />}
-      <Paper className={classes.paper} elevation={2}>
+      <div className={classes.paper}>
         {paginated ? (
           <StyledPagination
             rowsPerPageOptions={[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
@@ -364,11 +364,12 @@ const Listing = ({
             ActionsComponent={PaginationActions}
           />
         ) : null}
-        <div
+        <Paper
           style={{
             overflow: 'auto',
             maxHeight: tableMaxHeight(),
           }}
+          elevation={1}
         >
           <Table aria-label={ariaLabel} size="small" stickyHeader>
             <ListingHeader
@@ -435,8 +436,8 @@ const Listing = ({
               )}
             </TableBody>
           </Table>
-        </div>
-      </Paper>
+        </Paper>
+      </div>
     </>
   );
 };
