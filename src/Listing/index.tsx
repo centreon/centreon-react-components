@@ -13,7 +13,6 @@ import {
   TableBody,
   Paper,
   LinearProgress,
-  Tooltip as DefaultTooltip,
   Box,
   TableCell,
 } from '@material-ui/core';
@@ -195,23 +194,15 @@ const Listing = ({
 
   const getColumnCell = ({ row, column }): JSX.Element => {
     const cellByColumnType = {
-      [TABLE_COLUMN_TYPES.string]: (): JSX.Element => (
-        <BodyTableCell key={column.id} align="left">
-          {column.image && (
-            <img
-              alt=""
-              src={row.iconPath}
-              style={{
-                maxWidth: 21,
-                display: 'inline-block',
-                verticalAlign: 'middle',
-                marginRight: 5,
-              }}
-            />
-          )}
-          {row[column.id] || ''}
-        </BodyTableCell>
-      ),
+      [TABLE_COLUMN_TYPES.string]: (): JSX.Element => {
+        const { getFormattedString } = column;
+
+        return (
+          <BodyTableCell key={column.id} align="left">
+            {getFormattedString(row) || ''}
+          </BodyTableCell>
+        );
+      },
       [TABLE_COLUMN_TYPES.toggler]: (): JSX.Element => (
         <BodyTableCell align="left" key={column.id}>
           {row[column.id] ? (
@@ -237,25 +228,6 @@ const Listing = ({
               <IconPowerSettingsDisable />
             </Tooltip>
           )}
-        </BodyTableCell>
-      ),
-      [TABLE_COLUMN_TYPES.widthVariation]: (): JSX.Element => (
-        <BodyTableCell
-          key={column.id}
-          align="left"
-          colSpan={isSelected(row) ? 1 : 5}
-          style={{
-            maxWidth: '145px',
-            textOverflow: 'ellipsis',
-            overflow: 'hidden',
-          }}
-        >
-          <DefaultTooltip
-            title={`${row[column.id]} (${row[column.subValue]})`}
-            placement="top"
-          >
-            <span>{`${row[column.id]} (${row[column.subValue]})`}</span>
-          </DefaultTooltip>
         </BodyTableCell>
       ),
       [TABLE_COLUMN_TYPES.hoverActions]: (): JSX.Element => (
@@ -318,15 +290,18 @@ const Listing = ({
         }
 
         const Cell = ({ children }: CellProps): JSX.Element => (
-          <BodyTableCell align="left" key={column.id}>
-            {children}
-          </BodyTableCell>
+          <BodyTableCell align="left">{children}</BodyTableCell>
         );
 
         return displayHoverComponent ? (
-          <ComponentOnHover Cell={Cell} />
+          <ComponentOnHover Cell={Cell} key={column.id} />
         ) : (
-          <Component Cell={Cell} row={row} isRowSelected={isSelected(row)} />
+          <Component
+            key={column.id}
+            Cell={Cell}
+            row={row}
+            isRowSelected={isSelected(row)}
+          />
         );
       },
     };

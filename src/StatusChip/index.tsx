@@ -71,11 +71,17 @@ const useStyles = makeStyles<Theme, Props>((theme) => ({
   }),
 }));
 
-const StatusChip = ({ statusCode, label }: Props): JSX.Element => {
+const StatusChip = ({ statusCode, label, ...rest }: Props): JSX.Element => {
   const classes = useStyles({ statusCode, label });
 
   return (
-    <Chip size="small" label={label?.toUpperCase()} className={classes.chip} />
+    <Chip
+      size="small"
+      clickable={false}
+      label={label?.toUpperCase()}
+      className={classes.chip}
+      {...rest}
+    />
   );
 };
 
