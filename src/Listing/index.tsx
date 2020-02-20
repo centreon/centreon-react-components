@@ -309,21 +309,24 @@ const Listing = ({
         </BodyTableCell>
       ),
       [TABLE_COLUMN_TYPES.component]: (): JSX.Element => {
-        const Component = column.Component({
-          row,
-          isRowSelected: isSelected(row),
-        });
+        const { Component, ComponentOnHover } = column;
 
-        const { ComponentOnHover } = column;
+        const displayHoverComponent = hovered === row.id && ComponentOnHover;
 
-        const isHovered = hovered === row.id;
+        interface CellProps {
+          children: React.ReactNode;
+        }
 
-        return (
-          Component && (
-            <BodyTableCell align="left" key={column.id}>
-              {ComponentOnHover && isHovered ? <ComponentOnHover /> : Component}
-            </BodyTableCell>
-          )
+        const Cell = ({ children }: CellProps): JSX.Element => (
+          <BodyTableCell align="left" key={column.id}>
+            {children}
+          </BodyTableCell>
+        );
+
+        return displayHoverComponent ? (
+          <ComponentOnHover Cell={Cell} />
+        ) : (
+          <Component Cell={Cell} row={row} isRowSelected={isSelected(row)} />
         );
       },
     };
