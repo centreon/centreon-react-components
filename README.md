@@ -42,7 +42,7 @@ To run End to End tests:
   - Build Storybook : `npm run build:storybook`
   - Run all Storyshot tests : `npm run test:storyshot`
 
-You can also test one or more component using the following syntax:
+You can also test one or more Components using the following syntax:
 
 ```bash
 npm run test:storyshot -- "Title" # Run Storyshot tests about Title component
