@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable jsx-a11y/label-has-for */
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
