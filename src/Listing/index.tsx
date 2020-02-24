@@ -70,7 +70,7 @@ interface Props {
   ariaLabel?: string;
   checkable?: boolean;
   classes;
-  currentPage;
+  currentPage?;
   columnConfiguration;
   emptyDataMessage?: string;
   grayRowCondition?: (row) => boolean;
@@ -79,7 +79,7 @@ interface Props {
   labelDuplicate?: string;
   labelEnableDisable?: string;
   labelRowsPerPage?: string;
-  limit: number;
+  limit?: number;
   loading?: boolean;
   loadingDataMessage?: string;
   onDelete?: (rows) => void;
@@ -95,17 +95,17 @@ interface Props {
   selectedRows?;
   sorto?: 'asc' | 'desc';
   sortf?: string;
-  tableData;
-  totalRows: number;
+  tableData?;
+  totalRows?;
 }
 
 const Listing = ({
-  limit,
+  limit = 10,
   columnConfiguration,
-  tableData,
+  tableData = [],
   classes,
-  currentPage,
-  totalRows,
+  currentPage = 0,
+  totalRows = 0,
   ariaLabel = '',
   checkable = false,
   emptyDataMessage = 'No results found',
@@ -281,28 +281,42 @@ const Listing = ({
         </BodyTableCell>
       ),
       [TABLE_COLUMN_TYPES.component]: (): JSX.Element => {
-        const { Component, ComponentOnHover } = column;
-
-        const displayHoverComponent = hovered === row.id && ComponentOnHover;
+        const { Component, ComponentOnHover, clickable } = column;
 
         interface CellProps {
           children: React.ReactNode;
+          width?: number;
         }
 
-        const Cell = ({ children }: CellProps): JSX.Element => (
-          <BodyTableCell align="left">{children}</BodyTableCell>
+        const Cell = ({ children, width }: CellProps): JSX.Element => (
+          <BodyTableCell
+            align="left"
+            style={{ width }}
+            {...(!clickable && {
+              onClick: (e): void => {
+                e.preventDefault();
+                e.stopPropagation();
+              },
+            })}
+          >
+            {children}
+          </BodyTableCell>
         );
 
-        return displayHoverComponent ? (
-          <ComponentOnHover Cell={Cell} key={column.id} />
-        ) : (
-          <Component
-            key={column.id}
-            Cell={Cell}
-            row={row}
-            isRowSelected={isSelected(row)}
-          />
-        );
+        const displayHoverComponent = hovered === row.id && ComponentOnHover;
+
+        const ComponentToDisplay = displayHoverComponent
+          ? ComponentOnHover
+          : Component;
+
+        const props = {
+          Cell,
+          key: column.id,
+          row,
+          isRowSelected: isSelected(row),
+        };
+
+        return <ComponentToDisplay {...props} />;
       },
     };
 
@@ -407,7 +421,10 @@ const Listing = ({
               })}
               {tableData.length < 1 && (
                 <ListingRow tabIndex={-1}>
-                  <BodyTableCell colSpan={6} align="center">
+                  <BodyTableCell
+                    colSpan={columnConfiguration.length + 1}
+                    align="center"
+                  >
                     {loading ? loadingDataMessage : emptyDataMessage}
                   </BodyTableCell>
                 </ListingRow>
