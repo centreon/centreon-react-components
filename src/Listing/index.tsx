@@ -29,6 +29,7 @@ import TABLE_COLUMN_TYPES from './ColumnTypes';
 import PaginationActions from './PaginationActions';
 import StyledPagination from './Pagination';
 import Tooltip from '../Tooltip';
+import ListingLoadingSkeleton from './Skeleton';
 
 const loadingIndicatorHeight = 3;
 
@@ -339,8 +340,12 @@ const Listing = ({
 
   return (
     <>
-      {loading && <LinearProgress className={classes.loadingIndicator} />}
-      {!loading && <div className={classes.loadingIndicator} />}
+      {loading && tableData.length > 0 && (
+        <LinearProgress className={classes.loadingIndicator} />
+      )}
+      {(!loading || (loading && tableData.length < 1)) && (
+        <div className={classes.loadingIndicator} />
+      )}
       <div className={classes.paper}>
         {paginated ? (
           <StyledPagination
@@ -427,10 +432,17 @@ const Listing = ({
                   </ListingRow>
                 );
               })}
+              {loading && (
+                <ListingLoadingSkeleton
+                  columnConfiguration={columnConfiguration}
+                  checkable={checkable}
+                  BodyTableCell={BodyTableCell}
+                />
+              )}
               {tableData.length < 1 && (
                 <ListingRow tabIndex={-1}>
                   <BodyTableCell colSpan={6} align="center">
-                    {loading ? loadingDataMessage : emptyDataMessage}
+                    {!loading && emptyDataMessage}
                   </BodyTableCell>
                 </ListingRow>
               )}
