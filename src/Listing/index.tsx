@@ -119,7 +119,6 @@ const Listing = ({
   labelEnableDisable = 'Enable / Disable',
   labelRowsPerPage = 'Rows per page',
   loading = false,
-  loadingDataMessage = 'Loading data',
   onEnable = (): void => undefined,
   onDelete = (): void => undefined,
   onDisable = (): void => undefined,
@@ -432,17 +431,10 @@ const Listing = ({
                   </ListingRow>
                 );
               })}
-              {loading && (
-                <ListingLoadingSkeleton
-                  columnConfiguration={columnConfiguration}
-                  checkable={checkable}
-                  BodyTableCell={BodyTableCell}
-                />
-              )}
               {tableData.length < 1 && (
                 <ListingRow tabIndex={-1}>
                   <BodyTableCell colSpan={6} align="center">
-                    {!loading && emptyDataMessage}
+                    {loading ? <ListingLoadingSkeleton /> : emptyDataMessage}
                   </BodyTableCell>
                 </ListingRow>
               )}
