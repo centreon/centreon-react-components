@@ -58,6 +58,7 @@ const getStatusColors = ({ theme, statusCode }: StatusColorProps): Colors => {
 interface Props {
   label?: string;
   statusCode: StatusCode;
+  clickable?: boolean;
 }
 
 const useStyles = makeStyles<Theme, Props>((theme) => ({
@@ -68,14 +69,26 @@ const useStyles = makeStyles<Theme, Props>((theme) => ({
       height: theme.spacing(1.5),
       width: theme.spacing(1.5),
     }),
+    '&:hover': { ...getStatusColors({ theme, statusCode }) },
   }),
 }));
 
-const StatusChip = ({ statusCode, label }: Props): JSX.Element => {
+const StatusChip = ({
+  statusCode,
+  label,
+  clickable = true,
+  ...rest
+}: Props): JSX.Element => {
   const classes = useStyles({ statusCode, label });
 
   return (
-    <Chip size="small" label={label?.toUpperCase()} className={classes.chip} />
+    <Chip
+      size="small"
+      clickable={clickable}
+      label={label?.toUpperCase()}
+      className={classes.chip}
+      {...rest}
+    />
   );
 };
 
