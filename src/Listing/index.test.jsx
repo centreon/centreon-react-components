@@ -13,6 +13,7 @@ describe('Table', () => {
     {
       id: 'name',
       type: ColumnTypes.string,
+      getFormattedString: ({ name }) => name,
     },
   ];
 
