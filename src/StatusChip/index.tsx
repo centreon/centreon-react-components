@@ -92,5 +92,5 @@ const StatusChip = ({
   );
 };
 
-export default StatusChip;
 export { StatusCode };
+export default StatusChip;
