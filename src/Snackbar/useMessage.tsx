@@ -43,8 +43,6 @@ const useMessage = (): UseMessage => {
     });
   };
 
-  console.log(severity);
-
   return {
     message,
     severity,
