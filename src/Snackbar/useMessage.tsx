@@ -1,36 +1,37 @@
 import React, { useState } from 'react';
-import { SnackbarState } from './withSnackbar';
 
-interface UseMessage extends SnackbarState {
+import { SnackbarActions } from './withSnackbar';
+
+interface SnackbarContent {
   message;
   severity;
   confirmMessage: () => void;
 }
 
-const useMessage = (): UseMessage => {
-  const [message, setMessage] = useState();
-  const [severity, setSeverity] = useState();
+const useMessage = (): SnackbarContent & SnackbarActions => {
+  const [snackbarMessage, setSnackbarMessage] = useState();
+  const [snackbarSeverity, setSnackbarSeverity] = useState();
 
   const confirmMessage = (): void => {
-    setMessage(undefined);
-    setSeverity(undefined);
+    setSnackbarMessage(undefined);
+    setSnackbarSeverity(undefined);
   };
 
-  const showMessage = ({ newMessage, newSeverity }): void => {
-    setMessage(newMessage);
-    setSeverity(newSeverity);
+  const showMessage = ({ message, severity }): void => {
+    setSnackbarMessage(message);
+    setSnackbarSeverity(severity);
   };
 
-  const showMessages = ({ newMessages, newSeverity }): void => {
-    const messageKeys = Object.keys(newMessages);
+  const showMessages = ({ messages, severity }): void => {
+    const messageKeys = Object.keys(messages);
 
     const formattedMessages = messageKeys.map(
-      (messageKey) => `${messageKey}: ${newMessages[messageKey]}`,
+      (messageKey) => `${messageKey}: ${messages[messageKey]}`,
       [],
     );
 
     showMessage({
-      newMessage: (
+      message: (
         <div style={{ display: 'block' }}>
           {formattedMessages.map((err, index) => (
             <p style={{ margin: 0 }} key={messageKeys[index]}>
@@ -39,13 +40,13 @@ const useMessage = (): UseMessage => {
           ))}
         </div>
       ),
-      newSeverity,
+      severity,
     });
   };
 
   return {
-    message,
-    severity,
+    message: snackbarMessage,
+    severity: snackbarSeverity,
     confirmMessage,
     showMessage,
     showMessages,

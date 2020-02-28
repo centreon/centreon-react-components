@@ -3,19 +3,19 @@ import React, { createContext, ReactNode, ReactElement } from 'react';
 import Snackbar from '.';
 import useMessage from './useMessage';
 
-export interface SnackbarState {
-  showMessage: ({ newMessage, newSeverity }) => void;
-  showMessages: ({ newMessages, newSeverity }) => void;
+export interface SnackbarActions {
+  showMessage: ({ message, severity }) => void;
+  showMessages: ({ messages, severity }) => void;
 }
 
 const noOp = (): void => undefined;
 
-const defaultSnackBarState: SnackbarState = {
+const defaultSnackBarState: SnackbarActions = {
   showMessage: noOp,
   showMessages: noOp,
 };
 
-const Context = createContext<SnackbarState>(defaultSnackBarState);
+const Context = createContext<SnackbarActions>(defaultSnackBarState);
 
 interface SnackbarContextProviderProps {
   children?: ReactNode;
