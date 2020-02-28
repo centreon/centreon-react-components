@@ -78,7 +78,7 @@ const ErrorSnackbar = ({
   return (
     <Snackbar
       anchorOrigin={{
-        vertical: 'top',
+        vertical: 'bottom',
         horizontal: 'center',
       }}
       open={open}
