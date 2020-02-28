@@ -5,28 +5,22 @@ import {
   SnackbarContent,
   IconButton,
   makeStyles,
+  Theme,
 } from '@material-ui/core';
 import { Error, CheckCircle, Warning, Info, Close } from '@material-ui/icons';
+import { CreateCSSProperties } from '@material-ui/styles';
 
 import Severity from './Severity';
 
-const useStyles = makeStyles((theme) => ({
-  error: {
-    backgroundColor: theme.palette.error.dark,
+interface PropsStyle {
+  getColor: (theme) => string;
+}
+
+const useStyles = makeStyles<Theme, PropsStyle>((theme) => ({
+  iconColor: ({ getColor }: PropsStyle): CreateCSSProperties<PropsStyle> => ({
+    backgroundColor: getColor(theme),
     marginRight: theme.spacing(1),
-  },
-  success: {
-    backgroundColor: theme.palette.success.dark,
-    marginRight: theme.spacing(1),
-  },
-  warning: {
-    backgroundColor: theme.palette.warning.dark,
-    marginRight: theme.spacing(1),
-  },
-  info: {
-    backgroundColor: theme.palette.info.dark,
-    marginRight: theme.spacing(1),
-  },
+  }),
   icon: {
     fontSize: 20,
     opacity: 0.9,
@@ -44,22 +38,39 @@ interface Props {
   severity?: Severity;
 }
 
+const snackbarIcons = {
+  error: {
+    Icon: (props): JSX.Element => <Error {...props} />,
+    getColor: (theme): string => theme.palette.error.dark,
+  },
+  warning: {
+    Icon: (props): JSX.Element => <Warning {...props} />,
+    getColor: (theme): string => theme.palette.warning.dark,
+  },
+  success: {
+    Icon: (props): JSX.Element => <CheckCircle {...props} />,
+    getColor: (theme): string => theme.palette.success.dark,
+  },
+  info: {
+    Icon: (props): JSX.Element => <Info {...props} />,
+    getColor: (theme): string => theme.palette.info.dark,
+  },
+};
+
 const ErrorSnackbar = ({
   message,
   open,
   onClose = undefined,
   severity = Severity.success,
 }: Props): JSX.Element => {
-  const classes = useStyles();
+  const { Icon, getColor } = snackbarIcons[severity];
+  const classes = useStyles({ getColor });
 
-  const classNames = `${classes.icon} ${classes[severity]}`;
+  const classNames = `${classes.icon} ${classes.iconColor}`;
 
   const Message = (
     <span className={classes.message}>
-      {severity === Severity.error && <Error className={classNames} />}
-      {severity === Severity.warning && <Warning className={classNames} />}
-      {severity === Severity.success && <CheckCircle className={classNames} />}
-      {severity === Severity.info && <Info className={classNames} />}
+      <Icon className={classNames} />
       {message}
     </span>
   );
@@ -75,7 +86,7 @@ const ErrorSnackbar = ({
       onClose={onClose}
     >
       <SnackbarContent
-        className={classes[severity]}
+        className={classes.iconColor}
         message={Message}
         action={[
           <IconButton key="close" color="inherit" onClick={onClose}>
