@@ -4,19 +4,15 @@ import Snackbar from '.';
 import useMessage from './useMessage';
 
 export interface SnackbarState {
-  showError: (message) => void;
-  showErrors: (errors) => void;
-  showSuccess: (message) => void;
-  showSuccesses: (successes) => void;
+  showMessage: ({ newMessage, newSeverity }) => void;
+  showMessages: ({ newMessages, newSeverity }) => void;
 }
 
 const noOp = (): void => undefined;
 
 const defaultSnackBarState: SnackbarState = {
-  showError: noOp,
-  showErrors: noOp,
-  showSuccess: noOp,
-  showSuccesses: noOp,
+  showMessage: noOp,
+  showMessages: noOp,
 };
 
 const Context = createContext<SnackbarState>(defaultSnackBarState);
@@ -28,34 +24,23 @@ interface SnackbarContextProviderProps {
 const withSnackbar = (Component): ((props) => ReactElement) => {
   return (props: SnackbarContextProviderProps): ReactElement => {
     const {
-      confirmError,
-      showError,
-      showErrors,
-      errorMessage,
-      confirmSuccess,
-      showSuccess,
-      showSuccesses,
-      successMessage,
+      message,
+      severity,
+      showMessage,
+      showMessages,
+      confirmMessage,
     } = useMessage();
 
-    const hasError = errorMessage !== undefined;
-    const hasSuccess = successMessage !== undefined;
+    const hasMessage = message !== undefined;
 
     return (
-      <Context.Provider
-        value={{ showError, showErrors, showSuccess, showSuccesses }}
-      >
+      <Context.Provider value={{ showMessage, showMessages }}>
         <Component {...props} />
         <Snackbar
-          isError
-          onClose={confirmError}
-          open={hasError}
-          message={errorMessage}
-        />
-        <Snackbar
-          onClose={confirmSuccess}
-          open={hasSuccess}
-          message={successMessage}
+          severity={severity}
+          onClose={confirmMessage}
+          open={hasMessage}
+          message={message}
         />
       </Context.Provider>
     );

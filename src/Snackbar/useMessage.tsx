@@ -2,79 +2,55 @@ import React, { useState } from 'react';
 import { SnackbarState } from './withSnackbar';
 
 interface UseMessage extends SnackbarState {
-  errorMessage;
-  successMessage;
-  confirmError: () => void;
-  confirmSuccess: () => void;
+  message;
+  severity;
+  confirmMessage: () => void;
 }
 
 const useMessage = (): UseMessage => {
-  const [errorMessage, setErrorMessage] = useState();
-  const [successMessage, setSuccessMessage] = useState();
+  const [message, setMessage] = useState();
+  const [severity, setSeverity] = useState();
 
-  const confirmError = (): void => {
-    setErrorMessage(undefined);
+  const confirmMessage = (): void => {
+    setMessage(undefined);
+    setSeverity(undefined);
   };
 
-  const showError = (message): void => {
-    setErrorMessage(message);
+  const showMessage = ({ newMessage, newSeverity }): void => {
+    setMessage(newMessage);
+    setSeverity(newSeverity);
   };
 
-  const showErrors = (errors): void => {
-    const errorKeys = Object.keys(errors);
+  const showMessages = ({ newMessages, newSeverity }): void => {
+    const messageKeys = Object.keys(newMessages);
 
-    const formattedErrors = errorKeys.map(
-      (errorKey) => `${errorKey}: ${errors[errorKey]}`,
+    const formattedMessages = messageKeys.map(
+      (messageKey) => `${messageKey}: ${newMessages[messageKey]}`,
       [],
     );
 
-    showError(
-      <div style={{ display: 'block' }}>
-        {formattedErrors.map((err, index) => (
-          <p style={{ margin: 0 }} key={errorKeys[index]}>
-            {err}
-          </p>
-        ))}
-      </div>,
-    );
+    showMessage({
+      newMessage: (
+        <div style={{ display: 'block' }}>
+          {formattedMessages.map((err, index) => (
+            <p style={{ margin: 0 }} key={messageKeys[index]}>
+              {err}
+            </p>
+          ))}
+        </div>
+      ),
+      newSeverity,
+    });
   };
 
-  const confirmSuccess = (): void => {
-    setSuccessMessage(undefined);
-  };
-
-  const showSuccess = (message): void => {
-    setSuccessMessage(message);
-  };
-
-  const showSuccesses = (successes): void => {
-    const successKeys = Object.keys(successes);
-
-    const formattedSuccesses = successKeys.map(
-      (successKey) => `${successKey}: ${successes[successKey]}`,
-      [],
-    );
-
-    showSuccess(
-      <div style={{ display: 'block' }}>
-        {formattedSuccesses.map((err, index) => (
-          <p style={{ margin: 0 }} key={successKeys[index]}>
-            {err}
-          </p>
-        ))}
-      </div>,
-    );
-  };
+  console.log(severity);
 
   return {
-    confirmError,
-    showError,
-    showErrors,
-    errorMessage,
-    confirmSuccess,
-    showSuccess,
-    showSuccesses,
-    successMessage,
+    message,
+    severity,
+    confirmMessage,
+    showMessage,
+    showMessages,
   };
 };
 
