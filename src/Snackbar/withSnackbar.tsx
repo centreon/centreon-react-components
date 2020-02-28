@@ -47,5 +47,6 @@ const withSnackbar = (Component): ((props) => ReactElement) => {
   };
 };
 
-export default withSnackbar;
 export { Context as SnackbarContext };
+
+export default withSnackbar;
