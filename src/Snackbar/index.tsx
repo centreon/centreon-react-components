@@ -6,9 +6,9 @@ import {
   IconButton,
   makeStyles,
 } from '@material-ui/core';
-import { Error, CheckCircle, Close } from '@material-ui/icons';
+import { Error, CheckCircle, Warning, Info, Close } from '@material-ui/icons';
 
-import PropTypes from 'prop-types';
+import Severity from './Severity';
 
 const useStyles = makeStyles((theme) => ({
   error: {
@@ -17,6 +17,14 @@ const useStyles = makeStyles((theme) => ({
   },
   success: {
     backgroundColor: theme.palette.success.dark,
+    marginRight: theme.spacing(1),
+  },
+  warning: {
+    backgroundColor: theme.palette.warning.dark,
+    marginRight: theme.spacing(1),
+  },
+  info: {
+    backgroundColor: theme.palette.info.dark,
     marginRight: theme.spacing(1),
   },
   icon: {
@@ -33,28 +41,25 @@ interface Props {
   message?: string;
   open: boolean;
   onClose?: () => void;
-  isError?: boolean;
+  severity?: Severity;
 }
 
 const ErrorSnackbar = ({
   message = '',
   open,
   onClose = undefined,
-  isError = false,
+  severity = Severity.success,
 }: Props): JSX.Element => {
   const classes = useStyles();
 
-  const classNames = `${classes.icon} ${
-    isError ? classes.error : classes.success
-  }`;
+  const classNames = `${classes.icon} ${classes[severity]}`;
 
   const Message = (
     <span className={classes.message}>
-      {isError ? (
-        <Error className={classNames} />
-      ) : (
-        <CheckCircle className={classNames} />
-      )}
+      {severity === Severity.error && <Error className={classNames} />}
+      {severity === Severity.warning && <Warning className={classNames} />}
+      {severity === Severity.success && <CheckCircle className={classNames} />}
+      {severity === Severity.info && <Info className={classNames} />}
       {message}
     </span>
   );
@@ -70,7 +75,7 @@ const ErrorSnackbar = ({
       onClose={onClose}
     >
       <SnackbarContent
-        className={isError ? classes.error : classes.success}
+        className={classes[severity]}
         message={Message}
         action={[
           <IconButton key="close" color="inherit" onClick={onClose}>
