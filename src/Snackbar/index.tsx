@@ -38,14 +38,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface Props {
-  message?: string;
+  message: string;
   open: boolean;
   onClose?: () => void;
   severity?: Severity;
 }
 
 const ErrorSnackbar = ({
-  message = '',
+  message,
   open,
   onClose = undefined,
   severity = Severity.success,
