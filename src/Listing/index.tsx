@@ -1,10 +1,5 @@
-/* eslint-disable no-nested-ternary */
-/* eslint-disable react/jsx-no-bind */
-/* eslint-disable react/jsx-filename-extension */
-
 import React, { useState, useRef, useEffect } from 'react';
 
-import clsx from 'clsx';
 import ResizeObserver from 'resize-observer-polyfill';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -15,6 +10,7 @@ import {
   LinearProgress,
   Box,
   TableCell,
+  fade,
 } from '@material-ui/core';
 
 import ListingRow from './Row';
@@ -49,9 +45,6 @@ const styles = (): {} => ({
     flexDirection: 'column',
     background: 'none',
   },
-  rowDisabled: {
-    backgroundColor: 'rgba(0, 0, 0, 0.07)',
-  },
   loadingIndicator: {
     width: '100%',
     height: loadingIndicatorHeight,
@@ -67,13 +60,12 @@ const cumulativeOffset = (element): number => {
 };
 
 interface Props {
-  ariaLabel?: string;
   checkable?: boolean;
   classes;
   currentPage?;
   columnConfiguration;
   emptyDataMessage?: string;
-  grayRowCondition?: (row) => boolean;
+  rowColorConditions?;
   labelDelete?: string;
   labelDisplayedRows?: (fromToCount) => string;
   labelDuplicate?: string;
@@ -106,10 +98,9 @@ const Listing = ({
   classes,
   currentPage = 0,
   totalRows = 0,
-  ariaLabel = '',
   checkable = false,
   emptyDataMessage = 'No results found',
-  grayRowCondition = (): boolean => false,
+  rowColorConditions = [],
   labelDelete = 'Delete',
   labelDisplayedRows = ({ from, to, count }): string =>
     `${from}-${to} of ${count}`,
@@ -363,7 +354,7 @@ const Listing = ({
           }}
           elevation={1}
         >
-          <Table aria-label={ariaLabel} size="small" stickyHeader>
+          <Table size="small" stickyHeader>
             <ListingHeader
               numSelected={selectedRows.length}
               order={sorto}
@@ -385,13 +376,19 @@ const Listing = ({
               {tableData.map((row) => {
                 const isRowSelected = isSelected(row);
 
+                const specialColor = rowColorConditions.find(({ condition }) =>
+                  condition(row),
+                );
+
                 return (
                   <ListingRow
                     tabIndex={-1}
                     key={row.id}
                     onMouseEnter={hoverRow(row.id)}
-                    className={clsx({
-                      [classes.rowDisabled]: grayRowCondition(row),
+                    {...(specialColor && {
+                      style: {
+                        backgroundColor: fade(specialColor.color, 0.1),
+                      },
                     })}
                     onClick={(): void => {
                       onRowClick(row);
