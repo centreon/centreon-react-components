@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 
 import ResizeObserver from 'resize-observer-polyfill';
+import clsx from 'clsx';
 
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import {
   Table,
   TableBody,
@@ -10,10 +11,10 @@ import {
   LinearProgress,
   Box,
   TableCell,
+  TableRow,
   fade,
 } from '@material-ui/core';
 
-import ListingRow from './Row';
 import IconPowerSettings from '../Icon/IconPowerSettings';
 import IconPowerSettingsDisable from '../Icon/IconPowerSettingsDisable';
 import StyledCheckbox from './Checkbox';
@@ -37,19 +38,39 @@ const BodyTableCell = withStyles({
   },
 })(TableCell);
 
-const styles = (): {} => ({
-  paper: {
-    width: '100%',
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    background: 'none',
-  },
-  loadingIndicator: {
-    width: '100%',
-    height: loadingIndicatorHeight,
-  },
-});
+const useStyles = (rowColorConditions): (() => Record<string, string>) =>
+  makeStyles<Theme>((theme) => {
+    const rowColorClasses = rowColorConditions.reduce(
+      (rowColorConditionClasses, { name, color }) => ({
+        ...rowColorConditionClasses,
+        [name]: {
+          backgroundColor: fade(color, 0.2),
+        },
+      }),
+      {},
+    );
+
+    return {
+      paper: {
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        background: 'none',
+      },
+      loadingIndicator: {
+        width: '100%',
+        height: loadingIndicatorHeight,
+      },
+      row: {
+        cursor: 'pointer',
+        '&:hover': {
+          backgroundColor: fade(theme.palette.primary.main, 0.08),
+        },
+      },
+      ...rowColorClasses,
+    };
+  });
 
 const cumulativeOffset = (element): number => {
   if (!element || !element.offsetParent) {
@@ -61,7 +82,6 @@ const cumulativeOffset = (element): number => {
 
 interface Props {
   checkable?: boolean;
-  classes;
   currentPage?;
   columnConfiguration;
   emptyDataMessage?: string;
@@ -95,7 +115,6 @@ const Listing = ({
   limit = 10,
   columnConfiguration,
   tableData = [],
-  classes,
   currentPage = 0,
   totalRows = 0,
   checkable = false,
@@ -127,6 +146,8 @@ const Listing = ({
   const [hovered, setHovered] = useState(null);
 
   const tableBody = useRef<Element>();
+
+  const classes = useStyles(rowColorConditions)();
 
   useEffect(() => {
     const ro = new ResizeObserver(() => {
@@ -381,15 +402,11 @@ const Listing = ({
                 );
 
                 return (
-                  <ListingRow
+                  <TableRow
                     tabIndex={-1}
                     key={row.id}
                     onMouseEnter={hoverRow(row.id)}
-                    {...(specialColor && {
-                      style: {
-                        backgroundColor: fade(specialColor.color, 0.1),
-                      },
-                    })}
+                    className={clsx([classes.row, classes[specialColor?.name]])}
                     onClick={(): void => {
                       onRowClick(row);
                     }}
@@ -413,18 +430,18 @@ const Listing = ({
                     {columnConfiguration.map((column) =>
                       getColumnCell({ column, row }),
                     )}
-                  </ListingRow>
+                  </TableRow>
                 );
               })}
               {tableData.length < 1 && (
-                <ListingRow tabIndex={-1}>
+                <TableRow tabIndex={-1}>
                   <BodyTableCell
                     colSpan={columnConfiguration.length + 1}
                     align="center"
                   >
                     {loading ? loadingDataMessage : emptyDataMessage}
                   </BodyTableCell>
-                </ListingRow>
+                </TableRow>
               )}
             </TableBody>
           </Table>
@@ -434,4 +451,4 @@ const Listing = ({
   );
 };
 
-export default withStyles(styles, { withTheme: true })(Listing);
+export default Listing;
