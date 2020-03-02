@@ -1,11 +1,11 @@
 /* eslint-disable no-nested-ternary */
-/* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/jsx-filename-extension */
 
 import React, { useState, useRef, useEffect } from 'react';
 
 import clsx from 'clsx';
 import ResizeObserver from 'resize-observer-polyfill';
+import isEqual from 'lodash/isEqual';
 
 import { withStyles } from '@material-ui/core/styles';
 import {
@@ -397,25 +397,27 @@ const Listing = ({
                       onRowClick(row);
                     }}
                   >
-                    {checkable ? (
-                      <BodyTableCell
-                        align="left"
-                        onClick={(event): void => selectRow(event, row)}
-                        padding="checkbox"
-                      >
-                        <StyledCheckbox
-                          checked={isRowSelected}
-                          inputProps={{
-                            'aria-label': `Select row ${row.id}`,
-                          }}
-                          color="primary"
-                        />
-                      </BodyTableCell>
-                    ) : null}
+                    <Row isHovered={hovered === row.id}>
+                      {checkable ? (
+                        <BodyTableCell
+                          align="left"
+                          onClick={(event): void => selectRow(event, row)}
+                          padding="checkbox"
+                        >
+                          <StyledCheckbox
+                            checked={isRowSelected}
+                            inputProps={{
+                              'aria-label': `Select row ${row.id}`,
+                            }}
+                            color="primary"
+                          />
+                        </BodyTableCell>
+                      ) : null}
 
-                    {columnConfiguration.map((column) =>
-                      getColumnCell({ column, row }),
-                    )}
+                      {columnConfiguration.map((column) =>
+                        getColumnCell({ column, row }),
+                      )}
+                    </Row>
                   </ListingRow>
                 );
               })}
@@ -436,5 +438,17 @@ const Listing = ({
     </>
   );
 };
+
+interface RowProps {
+  children;
+  isHovered?: boolean;
+}
+
+const Row = React.memo<RowProps>(
+  ({ children }: RowProps) => children,
+  (prevProps, nextProps) => {
+    return isEqual(prevProps.isHovered, nextProps.isHovered);
+  },
+);
 
 export default withStyles(styles, { withTheme: true })(Listing);
