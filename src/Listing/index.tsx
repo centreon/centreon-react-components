@@ -15,6 +15,7 @@ import {
   LinearProgress,
   Box,
   TableCell,
+  TableRowProps,
 } from '@material-ui/core';
 
 import ListingRow from './Row';
@@ -386,7 +387,7 @@ const Listing = ({
                 const isRowSelected = isSelected(row);
 
                 return (
-                  <ListingRow
+                  <MemoizedRow
                     tabIndex={-1}
                     key={row.id}
                     onMouseEnter={hoverRow(row.id)}
@@ -396,29 +397,28 @@ const Listing = ({
                     onClick={(): void => {
                       onRowClick(row);
                     }}
+                    isHovered={hovered === row.id}
                   >
-                    <Row isHovered={hovered === row.id}>
-                      {checkable ? (
-                        <BodyTableCell
-                          align="left"
-                          onClick={(event): void => selectRow(event, row)}
-                          padding="checkbox"
-                        >
-                          <StyledCheckbox
-                            checked={isRowSelected}
-                            inputProps={{
-                              'aria-label': `Select row ${row.id}`,
-                            }}
-                            color="primary"
-                          />
-                        </BodyTableCell>
-                      ) : null}
+                    {checkable ? (
+                      <BodyTableCell
+                        align="left"
+                        onClick={(event): void => selectRow(event, row)}
+                        padding="checkbox"
+                      >
+                        <StyledCheckbox
+                          checked={isRowSelected}
+                          inputProps={{
+                            'aria-label': `Select row ${row.id}`,
+                          }}
+                          color="primary"
+                        />
+                      </BodyTableCell>
+                    ) : null}
 
-                      {columnConfiguration.map((column) =>
-                        getColumnCell({ column, row }),
-                      )}
-                    </Row>
-                  </ListingRow>
+                    {columnConfiguration.map((column) =>
+                      getColumnCell({ column, row }),
+                    )}
+                  </MemoizedRow>
                 );
               })}
               {tableData.length < 1 && (
@@ -444,8 +444,10 @@ interface RowProps {
   isHovered?: boolean;
 }
 
-const Row = React.memo<RowProps>(
-  ({ children }: RowProps) => children,
+const MemoizedRow = React.memo<RowProps & TableRowProps>(
+  ({ children, ...props }: RowProps): JSX.Element => (
+    <ListingRow {...props}>{children}</ListingRow>
+  ),
   (prevProps, nextProps) => {
     return isEqual(prevProps.isHovered, nextProps.isHovered);
   },
