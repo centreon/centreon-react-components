@@ -4,13 +4,13 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/prefer-stateless-function */
 
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import clsx from 'clsx';
 import styles from '../global-sass-files/_grid.scss';
 import filterStyles from './top-filters.scss';
 import Wrapper from '../Wrapper';
 import SearchLive from '../Search/SearchLive';
-import Switcher from '../Switcher';
+import {Switch, FormControlLabel} from '@material-ui/core';
 import Button from '../Button';
 
 class TopFilters extends Component {
@@ -25,7 +25,7 @@ class TopFilters extends Component {
               {fullText ? (
                 <div
                   className={clsx(
-                    styles['container__col-md-3'],
+                    styles['container__co"top"l-md-3'],
                     styles['container__col-xs-12'],
                   )}
                 >
@@ -49,7 +49,6 @@ class TopFilters extends Component {
                       {switcherColumn.map(
                           (
                             {
-                              customClass,
                               switcherTitle,
                               switcherStatus,
                               button,
@@ -57,20 +56,19 @@ class TopFilters extends Component {
                               buttonType,
                               color,
                               onClick,
-                              filterKey,
                               value,
+                              filterKey,
                             },
                             i,
                           ) =>
                             !button ? (
-                              <Switcher
-                                key={`switcher${index}${i}`}
-                                customClass={customClass}
-                                {...(switcherTitle ? { switcherTitle } : {})}
-                                switcherStatus={switcherStatus}
-                                filterKey={filterKey}
-                                onChange={onChange}
-                                value={value}
+                              <FormControlLabel
+                                control={<Switch color="primary" onChange={(e) => onChange(e.target.value, filterKey)} />}
+                                label={<>
+                                  {switcherTitle && <div><b>{switcherTitle}</b></div>}
+                                {switcherStatus && <div>{switcherStatus}</div>}
+                                  </>}
+                                labelPlacement="top"
                               />
                             ) : (
                               <div
