@@ -1,13 +1,10 @@
-/* eslint-disable no-nested-ternary */
-/* eslint-disable react/jsx-filename-extension */
-
 import React, { useState, useRef, useEffect } from 'react';
 
-import clsx from 'clsx';
 import ResizeObserver from 'resize-observer-polyfill';
 import isEqual from 'lodash/isEqual';
+import clsx from 'clsx';
 
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import {
   Table,
   TableBody,
@@ -16,9 +13,10 @@ import {
   Box,
   TableCell,
   TableRowProps,
+  TableRow,
+  fade,
 } from '@material-ui/core';
 
-import ListingRow from './Row';
 import IconPowerSettings from '../Icon/IconPowerSettings';
 import IconPowerSettingsDisable from '../Icon/IconPowerSettingsDisable';
 import StyledCheckbox from './Checkbox';
@@ -42,22 +40,39 @@ const BodyTableCell = withStyles({
   },
 })(TableCell);
 
-const styles = (): {} => ({
-  paper: {
-    width: '100%',
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    background: 'none',
-  },
-  rowDisabled: {
-    backgroundColor: 'rgba(0, 0, 0, 0.07)',
-  },
-  loadingIndicator: {
-    width: '100%',
-    height: loadingIndicatorHeight,
-  },
-});
+const useStyles = (rowColorConditions): (() => Record<string, string>) =>
+  makeStyles<Theme>((theme) => {
+    const rowColorClasses = rowColorConditions.reduce(
+      (rowColorConditionClasses, { name, color }) => ({
+        ...rowColorConditionClasses,
+        [name]: {
+          backgroundColor: fade(color, 0.2),
+        },
+      }),
+      {},
+    );
+
+    return {
+      paper: {
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        background: 'none',
+      },
+      loadingIndicator: {
+        width: '100%',
+        height: loadingIndicatorHeight,
+      },
+      row: {
+        cursor: 'pointer',
+        '&:hover': {
+          backgroundColor: fade(theme.palette.primary.main, 0.08),
+        },
+      },
+      ...rowColorClasses,
+    };
+  });
 
 const cumulativeOffset = (element): number => {
   if (!element || !element.offsetParent) {
@@ -68,13 +83,11 @@ const cumulativeOffset = (element): number => {
 };
 
 interface Props {
-  ariaLabel?: string;
   checkable?: boolean;
-  classes;
   currentPage?;
   columnConfiguration;
   emptyDataMessage?: string;
-  grayRowCondition?: (row) => boolean;
+  rowColorConditions?;
   labelDelete?: string;
   labelDisplayedRows?: (fromToCount) => string;
   labelDuplicate?: string;
@@ -104,13 +117,11 @@ const Listing = ({
   limit = 10,
   columnConfiguration,
   tableData = [],
-  classes,
   currentPage = 0,
   totalRows = 0,
-  ariaLabel = '',
   checkable = false,
   emptyDataMessage = 'No results found',
-  grayRowCondition = (): boolean => false,
+  rowColorConditions = [],
   labelDelete = 'Delete',
   labelDisplayedRows = ({ from, to, count }): string =>
     `${from}-${to} of ${count}`,
@@ -137,6 +148,8 @@ const Listing = ({
   const [hovered, setHovered] = useState(null);
 
   const tableBody = useRef<Element>();
+
+  const classes = useStyles(rowColorConditions)();
 
   useEffect(() => {
     const ro = new ResizeObserver(() => {
@@ -364,7 +377,7 @@ const Listing = ({
           }}
           elevation={1}
         >
-          <Table aria-label={ariaLabel} size="small" stickyHeader>
+          <Table size="small" stickyHeader>
             <ListingHeader
               numSelected={selectedRows.length}
               order={sorto}
@@ -386,14 +399,16 @@ const Listing = ({
               {tableData.map((row) => {
                 const isRowSelected = isSelected(row);
 
+                const specialColor = rowColorConditions.find(({ condition }) =>
+                  condition(row),
+                );
+
                 return (
                   <MemoizedRow
                     tabIndex={-1}
                     key={row.id}
                     onMouseEnter={hoverRow(row.id)}
-                    className={clsx({
-                      [classes.rowDisabled]: grayRowCondition(row),
-                    })}
+                    className={clsx([classes.row, classes[specialColor?.name]])}
                     onClick={(): void => {
                       onRowClick(row);
                     }}
@@ -422,14 +437,14 @@ const Listing = ({
                 );
               })}
               {tableData.length < 1 && (
-                <ListingRow tabIndex={-1}>
+                <TableRow tabIndex={-1}>
                   <BodyTableCell
                     colSpan={columnConfiguration.length + 1}
                     align="center"
                   >
                     {loading ? loadingDataMessage : emptyDataMessage}
                   </BodyTableCell>
-                </ListingRow>
+                </TableRow>
               )}
             </TableBody>
           </Table>
@@ -446,11 +461,11 @@ interface RowProps {
 
 const MemoizedRow = React.memo<RowProps & TableRowProps>(
   ({ children, ...props }: RowProps): JSX.Element => (
-    <ListingRow {...props}>{children}</ListingRow>
+    <TableRow {...props}>{children}</TableRow>
   ),
   (prevProps, nextProps) => {
     return isEqual(prevProps.isHovered, nextProps.isHovered);
   },
 );
 
-export default withStyles(styles, { withTheme: true })(Listing);
+export default Listing;
