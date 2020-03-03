@@ -428,7 +428,7 @@ const Listing = ({
                   <BodyTableCell
                     colSpan={columnConfiguration.length + 1}
                     align="center"
-                   >
+                  >
                     {loading ? <ListingLoadingSkeleton /> : emptyDataMessage}
                   </BodyTableCell>
                 </ListingRow>
