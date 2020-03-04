@@ -15,9 +15,12 @@ export { default as IconClose } from './Icon/IconClose';
 export { default as IconContent } from './Icon/IconContent';
 export { default as IconInfo } from './Icon/IconInfo';
 export { default as IconToggleSubmenu } from './Icon/IconToggleSubmenu';
+
+export { default as AutocompleteField } from './InputField/Select/Autocomplete';
 export { default as SearchField } from './InputField/Search';
 export { default as TextField } from './InputField/Text';
 export { default as SelectField } from './InputField/Select';
+
 export { default as Logo } from './Logo';
 export { default as LogoMini } from './Logo/LogoMini';
 export { default as MessageInfo } from './Message/MessageInfo';

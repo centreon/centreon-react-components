@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-interface SelectEntry {
+export interface SelectEntry {
   id: number;
   name: string;
 }
