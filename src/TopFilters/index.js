@@ -1,12 +1,14 @@
+/* eslint-disable react/jsx-curly-newline */
+/* eslint-disable react/jsx-indent */
+/* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable react/no-array-index-key */
-/* eslint-disable prettier/prettier */
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/prefer-stateless-function */
 
 import React, { Component } from 'react';
 import clsx from 'clsx';
-import {Switch, FormControlLabel} from '@material-ui/core';
+import { Switch, FormControlLabel } from '@material-ui/core';
 import styles from '../global-sass-files/_grid.scss';
 import filterStyles from './top-filters.scss';
 import Wrapper from '../Wrapper';
@@ -42,11 +44,11 @@ class TopFilters extends Component {
               <div className={clsx(styles.container__row)}>
                 {switchs
                   ? switchs.map((switchColumn, index) => (
-                    <div
-                      key={`switchSubColumn${index}`}
-                      className={filterStyles['switch-wrapper']}
-                    >
-                      {switchColumn.map(
+                      <div
+                        key={`switchSubColumn${index}`}
+                        className={filterStyles['switch-wrapper']}
+                      >
+                        {switchColumn.map(
                           (
                             {
                               switchTitle,
@@ -63,13 +65,25 @@ class TopFilters extends Component {
                           ) =>
                             !button ? (
                               <FormControlLabel
-                                control={<Switch checked={value} color="primary" onChange={(e) => onChange(e.target.checked, filterKey)} />}
-                                label={(
+                                control={
+                                  <Switch
+                                    checked={value}
+                                    color="primary"
+                                    onChange={(e) =>
+                                      onChange(e.target.checked, filterKey)
+                                    }
+                                  />
+                                }
+                                label={
                                   <>
-                                    {switchTitle && <div><b>{switchTitle}</b></div>}
+                                    {switchTitle && (
+                                      <div>
+                                        <b>{switchTitle}</b>
+                                      </div>
+                                    )}
                                     {switchStatus && <div>{switchStatus}</div>}
                                   </>
-)}
+                                }
                                 labelPlacement="top"
                               />
                             ) : (
@@ -93,7 +107,7 @@ class TopFilters extends Component {
                               </div>
                             ),
                         )}
-                    </div>
+                      </div>
                     ))
                   : null}
               </div>
