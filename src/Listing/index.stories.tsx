@@ -3,6 +3,7 @@
 import React from 'react';
 
 import { makeStyles } from '@material-ui/core';
+import { grey } from '@material-ui/core/colors';
 
 import Listing from '.';
 import ColumnTypes from './ColumnTypes';
@@ -15,8 +16,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ComponentColumn = ({ row, isRowSelected }): JSX.Element => (
-  <>
+const ComponentColumn = ({ row, isRowSelected, Cell }): JSX.Element => (
+  <Cell>
     <span>
       {'I am '}
       <b>{`${isRowSelected ? 'selected' : 'not selected'}`}</b>
@@ -26,13 +27,23 @@ const ComponentColumn = ({ row, isRowSelected }): JSX.Element => (
       {'I am '}
       <b>{`${row.active ? 'active' : 'not active'}`}</b>
     </span>
-  </>
+  </Cell>
 );
 
 const configuration = [
-  { id: 'name', label: 'Name', type: ColumnTypes.string },
+  {
+    id: 'name',
+    label: 'Name',
+    type: ColumnTypes.string,
+    getFormattedString: ({ name }): string => name,
+  },
   { id: 'active', label: 'Active', type: ColumnTypes.toggler },
-  { id: 'description', label: 'Description', type: ColumnTypes.string },
+  {
+    id: 'description',
+    label: 'Description',
+    type: ColumnTypes.string,
+    getFormattedString: ({ description }): string => description,
+  },
   {
     id: '#',
     label: 'Custom',
@@ -53,6 +64,14 @@ const listing = [...tenElements].map((_, index) => ({
   selected: index % 3 === 0,
 }));
 
+const rowColorConditions = [
+  {
+    name: 'inactive',
+    condition: ({ active }): boolean => !active,
+    color: grey[500],
+  },
+];
+
 const Story = (props): JSX.Element => {
   const classes = useStyles();
 
@@ -69,7 +88,7 @@ const Story = (props): JSX.Element => {
         currentPage={0}
         totalRows={listing.length}
         tableData={listing}
-        grayRowCondition={(row): boolean => !row.active}
+        rowColorConditions={rowColorConditions}
         selectedRows={listing.filter((row) => row.selected)}
         checkable
         {...props}
@@ -79,3 +98,11 @@ const Story = (props): JSX.Element => {
 };
 
 export const normal = (): JSX.Element => <Story />;
+
+export const loadingWithNoData = (): JSX.Element => {
+  return <Story tableData={[]} totalRows={0} loading />;
+};
+
+export const loadingWithData = (): JSX.Element => {
+  return <Story loading />;
+};

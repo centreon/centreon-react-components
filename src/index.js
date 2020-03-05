@@ -15,8 +15,6 @@ export { default as IconClose } from './Icon/IconClose';
 export { default as IconContent } from './Icon/IconContent';
 export { default as IconInfo } from './Icon/IconInfo';
 export { default as IconToggleSubmenu } from './Icon/IconToggleSubmenu';
-export { default as InputFieldSelectTableCell } from './InputField/InputFieldSelectTableCell';
-export { default as InputFieldTableCell } from './InputField/InputFieldTableCell';
 export { default as SearchField } from './InputField/Search';
 export { default as TextField } from './InputField/Text';
 export { default as SelectField } from './InputField/Select';
@@ -24,7 +22,6 @@ export { default as Logo } from './Logo';
 export { default as LogoMini } from './Logo/LogoMini';
 export { default as MessageInfo } from './Message/MessageInfo';
 export { default as Navigation } from './Navigation';
-export { default as Popup } from './Popup';
 export { default as SearchLive } from './Search/SearchLive';
 export { default as Slider } from './Slider/SliderContent';
 export { default as Sidebar } from './Sidebar';
@@ -80,3 +77,6 @@ export { default as SubmenuItem } from './Submenu/SubmenuHeader/SubmenuItem';
 
 export { default as MultiSelectEntries } from './MultiSelectEntries';
 export { default as RightPanel } from './RightPanel';
+
+export { default as StatusChip } from './StatusChip';
+export { StatusCode } from './StatusChip';

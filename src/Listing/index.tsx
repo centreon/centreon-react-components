@@ -1,24 +1,22 @@
-/* eslint-disable no-nested-ternary */
-/* eslint-disable react/jsx-no-bind */
-/* eslint-disable react/jsx-filename-extension */
-
 import React, { useState, useRef, useEffect } from 'react';
 
-import clsx from 'clsx';
 import ResizeObserver from 'resize-observer-polyfill';
+import isEqual from 'lodash/isEqual';
+import clsx from 'clsx';
 
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import {
   Table,
   TableBody,
   Paper,
   LinearProgress,
-  Tooltip as DefaultTooltip,
   Box,
   TableCell,
+  TableRowProps,
+  TableRow,
+  fade,
 } from '@material-ui/core';
 
-import ListingRow from './Row';
 import IconPowerSettings from '../Icon/IconPowerSettings';
 import IconPowerSettingsDisable from '../Icon/IconPowerSettingsDisable';
 import StyledCheckbox from './Checkbox';
@@ -29,6 +27,7 @@ import TABLE_COLUMN_TYPES from './ColumnTypes';
 import PaginationActions from './PaginationActions';
 import StyledPagination from './Pagination';
 import Tooltip from '../Tooltip';
+import ListingLoadingSkeleton from './Skeleton';
 
 const loadingIndicatorHeight = 3;
 
@@ -42,22 +41,39 @@ const BodyTableCell = withStyles({
   },
 })(TableCell);
 
-const styles = (): {} => ({
-  paper: {
-    width: '100%',
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    background: 'none',
-  },
-  rowDisabled: {
-    backgroundColor: 'rgba(0, 0, 0, 0.07)',
-  },
-  loadingIndicator: {
-    width: '100%',
-    height: loadingIndicatorHeight,
-  },
-});
+const useStyles = (rowColorConditions): (() => Record<string, string>) =>
+  makeStyles<Theme>((theme) => {
+    const rowColorClasses = rowColorConditions.reduce(
+      (rowColorConditionClasses, { name, color }) => ({
+        ...rowColorConditionClasses,
+        [name]: {
+          backgroundColor: fade(color, 0.2),
+        },
+      }),
+      {},
+    );
+
+    return {
+      paper: {
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        background: 'none',
+      },
+      loadingIndicator: {
+        width: '100%',
+        height: loadingIndicatorHeight,
+      },
+      row: {
+        cursor: 'pointer',
+        '&:hover': {
+          backgroundColor: fade(theme.palette.primary.main, 0.08),
+        },
+      },
+      ...rowColorClasses,
+    };
+  });
 
 const cumulativeOffset = (element): number => {
   if (!element || !element.offsetParent) {
@@ -68,19 +84,17 @@ const cumulativeOffset = (element): number => {
 };
 
 interface Props {
-  ariaLabel?: string;
   checkable?: boolean;
-  classes;
-  currentPage;
+  currentPage?;
   columnConfiguration;
   emptyDataMessage?: string;
-  grayRowCondition?: (row) => boolean;
+  rowColorConditions?;
   labelDelete?: string;
   labelDisplayedRows?: (fromToCount) => string;
   labelDuplicate?: string;
   labelEnableDisable?: string;
   labelRowsPerPage?: string;
-  limit: number;
+  limit?: number;
   loading?: boolean;
   loadingDataMessage?: string;
   onDelete?: (rows) => void;
@@ -96,21 +110,19 @@ interface Props {
   selectedRows?;
   sorto?: 'asc' | 'desc';
   sortf?: string;
-  tableData;
-  totalRows: number;
+  tableData?;
+  totalRows?;
 }
 
 const Listing = ({
-  limit,
+  limit = 10,
   columnConfiguration,
-  tableData,
-  classes,
-  currentPage,
-  totalRows,
-  ariaLabel = '',
+  tableData = [],
+  currentPage = 0,
+  totalRows = 0,
   checkable = false,
   emptyDataMessage = 'No results found',
-  grayRowCondition = (): boolean => false,
+  rowColorConditions = [],
   labelDelete = 'Delete',
   labelDisplayedRows = ({ from, to, count }): string =>
     `${from}-${to} of ${count}`,
@@ -118,7 +130,6 @@ const Listing = ({
   labelEnableDisable = 'Enable / Disable',
   labelRowsPerPage = 'Rows per page',
   loading = false,
-  loadingDataMessage = 'Loading data',
   onEnable = (): void => undefined,
   onDelete = (): void => undefined,
   onDisable = (): void => undefined,
@@ -137,6 +148,8 @@ const Listing = ({
   const [hovered, setHovered] = useState(null);
 
   const tableBody = useRef<Element>();
+
+  const classes = useStyles(rowColorConditions)();
 
   useEffect(() => {
     const ro = new ResizeObserver(() => {
@@ -195,23 +208,15 @@ const Listing = ({
 
   const getColumnCell = ({ row, column }): JSX.Element => {
     const cellByColumnType = {
-      [TABLE_COLUMN_TYPES.string]: (): JSX.Element => (
-        <BodyTableCell key={column.id} align="left">
-          {column.image && (
-            <img
-              alt=""
-              src={row.iconPath}
-              style={{
-                maxWidth: 21,
-                display: 'inline-block',
-                verticalAlign: 'middle',
-                marginRight: 5,
-              }}
-            />
-          )}
-          {row[column.id] || ''}
-        </BodyTableCell>
-      ),
+      [TABLE_COLUMN_TYPES.string]: (): JSX.Element => {
+        const { getFormattedString } = column;
+
+        return (
+          <BodyTableCell key={column.id} align="left">
+            {getFormattedString(row) || ''}
+          </BodyTableCell>
+        );
+      },
       [TABLE_COLUMN_TYPES.toggler]: (): JSX.Element => (
         <BodyTableCell align="left" key={column.id}>
           {row[column.id] ? (
@@ -237,25 +242,6 @@ const Listing = ({
               <IconPowerSettingsDisable />
             </Tooltip>
           )}
-        </BodyTableCell>
-      ),
-      [TABLE_COLUMN_TYPES.widthVariation]: (): JSX.Element => (
-        <BodyTableCell
-          key={column.id}
-          align="left"
-          colSpan={isSelected(row) ? 1 : 5}
-          style={{
-            maxWidth: '145px',
-            textOverflow: 'ellipsis',
-            overflow: 'hidden',
-          }}
-        >
-          <DefaultTooltip
-            title={`${row[column.id]} (${row[column.subValue]})`}
-            placement="top"
-          >
-            <span>{`${row[column.id]} (${row[column.subValue]})`}</span>
-          </DefaultTooltip>
         </BodyTableCell>
       ),
       [TABLE_COLUMN_TYPES.hoverActions]: (): JSX.Element => (
@@ -309,22 +295,42 @@ const Listing = ({
         </BodyTableCell>
       ),
       [TABLE_COLUMN_TYPES.component]: (): JSX.Element => {
-        const Component = column.Component({
+        const { Component, ComponentOnHover, clickable } = column;
+
+        interface CellProps {
+          children: React.ReactNode;
+          width?: number;
+        }
+
+        const Cell = ({ children, width }: CellProps): JSX.Element => (
+          <BodyTableCell
+            align="left"
+            style={{ width }}
+            {...(!clickable && {
+              onClick: (e): void => {
+                e.preventDefault();
+                e.stopPropagation();
+              },
+            })}
+          >
+            {children}
+          </BodyTableCell>
+        );
+
+        const displayHoverComponent = hovered === row.id && ComponentOnHover;
+
+        const ComponentToDisplay = displayHoverComponent
+          ? ComponentOnHover
+          : Component;
+
+        const props = {
+          Cell,
+          key: column.id,
           row,
           isRowSelected: isSelected(row),
-        });
+        };
 
-        const { ComponentOnHover } = column;
-
-        const isHovered = hovered === row.id;
-
-        return (
-          Component && (
-            <BodyTableCell align="left" key={column.id}>
-              {ComponentOnHover && isHovered ? <ComponentOnHover /> : Component}
-            </BodyTableCell>
-          )
-        );
+        return <ComponentToDisplay {...props} />;
       },
     };
 
@@ -339,8 +345,12 @@ const Listing = ({
 
   return (
     <>
-      {loading && <LinearProgress className={classes.loadingIndicator} />}
-      {!loading && <div className={classes.loadingIndicator} />}
+      {loading && tableData.length > 0 && (
+        <LinearProgress className={classes.loadingIndicator} />
+      )}
+      {(!loading || (loading && tableData.length < 1)) && (
+        <div className={classes.loadingIndicator} />
+      )}
       <div className={classes.paper}>
         {paginated ? (
           <StyledPagination
@@ -371,7 +381,7 @@ const Listing = ({
           }}
           elevation={1}
         >
-          <Table aria-label={ariaLabel} size="small" stickyHeader>
+          <Table size="small" stickyHeader>
             <ListingHeader
               numSelected={selectedRows.length}
               order={sorto}
@@ -393,17 +403,20 @@ const Listing = ({
               {tableData.map((row) => {
                 const isRowSelected = isSelected(row);
 
+                const specialColor = rowColorConditions.find(({ condition }) =>
+                  condition(row),
+                );
+
                 return (
-                  <ListingRow
+                  <MemoizedRow
                     tabIndex={-1}
                     key={row.id}
                     onMouseEnter={hoverRow(row.id)}
-                    className={clsx({
-                      [classes.rowDisabled]: grayRowCondition(row),
-                    })}
+                    className={clsx([classes.row, classes[specialColor?.name]])}
                     onClick={(): void => {
                       onRowClick(row);
                     }}
+                    isHovered={hovered === row.id}
                   >
                     {checkable ? (
                       <BodyTableCell
@@ -424,15 +437,18 @@ const Listing = ({
                     {columnConfiguration.map((column) =>
                       getColumnCell({ column, row }),
                     )}
-                  </ListingRow>
+                  </MemoizedRow>
                 );
               })}
               {tableData.length < 1 && (
-                <ListingRow tabIndex={-1}>
-                  <BodyTableCell colSpan={6} align="center">
-                    {loading ? loadingDataMessage : emptyDataMessage}
+                <TableRow tabIndex={-1}>
+                  <BodyTableCell
+                    colSpan={columnConfiguration.length + 1}
+                    align="center"
+                  >
+                    {loading ? <ListingLoadingSkeleton /> : emptyDataMessage}
                   </BodyTableCell>
-                </ListingRow>
+                </TableRow>
               )}
             </TableBody>
           </Table>
@@ -442,4 +458,18 @@ const Listing = ({
   );
 };
 
-export default withStyles(styles, { withTheme: true })(Listing);
+interface RowProps {
+  children;
+  isHovered?: boolean;
+}
+
+const MemoizedRow = React.memo<RowProps & TableRowProps>(
+  ({ children, ...props }: RowProps): JSX.Element => (
+    <TableRow {...props}>{children}</TableRow>
+  ),
+  (prevProps, nextProps) => {
+    return isEqual(prevProps.isHovered, nextProps.isHovered);
+  },
+);
+
+export default Listing;
