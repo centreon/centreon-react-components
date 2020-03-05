@@ -33,9 +33,9 @@ const useMessage = (): SnackbarContent & SnackbarActions => {
     showMessage({
       message: (
         <div style={{ display: 'block' }}>
-          {formattedMessages.map((err, index) => (
+          {formattedMessages.map((errorMessage, index) => (
             <p style={{ margin: 0 }} key={messageKeys[index]}>
-              {err}
+              {errorMessage}
             </p>
           ))}
         </div>
