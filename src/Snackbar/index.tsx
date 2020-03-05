@@ -60,7 +60,7 @@ const snackbarIcons = {
 const ErrorSnackbar = ({
   message,
   open,
-  onClose = undefined,
+  onClose,
   severity = Severity.success,
 }: Props): JSX.Element => {
   const { Icon, getColor } = snackbarIcons[severity];
