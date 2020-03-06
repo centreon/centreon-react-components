@@ -27,7 +27,7 @@ class TopFilters extends Component {
               {fullText ? (
                 <div
                   className={clsx(
-                    styles['container__co"top"l-md-3'],
+                    styles['container__col-md-3'],
                     styles['container__col-xs-12'],
                   )}
                 >
