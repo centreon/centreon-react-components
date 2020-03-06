@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 
 import ResizeObserver from 'resize-observer-polyfill';
+import isEqual from 'lodash/isEqual';
 import clsx from 'clsx';
 
 import { withStyles, makeStyles, Theme } from '@material-ui/core/styles';
@@ -11,6 +12,7 @@ import {
   LinearProgress,
   Box,
   TableCell,
+  TableRowProps,
   TableRow,
   fade,
 } from '@material-ui/core';
@@ -25,6 +27,7 @@ import TABLE_COLUMN_TYPES from './ColumnTypes';
 import PaginationActions from './PaginationActions';
 import StyledPagination from './Pagination';
 import Tooltip from '../Tooltip';
+import ListingLoadingSkeleton from './Skeleton';
 
 const loadingIndicatorHeight = 3;
 
@@ -127,7 +130,6 @@ const Listing = ({
   labelEnableDisable = 'Enable / Disable',
   labelRowsPerPage = 'Rows per page',
   loading = false,
-  loadingDataMessage = 'Loading data',
   onEnable = (): void => undefined,
   onDelete = (): void => undefined,
   onDisable = (): void => undefined,
@@ -343,8 +345,12 @@ const Listing = ({
 
   return (
     <>
-      {loading && <LinearProgress className={classes.loadingIndicator} />}
-      {!loading && <div className={classes.loadingIndicator} />}
+      {loading && tableData.length > 0 && (
+        <LinearProgress className={classes.loadingIndicator} />
+      )}
+      {(!loading || (loading && tableData.length < 1)) && (
+        <div className={classes.loadingIndicator} />
+      )}
       <div className={classes.paper}>
         {paginated ? (
           <StyledPagination
@@ -402,7 +408,7 @@ const Listing = ({
                 );
 
                 return (
-                  <TableRow
+                  <MemoizedRow
                     tabIndex={-1}
                     key={row.id}
                     onMouseEnter={hoverRow(row.id)}
@@ -410,6 +416,7 @@ const Listing = ({
                     onClick={(): void => {
                       onRowClick(row);
                     }}
+                    isHovered={hovered === row.id}
                   >
                     {checkable ? (
                       <BodyTableCell
@@ -430,7 +437,7 @@ const Listing = ({
                     {columnConfiguration.map((column) =>
                       getColumnCell({ column, row }),
                     )}
-                  </TableRow>
+                  </MemoizedRow>
                 );
               })}
               {tableData.length < 1 && (
@@ -439,7 +446,7 @@ const Listing = ({
                     colSpan={columnConfiguration.length + 1}
                     align="center"
                   >
-                    {loading ? loadingDataMessage : emptyDataMessage}
+                    {loading ? <ListingLoadingSkeleton /> : emptyDataMessage}
                   </BodyTableCell>
                 </TableRow>
               )}
@@ -450,5 +457,19 @@ const Listing = ({
     </>
   );
 };
+
+interface RowProps {
+  children;
+  isHovered?: boolean;
+}
+
+const MemoizedRow = React.memo<RowProps & TableRowProps>(
+  ({ children, ...props }: RowProps): JSX.Element => (
+    <TableRow {...props}>{children}</TableRow>
+  ),
+  (prevProps, nextProps) => {
+    return isEqual(prevProps.isHovered, nextProps.isHovered);
+  },
+);
 
 export default Listing;
