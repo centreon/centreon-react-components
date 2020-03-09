@@ -16,7 +16,7 @@ export const normal = () => (
         console.log(a);
       },
     }}
-    switchs={[
+    switches={[
       [
         {
           customClass: clsx(
