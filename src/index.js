@@ -16,7 +16,11 @@ export { default as IconContent } from './Icon/IconContent';
 export { default as IconInfo } from './Icon/IconInfo';
 export { default as IconToggleSubmenu } from './Icon/IconToggleSubmenu';
 
-export { default as AutocompleteField } from './InputField/Select/Autocomplete';
+export {
+  default as AutocompleteField,
+  Props as AutocompleteFieldProps,
+} from './InputField/Select/Autocomplete';
+export { default as ConnectedAutocompleteField } from './InputField/Select/Autocomplete/Connected';
 export { default as SearchField } from './InputField/Search';
 export { default as TextField } from './InputField/Text';
 export { default as SelectField } from './InputField/Select';

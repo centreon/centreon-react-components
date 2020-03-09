@@ -16,7 +16,8 @@ export const withThreeOptions = (): JSX.Element => {
       options={options}
       label="Autocomplete"
       placeholder="Type here..."
-      onChange={(_, values) => console.log(values)}
+      value={[options[1]]}
+      open
     />
   );
 };
