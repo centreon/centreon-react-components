@@ -6,7 +6,6 @@
 
 import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
-
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const styles = require('./switcher.scss');
 
