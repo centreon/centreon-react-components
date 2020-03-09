@@ -17,7 +17,7 @@ import Button from '../Button';
 
 class TopFilters extends Component {
   render() {
-    const { fullText, switchs, onChange } = this.props;
+    const { fullText, switches, onChange } = this.props;
 
     return (
       <div className={styles['container-gray']}>
@@ -42,8 +42,8 @@ class TopFilters extends Component {
               ) : null}
 
               <div className={clsx(styles.container__row)}>
-                {switchs
-                  ? switchs.map((switchColumn, index) => (
+                {switches
+                  ? switches.map((switchColumn, index) => (
                       <div
                         key={`switchSubColumn${index}`}
                         className={filterStyles['switch-wrapper']}
