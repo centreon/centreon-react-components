@@ -12,7 +12,7 @@
     height: 23px;
     overflow: hidden;
     input {
-      display: none;
+      display:none;
     }
     &-slider {
       width: 67px;
@@ -24,12 +24,12 @@
       bottom: 0;
       background-color: #f4f4f4;
       border: 1px solid #dcdcdc;
-      -webkit-transition: 0.4s;
-      transition: 0.4s;
+      -webkit-transition: .4s;
+      transition: .4s;
       cursor: pointer;
     }
     &-slider:before {
-      content: '';
+      content: "";
       position: absolute;
       height: 19px;
       width: 19px;
@@ -41,8 +41,8 @@
       line-height: 19px;
       background-color: $white-color;
       border: 1px solid #dcdcdc;
-      -webkit-transition: 0.4s;
-      transition: 0.4s;
+      -webkit-transition: .4s;
+      transition: .4s;
     }
     &-status {
       font-family: $primary-font-regular;
@@ -50,8 +50,8 @@
       font-size: 12px;
       position: absolute;
       cursor: pointer;
-      -webkit-transition: 0.4s;
-      transition: 0.4s;
+      -webkit-transition: .4s;
+      transition: .4s;
       &-show {
         color: $white-color;
         left: -30px;
@@ -76,7 +76,7 @@
     }
   }
   input + .switch-slider:after {
-    content: '';
+    content: "";
     height: 21px;
     display: block;
     box-sizing: border-box;
@@ -88,11 +88,11 @@
     font-family: $primary-font-regular;
     padding-left: 26px;
     line-height: 18px;
-    -webkit-transition: 0.75s;
-    transition: 0.75s;
+    -webkit-transition: .75s;
+    transition: .75s;
   }
   input:checked + .switch-slider:after {
-    content: '';
+    content: "";
     padding-left: 15px;
     text-align: left;
     background: $content-green-color;
@@ -115,8 +115,7 @@
     width: 19px;
     border-radius: 19px;
   }
-  &-title,
-  &-status {
+  &-title, &-status {
     display: block;
     color: #4e4d4d;
     font-size: 12px;
