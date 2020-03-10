@@ -10,7 +10,7 @@ const options = [
   { id: 2, name: 'Third Entity' },
 ];
 
-export const withThreeOptions = (): JSX.Element => {
+export const openWithThreeOptions = (): JSX.Element => {
   return (
     <AutocompleteField
       options={options}

@@ -16,7 +16,7 @@ const ConnectedAutocompleteField = <TData extends Record<string, unknown>>({
   getSearchEndpoint,
   getOptionsFromResult,
   ...props
-}: Props & AutocompleteFieldProps): JSX.Element => {
+}: Props & Omit<AutocompleteFieldProps, 'options'>): JSX.Element => {
   const [options, setOptions] = useState<Array<SelectEntry>>();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);

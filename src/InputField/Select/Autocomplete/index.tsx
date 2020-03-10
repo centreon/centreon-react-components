@@ -44,12 +44,13 @@ const LoadingIndicator = (): JSX.Element => {
   );
 };
 
-export interface Props {
+export type Props = {
   loading?: boolean;
   onTextChange?;
   label: string;
   placeholder?: string;
-}
+} & Omit<AutocompleteProps<SelectEntry>, 'renderInput'> &
+  Omit<UseAutocompleteMultipleProps<SelectEntry>, 'multiple'>;
 
 const AutocompleteField = ({
   options,
@@ -58,9 +59,7 @@ const AutocompleteField = ({
   loading = false,
   onTextChange = (): void => undefined,
   ...props
-}: Props &
-  Omit<AutocompleteProps<SelectEntry>, 'renderInput'> &
-  Omit<UseAutocompleteMultipleProps<SelectEntry>, 'multiple'>): JSX.Element => {
+}: Props): JSX.Element => {
   const classes = useStyles();
 
   const renderTags = (value, getTagProps): Array<JSX.Element> =>
