@@ -63,6 +63,19 @@ const AutocompleteField = ({
   Omit<UseAutocompleteMultipleProps<SelectEntry>, 'multiple'>): JSX.Element => {
   const classes = useStyles();
 
+  const renderTags = (value, getTagProps): Array<JSX.Element> =>
+    value.map((option, index) => (
+      <Chip
+        classes={{
+          root: classes.tag,
+        }}
+        key={option.id}
+        label={option.name}
+        size="small"
+        {...getTagProps({ index })}
+      />
+    ));
+
   return (
     <Autocomplete
       multiple
@@ -88,19 +101,7 @@ const AutocompleteField = ({
           onChange={onTextChange}
         />
       )}
-      renderTags={(value, getTagProps): Array<JSX.Element> =>
-        value.map((option, index) => (
-          <Chip
-            classes={{
-              root: classes.tag,
-            }}
-            key={option.id}
-            label={option.name}
-            size="small"
-            {...getTagProps({ index })}
-          />
-        ))
-      }
+      renderTags={renderTags}
       {...props}
     />
   );
