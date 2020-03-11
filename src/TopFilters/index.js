@@ -20,7 +20,7 @@ const useStyles = makeStyles({
     fontSize: '13px',
   },
 });
-const TopFilters = (props) => {
+const TopFilters = ({ fullText, switches, onChange }) => {
   const classes = useStyles();
   const { fullText, switches, onChange } = props;
   return (
