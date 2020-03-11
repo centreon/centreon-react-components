@@ -466,8 +466,21 @@ interface RowProps {
 }
 
 const MemoizedRow = React.memo<RowProps & TableRowProps>(
-  ({ children, ...props }: RowProps): JSX.Element => (
-    <TableRow {...props}>{children}</TableRow>
+  ({
+    children,
+    tabIndex,
+    onMouseEnter,
+    className,
+    onClick,
+  }: RowProps & TableRowProps): JSX.Element => (
+    <TableRow
+      tabIndex={tabIndex}
+      onMouseEnter={onMouseEnter}
+      className={className}
+      onClick={onClick}
+    >
+      {children}
+    </TableRow>
   ),
   (prevProps, nextProps) => {
     return (
