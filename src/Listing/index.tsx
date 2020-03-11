@@ -417,6 +417,7 @@ const Listing = ({
                       onRowClick(row);
                     }}
                     isHovered={hovered === row.id}
+                    row={row}
                   >
                     {checkable ? (
                       <BodyTableCell
@@ -461,6 +462,7 @@ const Listing = ({
 interface RowProps {
   children;
   isHovered?: boolean;
+  row;
 }
 
 const MemoizedRow = React.memo<RowProps & TableRowProps>(
@@ -468,7 +470,11 @@ const MemoizedRow = React.memo<RowProps & TableRowProps>(
     <TableRow {...props}>{children}</TableRow>
   ),
   (prevProps, nextProps) => {
-    return isEqual(prevProps.isHovered, nextProps.isHovered);
+    return (
+      isEqual(prevProps.isHovered, nextProps.isHovered) &&
+      isEqual(prevProps.row, nextProps.row) &&
+      isEqual(prevProps.className, nextProps.className)
+    );
   },
 );
 
