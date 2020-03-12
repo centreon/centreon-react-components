@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import { makeStyles } from '@material-ui/core/styles';
@@ -59,6 +59,19 @@ const Wizard = (props) => {
   const [page, setPage] = useState(0);
   const [values, setValues] = useState(initialValues);
   const [openConfirm, setOpenConfirm] = useState(false);
+  const [validValues, setValidValues] = useState(false);
+
+  useEffect(() => {
+    const activePage = React.Children.toArray(children)[page];
+    const { validate, validationSchema } = activePage.props;
+    if (validationSchema) {
+      validationSchema.isValid(values).then((isValidSchema) => {
+        setValidValues(isValidSchema);
+      });
+    }
+      setValidValues(true);
+    }
+  }, [values]);
 
   const handleClose = (event, reason) => {
     // close wizard without confirmation if it's the first page
@@ -155,7 +168,11 @@ const Wizard = (props) => {
                 })}
                 {!activePage.props.noActionBar && (
                   <ActionBar
-                    disabledNext={!bag.isValid || bag.isSubmitting}
+                    disabledNext={
+                      !bag.isValid ||
+                      bag.isSubmitting ||
+                      (!bag.dirty && !validValues)
+                    }
                     page={page}
                     isLastPage={isLastPage}
                     onPrevious={handlePrevious}
