@@ -63,12 +63,12 @@ const Wizard = (props) => {
 
   useEffect(() => {
     const activePage = React.Children.toArray(children)[page];
-    const { validate, validationSchema } = activePage.props;
+    const { validationSchema } = activePage.props;
     if (validationSchema) {
       validationSchema.isValid(values).then((isValidSchema) => {
         setValidValues(isValidSchema);
       });
-    }
+    } else {
       setValidValues(true);
     }
   }, [values]);
