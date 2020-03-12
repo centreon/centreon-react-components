@@ -7,8 +7,11 @@
 /* eslint-disable react/prefer-stateless-function */
 
 import React from 'react';
+
 import clsx from 'clsx';
+
 import { Switch, FormControlLabel, makeStyles } from '@material-ui/core';
+
 import styles from '../global-sass-files/_grid.scss';
 import filterStyles from './top-filters.scss';
 import Wrapper from '../Wrapper';
