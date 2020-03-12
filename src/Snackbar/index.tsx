@@ -1,6 +1,10 @@
 import React from 'react';
 
-import { Snackbar as MuiSnackbar, IconButton, makeStyles } from '@material-ui/core';
+import {
+  Snackbar as MuiSnackbar,
+  IconButton,
+  makeStyles,
+} from '@material-ui/core';
 import { Close } from '@material-ui/icons';
 import { Alert } from '@material-ui/lab';
 
@@ -57,7 +61,7 @@ const Snackbar = ({
       >
         {message}
       </Alert>
-    </Snackbar>
+    </MuiSnackbar>
   );
 };
 
