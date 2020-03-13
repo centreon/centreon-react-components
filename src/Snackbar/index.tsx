@@ -28,15 +28,10 @@ interface Props {
   message: string;
   open: boolean;
   onClose?: () => void;
-  severity?: Severity;
+  severity: Severity;
 }
 
-const Snackbar = ({
-  message,
-  open,
-  onClose,
-  severity = Severity.success,
-}: Props): JSX.Element => {
+const Snackbar = ({ message, open, onClose, severity }: Props): JSX.Element => {
   const classes = useStyles();
 
   return (
