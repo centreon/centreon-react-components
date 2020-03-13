@@ -152,36 +152,38 @@ const Wizard = (props) => {
             validationSchema={validationSchema()}
             onSubmit={handleSubmit}
           >
-            {(bag) => (
-              <form className={classes.form} onSubmit={bag.handleSubmit}>
-                {cloneElement(activePage, {
-                  errors: bag.errors,
-                  handleBlur: bag.handleBlur,
-                  handleChange: bag.handleChange,
-                  handleSubmit: bag.handleSubmit,
-                  onPrevious: handlePrevious,
-                  onNext: handleNext,
-                  setFieldTouched: bag.setFieldTouched,
-                  setFieldValue: bag.setFieldValue,
-                  submitForm: bag.submitForm,
-                  touched: bag.touched,
-                  values: bag.values,
-                })}
-                {!activePage.props.noActionBar && (
-                  <ActionBar
-                    disabledNext={
-                      !bag.isValid ||
-                      bag.isSubmitting ||
-                      (!bag.dirty && !validValues)
-                    }
-                    page={page}
-                    isLastPage={isLastPage}
-                    onPrevious={handlePrevious}
-                    actionBarProps={actionBarProps}
-                  />
-                )}
-              </form>
-            )}
+            {(bag) => {
+              const disabledNext =
+                !bag.isValid ||
+                bag.isSubmitting ||
+                (!bag.dirty && !validValues);
+              return (
+                <form className={classes.form} onSubmit={bag.handleSubmit}>
+                  {cloneElement(activePage, {
+                    errors: bag.errors,
+                    handleBlur: bag.handleBlur,
+                    handleChange: bag.handleChange,
+                    handleSubmit: bag.handleSubmit,
+                    onPrevious: handlePrevious,
+                    onNext: handleNext,
+                    setFieldTouched: bag.setFieldTouched,
+                    setFieldValue: bag.setFieldValue,
+                    submitForm: bag.submitForm,
+                    touched: bag.touched,
+                    values: bag.values,
+                  })}
+                  {!activePage.props.noActionBar && (
+                    <ActionBar
+                      disabledNext={disabledNext}
+                      page={page}
+                      isLastPage={isLastPage}
+                      onPrevious={handlePrevious}
+                      actionBarProps={actionBarProps}
+                    />
+                  )}
+                </form>
+              );
+            }}
           </Formik>
         </DialogContent>
       </Dialog>
