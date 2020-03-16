@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Button } from '@material-ui/core';
 import { grey } from '@material-ui/core/colors';
 
 import Listing from '.';
@@ -106,3 +106,13 @@ export const loadingWithNoData = (): JSX.Element => {
 export const loadingWithData = (): JSX.Element => {
   return <Story loading />;
 };
+
+export const withActions = (): JSX.Element => (
+  <Story
+    Actions={(
+      <Button variant="contained" color="primary">
+        Action
+      </Button>
+    )}
+  />
+);
