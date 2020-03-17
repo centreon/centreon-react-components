@@ -107,12 +107,10 @@ export const loadingWithData = (): JSX.Element => {
   return <Story loading />;
 };
 
-export const withActions = (): JSX.Element => (
-  <Story
-    Actions={(
-      <Button variant="contained" color="primary">
-        Action
-      </Button>
-    )}
-  />
+export const Actions = (
+  <Button variant="contained" color="primary">
+    Action
+  </Button>
 );
+
+export const withActions = (): JSX.Element => <Story Actions={Actions} />;
