@@ -15,11 +15,11 @@ import {
   TableRowProps,
   TableRow,
   fade,
+  Checkbox,
 } from '@material-ui/core';
 
 import IconPowerSettings from '../Icon/IconPowerSettings';
 import IconPowerSettingsDisable from '../Icon/IconPowerSettingsDisable';
-import StyledCheckbox from './Checkbox';
 import IconDelete from '../Icon/IconDelete';
 import IconLibraryAdd from '../Icon/IconLibraryAdd';
 import ListingHeader from './Header';
@@ -434,7 +434,7 @@ const Listing = ({
                         onClick={(event): void => selectRow(event, row)}
                         padding="checkbox"
                       >
-                        <StyledCheckbox
+                        <Checkbox
                           checked={isRowSelected}
                           inputProps={{
                             'aria-label': `Select row ${row.id}`,
