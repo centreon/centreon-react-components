@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, RefObject } from 'react';
 
 import ResizeObserver from 'resize-observer-polyfill';
 import isEqual from 'lodash/isEqual';
@@ -162,7 +162,7 @@ const Listing = ({
   const [tableTopOffset, setTableTopOffset] = useState(0);
   const [hoveredRowId, setHoveredRowId] = useState(null);
 
-  const tableBody = useRef<Element>();
+  const tableBody = useRef<HTMLTableSectionElement>();
 
   const classes = useStyles(rowColorConditions)();
 
@@ -403,7 +403,7 @@ const Listing = ({
             />
 
             <TableBody
-              ref={tableBody}
+              ref={tableBody as RefObject<HTMLTableSectionElement>}
               onMouseLeave={clearHoveredRow}
               style={{
                 position: 'relative',
