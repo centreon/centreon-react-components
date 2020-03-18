@@ -107,7 +107,7 @@ export const loadingWithData = (): JSX.Element => {
   return <Story loading />;
 };
 
-export const Actions = (
+const Actions = (
   <Button variant="contained" color="primary">
     Action
   </Button>
