@@ -208,6 +208,9 @@ const Listing = ({
   };
 
   const hoverRow = (id): void => {
+    if (hoveredRowId === id) {
+      return;
+    }
     setHoveredRowId(id);
   };
 
@@ -312,7 +315,7 @@ const Listing = ({
         </BodyTableCell>
       ),
       [TABLE_COLUMN_TYPES.component]: (): JSX.Element | null => {
-        const { Component, clickable, hiddenCondition, width } = column;
+        const { Component, hiddenCondition, width } = column;
 
         const isCellHidden = hiddenCondition
           ? hiddenCondition({ row, isRowSelected })
@@ -327,12 +330,9 @@ const Listing = ({
             align="left"
             key={cellKey}
             style={{ width: width || 'auto' }}
-            {...(!clickable && {
-              onClick: (e): void => {
-                e.preventDefault();
-                e.stopPropagation();
-              },
-            })}
+            onClick={(): void => {
+              clearHoveredRow();
+            }}
           >
             <Component
               row={row}
@@ -420,7 +420,8 @@ const Listing = ({
                   <MemoizedRow
                     tabIndex={-1}
                     key={row.id}
-                    onMouseEnter={(): void => hoverRow(row.id)}
+                    onMouseOver={(): void => hoverRow(row.id)}
+                    onFocus={(): void => hoverRow(row.id)}
                     className={clsx([classes.row, classes[specialColor?.name]])}
                     onClick={(): void => {
                       onRowClick(row);
@@ -481,14 +482,16 @@ const MemoizedRow = React.memo<RowProps & TableRowProps>(
   ({
     children,
     tabIndex,
-    onMouseEnter,
+    onMouseOver,
+    onFocus,
     className,
     onClick,
   }: RowProps & TableRowProps): JSX.Element => (
     <TableRow
       tabIndex={tabIndex}
-      onMouseEnter={onMouseEnter}
+      onMouseOver={onMouseOver}
       className={className}
+      onFocus={onFocus}
       onClick={onClick}
     >
       {children}
