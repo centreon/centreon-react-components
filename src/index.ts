@@ -89,3 +89,4 @@ export { default as StatusChip } from './StatusChip';
 export { SeverityCode } from './StatusChip';
 
 export { default as useCancelTokenSource } from './api/useCancelTokenSource';
+export { getData } from './api';
