@@ -92,5 +92,5 @@ const StatusChip = ({
   );
 };
 
-export { SeverityCode };
+export { SeverityCode, getStatusColors };
 export default StatusChip;
