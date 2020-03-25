@@ -349,10 +349,6 @@ const Listing = ({
 
   const emptyRows = limit - Math.min(limit, totalRows - currentPage * limit);
 
-  const tableMaxHeight = (): string => {
-    return `calc(100vh - ${tableTopOffset}px - 25px)`;
-  };
-
   return (
     <>
       {loading && tableData.length > 0 && (
@@ -386,7 +382,6 @@ const Listing = ({
         <Paper
           style={{
             overflow: 'auto',
-            maxHeight: tableMaxHeight(),
           }}
           elevation={1}
         >
