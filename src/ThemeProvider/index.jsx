@@ -8,7 +8,7 @@ import {
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#00006F',
+      main: '#10069F',
     },
     background: {
       default: '#EDEDED',
@@ -24,6 +24,12 @@ const theme = createMuiTheme({
     },
     info: {
       main: '#00d3d4',
+    },
+    action: {
+      acknowledged: '#AA9C24',
+      acknowledgedBackground: '#F7F4E5',
+      inDowntime: '#9C27B0',
+      inDowntimeBackground: '#F9E7FF',
     },
   },
 });
