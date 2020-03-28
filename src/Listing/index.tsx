@@ -105,7 +105,7 @@ interface Props {
   tableData?;
   totalRows?;
   Actions?: JSX.Element;
-  innerScrollDisabled: boolean;
+  innerScrollDisabled?: boolean;
 }
 
 const Listing = ({
