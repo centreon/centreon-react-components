@@ -5,6 +5,15 @@ import {
   ThemeProvider as MuiThemeProvider,
 } from '@material-ui/core';
 
+declare module '@material-ui/core/styles/createPalette' {
+  interface TypeAction {
+    acknowledged: string;
+    acknowledgedBackground: string;
+    inDowntime: string;
+    inDowntimeBackground: string;
+  }
+}
+
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -39,7 +48,7 @@ const theme = createMuiTheme({
   },
 });
 
-const ThemeProvider = ({ children, ...rest }) => (
+const ThemeProvider = ({ children, ...rest }): JSX.Element => (
   <MuiThemeProvider theme={theme} {...rest}>
     {children}
   </MuiThemeProvider>
