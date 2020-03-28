@@ -36,7 +36,7 @@ const haveSameIds = (a, b): boolean => a.id === b.id;
 
 const BodyTableCell = withStyles((theme) => ({
   root: {
-    padding: theme.spacing(0.5, 0.5),
+    padding: theme.spacing(0.25, 0.25),
   },
 }))(TableCell);
 

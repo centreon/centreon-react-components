@@ -32,6 +32,11 @@ const theme = createMuiTheme({
       inDowntimeBackground: '#F9E7FF',
     },
   },
+  typography: {
+    body2: {
+      fontSize: '0.75rem',
+    },
+  },
 });
 
 const ThemeProvider = ({ children, ...rest }) => (
