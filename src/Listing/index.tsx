@@ -53,7 +53,7 @@ const useStyles = makeStyles<Theme>((theme) => ({
     alignItems: 'center',
   },
   actions: {
-    padding: theme.spacing(0.5),
+    padding: theme.spacing(1),
   },
   pagination: {
     marginLeft: 'auto',
