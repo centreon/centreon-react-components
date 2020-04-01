@@ -73,8 +73,10 @@ const ListingHeader = ({
             padding={column.disablePadding ? 'none' : 'default'}
             sortDirection={orderBy === column.id ? order : false}
           >
-            {row.sortable === false ? (
-              <HeaderTypography variant="subtitle1">{row.label}</HeaderTypography>
+            {column.sortable === false ? (
+              <HeaderTypography variant="subtitle1">
+                {column.label}
+              </HeaderTypography>
             ) : (
               <TableSortLabel
                 aria-label={`Column ${column.label}`}
@@ -82,7 +84,9 @@ const ListingHeader = ({
                 direction={order || 'desc'}
                 onClick={createSortHandler(getSortField(column))}
               >
-                <HeaderTypography variant="subtitle1">{row.label}</HeaderTypography>
+                <HeaderTypography variant="subtitle1">
+                  {column.label}
+                </HeaderTypography>
               </TableSortLabel>
             )}
           </HeaderCell>
