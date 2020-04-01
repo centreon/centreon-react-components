@@ -74,7 +74,7 @@ const ListingHeader = ({
             sortDirection={orderBy === column.id ? order : false}
           >
             {column.sortable === false ? (
-              <HeaderTypography variant="subtitle1">
+              <HeaderTypography variant="body2">
                 {column.label}
               </HeaderTypography>
             ) : (
@@ -84,7 +84,7 @@ const ListingHeader = ({
                 direction={order || 'desc'}
                 onClick={createSortHandler(getSortField(column))}
               >
-                <HeaderTypography variant="subtitle1">
+                <HeaderTypography variant="body2">
                   {column.label}
                 </HeaderTypography>
               </TableSortLabel>
