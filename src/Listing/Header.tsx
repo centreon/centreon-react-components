@@ -13,11 +13,15 @@ import {
 const HeaderCell = withStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.common.white,
-    lineHeight: 1.4,
-    height: 24,
-    padding: '3px 4px',
+    padding: theme.spacing(1),
   },
 }))(TableCell);
+
+const HeaderTypography = withStyles({
+  root: {
+    fontWeight: 'bold',
+  },
+})(Typography);
 
 interface Props {
   onSelectAllClick: (event) => void;
@@ -50,8 +54,9 @@ const ListingHeader = ({
     <TableHead>
       <TableRow>
         {checkable ? (
-          <HeaderCell align="left" padding="checkbox">
+          <HeaderCell padding="checkbox">
             <Checkbox
+              size="small"
               color="primary"
               inputProps={{ 'aria-label': 'Select all' }}
               indeterminate={numSelected > 0 && numSelected < rowCount}
@@ -68,8 +73,8 @@ const ListingHeader = ({
             padding={column.disablePadding ? 'none' : 'default'}
             sortDirection={orderBy === column.id ? order : false}
           >
-            {column.sortable === false ? (
-              <Typography variant="subtitle1">{column.label}</Typography>
+            {row.sortable === false ? (
+              <HeaderTypography variant="subtitle1">{row.label}</HeaderTypography>
             ) : (
               <TableSortLabel
                 aria-label={`Column ${column.label}`}
@@ -77,7 +82,7 @@ const ListingHeader = ({
                 direction={order || 'desc'}
                 onClick={createSortHandler(getSortField(column))}
               >
-                <Typography variant="subtitle1">{column.label}</Typography>
+                <HeaderTypography variant="subtitle1">{row.label}</HeaderTypography>
               </TableSortLabel>
             )}
           </HeaderCell>
