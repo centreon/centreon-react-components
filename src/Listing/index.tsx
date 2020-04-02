@@ -116,7 +116,7 @@ const Listing = ({
   currentPage = 0,
   totalRows = 0,
   checkable = false,
-  checkCondition,
+  checkCondition = (): boolean => false,
   emptyDataMessage = 'No results found',
   rowColorConditions = [],
   labelDelete = 'Delete',
@@ -431,9 +431,7 @@ const Listing = ({
                           inputProps={{
                             'aria-label': `Select row ${row.id}`,
                           }}
-                          disabled={
-                            checkCondition ? !!checkCondition(row) : false
-                          }
+                          disabled={!!checkCondition(row)}
                         />
                       </BodyTableCell>
                     ) : null}
