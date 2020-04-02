@@ -91,6 +91,7 @@ const Story = (props): JSX.Element => {
         rowColorConditions={rowColorConditions}
         selectedRows={listing.filter((row) => row.selected)}
         checkable
+        checkCondition={(row): boolean => row.selected}
         {...props}
       />
     </div>
