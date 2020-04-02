@@ -431,7 +431,7 @@ const Listing = ({
                           inputProps={{
                             'aria-label': `Select row ${row.id}`,
                           }}
-                          disabled={!!disableRowCheckCondition(row)}
+                          disabled={disableRowCheckCondition(row)}
                         />
                       </BodyTableCell>
                     ) : null}
