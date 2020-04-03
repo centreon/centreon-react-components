@@ -39,7 +39,7 @@ const ConnectedAutocompleteField = <TData extends Record<string, unknown>>({
       .finally(() => setLoading(false));
   };
 
-  const [debouncedChangeText] = useDebouncedCallback((value) => {
+  const [debouncedChangeText] = useDebouncedCallback((value: string) => {
     loadOptions(getSearchEndpoint(value));
   }, 500);
 
