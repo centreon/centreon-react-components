@@ -89,7 +89,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.8.0",
     "jest-emotion": "^10.0.14",
-    "node-sass": "^4.10.0",
+    "node-sass": "^4.13.1",
     "prettier": "^1.18.2"
   }
 }
