@@ -3,7 +3,6 @@ import * as React from 'react';
 import { Typography } from '@material-ui/core';
 
 import RightPanel from '.';
-import Section from './ExpandableSection';
 
 export default { title: 'Right Panel' };
 
