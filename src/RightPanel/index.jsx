@@ -148,15 +148,17 @@ const RightPanel = ({
               )}
             </List>
           </MainPanel>
-          <SecondaryPanelBar
-            aria-label="Close Secondary Panel"
-            display="flex"
-            alignItems="center"
-            alignContent="center"
-            onClick={toggleSecondaryPanel}
-          >
-            {secondaryPanelActive && <CloseSecondaryPanelIcon />}
-          </SecondaryPanelBar>
+          {secondaryPanelActive && (
+            <SecondaryPanelBar
+              aria-label="Close Secondary Panel"
+              display="flex"
+              alignItems="center"
+              alignContent="center"
+              onClick={toggleSecondaryPanel}
+            >
+              <CloseSecondaryPanelIcon />
+            </SecondaryPanelBar>
+          )}
           <div className={secondaryPanel} onTransitionEnd={onTransitionEnd}>
             {secondaryPanelComponent}
           </div>
