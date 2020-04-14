@@ -26,7 +26,7 @@ const HeaderTypography = withStyles({
 })(Typography);
 
 export const useCellStyles = makeStyles((theme) => ({
-  cellPadding: {
+  cell: {
     paddingLeft: (checkable): number => theme.spacing(checkable ? 0 : 1.5),
   },
 }));
@@ -82,7 +82,7 @@ const ListingHeader = ({
             align={column.numeric ? 'left' : 'inherit'}
             padding={column.disablePadding ? 'none' : 'default'}
             sortDirection={orderBy === column.id ? order : false}
-            className={classes.cellPadding}
+            className={classes.cell}
           >
             {column.sortable === false ? (
               <HeaderTypography variant="body2">

@@ -225,7 +225,7 @@ const Listing = ({
             key={cellKey}
             align="left"
             style={{ width: width || 'auto' }}
-            className={cellClasses.cellPadding}
+            className={cellClasses.cell}
           >
             <Typography variant="body2">
               {getFormattedString(row) || ''}
@@ -237,7 +237,7 @@ const Listing = ({
         <BodyTableCell
           align="left"
           key={column.id}
-          className={cellClasses.cellPadding}
+          className={cellClasses.cell}
         >
           {row[column.id] ? (
             <Tooltip
@@ -272,7 +272,7 @@ const Listing = ({
             width: 90,
             position: 'relative',
           }}
-          className={cellClasses.cellPadding}
+          className={cellClasses.cell}
         >
           {hoveredRowId === row.id ? (
             <Box
@@ -338,7 +338,7 @@ const Listing = ({
               e.preventDefault();
               e.stopPropagation();
             }}
-            className={cellClasses.cellPadding}
+            className={cellClasses.cell}
           >
             <Component
               row={row}
