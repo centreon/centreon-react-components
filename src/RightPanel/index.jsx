@@ -57,8 +57,8 @@ const MainPanel = styled(Box)({
 const SecondaryPanelBar = styled(Box)({
   border: '1px solid #D6D6D8',
   width: 20,
-  height: '100%',
   cursor: 'pointer',
+  marginBottom: '49px',
 });
 
 const useSecondaryPanelStyles = makeStyles({
@@ -148,17 +148,15 @@ const RightPanel = ({
               )}
             </List>
           </MainPanel>
-          {secondaryPanelActive && (
-            <SecondaryPanelBar
-              aria-label="Close Secondary Panel"
-              display="flex"
-              alignItems="center"
-              alignContent="center"
-              onClick={toggleSecondaryPanel}
-            >
-              <CloseSecondaryPanelIcon />
-            </SecondaryPanelBar>
-          )}
+          <SecondaryPanelBar
+            aria-label="Close Secondary Panel"
+            display="flex"
+            alignItems="center"
+            alignContent="center"
+            onClick={toggleSecondaryPanel}
+          >
+            {secondaryPanelActive && <CloseSecondaryPanelIcon />}
+          </SecondaryPanelBar>
           <div className={secondaryPanel} onTransitionEnd={onTransitionEnd}>
             {secondaryPanelComponent}
           </div>
