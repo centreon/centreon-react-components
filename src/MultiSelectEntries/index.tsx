@@ -12,7 +12,7 @@ import {
   Typography,
   makeStyles,
 } from '@material-ui/core';
-import { Create } from '@material-ui/icons';
+import Create from '@material-ui/icons/Create';
 
 import useHover from './useHover';
 
