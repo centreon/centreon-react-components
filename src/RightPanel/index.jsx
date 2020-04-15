@@ -16,7 +16,7 @@ const inAnimationDurationMs = 150;
 const outAnimationDurationMs = 50;
 
 // TODO this should be dynamic
-const topHeight = 52;
+const topHeight = 49;
 
 const HeaderContainer = styled(Box)({
   paddingLeft: 20,
@@ -58,7 +58,7 @@ const SecondaryPanelBar = styled(Box)({
   border: '1px solid #D6D6D8',
   width: 20,
   cursor: 'pointer',
-  marginBottom: '49px',
+  marginBottom: topHeight,
 });
 
 const useSecondaryPanelStyles = makeStyles({
