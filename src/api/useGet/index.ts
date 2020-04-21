@@ -27,7 +27,7 @@ const useGet = <TData>({
   const { token, cancel } = useCancelTokenSource();
   const { showMessage } = useSnackbar();
 
-  const [fetching, setFetching] = React.useState(false);
+  const [fetching, setFetching] = React.useState(true);
 
   React.useEffect(() => {
     return (): void => cancel();
