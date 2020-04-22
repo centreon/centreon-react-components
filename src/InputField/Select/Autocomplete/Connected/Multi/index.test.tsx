@@ -9,7 +9,7 @@ import {
 } from '@testing-library/react';
 
 import ConnectedAutocompleteField from '.';
-import { SelectEntry } from '../..';
+import { SelectEntry } from '../../..';
 
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 

@@ -5,8 +5,8 @@ import React from 'react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
-import ConnectedAutocompleteField from '.';
-import { SelectEntry } from '../..';
+import MultiConnectedAutocompleteField from '.';
+import { SelectEntry } from '../../..';
 
 export default { title: 'InputField/Autocomplete/Connected' };
 
@@ -29,7 +29,7 @@ mockedAxios.onGet(`${baseEndpoint}/search`).reply(
 );
 
 export const withThreeOptionsRetrieved = (): JSX.Element => (
-  <ConnectedAutocompleteField
+  <MultiConnectedAutocompleteField
     label="Connected Autocomplete"
     baseEndpoint={baseEndpoint}
     getSearchEndpoint={getSearchEndpoint}
