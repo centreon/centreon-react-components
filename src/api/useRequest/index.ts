@@ -25,7 +25,7 @@ const useRequest = <TResult>({
   const { token, cancel } = useCancelTokenSource();
   const { showMessage } = useSnackbar();
 
-  const [sending, setSending] = React.useState(true);
+  const [sending, setSending] = React.useState(false);
 
   React.useEffect(() => {
     return (): void => cancel();
