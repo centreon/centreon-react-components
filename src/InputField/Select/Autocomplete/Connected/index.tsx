@@ -23,7 +23,7 @@ export default (
     ...props
   }: Props): JSX.Element => {
     const [options, setOptions] = React.useState<Array<SelectEntry>>();
-    const [open, setOpen] = React.useState(false);
+    const [optionsOpen, setOptionsOpen] = React.useState(false);
     const [searchValue, setSearchValue] = React.useState('');
 
     const { sendRequest, sending } = useRequest<TData>({
@@ -45,29 +45,29 @@ export default (
       debouncedChangeText(event.target.value);
     };
 
-    const doOpen = (): void => {
-      setOpen(true);
+    const openOptions = (): void => {
+      setOptionsOpen(true);
     };
 
-    const close = (): void => {
-      setOpen(false);
+    const closeOptions = (): void => {
+      setOptionsOpen(false);
     };
 
     React.useEffect(() => {
-      if (!open) {
+      if (!optionsOpen) {
         setSearchValue('');
         return;
       }
 
       loadOptions(baseEndpoint);
-    }, [open]);
+    }, [optionsOpen]);
 
     const loading = sending || !options;
 
     return (
       <AutocompleteField
-        onOpen={doOpen}
-        onClose={close}
+        onOpen={openOptions}
+        onClose={closeOptions}
         options={options || []}
         onTextChange={changeText}
         loading={loading}
