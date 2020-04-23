@@ -2,16 +2,16 @@ import * as React from 'react';
 
 import { useDebouncedCallback } from 'use-debounce';
 
-import useCancelTokenSource from '../../../../api/useCancelTokenSource';
 import { getData } from '../../../../api';
 import { SelectEntry } from '../..';
-import { AutocompleteFieldProps } from '../../../..';
+import { Props as AutocompleteFieldProps } from '..';
+import useRequest from '../../../../api/useRequest';
 
-interface Props {
+type Props = {
   baseEndpoint: string;
   getSearchEndpoint: (searchField: string) => string;
   getOptionsFromResult: (result) => Array<SelectEntry>;
-}
+} & Omit<AutocompleteFieldProps, 'options'>;
 
 export default (
   AutocompleteField: (props) => JSX.Element,
@@ -21,25 +21,19 @@ export default (
     getSearchEndpoint,
     getOptionsFromResult,
     ...props
-  }: Props & Omit<AutocompleteFieldProps, 'options'>): JSX.Element => {
+  }: Props): JSX.Element => {
     const [options, setOptions] = React.useState<Array<SelectEntry>>();
     const [open, setOpen] = React.useState(false);
-    const [loading, setLoading] = React.useState(true);
     const [searchValue, setSearchValue] = React.useState('');
 
-    const { token, cancel } = useCancelTokenSource();
+    const { sendRequest, sending } = useRequest<TData>({
+      request: getData,
+    });
 
     const loadOptions = (endpoint): void => {
-      setLoading(true);
-      getData<TData>({
-        endpoint,
-        requestParams: { token },
-      })
-        .then((result) => {
-          setOptions(getOptionsFromResult(result));
-        })
-        .catch(() => setOptions([]))
-        .finally(() => setLoading(false));
+      sendRequest(endpoint).then((result) =>
+        setOptions(getOptionsFromResult(result)),
+      );
     };
 
     const [debouncedChangeText] = useDebouncedCallback((value: string) => {
@@ -60,10 +54,6 @@ export default (
     };
 
     React.useEffect(() => {
-      return (): void => cancel();
-    }, []);
-
-    React.useEffect(() => {
       if (!open) {
         setSearchValue('');
         return;
@@ -71,6 +61,8 @@ export default (
 
       loadOptions(baseEndpoint);
     }, [open]);
+
+    const loading = sending || !options;
 
     return (
       <AutocompleteField
