@@ -7,6 +7,10 @@ import Autocomplete, { Props as AutocompleteProps } from '..';
 import { SelectEntry } from '../..';
 
 const useStyles = makeStyles((theme) => ({
+  checkbox: {
+    padding: 0,
+    marginRight: theme.spacing(1),
+  },
   tag: {
     fontSize: theme.typography.pxToRem(10),
   },
@@ -39,7 +43,11 @@ const MultiAutocompleteField = (props: Props): JSX.Element => {
       multiple
       renderOption={(option, { selected }): JSX.Element => (
         <>
-          <Checkbox color="primary" checked={selected} />
+          <Checkbox
+            color="primary"
+            checked={selected}
+            className={classes.checkbox}
+          />
           {option.name}
         </>
       )}
