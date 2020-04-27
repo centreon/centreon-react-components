@@ -189,7 +189,7 @@ const Wizard = (props) => {
                   })}
                   {!activePage.props.noActionBar && (
                     <ActionBar
-                      disabledNext={disabledNext}
+                      disabledActionBar={disabledNext}
                       page={page}
                       isLastPage={isLastPage}
                       onPrevious={handlePrevious}

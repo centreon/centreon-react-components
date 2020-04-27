@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ActionBar = ({
-  disabledNext,
+  disabledActionBar,
   page,
   isLastPage,
   onCancel,
@@ -52,7 +52,12 @@ const ActionBar = ({
 
       <Grid item>
         {page > 0 && (
-          <Button type="button" color="primary" onClick={onPrevious}>
+          <Button
+            type="button"
+            color="primary"
+            onClick={onPrevious}
+            disabled={disabledActionBar}
+          >
             {labelPrevious}
           </Button>
         )}
@@ -61,7 +66,7 @@ const ActionBar = ({
           <Button
             type="submit"
             color="primary"
-            disabled={disabledNext}
+            disabled={disabledActionBar}
             onClick={onFinish}
           >
             {labelFinish}
@@ -71,7 +76,7 @@ const ActionBar = ({
             type="submit"
             color="primary"
             onClick={onNext}
-            disabled={disabledNext}
+            disabled={disabledActionBar}
           >
             {labelNext}
           </Button>
@@ -82,7 +87,7 @@ const ActionBar = ({
 };
 
 ActionBar.propTypes = {
-  disabledNext: PropTypes.bool,
+  disabledActionBar: PropTypes.bool,
   page: PropTypes.number,
   isLastPage: PropTypes.bool,
   onCancel: PropTypes.func,
@@ -96,7 +101,7 @@ ActionBar.propTypes = {
 };
 
 ActionBar.defaultProps = {
-  disabledNext: false,
+  disabledActionBar: false,
   page: 0,
   isLastPage: true,
   onCancel: null,
