@@ -1,5 +1,8 @@
 import React from 'react';
-import { act, render, fireEvent } from '@testing-library/react';
+
+import { act, render, fireEvent, waitFor } from '@testing-library/react';
+import * as Yup from 'yup';
+
 import Wizard, { Page } from '.';
 
 const renderWizardThreeSteps = () =>
@@ -22,6 +25,22 @@ const renderWizardOneStep = () =>
     <Wizard open>
       <Page>
         <div>Step 1</div>
+      </Page>
+    </Wizard>,
+  );
+
+const secondStepValidationSchema = Yup.object().shape({
+  secondInput: Yup.string().required('Required'),
+});
+
+const renderWizardTwoStepsWithFormValidation = () =>
+  render(
+    <Wizard open initialValues={{ secondInput: '' }}>
+      <Page>
+        <div>Step 1</div>
+      </Page>
+      <Page validationSchema={secondStepValidationSchema}>
+        <div>Step 2</div>
       </Page>
     </Wizard>,
   );
@@ -55,5 +74,27 @@ describe('Wizard', () => {
     });
 
     expect(getByText('Step 1')).toBeInTheDocument();
+  });
+
+  it('can not click on "Finish" button when second step has an error, goes to first step by clicking on "Previous" then return to second step', async () => {
+    const { getByText } = renderWizardTwoStepsWithFormValidation();
+
+    await act(async () => {
+      fireEvent.click(getByText('Next').parentNode);
+    });
+
+    expect(getByText('Finish').parentNode).toHaveAttribute('disabled');
+
+    await act(async () => {
+      fireEvent.click(getByText('Previous').parentNode);
+    });
+
+    expect(getByText('Step 1')).toBeInTheDocument();
+
+    await act(async () => {
+      fireEvent.click(getByText('Next').parentNode);
+    });
+
+    expect(getByText('Step 2')).toBeInTheDocument();
   });
 });

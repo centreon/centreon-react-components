@@ -28,6 +28,14 @@ const cloneElement = (element, props) => {
   return React.cloneElement(element, { ...forwardedProps });
 };
 
+const ValidateForm = ({ children, page, validateForm }) => {
+  useEffect(() => {
+    validateForm();
+  }, [page]);
+
+  return children;
+};
+
 const useWizardStyles = makeStyles((theme) => ({
   fullHeight: {
     height: '100%',
@@ -173,20 +181,22 @@ const Wizard = (props) => {
                     }
                   }}
                 >
-                  {cloneElement(activePage, {
-                    errors: bag.errors,
-                    handleBlur: bag.handleBlur,
-                    handleChange: bag.handleChange,
-                    handleSubmit: bag.handleSubmit,
-                    onPrevious: handlePrevious,
-                    onNext: handleNext,
-                    setFieldTouched: bag.setFieldTouched,
-                    setFieldValue: bag.setFieldValue,
-                    setFieldError: bag.setFieldError,
-                    submitForm: bag.submitForm,
-                    touched: bag.touched,
-                    values: bag.values,
-                  })}
+                  <ValidateForm page={page} validateForm={bag.validateForm}>
+                    {cloneElement(activePage, {
+                      errors: bag.errors,
+                      handleBlur: bag.handleBlur,
+                      handleChange: bag.handleChange,
+                      handleSubmit: bag.handleSubmit,
+                      onPrevious: handlePrevious,
+                      onNext: handleNext,
+                      setFieldTouched: bag.setFieldTouched,
+                      setFieldValue: bag.setFieldValue,
+                      setFieldError: bag.setFieldError,
+                      submitForm: bag.submitForm,
+                      touched: bag.touched,
+                      values: bag.values,
+                    })}
+                  </ValidateForm>
                   {!activePage.props.noActionBar && (
                     <ActionBar
                       disabledNext={disabledNext}
