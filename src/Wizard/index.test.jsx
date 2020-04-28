@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { act, render, fireEvent, waitFor } from '@testing-library/react';
+import { act, render, fireEvent } from '@testing-library/react';
 import * as Yup from 'yup';
 
 import Wizard, { Page } from '.';
