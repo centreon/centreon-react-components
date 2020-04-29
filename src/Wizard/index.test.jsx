@@ -76,7 +76,7 @@ describe('Wizard', () => {
     expect(getByText('Step 1')).toBeInTheDocument();
   });
 
-  it('can not click on "Finish" button when second step has an error, goes to first step by clicking on "Previous" then return to second step', async () => {
+  it('cannot finish the Wizard when there is a validation error, but can change steps', async () => {
     const { getByText } = renderWizardTwoStepsWithFormValidation();
 
     await act(async () => {
