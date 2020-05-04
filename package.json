@@ -47,8 +47,7 @@
     "react-files": "^2.4.8",
     "react-router-dom": "^5.1.2",
     "resize-observer-polyfill": "^1.5.1",
-    "use-debounce": "^3.4.1",
-    "yup": "^0.28.4"
+    "use-debounce": "^3.4.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
@@ -95,6 +94,7 @@
     "react-test-renderer": "^16.13.1",
     "sass-loader": "^8.0.2",
     "typescript": "^3.8.3",
-    "webpack-merge": "^4.2.2"
+    "webpack-merge": "^4.2.2",
+    "yup": "^0.28.5"
   }
 }
