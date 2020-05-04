@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { act, render, fireEvent } from '@testing-library/react';
+import { act, render, fireEvent, waitFor } from '@testing-library/react';
 import * as Yup from 'yup';
 
 import Wizard, { Page } from '.';
@@ -63,38 +63,48 @@ describe('Wizard', () => {
   it('goes to next and previous steps', async () => {
     const { getByText } = renderWizardThreeSteps();
 
-    await act(async () => {
+    act(() => {
       fireEvent.click(getByText('Next').parentNode);
     });
 
-    expect(getByText('Step 2')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(getByText('Step 2')).toBeInTheDocument();
+    });
 
-    await act(async () => {
+    act(() => {
       fireEvent.click(getByText('Previous').parentNode);
     });
 
-    expect(getByText('Step 1')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(getByText('Step 1')).toBeInTheDocument();
+    });
   });
 
   it('cannot finish the Wizard when there is a validation error, but can change steps', async () => {
     const { getByText } = renderWizardTwoStepsWithFormValidation();
 
-    await act(async () => {
+    act(() => {
       fireEvent.click(getByText('Next').parentNode);
     });
 
-    expect(getByText('Finish').parentNode).toHaveAttribute('disabled');
+    await waitFor(() => {
+      expect(getByText('Finish').parentNode).toHaveAttribute('disabled');
+    });
 
-    await act(async () => {
+    act(() => {
       fireEvent.click(getByText('Previous').parentNode);
     });
 
-    expect(getByText('Step 1')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(getByText('Step 1')).toBeInTheDocument();
+    });
 
-    await act(async () => {
+    act(() => {
       fireEvent.click(getByText('Next').parentNode);
     });
 
-    expect(getByText('Step 2')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(getByText('Step 2')).toBeInTheDocument();
+    });
   });
 });
