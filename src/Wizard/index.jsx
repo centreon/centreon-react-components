@@ -28,7 +28,7 @@ const cloneElement = (element, props) => {
   return React.cloneElement(element, { ...forwardedProps });
 };
 
-const ValidateForm = ({ children, page, validateForm }) => {
+const FormPage = ({ children, page, validateForm }) => {
   useEffect(() => {
     validateForm();
   }, [page]);
@@ -181,7 +181,7 @@ const Wizard = (props) => {
                     }
                   }}
                 >
-                  <ValidateForm page={page} validateForm={bag.validateForm}>
+                  <FormPage page={page} validateForm={bag.validateForm}>
                     {cloneElement(activePage, {
                       errors: bag.errors,
                       handleBlur: bag.handleBlur,
@@ -196,7 +196,7 @@ const Wizard = (props) => {
                       touched: bag.touched,
                       values: bag.values,
                     })}
-                  </ValidateForm>
+                  </FormPage>
                   {!activePage.props.noActionBar && (
                     <ActionBar
                       disabledNext={disabledNext}
