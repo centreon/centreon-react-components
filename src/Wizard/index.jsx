@@ -203,7 +203,7 @@ const Wizard = (props) => {
                       page={page}
                       isLastPage={isLastPage}
                       onPrevious={handlePrevious}
-                      actionBarProps={actionBarProps}
+                      {...actionBarProps}
                     />
                   )}
                 </Form>
