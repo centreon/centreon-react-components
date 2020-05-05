@@ -23,7 +23,7 @@ describe('ActionBar', () => {
     expect(getByText('Finish').parentNode).toHaveAttribute('disabled');
   });
 
-  it('displays custom previous, next button label when wizar is on second step and not on last step', () => {
+  it('displays the given previous and next labels when the current page is not the last one', () => {
     const { getByText } = render(
       <ActionBar
         isLastPage={false}
