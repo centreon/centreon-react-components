@@ -37,7 +37,7 @@ describe('ActionBar', () => {
     expect(getByText('Custom next')).toBeInTheDocument();
   });
 
-  it('displays custom previous, finish button label when wizard is on last step', () => {
+  it('displays the given previous and finish labels when the current page is the last one', () => {
     const { getByText } = render(
       <ActionBar
         isLastPage
