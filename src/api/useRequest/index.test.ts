@@ -7,7 +7,6 @@ import {
 import axios from 'axios';
 import ulog from 'ulog';
 
-import { waitFor } from '@testing-library/react';
 import useRequest, { RequestResult, RequestParams } from '.';
 import { Severity } from '../..';
 
