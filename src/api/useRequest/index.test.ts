@@ -5,7 +5,9 @@ import {
 } from '@testing-library/react-hooks';
 
 import axios from 'axios';
+import ulog from 'ulog';
 
+import { waitFor } from '@testing-library/react';
 import useRequest, { RequestResult, RequestParams } from '.';
 import { Severity } from '../..';
 
@@ -69,7 +71,7 @@ describe(useRequest, () => {
     });
   });
 
-  it('shows an error via the Snackbar using the error message from the API when available', async () => {
+  it("shows an error via the Snackbar and inside browser's console using the error message from the API when available", async () => {
     request.mockImplementation(() =>
       jest.fn().mockRejectedValue({
         response: { data: { message: 'failure' } },
@@ -80,6 +82,10 @@ describe(useRequest, () => {
 
     await act(async () => {
       result.current.sendRequest();
+    });
+
+    expect(ulog().error).toHaveBeenCalledWith({
+      response: { data: { message: 'failure' } },
     });
 
     expect(mockedShowMessage).toHaveBeenCalledWith({

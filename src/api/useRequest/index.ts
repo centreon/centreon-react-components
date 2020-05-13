@@ -44,8 +44,6 @@ const useRequest = <TResult>({
       getErrorMessage,
     )(error);
 
-    log.error(message);
-
     showMessage({
       message,
       severity: Severity.error,
@@ -58,19 +56,18 @@ const useRequest = <TResult>({
     return request(token)(params)
       .then((data) => {
         if (decoder) {
-          return decoder.decodePromise(data).catch((decodeError) => {
-            log.error(decodeError);
-            throw Error();
-          });
+          return decoder.decodePromise(data);
         }
         return data;
       })
-      .catch((error) =>
-        cond([
+      .catch((error) => {
+        log.error(error);
+
+        return cond([
           [axios.isCancel, T],
           [T, showErrorMessage],
-        ])(error),
-      )
+        ])(error);
+      })
       .finally(() => setSending(false));
   };
 
