@@ -63,10 +63,12 @@ const useRequest = <TResult>({
       .catch((error) => {
         log.error(error);
 
-        return cond([
+        cond([
           [axios.isCancel, T],
           [T, showErrorMessage],
         ])(error);
+
+        throw Error();
       })
       .finally(() => setSending(false));
   };
