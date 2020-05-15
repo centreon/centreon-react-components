@@ -68,7 +68,7 @@ const useRequest = <TResult>({
           [T, showErrorMessage],
         ])(error);
 
-        throw Error();
+        throw error;
       })
       .finally(() => setSending(false));
   };
