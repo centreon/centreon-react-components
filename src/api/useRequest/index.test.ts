@@ -61,7 +61,9 @@ describe(useRequest, () => {
     const { result } = renderUseRequest({ request, getErrorMessage });
 
     await act(async () => {
-      result.current.sendRequest();
+      result.current.sendRequest().catch((error) => {
+        expect(error).toEqual({});
+      });
     });
 
     expect(mockedShowMessage).toHaveBeenCalledWith({
@@ -71,21 +73,20 @@ describe(useRequest, () => {
   });
 
   it("shows an error via the Snackbar and inside browser's console using the error message from the API when available", async () => {
-    request.mockImplementation(() =>
-      jest.fn().mockRejectedValue({
-        response: { data: { message: 'failure' } },
-      }),
-    );
+    const response = {
+      response: { data: { message: 'failure' } },
+    };
+    request.mockImplementation(() => jest.fn().mockRejectedValue(response));
 
     const { result } = renderUseRequest({ request });
 
     await act(async () => {
-      result.current.sendRequest();
+      result.current.sendRequest().catch((error) => {
+        expect(error).toEqual(response);
+      });
     });
 
-    expect(ulog().error).toHaveBeenCalledWith({
-      response: { data: { message: 'failure' } },
-    });
+    expect(ulog().error).toHaveBeenCalledWith(response);
 
     expect(mockedShowMessage).toHaveBeenCalledWith({
       message: 'failure',
@@ -102,7 +103,9 @@ describe(useRequest, () => {
     });
 
     await act(async () => {
-      result.current.sendRequest();
+      result.current.sendRequest().catch((error) => {
+        expect(error).toEqual({});
+      });
     });
 
     expect(mockedShowMessage).toHaveBeenCalledWith({
@@ -121,7 +124,9 @@ describe(useRequest, () => {
     });
 
     await act(async () => {
-      result.current.sendRequest();
+      result.current.sendRequest().catch((error) => {
+        expect(error).toEqual({});
+      });
     });
 
     expect(mockedShowMessage).not.toHaveBeenCalled();
