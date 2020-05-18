@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const headers = { 'Content-Type': 'application/x-www-form-urlencoded' }
+const headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
 
 const getData = <TData>(cancelToken) => (endpoint): Promise<TData> =>
   axios.get(endpoint, { cancelToken }).then(({ data }) => data);
