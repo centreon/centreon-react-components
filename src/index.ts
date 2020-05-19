@@ -26,6 +26,7 @@ export {
 export { default as SingleConnectedAutocompleteField } from './InputField/Select/Autocomplete/Connected/Single';
 export { default as MultiConnectedAutocompleteField } from './InputField/Select/Autocomplete/Connected/Multi';
 export { default as SearchField } from './InputField/Search';
+export { default as SearchHelpTooltip } from './InputField/Search/SearchHelpTooltip';
 export { default as TextField } from './InputField/Text';
 export { default as SelectField, SelectEntry } from './InputField/Select';
 
