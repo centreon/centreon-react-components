@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { ifElse, always, pipe, not, isNil } from 'ramda';
 
 import { Tooltip, IconButton, Box, Link, makeStyles } from '@material-ui/core';
 import IconHelp from '@material-ui/icons/HelpOutline';
@@ -21,13 +22,13 @@ const useStyles = makeStyles((theme) => ({
 
 interface ContentProps {
   onClose: (event) => void;
-  description: React.ReactElement;
-  labelExamples: string;
-  examples: Array<React.ReactElement>;
-  labelTips: string;
-  labelGetRegexHelp: string;
-  urlTip: string;
-  labelUrlTip: string;
+  description?: React.ReactElement;
+  labelExamples?: string;
+  examples?: Array<React.ReactElement>;
+  labelTips?: string;
+  labelGetHelp?: string;
+  urlTip?: string;
+  labelUrlTip?: string;
 }
 
 const Content = ({
@@ -36,11 +37,14 @@ const Content = ({
   labelExamples,
   examples,
   labelTips,
-  labelGetRegexHelp,
+  labelGetHelp,
   urlTip,
   labelUrlTip,
 }: ContentProps): JSX.Element => {
   const classes = useStyles();
+
+  const displayElement = (element) =>
+    ifElse(isNil, always(null), always(element));
 
   return (
     <>
@@ -52,16 +56,20 @@ const Content = ({
         <IconClose fontSize="small" />
       </IconButton>
       <Box padding={1}>
-        <div>{description}</div>
-        <p>{labelExamples}</p>
-        <ul>{examples.map((example) => example)}</ul>
-        <i>
-          <b>{`${labelTips}: `}</b>
-          {`${labelGetRegexHelp} `}
-          <Link href={urlTip} target="_blank" rel="noopener noreferrer">
-            {labelUrlTip}
-          </Link>
-        </i>
+        {displayElement(<div>{description}</div>)(description)}
+        {displayElement(<p>{labelExamples}</p>)(labelExamples)}
+        {displayElement(<ul>{examples?.map((example) => example)}</ul>)(
+          examples,
+        )}
+        {displayElement(
+          <i>
+            <b>{`${labelTips}: `}</b>
+            {`${labelGetHelp} `}
+            <Link href={urlTip} target="_blank" rel="noopener noreferrer">
+              {labelUrlTip}
+            </Link>
+          </i>,
+        )(labelTips && labelGetHelp && urlTip && labelUrlTip)}
       </Box>
     </>
   );
@@ -71,13 +79,13 @@ interface TooltipProps extends ContentProps {
   labelSearchHelp: string;
 }
 
-const SearchHelpTooltip = ({
+const PersistentTooltip = ({
   labelSearchHelp,
   description,
   labelExamples,
   examples,
   labelTips,
-  labelGetRegexHelp,
+  labelGetHelp,
   urlTip,
   labelUrlTip,
 }: TooltipProps): JSX.Element => {
@@ -100,7 +108,7 @@ const SearchHelpTooltip = ({
       labelExamples={labelExamples}
       examples={examples}
       labelTips={labelTips}
-      labelGetRegexHelp={labelGetRegexHelp}
+      labelGetHelp={labelGetHelp}
       urlTip={urlTip}
       labelUrlTip={labelUrlTip}
     />
@@ -124,4 +132,4 @@ const SearchHelpTooltip = ({
   );
 };
 
-export default SearchHelpTooltip;
+export default PersistentTooltip;

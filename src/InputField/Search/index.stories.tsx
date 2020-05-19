@@ -1,7 +1,7 @@
 import React from 'react';
 
 import SearchInput from '.';
-import SearchHelpTooltip from './SearchHelpTooltip';
+import PersistentTooltip from './PersistentTooltip';
 
 export default { title: 'InputField/Search' };
 
@@ -23,14 +23,14 @@ const tooltipExamples = [
 ];
 
 const SearchTooltip = (): JSX.Element => (
-  <SearchHelpTooltip
+  <PersistentTooltip
     onClose={(): void => undefined}
     description={tooltipDescription}
     examples={tooltipExamples}
     labelExamples="Here are some examples"
     labelSearchHelp="search input"
     labelTips="Tips"
-    labelGetRegexHelp="This link should help you"
+    labelGetHelp="This link should help you"
     urlTip="https://regex101.com"
     labelUrlTip="regex101.com"
   />
