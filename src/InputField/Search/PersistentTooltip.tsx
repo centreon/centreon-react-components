@@ -43,7 +43,7 @@ const Content = ({
 }: ContentProps): JSX.Element => {
   const classes = useStyles();
 
-  const displayElement = (element) =>
+  const displayElement = (element): ((prop) => React.ReactElement | null) =>
     ifElse(isNil, always(null), always(element));
 
   return (
