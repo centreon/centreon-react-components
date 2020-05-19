@@ -24,9 +24,7 @@ const tooltipExamples = [
 
 const SearchTooltip = (): JSX.Element => (
   <SearchHelpTooltip
-    onClose={(): void => {
-      console.log('closed');
-    }}
+    onClose={(): void => undefined}
     description={tooltipDescription}
     examples={tooltipExamples}
     labelExamples="Here are some examples"
