@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ifElse, always, pipe, not, isNil } from 'ramda';
+import { ifElse, always, isNil } from 'ramda';
 
 import { Tooltip, IconButton, Box, Link, makeStyles } from '@material-ui/core';
 import IconHelp from '@material-ui/icons/HelpOutline';
