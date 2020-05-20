@@ -24,7 +24,6 @@ const tooltipExamples = [
 
 const SearchTooltip = (): JSX.Element => (
   <PersistentTooltip
-    onClose={(): void => undefined}
     description={tooltipDescription}
     examples={tooltipExamples}
     labelExamples="Here are some examples"

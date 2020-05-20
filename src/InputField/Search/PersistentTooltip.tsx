@@ -75,7 +75,14 @@ const Content = ({
   );
 };
 
-interface TooltipProps extends ContentProps {
+interface TooltipProps {
+  description?: React.ReactElement;
+  labelExamples?: string;
+  examples?: Array<React.ReactElement>;
+  labelTips?: string;
+  labelGetHelp?: string;
+  urlTip?: string;
+  labelUrlTip?: string;
   labelSearchHelp: string;
 }
 
