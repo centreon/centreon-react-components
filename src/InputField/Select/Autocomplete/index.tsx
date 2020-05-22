@@ -2,7 +2,11 @@ import * as React from 'react';
 
 import { equals } from 'ramda';
 
-import { makeStyles, CircularProgress } from '@material-ui/core';
+import {
+  makeStyles,
+  CircularProgress,
+  InputAdornment,
+} from '@material-ui/core';
 import Autocomplete, { AutocompleteProps } from '@material-ui/lab/Autocomplete';
 import { UseAutocompleteProps } from '@material-ui/lab/useAutocomplete';
 
@@ -24,6 +28,9 @@ const useStyles = makeStyles(() => ({
       borderBottom: 0,
     },
   },
+  inputEndAdornment: {
+    paddingBottom: '19px',
+  },
 }));
 
 const LoadingIndicator = (): JSX.Element => {
@@ -41,6 +48,7 @@ export type Props = {
   onTextChange?;
   label: string;
   placeholder?: string;
+  endAdornmentInput?: React.ReactElement;
 } & Omit<AutocompleteProps<SelectEntry>, 'renderInput'> &
   UseAutocompleteProps<SelectEntry>;
 
@@ -50,6 +58,7 @@ const AutocompleteField = ({
   placeholder = '',
   loading = false,
   onTextChange = (): void => undefined,
+  endAdornmentInput = undefined,
   ...props
 }: Props): JSX.Element => {
   const classes = useStyles();
@@ -70,6 +79,20 @@ const AutocompleteField = ({
           label={label}
           placeholder={placeholder}
           onChange={onTextChange}
+          InputProps={{
+            ...params.InputProps,
+            endAdornment: (
+              <>
+                <InputAdornment
+                  classes={{ root: classes.inputEndAdornment }}
+                  position="end"
+                >
+                  {endAdornmentInput}
+                </InputAdornment>
+                {params.InputProps.endAdornment}
+              </>
+            ),
+          }}
         />
       )}
       {...props}
