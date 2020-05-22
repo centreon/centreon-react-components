@@ -22,13 +22,10 @@ const useStyles = makeStyles((theme) => ({
 
 interface ContentProps {
   onClose: (event) => void;
-  description?: React.ReactElement;
-  labelExamples?: string;
-  examples?: Array<React.ReactElement>;
-  labelTips?: string;
-  labelGetHelp?: string;
-  urlTip?: string;
-  labelUrlTip?: string;
+  description: React.ReactElement | null;
+  labelExamples: React.ReactElement | null;
+  examples: React.ReactElement | null;
+  tips: React.ReactElement | null;
 }
 
 const Content = ({
@@ -36,15 +33,9 @@ const Content = ({
   description,
   labelExamples,
   examples,
-  labelTips,
-  labelGetHelp,
-  urlTip,
-  labelUrlTip,
+  tips,
 }: ContentProps): JSX.Element => {
   const classes = useStyles();
-
-  const displayElement = (element): ((prop) => React.ReactElement | null) =>
-    ifElse(isNil, always(null), always(element));
 
   return (
     <>
@@ -56,20 +47,10 @@ const Content = ({
         <IconClose fontSize="small" />
       </IconButton>
       <Box padding={1}>
-        {displayElement(<div>{description}</div>)(description)}
-        {displayElement(<p>{labelExamples}</p>)(labelExamples)}
-        {displayElement(<ul>{examples?.map((example) => example)}</ul>)(
-          examples,
-        )}
-        {displayElement(
-          <i>
-            <b>{`${labelTips}: `}</b>
-            {`${labelGetHelp} `}
-            <Link href={urlTip} target="_blank" rel="noopener noreferrer">
-              {labelUrlTip}
-            </Link>
-          </i>,
-        )(labelTips && labelGetHelp && urlTip && labelUrlTip)}
+        {description}
+        {labelExamples}
+        {examples}
+        {tips}
       </Box>
     </>
   );
@@ -108,16 +89,26 @@ const PersistentTooltip = ({
     setOpen(false);
   };
 
+  const displayElement = (element): ((prop) => React.ReactElement | null) =>
+    ifElse(isNil, always(null), always(element));
+
   const content = (
     <Content
       onClose={closeTooltip}
-      description={description}
-      labelExamples={labelExamples}
-      examples={examples}
-      labelTips={labelTips}
-      labelGetHelp={labelGetHelp}
-      urlTip={urlTip}
-      labelUrlTip={labelUrlTip}
+      description={displayElement(<div>{description}</div>)(description)}
+      labelExamples={displayElement(<p>{labelExamples}</p>)(labelExamples)}
+      examples={displayElement(<ul>{examples?.map((example) => example)}</ul>)(
+        examples,
+      )}
+      tips={displayElement(
+        <i>
+          <b>{`${labelTips}: `}</b>
+          {`${labelGetHelp} `}
+          <Link href={urlTip} target="_blank" rel="noopener noreferrer">
+            {labelUrlTip}
+          </Link>
+        </i>,
+      )(labelTips && labelGetHelp && urlTip && labelUrlTip)}
     />
   );
 
