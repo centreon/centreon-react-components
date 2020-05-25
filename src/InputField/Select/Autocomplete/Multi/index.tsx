@@ -16,11 +16,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+type Multiple = boolean;
+type DisableClearable = boolean;
+type FreeSolo = boolean;
+
 export type Props = Omit<
   AutocompleteProps,
   'renderTags' | 'renderOption' | 'multiple'
 > &
-  Omit<UseAutocompleteProps<SelectEntry, true, false, false>, 'multiple'>;
+  Omit<
+    UseAutocompleteProps<SelectEntry, Multiple, DisableClearable, FreeSolo>,
+    'multiple'
+  >;
 
 const MultiAutocompleteField = (props: Props): JSX.Element => {
   const classes = useStyles();
