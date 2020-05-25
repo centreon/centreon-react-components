@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { Checkbox, Chip, makeStyles } from '@material-ui/core';
 
-import { UseAutocompleteMultipleProps } from '@material-ui/lab';
+import { UseAutocompleteProps } from '@material-ui/lab';
 import Autocomplete, { Props as AutocompleteProps } from '..';
 import { SelectEntry } from '../..';
 
@@ -20,7 +20,7 @@ export type Props = Omit<
   AutocompleteProps,
   'renderTags' | 'renderOption' | 'multiple'
 > &
-  Omit<UseAutocompleteMultipleProps<SelectEntry>, 'multiple'>;
+  Omit<UseAutocompleteProps<SelectEntry, true, false, false>, 'multiple'>;
 
 const MultiAutocompleteField = (props: Props): JSX.Element => {
   const classes = useStyles();

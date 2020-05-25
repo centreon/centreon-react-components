@@ -43,14 +43,21 @@ const LoadingIndicator = (): JSX.Element => {
   );
 };
 
+type Multiple = boolean;
+type DisableClearable = boolean;
+type FreeSolo = boolean;
+
 export type Props = {
   loading?: boolean;
   onTextChange?;
   label: string;
   placeholder?: string;
   endAdornmentInput?: React.ReactElement;
-} & Omit<AutocompleteProps<SelectEntry>, 'renderInput'> &
-  UseAutocompleteProps<SelectEntry>;
+} & Omit<
+  AutocompleteProps<SelectEntry, Multiple, DisableClearable, FreeSolo>,
+  'renderInput'
+> &
+  UseAutocompleteProps<SelectEntry, Multiple, DisableClearable, FreeSolo>;
 
 const AutocompleteField = ({
   options,
