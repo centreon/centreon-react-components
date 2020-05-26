@@ -86,6 +86,10 @@ const AutocompleteField = ({
           label={label}
           placeholder={placeholder}
           onChange={onTextChange}
+          inputProps={{
+            ...params.inputProps,
+            'aria-label': label,
+          }}
           InputProps={{
             ...params.InputProps,
             endAdornment: (
