@@ -20,12 +20,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface Props {
-  content: React.ReactElement;
+  children?: React.ReactElement;
   labelSearchHelp: string;
 }
 
 const PersistentTooltip = ({
-  content,
+  children,
   labelSearchHelp,
 }: Props): JSX.Element => {
   const classes = useStyles();
@@ -49,7 +49,7 @@ const PersistentTooltip = ({
       >
         <IconClose fontSize="small" />
       </IconButton>
-      {content}
+      {children}
     </>
   );
 

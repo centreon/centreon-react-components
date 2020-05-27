@@ -71,7 +71,9 @@ const RegexpHelpTooltip = ({
   );
 
   return (
-    <PersistentTooltip content={content} labelSearchHelp={labelSearchHelp} />
+    <PersistentTooltip labelSearchHelp={labelSearchHelp}>
+      {content}
+    </PersistentTooltip>
   );
 };
 
