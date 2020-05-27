@@ -4,7 +4,6 @@ import { equals } from 'ramda';
 
 import { makeStyles, CircularProgress } from '@material-ui/core';
 import Autocomplete, { AutocompleteProps } from '@material-ui/lab/Autocomplete';
-import { UseAutocompleteProps } from '@material-ui/lab/useAutocomplete';
 
 import TextField from '../../Text';
 import { SelectEntry } from '..';
@@ -41,8 +40,10 @@ export type Props = {
   onTextChange?;
   label: string;
   placeholder?: string;
-} & Omit<AutocompleteProps<SelectEntry>, 'renderInput'> &
-  UseAutocompleteProps<SelectEntry>;
+} & Omit<
+  AutocompleteProps<SelectEntry, boolean, boolean, boolean>,
+  'renderInput'
+>;
 
 const AutocompleteField = ({
   options,
