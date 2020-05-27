@@ -13,10 +13,6 @@ type Props = {
   getOptionsFromResult: (result) => Array<SelectEntry>;
 } & Omit<AutocompleteFieldProps, 'options'>;
 
-interface InputValueProps {
-  inputValue?: string;
-}
-
 export default (
   AutocompleteField: (props) => JSX.Element,
 ): ((props) => JSX.Element) => {
@@ -68,11 +64,7 @@ export default (
 
     const loading = sending || !options;
 
-    const inputValueProps: InputValueProps = {};
-
-    if (optionsOpen) {
-      inputValueProps.inputValue = searchValue;
-    }
+    const inputValueProps = optionsOpen ? { inputValue: searchValue } : {};
 
     return (
       <AutocompleteField
