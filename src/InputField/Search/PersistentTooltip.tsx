@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { ifElse, always, isNil } from 'ramda';
 
-import { Tooltip, IconButton, Box, Link, makeStyles } from '@material-ui/core';
+import { Tooltip, makeStyles, IconButton } from '@material-ui/core';
 import IconHelp from '@material-ui/icons/HelpOutline';
 import IconClose from '@material-ui/icons/HighlightOff';
 
@@ -20,63 +19,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface ContentProps {
-  onClose: (event) => void;
-  description: React.ReactElement | null;
-  labelExamples: React.ReactElement | null;
-  examples: React.ReactElement | null;
-  tips: React.ReactElement | null;
-}
-
-const Content = ({
-  onClose,
-  description,
-  labelExamples,
-  examples,
-  tips,
-}: ContentProps): JSX.Element => {
-  const classes = useStyles();
-
-  return (
-    <>
-      <IconButton
-        size="small"
-        onClick={onClose}
-        className={classes.buttonClose}
-      >
-        <IconClose fontSize="small" />
-      </IconButton>
-      <Box padding={1}>
-        {description}
-        {labelExamples}
-        {examples}
-        {tips}
-      </Box>
-    </>
-  );
-};
-
-interface TooltipProps {
-  description?: React.ReactElement;
-  labelExamples?: string;
-  examples?: Array<React.ReactElement>;
-  labelTips?: string;
-  labelGetHelp?: string;
-  urlTip?: string;
-  labelUrlTip?: string;
+interface Props {
+  content: React.ReactElement;
   labelSearchHelp: string;
 }
 
 const PersistentTooltip = ({
+  content,
   labelSearchHelp,
-  description,
-  labelExamples,
-  examples,
-  labelTips,
-  labelGetHelp,
-  urlTip,
-  labelUrlTip,
-}: TooltipProps): JSX.Element => {
+}: Props): JSX.Element => {
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
@@ -89,33 +40,23 @@ const PersistentTooltip = ({
     setOpen(false);
   };
 
-  const displayElement = (element): ((prop) => React.ReactElement | null) =>
-    ifElse(isNil, always(null), always(element));
-
-  const content = (
-    <Content
-      onClose={closeTooltip}
-      description={displayElement(<div>{description}</div>)(description)}
-      labelExamples={displayElement(<p>{labelExamples}</p>)(labelExamples)}
-      examples={displayElement(<ul>{examples?.map((example) => example)}</ul>)(
-        examples,
-      )}
-      tips={displayElement(
-        <i>
-          <b>{`${labelTips}: `}</b>
-          {`${labelGetHelp} `}
-          <Link href={urlTip} target="_blank" rel="noopener noreferrer">
-            {labelUrlTip}
-          </Link>
-        </i>,
-      )(labelTips && labelGetHelp && urlTip && labelUrlTip)}
-    />
+  const title = (
+    <>
+      <IconButton
+        size="small"
+        onClick={closeTooltip}
+        className={classes.buttonClose}
+      >
+        <IconClose fontSize="small" />
+      </IconButton>
+      {content}
+    </>
   );
 
   return (
     <Tooltip
       open={open}
-      title={content}
+      title={title}
       classes={{ tooltip: classes.tooltip }}
       interactive
     >

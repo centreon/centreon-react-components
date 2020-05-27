@@ -1,6 +1,7 @@
 import React from 'react';
 
 import SearchInput from '.';
+import RegexpHelpTooltip from './RegexpHelpTooltip';
 import PersistentTooltip from './PersistentTooltip';
 
 export default { title: 'InputField/Search' };
@@ -22,8 +23,8 @@ const tooltipExamples = [
   <li key="third">Third example</li>,
 ];
 
-const SearchTooltip = (): JSX.Element => (
-  <PersistentTooltip
+const RegexpHelp = (): JSX.Element => (
+  <RegexpHelpTooltip
     description={tooltipDescription}
     examples={tooltipExamples}
     labelExamples="Here are some examples"
@@ -35,9 +36,30 @@ const SearchTooltip = (): JSX.Element => (
   />
 );
 
-export const searchInputWithHelpTooltip = (): JSX.Element => (
+export const searchInputWithRegexpHelpTooltip = (): JSX.Element => (
   <SearchInput
     placeholder="Search"
-    EndAdornment={(): JSX.Element => <SearchTooltip />}
+    EndAdornment={(): JSX.Element => <RegexpHelp />}
+  />
+);
+
+const persistentTooltipContent = (
+  <div>
+    <p>Here is a simple persistent </p>
+    <p>With a description about the input</p>
+  </div>
+);
+
+const PersistentHelpTooltip = (): JSX.Element => (
+  <PersistentTooltip
+    content={persistentTooltipContent}
+    labelSearchHelp="search input"
+  />
+);
+
+export const searchInputWithPersistentHelpTooltip = (): JSX.Element => (
+  <SearchInput
+    placeholder="Search"
+    EndAdornment={(): JSX.Element => <PersistentHelpTooltip />}
   />
 );
