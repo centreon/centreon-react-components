@@ -52,7 +52,7 @@ export type Props = {
   onTextChange?;
   label: string;
   placeholder?: string;
-  endAdornmentInput?: React.ReactElement;
+  endAdornment?: React.ReactElement;
 } & Omit<
   AutocompleteProps<SelectEntry, Multiple, DisableClearable, FreeSolo>,
   'renderInput'
@@ -65,7 +65,7 @@ const AutocompleteField = ({
   placeholder = '',
   loading = false,
   onTextChange = (): void => undefined,
-  endAdornmentInput = undefined,
+  endAdornment = undefined,
   ...props
 }: Props): JSX.Element => {
   const classes = useStyles();
@@ -98,7 +98,7 @@ const AutocompleteField = ({
                   classes={{ root: classes.inputEndAdornment }}
                   position="end"
                 >
-                  {endAdornmentInput}
+                  {endAdornment}
                 </InputAdornment>
                 {params.InputProps.endAdornment}
               </>

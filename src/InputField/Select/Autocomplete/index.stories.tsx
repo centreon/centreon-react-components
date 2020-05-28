@@ -31,7 +31,7 @@ export const closeWithEndAdornment = (): JSX.Element => {
       label="Autocomplete"
       placeholder="Type here..."
       value={options[1]}
-      endAdornmentInput={<EditIcon />}
+      endAdornment={<EditIcon />}
     />
   );
 };
