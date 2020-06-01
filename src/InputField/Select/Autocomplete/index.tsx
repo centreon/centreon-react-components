@@ -2,7 +2,11 @@ import * as React from 'react';
 
 import { equals } from 'ramda';
 
-import { makeStyles, CircularProgress } from '@material-ui/core';
+import {
+  makeStyles,
+  CircularProgress,
+  InputAdornment,
+} from '@material-ui/core';
 import Autocomplete, { AutocompleteProps } from '@material-ui/lab/Autocomplete';
 
 import TextField from '../../Text';
@@ -23,6 +27,9 @@ const useStyles = makeStyles(() => ({
       borderBottom: 0,
     },
   },
+  inputEndAdornment: {
+    paddingBottom: '19px',
+  },
 }));
 
 const LoadingIndicator = (): JSX.Element => {
@@ -35,15 +42,21 @@ const LoadingIndicator = (): JSX.Element => {
   );
 };
 
+type Multiple = boolean;
+type DisableClearable = boolean;
+type FreeSolo = boolean;
+
 export type Props = {
   loading?: boolean;
   onTextChange?;
   label: string;
   placeholder?: string;
+  endAdornment?: React.ReactElement;
 } & Omit<
-  AutocompleteProps<SelectEntry, boolean, boolean, boolean>,
+  AutocompleteProps<SelectEntry, Multiple, DisableClearable, FreeSolo>,
   'renderInput'
->;
+> &
+  UseAutocompleteProps<SelectEntry, Multiple, DisableClearable, FreeSolo>;
 
 const AutocompleteField = ({
   options,
@@ -51,6 +64,7 @@ const AutocompleteField = ({
   placeholder = '',
   loading = false,
   onTextChange = (): void => undefined,
+  endAdornment = undefined,
   ...props
 }: Props): JSX.Element => {
   const classes = useStyles();
@@ -71,6 +85,24 @@ const AutocompleteField = ({
           label={label}
           placeholder={placeholder}
           onChange={onTextChange}
+          inputProps={{
+            ...params.inputProps,
+            'aria-label': label,
+          }}
+          InputProps={{
+            ...params.InputProps,
+            endAdornment: (
+              <>
+                <InputAdornment
+                  classes={{ root: classes.inputEndAdornment }}
+                  position="end"
+                >
+                  {endAdornment}
+                </InputAdornment>
+                {params.InputProps.endAdornment}
+              </>
+            ),
+          }}
         />
       )}
       {...props}
