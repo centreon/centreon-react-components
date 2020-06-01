@@ -36,17 +36,17 @@ const OptionalLabelInputAdornment = ({
   );
 };
 
-interface Props {
+export type Props = {
   StartAdornment?: React.SFC;
   EndAdornment?: React.SFC;
-}
+} & Omit<TextFieldProps, 'variant' | 'size'>;
 
 const TextField = ({
   StartAdornment,
   EndAdornment,
   label,
   ...rest
-}: Props & Omit<TextFieldProps, 'variant' | 'size'>): JSX.Element => {
+}: Props): JSX.Element => {
   const classes = useStyles();
 
   return (

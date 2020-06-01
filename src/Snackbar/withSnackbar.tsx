@@ -21,7 +21,7 @@ interface SnackbarContextProviderProps {
   children?: ReactNode;
 }
 
-const withSnackbar = (Component): ((props) => ReactElement) => {
+const withSnackbar = (Component: React.SFC): ((props) => ReactElement) => {
   return (props: SnackbarContextProviderProps): ReactElement => {
     const {
       message,
