@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import { isNil, ifElse } from 'ramda';
+
 import { Tooltip, makeStyles, IconButton } from '@material-ui/core';
 import IconHelp from '@material-ui/icons/HelpOutline';
 import IconClose from '@material-ui/icons/HighlightOff';
@@ -22,22 +24,38 @@ const useStyles = makeStyles((theme) => ({
 interface Props {
   children?: React.ReactElement;
   labelSearchHelp: string;
+  openTooltip?: boolean;
+  toggleTooltip?: () => void;
+  closeTooltip?: () => void;
 }
 
 const PersistentTooltip = ({
   children,
   labelSearchHelp,
+  openTooltip,
+  toggleTooltip: toggleTooltipProp,
+  closeTooltip: closeTooltipProp,
 }: Props): JSX.Element => {
   const classes = useStyles();
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(openTooltip || false);
 
   const toggleTooltip = (): void => {
-    setOpen(!open);
+    ifElse(
+      isNil,
+      () => setOpen(!open),
+      () => toggleTooltipProp && toggleTooltipProp(),
+    )(openTooltip);
   };
 
   const closeTooltip = (): void => {
-    setOpen(false);
+    if (openTooltip) {
+      if (closeTooltipProp) {
+        closeTooltipProp();
+      }
+    } else {
+      setOpen(false);
+    }
   };
 
   const title = (
