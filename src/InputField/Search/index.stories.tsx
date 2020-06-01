@@ -43,8 +43,8 @@ export const searchInputWithRegexpHelpTooltip = (): JSX.Element => (
   />
 );
 
-const PersistentHelpTooltip = (): JSX.Element => (
-  <PersistentTooltip labelSearchHelp="search input">
+const PersistentHelpTooltip = (props): JSX.Element => (
+  <PersistentTooltip labelSearchHelp="search input" {...props}>
     <div>
       <p>Here is a simple persistent </p>
       <p>With a description about the input</p>
@@ -56,5 +56,12 @@ export const searchInputWithPersistentHelpTooltip = (): JSX.Element => (
   <SearchInput
     placeholder="Search"
     EndAdornment={(): JSX.Element => <PersistentHelpTooltip />}
+  />
+);
+
+export const searchInputWithOpenedPersistentHelpTooltip = (): JSX.Element => (
+  <SearchInput
+    placeholder="Search"
+    EndAdornment={(): JSX.Element => <PersistentHelpTooltip openTooltip />}
   />
 );
