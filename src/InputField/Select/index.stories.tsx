@@ -33,7 +33,7 @@ export const withError = (): JSX.Element => (
     label="name"
     options={[{ id: 0, name: 'Selected' }]}
     selectedOptionId={0}
-    onChange={() => undefined}
+    onChange={(): void => undefined}
     error="Something went wrong"
   />
 );
