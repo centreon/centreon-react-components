@@ -49,13 +49,12 @@ const PersistentTooltip = ({
   };
 
   const closeTooltip = (): void => {
-    if (openTooltip) {
-      if (closeTooltipProp) {
-        closeTooltipProp();
-      }
-    } else {
-      setOpen(false);
-    }
+    if (!openTooltip) {
+     setOpen(false);
+     return;
+   }
+   
+   closeTooltipProp.?();
   };
 
   const title = (
