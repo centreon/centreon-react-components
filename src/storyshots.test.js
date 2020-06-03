@@ -5,7 +5,7 @@ jest.unmock('axios');
 
 const getMatchOptions = () => {
   return {
-    failureThreshold: 0.015,
+    failureThreshold: 0.02,
     failureThresholdType: 'percent',
   };
 };
