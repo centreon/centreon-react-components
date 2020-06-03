@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { isNil, ifElse } from 'ramda';
+import { isNil, cond, T } from 'ramda';
 
 import { Tooltip, makeStyles, IconButton } from '@material-ui/core';
 import IconHelp from '@material-ui/icons/HelpOutline';
@@ -41,20 +41,19 @@ const PersistentTooltip = ({
   const [open, setOpen] = React.useState(openTooltip || false);
 
   const toggleTooltip = (): void => {
-    ifElse(
-      isNil,
-      () => setOpen(!open),
-      () => toggleTooltipProp && toggleTooltipProp(),
-    )(openTooltip);
+    cond([
+      [isNil, (): void => setOpen(!open)],
+      [T, (): void => toggleTooltipProp?.()],
+    ])(openTooltip);
   };
 
   const closeTooltip = (): void => {
     if (!openTooltip) {
-     setOpen(false);
-     return;
-   }
-   
-   closeTooltipProp.?();
+      setOpen(false);
+      return;
+    }
+
+    closeTooltipProp?.();
   };
 
   const title = (
