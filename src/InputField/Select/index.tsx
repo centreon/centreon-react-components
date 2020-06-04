@@ -39,12 +39,18 @@ const SelectField = ({
   selectedOptionId,
   label,
   error,
+  fullWidth,
   ...props
 }: Props): JSX.Element => {
   const classes = useStyles();
 
   return (
-    <FormControl variant="filled" size="small" error={!isNil(error)}>
+    <FormControl
+      variant="filled"
+      size="small"
+      error={!isNil(error)}
+      fullWidth={fullWidth}
+    >
       {label && <InputLabel>{label}</InputLabel>}
       <Select
         inputProps={{
@@ -53,6 +59,7 @@ const SelectField = ({
         value={selectedOptionId}
         onChange={onChange}
         disableUnderline
+        fullWidth={fullWidth}
         {...props}
       >
         {options.map(({ id, name }) => (
