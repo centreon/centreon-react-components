@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, RefObject } from 'react';
 
 import ResizeObserver from 'resize-observer-polyfill';
+import clsx from 'clsx';
 
 import { withStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import {
@@ -13,6 +14,7 @@ import {
   TableRow,
   Checkbox,
   Typography,
+  Tooltip,
 } from '@material-ui/core';
 
 import IconPowerSettings from '../Icon/IconPowerSettings';
@@ -24,7 +26,6 @@ import ListingRow from './Row';
 import TABLE_COLUMN_TYPES from './ColumnTypes';
 import PaginationActions from './PaginationActions';
 import StyledPagination from './Pagination';
-import Tooltip from '../Tooltip';
 import ListingLoadingSkeleton from './Skeleton';
 
 const loadingIndicatorHeight = 3;
@@ -63,6 +64,12 @@ const useStyles = makeStyles<Theme>((theme) => ({
   loadingIndicator: {
     width: '100%',
     height: loadingIndicatorHeight,
+  },
+  truncated: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    maxWidth: 150,
+    whiteSpace: 'nowrap',
   },
 }));
 
@@ -215,7 +222,16 @@ const Listing = ({
 
     const cellByColumnType = {
       [TABLE_COLUMN_TYPES.string]: (): JSX.Element => {
-        const { getFormattedString, width } = column;
+        const {
+          getFormattedString,
+          width,
+          getTruncateCondition,
+          getColSpan,
+        } = column;
+
+        const isTruncated = getTruncateCondition(isRowSelected);
+        const formattedString = getFormattedString(row) || '';
+        const colSpan = getColSpan(isRowSelected);
 
         return (
           <BodyTableCell
@@ -223,10 +239,19 @@ const Listing = ({
             align="left"
             style={{ width: width || 'auto' }}
             className={cellClasses.cell}
+            colSpan={colSpan}
           >
-            <Typography variant="body2">
-              {getFormattedString(row) || ''}
-            </Typography>
+            {isTruncated && (
+              <Tooltip title={formattedString}>
+                <Typography
+                  variant="body2"
+                  className={clsx({ [classes.truncated]: isTruncated })}
+                >
+                  {formattedString}
+                </Typography>
+              </Tooltip>
+            )}
+            {!isTruncated && formattedString}
           </BodyTableCell>
         );
       },
@@ -313,11 +338,9 @@ const Listing = ({
         </BodyTableCell>
       ),
       [TABLE_COLUMN_TYPES.component]: (): JSX.Element | null => {
-        const { Component, hiddenCondition, width, clickable } = column;
+        const { Component, getHiddenCondition, width, clickable } = column;
 
-        const isCellHidden = hiddenCondition
-          ? hiddenCondition({ row, isRowSelected })
-          : false;
+        const isCellHidden = getHiddenCondition?.(isRowSelected);
 
         if (isCellHidden) {
           return null;

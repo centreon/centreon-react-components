@@ -18,6 +18,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   noLabelInput: {
     padding: theme.spacing(1.5),
   },
+  compact: {
+    padding: theme.spacing(0.5),
+    fontSize: 'x-small',
+  },
 }));
 
 export interface SelectEntry {
@@ -31,6 +35,7 @@ type Props = {
   selectedOptionId: number | string;
   label?: string;
   error?: string;
+  compact?: boolean;
 } & Omit<SelectProps, 'error'>;
 
 const SelectField = ({
@@ -40,6 +45,7 @@ const SelectField = ({
   label,
   error,
   fullWidth,
+  compact = false,
   ...props
 }: Props): JSX.Element => {
   const classes = useStyles();
@@ -54,7 +60,10 @@ const SelectField = ({
       {label && <InputLabel>{label}</InputLabel>}
       <Select
         inputProps={{
-          className: clsx({ [classes.noLabelInput]: !label }),
+          className: clsx({
+            [classes.noLabelInput]: !label && !compact,
+            [classes.compact]: compact,
+          }),
         }}
         value={selectedOptionId}
         onChange={onChange}
