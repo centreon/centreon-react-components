@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 export interface SelectEntry {
   id: number | string;
   name: string;
+  color?: string;
 }
 
 type Props = {
@@ -71,8 +72,8 @@ const SelectField = ({
         fullWidth={fullWidth}
         {...props}
       >
-        {options.map(({ id, name }) => (
-          <MenuItem key={id} value={id}>
+        {options.map(({ id, name, color }) => (
+          <MenuItem key={id} value={id} style={{ backgroundColor: color }}>
             {name}
           </MenuItem>
         ))}

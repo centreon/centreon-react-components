@@ -9,7 +9,6 @@ import {
   TableBody,
   Paper,
   LinearProgress,
-  Box,
   TableCell,
   TableRow,
   Checkbox,
@@ -17,10 +16,6 @@ import {
   Tooltip,
 } from '@material-ui/core';
 
-import IconPowerSettings from '../Icon/IconPowerSettings';
-import IconPowerSettingsDisable from '../Icon/IconPowerSettingsDisable';
-import IconDelete from '../Icon/IconDelete';
-import IconLibraryAdd from '../Icon/IconLibraryAdd';
 import ListingHeader, { useCellStyles } from './Header';
 import ListingRow from './Row';
 import TABLE_COLUMN_TYPES from './ColumnTypes';
@@ -88,18 +83,11 @@ interface Props {
   columnConfiguration;
   emptyDataMessage?: string;
   rowColorConditions?;
-  labelDelete?: string;
   labelDisplayedRows?: (fromToCount) => string;
-  labelDuplicate?: string;
-  labelEnableDisable?: string;
   labelRowsPerPage?: string;
   limit?: number;
   loading?: boolean;
   loadingDataMessage?: string;
-  onDelete?: (rows) => void;
-  onDisable?: (rows) => void;
-  onDuplicate?: (rows) => void;
-  onEnable?: (rows) => void;
   onPaginate?: (event, value) => void;
   onPaginationLimitChanged?: (event) => void;
   onRowClick?: (row) => void;
@@ -125,17 +113,10 @@ const Listing = ({
   disableRowCheckCondition = (): boolean => false,
   emptyDataMessage = 'No results found',
   rowColorConditions = [],
-  labelDelete = 'Delete',
   labelDisplayedRows = ({ from, to, count }): string =>
     `${from}-${to} of ${count}`,
-  labelDuplicate = 'Duplicate',
-  labelEnableDisable = 'Enable / Disable',
   labelRowsPerPage = 'Rows per page',
   loading = false,
-  onEnable = (): void => undefined,
-  onDelete = (): void => undefined,
-  onDisable = (): void => undefined,
-  onDuplicate = (): void => undefined,
   onPaginate = (): void => undefined,
   onPaginationLimitChanged = (): void => undefined,
   onRowClick = (): void => undefined,
@@ -229,9 +210,10 @@ const Listing = ({
           getColSpan,
         } = column;
 
-        const isTruncated = getTruncateCondition(isRowSelected);
+        const isTruncated = getTruncateCondition?.(isRowSelected);
+        const colSpan = getColSpan?.(isRowSelected);
+
         const formattedString = getFormattedString(row) || '';
-        const colSpan = getColSpan(isRowSelected);
 
         return (
           <BodyTableCell
@@ -255,88 +237,6 @@ const Listing = ({
           </BodyTableCell>
         );
       },
-      [TABLE_COLUMN_TYPES.toggler]: (): JSX.Element => (
-        <BodyTableCell
-          align="left"
-          key={column.id}
-          className={cellClasses.cell}
-        >
-          {row[column.id] ? (
-            <Tooltip
-              label={labelEnableDisable}
-              onClick={(e): void => {
-                e.preventDefault();
-                e.stopPropagation();
-                onDisable([row]);
-              }}
-            >
-              <IconPowerSettings />
-            </Tooltip>
-          ) : (
-            <Tooltip
-              label={labelEnableDisable}
-              onClick={(e): void => {
-                e.preventDefault();
-                e.stopPropagation();
-                onEnable([row]);
-              }}
-            >
-              <IconPowerSettingsDisable />
-            </Tooltip>
-          )}
-        </BodyTableCell>
-      ),
-      [TABLE_COLUMN_TYPES.hoverActions]: (): JSX.Element => (
-        <BodyTableCell
-          align="right"
-          key={column.id}
-          style={{
-            width: 90,
-            position: 'relative',
-          }}
-          className={cellClasses.cell}
-        >
-          {hoveredRowId === row.id ? (
-            <Box
-              flexDirection="row"
-              display="flex"
-              style={{
-                marginRight: -4,
-                position: 'absolute',
-                top: 3,
-                right: 0,
-              }}
-            >
-              <Box>
-                <Tooltip
-                  label={labelDelete}
-                  onClick={(e): void => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    onDelete([row]);
-                  }}
-                >
-                  <IconDelete />
-                </Tooltip>
-              </Box>
-              <Box>
-                <Tooltip
-                  label={labelDuplicate}
-                  onClick={(e): void => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    onDuplicate([row]);
-                  }}
-                >
-                  <IconLibraryAdd />
-                </Tooltip>
-              </Box>
-            </Box>
-          ) : (
-            ' '
-          )}
-        </BodyTableCell>
-      ),
       [TABLE_COLUMN_TYPES.component]: (): JSX.Element | null => {
         const { Component, getHiddenCondition, width, clickable } = column;
 
