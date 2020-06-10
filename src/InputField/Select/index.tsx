@@ -37,6 +37,7 @@ type Props = {
   label?: string;
   error?: string;
   compact?: boolean;
+  ariaLabel?: string;
 } & Omit<SelectProps, 'error'>;
 
 const SelectField = ({
@@ -46,6 +47,7 @@ const SelectField = ({
   label,
   error,
   fullWidth,
+  ariaLabel,
   compact = false,
   ...props
 }: Props): JSX.Element => {
@@ -61,6 +63,7 @@ const SelectField = ({
       {label && <InputLabel>{label}</InputLabel>}
       <Select
         inputProps={{
+          'aria-label': ariaLabel,
           className: clsx({
             [classes.noLabelInput]: !label && !compact,
             [classes.compact]: compact,

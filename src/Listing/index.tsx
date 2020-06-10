@@ -18,7 +18,7 @@ import {
 
 import ListingHeader, { useCellStyles } from './Header';
 import ListingRow from './Row';
-import TABLE_COLUMN_TYPES from './ColumnTypes';
+import { ColumnType } from './models';
 import PaginationActions from './PaginationActions';
 import StyledPagination from './Pagination';
 import ListingLoadingSkeleton from './Skeleton';
@@ -76,7 +76,7 @@ const cumulativeOffset = (element): number => {
   return cumulativeOffset(element.offsetParent) + element.offsetTop;
 };
 
-interface Props {
+export interface Props {
   checkable?: boolean;
   disableRowCheckCondition?;
   currentPage?;
@@ -101,6 +101,7 @@ interface Props {
   totalRows?;
   Actions?: JSX.Element;
   innerScrollDisabled?: boolean;
+  expanded?: boolean;
 }
 
 const Listing = ({
@@ -202,7 +203,7 @@ const Listing = ({
     const isRowSelected = isSelected(row);
 
     const cellByColumnType = {
-      [TABLE_COLUMN_TYPES.string]: (): JSX.Element => {
+      [ColumnType.string]: (): JSX.Element => {
         const {
           getFormattedString,
           width,
@@ -237,7 +238,7 @@ const Listing = ({
           </BodyTableCell>
         );
       },
-      [TABLE_COLUMN_TYPES.component]: (): JSX.Element | null => {
+      [ColumnType.component]: (): JSX.Element | null => {
         const { Component, getHiddenCondition, width, clickable } = column;
 
         const isCellHidden = getHiddenCondition?.(isRowSelected);

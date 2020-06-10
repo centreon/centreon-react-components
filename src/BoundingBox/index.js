@@ -8,8 +8,7 @@
 /* eslint-disable react/require-default-props */
 /* eslint-disable no-unused-vars */
 
-import React, { Component, Children } from 'react';
-import { findDOMNode } from 'react-dom';
+import { Component, Children } from 'react';
 import PropTypes from 'prop-types';
 import { normalize } from './helpers';
 
@@ -23,58 +22,8 @@ export default class BoundingBox extends Component {
     children: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
   };
 
-  componentDidMount() {
-    this.node = findDOMNode(this);
-
-    if (!this.node) {
-      return;
-    }
-
-    const rect = normalize(
-      this.roundRectDown(this.node.getBoundingClientRect()),
-    );
-
-    const isHidden = rect.height === 0 && rect.width === 0;
-
-    if (this.props.active && !isHidden) {
-      this.startWatching();
-    }
-  }
-
-  componentWillUnmount() {
-    this.stopWatching();
-  }
-
-  componentDidUpdate(prevProps) {
-    this.node = findDOMNode(this);
-
-    if (this.props.active && !prevProps.active) {
-      this.setState({
-        isInViewport: null,
-      });
-
-      this.startWatching();
-    } else if (!this.props.active) {
-      this.stopWatching();
-    }
-  }
-
   getContainer = () => {
     return window;
-  };
-
-  startWatching = () => {
-    if (this.interval) {
-      return;
-    }
-
-    this.interval = setInterval(this.isIn, 0);
-  };
-
-  stopWatching = () => {
-    if (this.interval) {
-      this.interval = clearInterval(this.interval);
-    }
   };
 
   roundRectDown(rect) {
