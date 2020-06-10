@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
     gridTemplateRows: 'auto 1fr',
     backgroundColor: theme.palette.background.default,
     overflowY: 'hidden',
+    height: '100%',
   },
   pageBody: {
     display: 'grid',
