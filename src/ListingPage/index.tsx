@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { makeStyles } from '@material-ui/core';
 import Filters, { FiltersProps } from './Filters';
-import SlidePanel, { SlidePanelProps } from './SlidePanel';
+import SlidePanel from './SlidePanel';
 
 const useStyles = makeStyles((theme) => ({
   page: {
@@ -25,17 +25,19 @@ const useStyles = makeStyles((theme) => ({
 
 interface Props {
   listing: React.ReactElement;
+  slidePanelOpen: boolean;
+  slidePanel?: React.ReactElement;
 }
 
 const ListingPage = ({
-  openSlidePanel,
+  slidePanelOpen,
   listing,
   filtersExpandable,
   labelFiltersIcon,
   filters,
   expandableFilters,
   slidePanel,
-}: Props & FiltersProps & SlidePanelProps): JSX.Element => {
+}: Props & FiltersProps): JSX.Element => {
   const classes = useStyles();
 
   return (
@@ -47,8 +49,8 @@ const ListingPage = ({
         expandableFilters={expandableFilters}
       />
       <div className={classes.pageBody}>
-        {openSlidePanel && (
-          <SlidePanel openSlidePanel={openSlidePanel} slidePanel={slidePanel} />
+        {slidePanelOpen && (
+          <SlidePanel open={slidePanelOpen} slidePanel={slidePanel} />
         )}
         <div className={classes.listing}>{listing}</div>
       </div>

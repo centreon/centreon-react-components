@@ -16,21 +16,18 @@ const useStyles = makeStyles({
   },
 });
 
-export interface SlidePanelProps {
-  openSlidePanel: boolean;
+interface SlidePanelProps {
+  open: boolean;
   slidePanel?: React.ReactElement;
 }
 
-const SlidePanel = ({
-  openSlidePanel,
-  slidePanel,
-}: SlidePanelProps): JSX.Element => {
+const SlidePanel = ({ open, slidePanel }: SlidePanelProps): JSX.Element => {
   const classes = useStyles();
 
   return (
     <Slide
       direction="left"
-      in={equals(openSlidePanel, true)}
+      in={equals(open, true)}
       timeout={{
         enter: 150,
         exit: 50,

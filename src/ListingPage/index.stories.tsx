@@ -176,7 +176,7 @@ const DetailsPanel = (): JSX.Element => {
 
 export const normal = (): JSX.Element => (
   <ListingPage
-    openSlidePanel={false}
+    slidePanelOpen={false}
     listing={listing}
     filtersExpandable={false}
     filters={<FiltersSummary />}
@@ -185,7 +185,7 @@ export const normal = (): JSX.Element => (
 
 export const normalWithOpenedPanel = (): JSX.Element => (
   <ListingPage
-    openSlidePanel
+    slidePanelOpen
     listing={listing}
     filtersExpandable={false}
     filters={<FiltersSummary />}
@@ -195,7 +195,7 @@ export const normalWithOpenedPanel = (): JSX.Element => (
 
 export const normalWithFiltersDetails = (): JSX.Element => (
   <ListingPage
-    openSlidePanel={false}
+    slidePanelOpen={false}
     listing={listing}
     filtersExpandable
     filters={<FiltersSummary />}
