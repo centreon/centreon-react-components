@@ -1,18 +1,16 @@
 /* eslint-disable react/static-property-placement */
 /* eslint-disable class-methods-use-this */
-/* eslint-disable react/no-did-update-set-state */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/sort-comp */
-/* eslint-disable react/no-find-dom-node */
 /* eslint-disable react/require-default-props */
-/* eslint-disable no-unused-vars */
 
-import { Component, Children } from 'react';
+import * as React from 'react';
+
 import PropTypes from 'prop-types';
 import { normalize } from './helpers';
 
-export default class BoundingBox extends Component {
+export default class BoundingBox extends React.Component {
   state = {
     isInViewport: null,
   };
@@ -90,6 +88,6 @@ export default class BoundingBox extends Component {
         rectBox: this.state.rectBox,
       });
     }
-    return Children.only(this.props.children);
+    return React.Children.only(this.props.children);
   }
 }
