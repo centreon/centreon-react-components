@@ -5,7 +5,7 @@ import { grey } from '@material-ui/core/colors';
 
 import ListingPage from '.';
 import Listing from '../Listing';
-import ColumnTypes from '../Listing/ColumnTypes';
+import { ColumnType } from '../Listing/models';
 import { SearchField } from '..';
 import TextField from '../InputField/Text';
 import AutocompleteField from '../InputField/Select/Autocomplete';
@@ -58,20 +58,19 @@ const configuration = [
   {
     id: 'name',
     label: 'Name',
-    type: ColumnTypes.string,
+    type: ColumnType.string,
     getFormattedString: ({ name }): string => name,
   },
-  { id: 'active', label: 'Active', type: ColumnTypes.toggler },
   {
     id: 'description',
     label: 'Description',
-    type: ColumnTypes.string,
+    type: ColumnType.string,
     getFormattedString: ({ description }): string => description,
   },
   {
     id: 'alias',
     label: 'Alias',
-    type: ColumnTypes.string,
+    type: ColumnType.string,
     getFormattedString: ({ alias }): string => alias,
   },
 ];
@@ -83,7 +82,6 @@ const elements = [...fifteenElements].map((_, index) => ({
   name: `E${index}`,
   description: `Entity ${index}`,
   alias: `Alias ${index}`,
-  active: index % 2 === 0,
 }));
 
 const rowColorConditions = [
