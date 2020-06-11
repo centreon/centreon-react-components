@@ -231,9 +231,8 @@ export const normalWithOpenedPanel = (): JSX.Element => (
   <ListingPage
     slidePanelOpen
     listing={listing}
-    filtersExpandable
+    filtersExpandable={false}
     filters={<FiltersSummary />}
-    expandableFilters={<FiltersDetails />}
     slidePanel={<DetailsPanel />}
   />
 );
