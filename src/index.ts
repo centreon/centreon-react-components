@@ -42,6 +42,8 @@ export { default as Subtitle } from './Subtitle';
 export { default as Listing } from './Listing';
 export { RowColorCondition } from './Listing/Row';
 
+export { default as ListingPage } from './ListingPage';
+
 export { default as Title } from './Title';
 export { default as Wrapper } from './Wrapper';
 export { default as TopFilters } from './TopFilters';
