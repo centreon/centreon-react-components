@@ -49,7 +49,7 @@ export interface FiltersProps {
   labelFiltersIcon?: string;
   filters: React.ReactElement;
   expandableFilters?: React.ReactElement;
-  expandTransitionFinished?: (expanded: boolean) => void;
+  expandTransitionFinished?: () => void;
 }
 
 const Filters = ({
@@ -69,7 +69,7 @@ const Filters = ({
       <ExpansionPanel
         square
         expanded={!filtersExpandable ? false : expanded}
-        onTransitionEnd={() => expandTransitionFinished?.(expanded)}
+        onTransitionEnd={() => expandTransitionFinished?.()}
       >
         <ExpansionPanelSummary
           expandIcon={

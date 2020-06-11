@@ -8,11 +8,12 @@ const useStyles = makeStyles({
   rightPanel: {
     gridArea: '1 / 2',
     zIndex: 3,
+    overflowY: 'auto',
   },
   paperPanel: {
-    height: '100%',
     display: 'grid',
     gridTemplate: 'auto auto 1fr / 1fr',
+    minHeight: '100%',
   },
 });
 

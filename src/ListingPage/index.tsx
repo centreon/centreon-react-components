@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'grid',
     gridTemplateRows: '1fr',
     gridTemplateColumns: '1fr 550px',
-    marginBottom: theme.spacing(2),
   },
   listing: {
     marginLeft: theme.spacing(2),
@@ -49,13 +48,17 @@ const ListingPage = ({
   expandableFilters,
   slidePanel,
 }: Props & FiltersProps): JSX.Element => {
-  const [_, setExpanded] = React.useState(false);
   const classes = useStyles();
   const pageBody = React.useRef<HTMLDivElement>();
+  const [height, setHeight] = React.useState<string>('100%');
+
+  React.useEffect(() => {
+    setHeight(pageBodyHeight());
+  }, [pageBody.current]);
 
   const pageBodyHeight = (): string => {
     return pageBody.current
-      ? `calc(100vh - ${cumulativeOffset(pageBody.current)}px - 50px)`
+      ? `calc(100vh - ${cumulativeOffset(pageBody.current)}px - 30px)`
       : '100%';
   };
 
@@ -66,15 +69,15 @@ const ListingPage = ({
         labelFiltersIcon={labelFiltersIcon}
         filters={filters}
         expandableFilters={expandableFilters}
-        expandTransitionFinished={(filterExpanded) => {
-          setExpanded(filterExpanded);
+        expandTransitionFinished={() => {
+          setHeight(pageBodyHeight());
         }}
       />
       <div
         className={classes.pageBody}
         ref={pageBody as React.RefObject<HTMLDivElement>}
         style={{
-          height: pageBodyHeight(),
+          height,
         }}
       >
         {slidePanelOpen && (

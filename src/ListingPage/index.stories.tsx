@@ -170,6 +170,50 @@ const DetailsPanel = (): JSX.Element => {
           <Typography>Comment</Typography>
         </Paper>
       </div>
+      <div className={classes.detailsContent}>
+        <Paper className={classes.title}>
+          <Typography>My Title</Typography>
+        </Paper>
+        <Paper className={classes.description}>
+          <Typography>Description</Typography>
+        </Paper>
+        <Paper className={classes.comment}>
+          <Typography>Comment</Typography>
+        </Paper>
+      </div>
+      <div className={classes.detailsContent}>
+        <Paper className={classes.title}>
+          <Typography>My Title</Typography>
+        </Paper>
+        <Paper className={classes.description}>
+          <Typography>Description</Typography>
+        </Paper>
+        <Paper className={classes.comment}>
+          <Typography>Comment</Typography>
+        </Paper>
+      </div>
+      <div className={classes.detailsContent}>
+        <Paper className={classes.title}>
+          <Typography>My Title</Typography>
+        </Paper>
+        <Paper className={classes.description}>
+          <Typography>Description</Typography>
+        </Paper>
+        <Paper className={classes.comment}>
+          <Typography>Comment</Typography>
+        </Paper>
+      </div>
+      <div className={classes.detailsContent}>
+        <Paper className={classes.title}>
+          <Typography>My Title</Typography>
+        </Paper>
+        <Paper className={classes.description}>
+          <Typography>Description</Typography>
+        </Paper>
+        <Paper className={classes.comment}>
+          <Typography>Comment</Typography>
+        </Paper>
+      </div>
     </div>
   );
 };
@@ -187,8 +231,9 @@ export const normalWithOpenedPanel = (): JSX.Element => (
   <ListingPage
     slidePanelOpen
     listing={listing}
-    filtersExpandable={false}
+    filtersExpandable
     filters={<FiltersSummary />}
+    expandableFilters={<FiltersDetails />}
     slidePanel={<DetailsPanel />}
   />
 );
