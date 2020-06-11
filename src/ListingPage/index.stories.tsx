@@ -82,6 +82,7 @@ const elements = [...fifteenElements].map((_, index) => ({
   name: `E${index}`,
   description: `Entity ${index}`,
   alias: `Alias ${index}`,
+  active: index % 2 === 0,
 }));
 
 const rowColorConditions = [
@@ -101,9 +102,7 @@ const options = [
 const listing = (
   <Listing
     columnConfiguration={configuration}
-    onDelete={noOp}
     onSort={noOp}
-    onDuplicate={noOp}
     onPaginate={noOp}
     onPaginationLimitChanged={noOp}
     limit={elements.length}
