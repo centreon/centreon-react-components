@@ -76,7 +76,7 @@ const configuration = [
   },
 ];
 
-const fifteenElements = new Array(15).fill(0);
+const fifteenElements = new Array(25).fill(0);
 
 const elements = [...fifteenElements].map((_, index) => ({
   id: index,

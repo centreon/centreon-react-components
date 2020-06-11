@@ -49,6 +49,7 @@ export interface FiltersProps {
   labelFiltersIcon?: string;
   filters: React.ReactElement;
   expandableFilters?: React.ReactElement;
+  expandTransitionFinished?: (expanded: boolean) => void;
 }
 
 const Filters = ({
@@ -56,6 +57,7 @@ const Filters = ({
   labelFiltersIcon,
   filters,
   expandableFilters,
+  expandTransitionFinished,
 }: FiltersProps): JSX.Element => {
   const [expanded, setExpanded] = React.useState(false);
   const classes = useStyles();
@@ -64,7 +66,11 @@ const Filters = ({
 
   return (
     <div className={classes.filters}>
-      <ExpansionPanel square expanded={!filtersExpandable ? false : expanded}>
+      <ExpansionPanel
+        square
+        expanded={!filtersExpandable ? false : expanded}
+        onTransitionEnd={() => expandTransitionFinished?.(expanded)}
+      >
         <ExpansionPanelSummary
           expandIcon={
             filtersExpandable && (

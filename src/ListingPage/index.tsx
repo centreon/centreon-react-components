@@ -16,11 +16,13 @@ const useStyles = makeStyles((theme) => ({
     display: 'grid',
     gridTemplateRows: '1fr',
     gridTemplateColumns: '1fr 550px',
+    marginBottom: theme.spacing(2),
   },
   listing: {
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
     gridArea: '1 / 1 / 1 / span 2',
+    height: '100%',
   },
 }));
 
@@ -29,6 +31,14 @@ interface Props {
   slidePanelOpen: boolean;
   slidePanel?: React.ReactElement;
 }
+
+const cumulativeOffset = (element): number => {
+  if (!element || !element.offsetParent) {
+    return 0;
+  }
+
+  return cumulativeOffset(element.offsetParent) + element.offsetTop;
+};
 
 const ListingPage = ({
   slidePanelOpen,
@@ -39,7 +49,15 @@ const ListingPage = ({
   expandableFilters,
   slidePanel,
 }: Props & FiltersProps): JSX.Element => {
+  const [_, setExpanded] = React.useState(false);
   const classes = useStyles();
+  const pageBody = React.useRef<HTMLDivElement>();
+
+  const pageBodyHeight = (): string => {
+    return pageBody.current
+      ? `calc(100vh - ${cumulativeOffset(pageBody.current)}px - 50px)`
+      : '100%';
+  };
 
   return (
     <div className={classes.page}>
@@ -48,8 +66,17 @@ const ListingPage = ({
         labelFiltersIcon={labelFiltersIcon}
         filters={filters}
         expandableFilters={expandableFilters}
+        expandTransitionFinished={(filterExpanded) => {
+          setExpanded(filterExpanded);
+        }}
       />
-      <div className={classes.pageBody}>
+      <div
+        className={classes.pageBody}
+        ref={pageBody as React.RefObject<HTMLDivElement>}
+        style={{
+          height: pageBodyHeight(),
+        }}
+      >
         {slidePanelOpen && (
           <SlidePanel open={slidePanelOpen} slidePanel={slidePanel} />
         )}

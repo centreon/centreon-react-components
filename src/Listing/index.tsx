@@ -144,17 +144,17 @@ const Listing = ({
   const [tableTopOffset, setTableTopOffset] = useState(0);
   const [hoveredRowId, setHoveredRowId] = useState(null);
 
-  const tableBody = useRef<HTMLTableSectionElement>();
+  const paper = useRef<HTMLTableSectionElement>();
 
   const classes = useStyles();
   const cellClasses = useCellStyles(checkable);
 
   useEffect(() => {
     const ro = new ResizeObserver(() => {
-      setTableTopOffset(cumulativeOffset(tableBody.current));
+      setTableTopOffset(cumulativeOffset(paper.current));
     });
 
-    ro.observe(tableBody.current as Element);
+    ro.observe(paper.current as Element);
   }, []);
 
   const selectedRowsInclude = (row): boolean => {
@@ -353,9 +353,9 @@ const Listing = ({
   const emptyRows = limit - Math.min(limit, totalRows - currentPage * limit);
 
   const tableMaxHeight = (): string => {
-    return innerScrollDisabled
-      ? '100%'
-      : `calc(100vh - ${tableTopOffset}px - 25px)`;
+    return !innerScrollDisabled
+      ? `calc(100vh - ${tableTopOffset}px - 100px)`
+      : '100%';
   };
 
   return (
@@ -366,7 +366,7 @@ const Listing = ({
       {(!loading || (loading && tableData.length < 1)) && (
         <div className={classes.loadingIndicator} />
       )}
-      <div className={classes.paper}>
+      <div className={classes.paper} ref={paper as RefObject<HTMLDivElement>}>
         <div className={classes.actionBar}>
           <div className={classes.actions}>{Actions}</div>
           {paginated ? (
@@ -409,7 +409,6 @@ const Listing = ({
             />
 
             <TableBody
-              ref={tableBody as RefObject<HTMLTableSectionElement>}
               onMouseLeave={clearHoveredRow}
               style={{
                 position: 'relative',
