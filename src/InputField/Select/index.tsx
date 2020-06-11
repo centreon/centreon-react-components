@@ -48,6 +48,7 @@ const SelectField = ({
   error,
   fullWidth,
   ariaLabel,
+  inputProps,
   compact = false,
   ...props
 }: Props): JSX.Element => {
@@ -68,6 +69,7 @@ const SelectField = ({
             [classes.noLabelInput]: !label && !compact,
             [classes.compact]: compact,
           }),
+          ...inputProps,
         }}
         value={selectedOptionId}
         onChange={onChange}
