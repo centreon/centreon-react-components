@@ -74,6 +74,8 @@ const cumulativeOffset = (element): number => {
   return cumulativeOffset(element.offsetParent) + element.offsetTop;
 };
 
+const heightOffset = '100px';
+
 interface Props {
   checkable?: boolean;
   disableRowCheckCondition?;
@@ -353,9 +355,11 @@ const Listing = ({
   const emptyRows = limit - Math.min(limit, totalRows - currentPage * limit);
 
   const tableMaxHeight = (): string => {
-    return !innerScrollDisabled
-      ? `calc(100vh - ${tableTopOffset}px - 100px)`
-      : '100%';
+    if (innerScrollDisabled) {
+      return '100%';
+    }
+
+    return `calc(100vh - ${tableTopOffset}px - ${heightOffset})`;
   };
 
   return (

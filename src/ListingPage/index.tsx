@@ -39,6 +39,8 @@ const cumulativeOffset = (element): number => {
   return cumulativeOffset(element.offsetParent) + element.offsetTop;
 };
 
+const heightOffset = '30px';
+
 const ListingPage = ({
   slidePanelOpen,
   listing,
@@ -58,7 +60,9 @@ const ListingPage = ({
 
   const pageBodyHeight = (): string => {
     return pageBody.current
-      ? `calc(100vh - ${cumulativeOffset(pageBody.current)}px - 30px)`
+      ? `calc(100vh - ${cumulativeOffset(
+          pageBody.current,
+        )}px - ${heightOffset})`
       : '100%';
   };
 
