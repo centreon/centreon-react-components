@@ -36,7 +36,7 @@ const BodyTableCell = withStyles((theme) => ({
 }))(TableCell);
 
 const useStyles = makeStyles<Theme>((theme) => ({
-  paper: {
+  paperElement: {
     width: '100%',
     height: '100%',
     display: 'flex',
@@ -50,7 +50,7 @@ const useStyles = makeStyles<Theme>((theme) => ({
   actions: {
     padding: theme.spacing(1),
   },
-  pagination: {
+  paginationElement: {
     marginLeft: 'auto',
     display: 'flex',
     flexDirection: 'row-reverse',
@@ -75,8 +75,6 @@ const cumulativeOffset = (element): number => {
 
   return cumulativeOffset(element.offsetParent) + element.offsetTop;
 };
-
-const heightOffset = '100px';
 
 export interface Props {
   checkable?: boolean;
@@ -135,17 +133,19 @@ const Listing = ({
   const [tableTopOffset, setTableTopOffset] = useState(0);
   const [hoveredRowId, setHoveredRowId] = useState(null);
 
-  const paper = useRef<HTMLTableSectionElement>();
+  const paperElement = useRef<HTMLDivElement>();
+  const paginationElement = useRef<HTMLDivElement>();
+  const tableHeaderElement = useRef<HTMLTableSectionElement>();
 
   const classes = useStyles();
   const cellClasses = useCellStyles(checkable);
 
   useEffect(() => {
     const ro = new ResizeObserver(() => {
-      setTableTopOffset(cumulativeOffset(paper.current));
+      setTableTopOffset(cumulativeOffset(paperElement.current));
     });
 
-    ro.observe(paper.current as Element);
+    ro.observe(paperElement.current as Element);
   }, []);
 
   const selectedRowsInclude = (row): boolean => {
@@ -283,7 +283,7 @@ const Listing = ({
       return '100%';
     }
 
-    return `calc(100vh - ${tableTopOffset}px - ${heightOffset})`;
+    return `calc(100vh - ${tableTopOffset}px - ${paginationElement.current?.clientHeight}px - ${tableHeaderElement.current?.clientHeight}px)`;
   };
 
   return (
@@ -294,12 +294,18 @@ const Listing = ({
       {(!loading || (loading && tableData.length < 1)) && (
         <div className={classes.loadingIndicator} />
       )}
-      <div className={classes.paper} ref={paper as RefObject<HTMLDivElement>}>
-        <div className={classes.actionBar}>
+      <div
+        className={classes.paperElement}
+        ref={paperElement as RefObject<HTMLDivElement>}
+      >
+        <div
+          className={classes.actionBar}
+          ref={paginationElement as RefObject<HTMLDivElement>}
+        >
           <div className={classes.actions}>{Actions}</div>
           {paginated ? (
             <StyledPagination
-              className={classes.pagination}
+              className={classes.paginationElement}
               rowsPerPageOptions={[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
               labelDisplayedRows={labelDisplayedRows}
               labelRowsPerPage={labelRowsPerPage}
@@ -334,6 +340,7 @@ const Listing = ({
               onRequestSort={handleRequestSort}
               rowCount={limit - emptyRows}
               headColumns={columnConfiguration}
+              ref={tableHeaderElement as RefObject<HTMLTableSectionElement>}
             />
 
             <TableBody
