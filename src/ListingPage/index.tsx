@@ -73,7 +73,7 @@ const ListingPage = ({
         labelFiltersIcon={labelFiltersIcon}
         filters={filters}
         expandableFilters={expandableFilters}
-        expandTransitionFinished={() => {
+        onExpandTransitionFinished={() => {
           setHeight(pageBodyHeight());
         }}
       />
