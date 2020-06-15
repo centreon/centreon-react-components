@@ -68,7 +68,7 @@ const Filters = ({
     <div className={classes.filters}>
       <ExpansionPanel
         square
-        expanded={!filtersExpandable ? false : expanded}
+        expanded={filtersExpandable ? expanded : false}
         onTransitionEnd={() => onExpandTransitionFinished?.()}
       >
         <ExpansionPanelSummary
