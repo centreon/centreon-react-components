@@ -39,8 +39,6 @@ const cumulativeOffset = (element): number => {
   return cumulativeOffset(element.offsetParent) + element.offsetTop;
 };
 
-const heightOffset = '30px';
-
 const ListingPage = ({
   slidePanelOpen,
   listing,
@@ -53,6 +51,7 @@ const ListingPage = ({
   const classes = useStyles();
   const pageBody = React.useRef<HTMLDivElement>();
   const [height, setHeight] = React.useState<string>('100%');
+  const filterSummaryElement = React.useRef<HTMLDivElement>();
 
   React.useEffect(() => {
     setHeight(pageBodyHeight());
@@ -60,9 +59,9 @@ const ListingPage = ({
 
   const pageBodyHeight = (): string => {
     return pageBody.current
-      ? `calc(100vh - ${cumulativeOffset(
-          pageBody.current,
-        )}px - ${heightOffset})`
+      ? `calc(100vh - ${cumulativeOffset(pageBody.current)}px - ${Math.floor(
+          (filterSummaryElement.current?.clientHeight || 0) / 2,
+        )}px)`
       : '100%';
   };
 
@@ -76,6 +75,7 @@ const ListingPage = ({
         onExpandTransitionFinished={() => {
           setHeight(pageBodyHeight());
         }}
+        ref={filterSummaryElement}
       />
       <div
         className={classes.pageBody}

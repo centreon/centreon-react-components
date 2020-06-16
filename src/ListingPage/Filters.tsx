@@ -52,42 +52,48 @@ export interface FiltersProps {
   onExpandTransitionFinished?: () => void;
 }
 
-const Filters = ({
-  filtersExpandable,
-  labelFiltersIcon,
-  filters,
-  expandableFilters,
-  onExpandTransitionFinished,
-}: FiltersProps): JSX.Element => {
-  const [expanded, setExpanded] = React.useState(false);
-  const classes = useStyles();
+const Filters = React.forwardRef(
+  (
+    {
+      filtersExpandable,
+      labelFiltersIcon,
+      filters,
+      expandableFilters,
+      onExpandTransitionFinished,
+    }: FiltersProps,
+    ref,
+  ): JSX.Element => {
+    const [expanded, setExpanded] = React.useState(false);
+    const classes = useStyles();
 
-  const toggleExpanded = () => setExpanded(!expanded);
+    const toggleExpanded = () => setExpanded(!expanded);
 
-  return (
-    <div className={classes.filters}>
-      <ExpansionPanel
-        square
-        expanded={filtersExpandable ? expanded : false}
-        onTransitionEnd={() => onExpandTransitionFinished?.()}
-      >
-        <ExpansionPanelSummary
-          expandIcon={
-            filtersExpandable && (
-              <ExpandMoreIcon color="primary" aria-label={labelFiltersIcon} />
-            )
-          }
-          IconButtonProps={{ onClick: toggleExpanded }}
-          style={{ cursor: 'default' }}
+    return (
+      <div className={classes.filters}>
+        <ExpansionPanel
+          square
+          expanded={filtersExpandable ? expanded : false}
+          onTransitionEnd={() => onExpandTransitionFinished?.()}
         >
-          {filters}
-        </ExpansionPanelSummary>
-        {expandableFilters && (
-          <ExpansionPanelDetails>{expandableFilters}</ExpansionPanelDetails>
-        )}
-      </ExpansionPanel>
-    </div>
-  );
-};
+          <ExpansionPanelSummary
+            expandIcon={
+              filtersExpandable && (
+                <ExpandMoreIcon color="primary" aria-label={labelFiltersIcon} />
+              )
+            }
+            IconButtonProps={{ onClick: toggleExpanded }}
+            style={{ cursor: 'default' }}
+            ref={ref as React.RefObject<HTMLDivElement>}
+          >
+            {filters}
+          </ExpansionPanelSummary>
+          {expandableFilters && (
+            <ExpansionPanelDetails>{expandableFilters}</ExpansionPanelDetails>
+          )}
+        </ExpansionPanel>
+      </div>
+    );
+  },
+);
 
 export default Filters;
