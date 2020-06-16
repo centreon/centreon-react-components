@@ -111,6 +111,7 @@ export {
   SearchInput,
   SearchObject,
   Param,
+  Listing as ListingModel,
 } from './api/buildListingEndpoint/models';
 
 export { default as copyToClipboard } from './utils/copy';
