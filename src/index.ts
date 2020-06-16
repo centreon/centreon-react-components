@@ -1,7 +1,6 @@
 export { default as Button } from './Button';
 export { default as ButtonAction } from './Button/ButtonAction';
 export { default as ButtonActionInput } from './Button/ButtonActionInput';
-export { default as ButtonAdd } from './Button/ButtonAdd';
 export { default as IconButton } from './Button/Icon';
 
 export { default as Card } from './Card';
