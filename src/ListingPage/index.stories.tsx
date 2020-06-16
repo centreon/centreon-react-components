@@ -243,3 +243,14 @@ export const normalWithFiltersDetails = (): JSX.Element => (
     expandableFilters={<FiltersDetails />}
   />
 );
+
+export const normalWithFiltersDetailsAndOpenedPanel = (): JSX.Element => (
+  <ListingPage
+    slidePanelOpen
+    listing={listing}
+    filtersExpandable
+    filters={<FiltersSummary />}
+    expandableFilters={<FiltersDetails />}
+    slidePanel={<DetailsPanel />}
+  />
+);
