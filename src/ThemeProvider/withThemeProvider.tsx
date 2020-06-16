@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { ThemeProvider } from '..';
+import ThemeProvider from '.';
 
 const withThemeProvider = <TProps extends Record<string, string>>(
   Component: (props) => JSX.Element,
