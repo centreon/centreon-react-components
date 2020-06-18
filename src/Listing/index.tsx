@@ -141,11 +141,17 @@ const Listing = ({
   const cellClasses = useCellStyles(checkable);
 
   useEffect(() => {
+    let active = true;
     const ro = new ResizeObserver(() => {
-      setTableTopOffset(cumulativeOffset(paperElement.current));
+      if (active) {
+        setTableTopOffset(cumulativeOffset(paperElement.current));
+      }
     });
 
     ro.observe(paperElement.current as Element);
+    return () => {
+      active = false;
+    };
   }, []);
 
   const selectedRowsInclude = (row): boolean => {
