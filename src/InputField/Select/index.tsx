@@ -78,7 +78,11 @@ const SelectField = ({
         {...props}
       >
         {options.map(({ id, name, color }) => (
-          <MenuItem key={id} value={id} style={{ backgroundColor: color }}>
+          <MenuItem
+            key={`${id}-${name}`}
+            value={id}
+            style={{ backgroundColor: color }}
+          >
             {name}
           </MenuItem>
         ))}
