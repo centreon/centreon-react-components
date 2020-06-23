@@ -153,9 +153,6 @@ const DetailsPanel = (): JSX.Element => {
   const classes = useStyles();
   return (
     <div className={classes.detailsPanel}>
-      <Typography variant="h5" align="center">
-        Details Panel
-      </Typography>
       <div className={classes.detailsContent}>
         <Paper className={classes.title}>
           <Typography>My Title</Typography>
@@ -215,6 +212,12 @@ const DetailsPanel = (): JSX.Element => {
   );
 };
 
+const DetailsPanelHeader = (): JSX.Element => (
+  <Typography variant="h5" align="center">
+    Details Panel
+  </Typography>
+);
+
 export const normal = (): JSX.Element => (
   <ListingPage
     slidePanelOpen={false}
@@ -231,6 +234,7 @@ export const normalWithOpenedPanel = (): JSX.Element => (
     filtersExpandable={false}
     filters={<FiltersSummary />}
     slidePanel={<DetailsPanel />}
+    slideHeader={<DetailsPanelHeader />}
   />
 );
 
@@ -252,5 +256,6 @@ export const normalWithFiltersDetailsAndOpenedPanel = (): JSX.Element => (
     filters={<FiltersSummary />}
     expandableFilters={<FiltersDetails />}
     slidePanel={<DetailsPanel />}
+    slideHeader={<DetailsPanelHeader />}
   />
 );

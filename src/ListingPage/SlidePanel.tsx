@@ -12,17 +12,28 @@ const useStyles = makeStyles({
   },
   paperPanel: {
     display: 'grid',
-    gridTemplate: 'auto auto 1fr / 1fr',
-    minHeight: '100%',
+    gridTemplate: 'auto 1fr',
+    height: '100%',
+  },
+  slideContent: {
+    overflowY: 'auto',
+  },
+  slideHeader: {
+    zIndex: 1,
   },
 });
 
 interface SlidePanelProps {
   open: boolean;
   slidePanel?: React.ReactElement;
+  slideHeader?: React.ReactElement;
 }
 
-const SlidePanel = ({ open, slidePanel }: SlidePanelProps): JSX.Element => {
+const SlidePanel = ({
+  open,
+  slidePanel,
+  slideHeader,
+}: SlidePanelProps): JSX.Element => {
   const classes = useStyles();
 
   return (
@@ -36,7 +47,12 @@ const SlidePanel = ({ open, slidePanel }: SlidePanelProps): JSX.Element => {
     >
       <div className={classes.rightPanel}>
         <Paper elevation={5} className={classes.paperPanel}>
-          {slidePanel}
+          {slideHeader && (
+            <Paper elevation={3} className={classes.slideHeader}>
+              {slideHeader}
+            </Paper>
+          )}
+          <div className={classes.slideContent}>{slidePanel}</div>
         </Paper>
       </div>
     </Slide>

@@ -29,6 +29,7 @@ interface Props {
   listing: React.ReactElement;
   slidePanelOpen: boolean;
   slidePanel?: React.ReactElement;
+  slideHeader?: React.ReactElement;
 }
 
 const cumulativeOffset = (element): number => {
@@ -47,6 +48,7 @@ const ListingPage = ({
   filters,
   expandableFilters,
   slidePanel,
+  slideHeader,
 }: Props & FiltersProps): JSX.Element => {
   const classes = useStyles();
   const pageBody = React.useRef<HTMLDivElement>();
@@ -85,7 +87,11 @@ const ListingPage = ({
         }}
       >
         {slidePanelOpen && (
-          <SlidePanel open={slidePanelOpen} slidePanel={slidePanel} />
+          <SlidePanel
+            open={slidePanelOpen}
+            slidePanel={slidePanel}
+            slideHeader={slideHeader}
+          />
         )}
         <div className={classes.listing}>{listing}</div>
       </div>
