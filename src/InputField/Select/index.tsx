@@ -28,6 +28,7 @@ export interface SelectEntry {
   id: number | string;
   name: string;
   color?: string;
+  url?: string;
 }
 
 type Props = {
