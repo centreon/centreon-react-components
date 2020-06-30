@@ -9,6 +9,7 @@ import { ColumnType } from '../Listing/models';
 import { SearchField } from '..';
 import TextField from '../InputField/Text';
 import AutocompleteField from '../InputField/Select/Autocomplete';
+import SlidePanel from './SlidePanel';
 
 export default { title: 'Listing Page' };
 
@@ -149,7 +150,7 @@ const FiltersDetails = (): JSX.Element => {
   );
 };
 
-const DetailsPanel = (): JSX.Element => {
+const DetailsPanelContent = (): JSX.Element => {
   const classes = useStyles();
   return (
     <div className={classes.detailsPanel}>
@@ -218,29 +219,45 @@ const DetailsPanelHeader = (): JSX.Element => (
   </Typography>
 );
 
+const DetailsPanel = (): JSX.Element => (
+  <SlidePanel
+    header={<DetailsPanelHeader />}
+    content={<DetailsPanelContent />}
+  />
+);
+
 export const normal = (): JSX.Element => (
   <ListingPage
-    slidePanelOpen={false}
+    openSlidePanel={false}
     listing={listing}
     filtersExpandable={false}
     filters={<FiltersSummary />}
   />
 );
 
-export const normalWithOpenedPanel = (): JSX.Element => (
-  <ListingPage
-    slidePanelOpen
-    listing={listing}
-    filtersExpandable={false}
-    filters={<FiltersSummary />}
-    slidePanel={<DetailsPanel />}
-    slideHeader={<DetailsPanelHeader />}
-  />
-);
+export const normalWithOpenedPanel = (): JSX.Element => {
+  const [open, setOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      setOpen(true);
+    }, 1000);
+  }, []);
+
+  return (
+    <ListingPage
+      openSlidePanel={open}
+      listing={listing}
+      filtersExpandable={false}
+      filters={<FiltersSummary />}
+      slidePanel={<DetailsPanel />}
+    />
+  );
+};
 
 export const normalWithFiltersDetails = (): JSX.Element => (
   <ListingPage
-    slidePanelOpen={false}
+    openSlidePanel={false}
     listing={listing}
     filtersExpandable
     filters={<FiltersSummary />}
@@ -250,12 +267,11 @@ export const normalWithFiltersDetails = (): JSX.Element => (
 
 export const normalWithFiltersDetailsAndOpenedPanel = (): JSX.Element => (
   <ListingPage
-    slidePanelOpen
+    openSlidePanel
     listing={listing}
     filtersExpandable
     filters={<FiltersSummary />}
     expandableFilters={<FiltersDetails />}
     slidePanel={<DetailsPanel />}
-    slideHeader={<DetailsPanelHeader />}
   />
 );

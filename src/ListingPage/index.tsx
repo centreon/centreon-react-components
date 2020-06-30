@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import { makeStyles } from '@material-ui/core';
 import Filters, { FiltersProps } from './Filters';
-import SlidePanel from './SlidePanel';
 
 const useStyles = makeStyles((theme) => ({
   page: {
@@ -27,9 +26,8 @@ const useStyles = makeStyles((theme) => ({
 
 interface Props {
   listing: React.ReactElement;
-  slidePanelOpen: boolean;
   slidePanel?: React.ReactElement;
-  slideHeader?: React.ReactElement;
+  openSlidePanel: boolean;
 }
 
 const cumulativeOffset = (element): number => {
@@ -41,14 +39,13 @@ const cumulativeOffset = (element): number => {
 };
 
 const ListingPage = ({
-  slidePanelOpen,
   listing,
   filtersExpandable,
   labelFiltersIcon,
   filters,
   expandableFilters,
   slidePanel,
-  slideHeader,
+  openSlidePanel,
 }: Props & FiltersProps): JSX.Element => {
   const classes = useStyles();
   const pageBody = React.useRef<HTMLDivElement>();
@@ -86,13 +83,7 @@ const ListingPage = ({
           height,
         }}
       >
-        {slidePanelOpen && (
-          <SlidePanel
-            open={slidePanelOpen}
-            slidePanel={slidePanel}
-            slideHeader={slideHeader}
-          />
-        )}
+        {openSlidePanel && slidePanel}
         <div className={classes.listing}>{listing}</div>
       </div>
     </div>

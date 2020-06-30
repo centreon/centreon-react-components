@@ -1,8 +1,6 @@
 import * as React from 'react';
 
-import { equals } from 'ramda';
-
-import { makeStyles, Slide, Paper } from '@material-ui/core';
+import { makeStyles, Paper, Slide } from '@material-ui/core';
 
 const useStyles = makeStyles({
   rightPanel: {
@@ -24,22 +22,17 @@ const useStyles = makeStyles({
 });
 
 interface SlidePanelProps {
-  open: boolean;
-  slidePanel?: React.ReactElement;
-  slideHeader?: React.ReactElement;
+  header: React.ReactElement;
+  content: React.ReactElement;
 }
 
-const SlidePanel = ({
-  open,
-  slidePanel,
-  slideHeader,
-}: SlidePanelProps): JSX.Element => {
+const SlidePanel = ({ header, content }: SlidePanelProps): JSX.Element => {
   const classes = useStyles();
 
   return (
     <Slide
       direction="left"
-      in={equals(open, true)}
+      in
       timeout={{
         enter: 150,
         exit: 50,
@@ -47,12 +40,12 @@ const SlidePanel = ({
     >
       <div className={classes.rightPanel}>
         <Paper elevation={5} className={classes.paperPanel}>
-          {slideHeader && (
+          {header && (
             <Paper elevation={3} className={classes.slideHeader}>
-              {slideHeader}
+              {header}
             </Paper>
           )}
-          <div className={classes.slideContent}>{slidePanel}</div>
+          <div className={classes.slideContent}>{content}</div>
         </Paper>
       </div>
     </Slide>
