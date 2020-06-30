@@ -235,25 +235,15 @@ export const normal = (): JSX.Element => (
   />
 );
 
-export const normalWithOpenedPanel = (): JSX.Element => {
-  const [open, setOpen] = React.useState(false);
-
-  React.useEffect(() => {
-    setTimeout(() => {
-      setOpen(true);
-    }, 1000);
-  }, []);
-
-  return (
-    <ListingPage
-      openSlidePanel={open}
-      listing={listing}
-      filtersExpandable={false}
-      filters={<FiltersSummary />}
-      slidePanel={<DetailsPanel />}
-    />
-  );
-};
+export const normalWithOpenedPanel = (): JSX.Element => (
+  <ListingPage
+    openSlidePanel
+    listing={listing}
+    filtersExpandable={false}
+    filters={<FiltersSummary />}
+    slidePanel={<DetailsPanel />}
+  />
+);
 
 export const normalWithFiltersDetails = (): JSX.Element => (
   <ListingPage
