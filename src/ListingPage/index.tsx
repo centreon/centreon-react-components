@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 interface Props {
   listing: React.ReactElement;
   slidePanel?: React.ReactElement;
-  openSlidePanel: boolean;
+  slidePanelOpen: boolean;
 }
 
 const cumulativeOffset = (element): number => {
@@ -45,7 +45,7 @@ const ListingPage = ({
   filters,
   expandableFilters,
   slidePanel,
-  openSlidePanel,
+  slidePanelOpen,
 }: Props & FiltersProps): JSX.Element => {
   const classes = useStyles();
   const pageBody = React.useRef<HTMLDivElement>();
@@ -83,7 +83,7 @@ const ListingPage = ({
           height,
         }}
       >
-        {openSlidePanel && slidePanel}
+        {slidePanelOpen && slidePanel}
         <div className={classes.listing}>{listing}</div>
       </div>
     </div>
