@@ -1,7 +1,7 @@
-import React from 'react';
+import * as React from 'react';
 
 import clsx from 'clsx';
-import { isNil } from 'ramda';
+import { isNil, propEq } from 'ramda';
 
 import {
   Select,
@@ -76,17 +76,23 @@ const SelectField = ({
         onChange={onChange}
         disableUnderline
         fullWidth={fullWidth}
+        displayEmpty
+        renderValue={(id) => {
+          return options.find(propEq('id', id))?.name;
+        }}
         {...props}
       >
-        {options.map(({ id, name, color }) => (
-          <MenuItem
-            key={`${id}-${name}`}
-            value={id}
-            style={{ backgroundColor: color }}
-          >
-            {name}
-          </MenuItem>
-        ))}
+        {options
+          .filter(({ id }) => id !== '')
+          .map(({ id, name, color }) => (
+            <MenuItem
+              key={`${id}-${name}`}
+              value={id}
+              style={{ backgroundColor: color }}
+            >
+              {name}
+            </MenuItem>
+          ))}
       </Select>
       {error && <FormHelperText>{error}</FormHelperText>}
     </FormControl>
