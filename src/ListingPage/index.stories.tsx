@@ -128,7 +128,20 @@ interface Filter {
   onOpen?: () => void;
 }
 
-const FiltersSummary = ({ onOpen = () => undefined }: Filter): JSX.Element => {
+const FiltersSummary = (): JSX.Element => {
+  const classes = useStyles();
+
+  return (
+    <div className={classes.filtersSummary}>
+      <Typography>Filters</Typography>
+      <SearchField />
+    </div>
+  );
+};
+
+const FiltersSummaryWithOpenSlidePanelButton = ({
+  onOpen = () => undefined,
+}: Filter): JSX.Element => {
   const classes = useStyles();
 
   return (
@@ -306,7 +319,9 @@ export const NormalWithFiltersDetailsAndOpenedIntegratedPanel = (): JSX.Element 
       slidePanelOpen={open}
       listing={listing}
       filtersExpandable
-      filters={<FiltersSummary onOpen={() => setOpen(true)} />}
+      filters={
+        <FiltersSummaryWithOpenSlidePanelButton onOpen={() => setOpen(true)} />
+      }
       expandableFilters={<FiltersDetails />}
       slidePanel={<DetailsPanel onClose={() => setOpen(false)} />}
       slidePanelIntegrate
