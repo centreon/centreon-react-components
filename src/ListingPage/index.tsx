@@ -4,7 +4,7 @@ import { makeStyles, Theme } from '@material-ui/core';
 import Filters, { FiltersProps } from './Filters';
 
 const useStyles = (
-  sidePanelIntegrated: boolean,
+  slidePanelIntegrated: boolean,
 ): (() => Record<string, string>) =>
   makeStyles<Theme>((theme) => ({
     page: {
@@ -22,7 +22,7 @@ const useStyles = (
     listing: {
       marginLeft: theme.spacing(2),
       marginRight: theme.spacing(2),
-      gridArea: sidePanelIntegrated ? '1 / 1 / 1 / 1' : '1 / 1 / 1 / span 2',
+      gridArea: slidePanelIntegrated ? '1 / 1 / 1 / 1' : '1 / 1 / 1 / span 2',
       height: '100%',
     },
   }));
