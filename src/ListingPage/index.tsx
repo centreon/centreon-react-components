@@ -1,33 +1,37 @@
 import * as React from 'react';
 
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Theme } from '@material-ui/core';
 import Filters, { FiltersProps } from './Filters';
 
-const useStyles = makeStyles((theme) => ({
-  page: {
-    display: 'grid',
-    gridTemplateRows: 'auto 1fr',
-    backgroundColor: theme.palette.background.default,
-    overflowY: 'hidden',
-    height: '100%',
-  },
-  pageBody: {
-    display: 'grid',
-    gridTemplateRows: '1fr',
-    gridTemplateColumns: '1fr 550px',
-  },
-  listing: {
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
-    gridArea: '1 / 1 / 1 / span 2',
-    height: '100%',
-  },
-}));
+const useStyles = (
+  sidePanelIntegrated: boolean,
+): (() => Record<string, string>) =>
+  makeStyles<Theme>((theme) => ({
+    page: {
+      display: 'grid',
+      gridTemplateRows: 'auto 1fr',
+      backgroundColor: theme.palette.background.default,
+      overflowY: 'hidden',
+      height: '100%',
+    },
+    pageBody: {
+      display: 'grid',
+      gridTemplateRows: '1fr',
+      gridTemplateColumns: '1fr 550px',
+    },
+    listing: {
+      marginLeft: theme.spacing(2),
+      marginRight: theme.spacing(2),
+      gridArea: sidePanelIntegrated ? '1 / 1 / 1 / 1' : '1 / 1 / 1 / span 2',
+      height: '100%',
+    },
+  }));
 
 interface Props {
   listing: React.ReactElement;
   slidePanel?: React.ReactElement;
   slidePanelOpen: boolean;
+  slidePanelIntegrate?: boolean;
 }
 
 const cumulativeOffset = (element): number => {
@@ -46,8 +50,9 @@ const ListingPage = ({
   expandableFilters,
   slidePanel,
   slidePanelOpen,
+  slidePanelIntegrate = false,
 }: Props & FiltersProps): JSX.Element => {
-  const classes = useStyles();
+  const classes = useStyles(slidePanelIntegrate && slidePanelOpen)();
   const pageBody = React.useRef<HTMLDivElement>();
   const [height, setHeight] = React.useState<string>('100%');
   const filterSummaryElement = React.useRef<HTMLDivElement>();

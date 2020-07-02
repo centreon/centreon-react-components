@@ -1,7 +1,8 @@
 import * as React from 'react';
 
-import { Typography, makeStyles, Paper } from '@material-ui/core';
+import { Typography, makeStyles, Paper, Button } from '@material-ui/core';
 import { grey } from '@material-ui/core/colors';
+import CloseIcon from '@material-ui/icons/Close';
 
 import ListingPage from '.';
 import Listing from '../Listing';
@@ -10,6 +11,7 @@ import { SearchField } from '..';
 import TextField from '../InputField/Text';
 import AutocompleteField from '../InputField/Select/Autocomplete';
 import SlidePanel from './SlidePanel';
+import IconButton from '../Button/Icon';
 
 export default { title: 'Listing Page' };
 
@@ -18,7 +20,7 @@ const noOp = (): void => undefined;
 const useStyles = makeStyles((theme) => ({
   filtersSummary: {
     display: 'grid',
-    gridTemplateColumns: 'auto 1fr',
+    gridTemplateColumns: 'auto auto 1fr',
     gridGap: theme.spacing(2),
     alignItems: 'center',
   },
@@ -52,6 +54,14 @@ const useStyles = makeStyles((theme) => ({
   },
   comment: {
     gridArea: 'comment',
+  },
+  detailsPanelHeader: {
+    display: 'grid',
+    gridTemplateColumns: 'auto min-content',
+    gridGap: theme.spacing(2),
+    margin: '0 auto',
+    justifyItems: 'center',
+    width: '95%',
   },
 }));
 
@@ -114,13 +124,18 @@ const listing = (
   />
 );
 
-const FiltersSummary = (): JSX.Element => {
+interface Filter {
+  onOpen?: () => void;
+}
+
+const FiltersSummary = ({ onOpen = () => undefined }: Filter): JSX.Element => {
   const classes = useStyles();
 
   return (
     <div className={classes.filtersSummary}>
       <Typography>Filters</Typography>
       <SearchField />
+      <Button onClick={onOpen}>Open Side Panel</Button>
     </div>
   );
 };
@@ -213,15 +228,33 @@ const DetailsPanelContent = (): JSX.Element => {
   );
 };
 
-const DetailsPanelHeader = (): JSX.Element => (
-  <Typography variant="h5" align="center">
-    Details Panel
-  </Typography>
-);
+interface PanelProps {
+  onClose?: () => void;
+}
 
-const DetailsPanel = (): JSX.Element => (
+interface PanelPropsMandatory {
+  onClose: () => void;
+}
+
+const DetailsPanelHeader = ({ onClose }: PanelPropsMandatory): JSX.Element => {
+  const classes = useStyles();
+  return (
+    <div className={classes.detailsPanelHeader}>
+      <Typography variant="h5" align="center">
+        Details Panel
+      </Typography>
+      <IconButton title="Close" ariaLabel="Close" onClick={onClose}>
+        <CloseIcon />
+      </IconButton>
+    </div>
+  );
+};
+
+const DetailsPanel = ({
+  onClose = () => undefined,
+}: PanelProps): JSX.Element => (
   <SlidePanel
-    header={<DetailsPanelHeader />}
+    header={<DetailsPanelHeader onClose={onClose} />}
     content={<DetailsPanelContent />}
   />
 );
@@ -265,3 +298,18 @@ export const normalWithFiltersDetailsAndOpenedPanel = (): JSX.Element => (
     slidePanel={<DetailsPanel />}
   />
 );
+
+export const NormalWithFiltersDetailsAndOpenedIntegratedPanel = (): JSX.Element => {
+  const [open, setOpen] = React.useState(true);
+  return (
+    <ListingPage
+      slidePanelOpen={open}
+      listing={listing}
+      filtersExpandable
+      filters={<FiltersSummary onOpen={() => setOpen(true)} />}
+      expandableFilters={<FiltersDetails />}
+      slidePanel={<DetailsPanel onClose={() => setOpen(false)} />}
+      slidePanelIntegrate
+    />
+  );
+};
