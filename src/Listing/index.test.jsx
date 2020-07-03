@@ -197,7 +197,7 @@ describe('Table', () => {
     });
   });
 
-  it('resets page number to 0 after selecting a new pagination limit when current page is 4', () => {
+  it('resets the page number to 0 when changing the limit and the current page is different than 0', () => {
     const { container, getByText } = render(<PaginationTable />);
 
     expect(getByText('41-50 of 100'));
