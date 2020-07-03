@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import * as React from 'react';
 
 import { Typography, makeStyles, Paper, Button } from '@material-ui/core';
@@ -312,7 +313,7 @@ export const normalWithFiltersDetailsAndOpenedPanel = (): JSX.Element => (
   />
 );
 
-export const NormalWithFiltersDetailsAndOpenedIntegratedPanel = (): JSX.Element => {
+export const normalWithFiltersDetailsAndOpenedIntegratedPanel = (): JSX.Element => {
   const [open, setOpen] = React.useState(true);
   return (
     <ListingPage
