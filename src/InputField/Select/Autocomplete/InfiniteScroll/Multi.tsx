@@ -1,9 +1,9 @@
-import InfiniteScrollAutocompleteField from '.';
+import InfiniteAutocompleteField from '.';
 import MultiAutocompleteField from '../Multi';
 
-const MultiInfiniteScrollAutocompleteField = InfiniteScrollAutocompleteField(
+const MultiInfiniteAutocompleteField = InfiniteAutocompleteField(
   MultiAutocompleteField,
   true,
 );
 
-export default MultiInfiniteScrollAutocompleteField;
+export default MultiInfiniteAutocompleteField;

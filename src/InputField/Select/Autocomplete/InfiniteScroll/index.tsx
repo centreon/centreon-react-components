@@ -33,7 +33,7 @@ export default (
   AutocompleteField: (props) => JSX.Element,
   multiple: boolean,
 ): ((props) => JSX.Element) => {
-  const InfiniteScroll = <TData extends Record<string, unknown>>({
+  const InfiniteAutocomplete = <TData extends Record<string, unknown>>({
     initialPage,
     getEndpoint,
     getOptionsFromResult,
@@ -140,5 +140,5 @@ export default (
     );
   };
 
-  return InfiniteScroll;
+  return InfiniteAutocomplete;
 };

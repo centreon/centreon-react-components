@@ -1,9 +1,9 @@
-import InfiniteScrollAutocompleteField from '.';
+import InfiniteAutocompleteField from '.';
 import AutocompleteField from '..';
 
-const SingleInfiniteScrollAutocompleteField = InfiniteScrollAutocompleteField(
+const SingleInfiniteAutocompleteField = InfiniteAutocompleteField(
   AutocompleteField,
   false,
 );
 
-export default SingleInfiniteScrollAutocompleteField;
+export default SingleInfiniteAutocompleteField;
