@@ -88,6 +88,25 @@ export default (
       setOptionsOpen(false);
     };
 
+    const renderOptions = (option, { selected }): JSX.Element => {
+      const typographyProps = equals(last(options), option)
+        ? { ref: lastItemElementRef }
+        : {};
+      const checkBox = multiple && (
+        <Checkbox
+          color="primary"
+          checked={selected}
+          className={classes.checkbox}
+        />
+      );
+      return (
+        <>
+          {checkBox}
+          <Typography {...typographyProps}>{option.name}</Typography>
+        </>
+      );
+    };
+
     React.useEffect(() => {
       if (!optionsOpen) {
         setSearchValue('');
@@ -116,24 +135,7 @@ export default (
         options={options || []}
         onTextChange={changeText}
         loading={loading}
-        renderOption={(option, { selected }): JSX.Element => {
-          const typographyProps = equals(last(options), option)
-            ? { ref: lastItemElementRef }
-            : {};
-          const checkBox = multiple && (
-            <Checkbox
-              color="primary"
-              checked={selected}
-              className={classes.checkbox}
-            />
-          );
-          return (
-            <>
-              {checkBox}
-              <Typography {...typographyProps}>{option.name}</Typography>
-            </>
-          );
-        }}
+        renderOption={renderOptions}
         filterOptions={(opt) => opt}
         {...props}
       />
