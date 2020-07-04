@@ -21,7 +21,8 @@ const cancelTokenRequestParam = {
   cancelToken: { promise: Promise.resolve({}) },
 };
 
-const label = 'Connected Autocomplete';
+const label = 'Infnite Autocomplete';
+const placeholder = 'Type here...';
 
 const optionsData = {
   result: [
@@ -39,7 +40,7 @@ const optionsData = {
 
 const baseEndpoint = 'endpoint';
 const getEndpoint = (params): string =>
-  buildListingEndpoint({ baseEndpoint, params });
+  buildListingEndpoint({ baseEndpoint, params, searchOptions: ['host.name'] });
 
 const renderSingleInfiniteAutocompleteField = (): RenderResult =>
   render(
@@ -80,6 +81,33 @@ describe('Infinite Autocomplete', () => {
 
     await waitFor(() => {
       expect(getByText('My Option 1')).toBeInTheDocument();
+    });
+  });
+
+  it('populates options with the first page result of the get call from the endpoint after typing something in input field', async () => {
+    const {
+      getByLabelText,
+      getByPlaceholderText,
+    } = renderSingleInfiniteAutocompleteField();
+
+    act(() => {
+      fireEvent.click(getByLabelText('Open'));
+    });
+
+    expect(mockedAxios.get).toHaveBeenCalledWith(
+      `${baseEndpoint}?page=1`,
+      cancelTokenRequestParam,
+    );
+
+    fireEvent.change(getByPlaceholderText(placeholder), {
+      target: { value: 'My Option 2' },
+    });
+
+    await waitFor(() => {
+      expect(mockedAxios.get).toHaveBeenCalledWith(
+        `${baseEndpoint}?page=1&search={\"$or\":[{\"host.name\":{\"$rg\":\"My Option 2\"}}]}`,
+        cancelTokenRequestParam,
+      );
     });
   });
 });
