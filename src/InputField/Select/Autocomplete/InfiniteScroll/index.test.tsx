@@ -105,7 +105,7 @@ describe('Infinite Autocomplete', () => {
 
     await waitFor(() => {
       expect(mockedAxios.get).toHaveBeenCalledWith(
-        `${baseEndpoint}?page=1&search={\"$or\":[{\"host.name\":{\"$rg\":\"My Option 2\"}}]}`,
+        `${baseEndpoint}?page=1&search={"$or":[{"host.name":{"$rg":"My Option 2"}}]}`,
         cancelTokenRequestParam,
       );
     });
