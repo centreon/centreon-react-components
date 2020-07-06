@@ -1,11 +1,10 @@
 import React from 'react';
 
-import Button from '@material-ui/core/Button';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Tooltip from '@material-ui/core/Tooltip';
+import PropTypes from 'prop-types';
+
+import { Button, CircularProgress, Tooltip } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import SaveIcon from '@material-ui/icons/Save';
-import PropTypes from 'prop-types';
 
 const SaveButton = ({ succeeded, loading, tooltipLabel, ...rest }) => {
   const ButtonContent = () => {
@@ -42,7 +41,7 @@ SaveButton.defaultProps = {
   disabled: false,
   loading: false,
   tooltipLabel: 'Save',
-  onClick: () => {},
+  onClick: () => { },
 };
 
 SaveButton.propTypes = {
