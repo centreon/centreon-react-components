@@ -65,4 +65,8 @@ const Snackbar = ({ message, open, onClose, severity }: Props): JSX.Element => {
   );
 };
 
+Snackbar.defaultProps = {
+  onClose: undefined,
+};
+
 export default Snackbar;

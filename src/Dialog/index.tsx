@@ -34,8 +34,8 @@ const Dialog = ({
   labelConfirm = 'Confirm',
   children,
   contentWidth,
-  confirmDisabled = false,
-  submitting = false,
+  confirmDisabled,
+  submitting,
   ...rest
 }: Props): JSX.Element => (
   <MuiDialog open={open} onClose={onClose} {...rest}>
@@ -62,5 +62,10 @@ const Dialog = ({
     </DialogActions>
   </MuiDialog>
 );
+
+Dialog.defaultProps = {
+  confirmDisabled: false,
+  submitting: false,
+};
 
 export default Dialog;

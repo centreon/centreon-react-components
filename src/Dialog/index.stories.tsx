@@ -21,6 +21,11 @@ const Story = ({ children, ...props }: Props): JSX.Element => (
   </Dialog>
 );
 
+Story.defaultProps = {
+  confirmDisabled: false,
+  submitting: false,
+};
+
 export const normal = (): JSX.Element => (
   <Story>
     <Typography>Dialog</Typography>

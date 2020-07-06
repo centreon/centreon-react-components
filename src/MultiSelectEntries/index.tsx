@@ -88,8 +88,8 @@ const MultiSelectEntries = ({
   emptyLabel,
   onClick,
   values = [],
-  highlight = false,
-  error = undefined,
+  highlight,
+  error,
 }: Props): JSX.Element => {
   const classes = useStyles();
 
@@ -132,6 +132,12 @@ const MultiSelectEntries = ({
       {error && <FormHelperText error>{error}</FormHelperText>}
     </div>
   );
+};
+
+MultiSelectEntries.defaultProps = {
+  highlight: false,
+  values: [],
+  error: undefined,
 };
 
 export default MultiSelectEntries;

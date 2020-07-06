@@ -41,7 +41,7 @@ SaveButton.defaultProps = {
   disabled: false,
   loading: false,
   tooltipLabel: 'Save',
-  onClick: () => { },
+  onClick: () => {},
 };
 
 SaveButton.propTypes = {

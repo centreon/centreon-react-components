@@ -41,6 +41,10 @@ const OptionalLabelInputAdornment = ({
   );
 };
 
+OptionalLabelInputAdornment.defaultProps = {
+  label: '',
+};
+
 export type Props = {
   StartAdornment?: React.SFC;
   EndAdornment?: React.SFC;

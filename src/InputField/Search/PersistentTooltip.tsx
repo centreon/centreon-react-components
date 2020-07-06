@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface Props {
-  children?: React.ReactElement;
+  children: React.ReactElement;
   labelSearchHelp: string;
   openTooltip?: boolean;
   toggleTooltip?: () => void;
@@ -85,6 +85,12 @@ const PersistentTooltip = ({
       </IconButton>
     </Tooltip>
   );
+};
+
+PersistentTooltip.defaultProps = {
+  openTooltip: undefined,
+  toggleTooltip: undefined,
+  closeTooltip: undefined,
 };
 
 export default PersistentTooltip;

@@ -77,4 +77,14 @@ const RegexpHelpTooltip = ({
   );
 };
 
+RegexpHelpTooltip.defaultProps = {
+  description: undefined,
+  labelExamples: undefined,
+  examples: undefined,
+  labelTips: undefined,
+  labelGetHelp: undefined,
+  urlTip: undefined,
+  labelUrlTip: undefined,
+};
+
 export default RegexpHelpTooltip;

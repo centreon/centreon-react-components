@@ -18,7 +18,7 @@ const defaultSnackBarState: SnackbarActions = {
 const Context = createContext<SnackbarActions>(defaultSnackBarState);
 
 interface SnackbarContextProviderProps {
-  children?: ReactNode;
+  children: ReactNode;
 }
 
 const withSnackbar = (

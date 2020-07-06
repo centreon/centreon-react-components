@@ -108,4 +108,9 @@ const ListingHeader = ({
   );
 };
 
+ListingHeader.defaultProps = {
+  order: undefined,
+  orderBy: undefined,
+};
+
 export default ListingHeader;
