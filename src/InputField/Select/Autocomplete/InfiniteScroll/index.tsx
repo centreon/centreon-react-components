@@ -111,7 +111,7 @@ export default (
       if (!optionsOpen) {
         setSearchValue('');
         setOptions([]);
-        setPage(1);
+        setPage(initialPage);
         return;
       }
 
@@ -120,9 +120,6 @@ export default (
           endpoint: getEndpoint({ search: searchValue, page }),
           loadMore: page > 1,
         });
-      } else if (!optionsOpen) {
-        setOptions([]);
-        setPage(initialPage);
       }
     }, [optionsOpen, page]);
 
