@@ -92,8 +92,8 @@ interface Props {
   onDisable?: (rows) => void;
   onDuplicate?: (rows) => void;
   onEnable?: (rows) => void;
-  onPaginate?: () => void;
-  onPaginationLimitChanged?: () => void;
+  onPaginate?: (event, page) => void;
+  onPaginationLimitChanged?: (event) => void;
   onRowClick?: (row) => void;
   onSelectRows?: (rows) => void;
   onSort?: (sortParams) => void;
@@ -196,6 +196,11 @@ const Listing = ({
 
   const isSelected = (row): boolean => {
     return selectedRowsInclude(row);
+  };
+
+  const onLimitChanged = (event): void => {
+    onPaginationLimitChanged(event);
+    onPaginate(null, 0);
   };
 
   const getColumnCell = ({ row, column }): JSX.Element => {
@@ -378,7 +383,7 @@ const Listing = ({
               native: true,
             }}
             onChangePage={onPaginate}
-            onChangeRowsPerPage={onPaginationLimitChanged}
+            onChangeRowsPerPage={onLimitChanged}
             ActionsComponent={PaginationActions}
           />
         ) : null}
