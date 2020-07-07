@@ -19,15 +19,18 @@ const useObserver = ({
       if (observer.current) {
         observer.current.disconnect();
       }
+
       if (loading) {
         observer.current = null;
-      } else {
-        observer.current = new IntersectionObserver((entries) => {
-          if (entries[0].isIntersecting && page < maxPage) {
-            action();
-          }
-        });
+        return;
       }
+
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && page < maxPage) {
+          action();
+        }
+      });
+
       if (node && observer.current) {
         observer.current.observe(node);
       }
