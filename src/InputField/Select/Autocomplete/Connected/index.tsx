@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { useDebouncedCallback } from 'use-debounce';
+import debounce from '@material-ui/core/utils/debounce';
 
 import { getData } from '../../../../api';
 import { SelectEntry } from '../..';
@@ -12,6 +12,8 @@ type Props = {
   getSearchEndpoint: (searchField: string) => string;
   getOptionsFromResult: (result) => Array<SelectEntry>;
 } & Omit<AutocompleteFieldProps, 'options'>;
+
+type SearchDebounce = (value: string) => void;
 
 export default (
   AutocompleteField: (props) => JSX.Element,
@@ -25,6 +27,11 @@ export default (
     const [options, setOptions] = React.useState<Array<SelectEntry>>();
     const [optionsOpen, setOptionsOpen] = React.useState<boolean>(false);
     const [searchValue, setSearchValue] = React.useState<string>('');
+    const debouncedChangeText = React.useRef<SearchDebounce>(
+      debounce<SearchDebounce>((value): void => {
+        loadOptions(getSearchEndpoint(value));
+      }, 500),
+    );
 
     const { sendRequest, sending } = useRequest<TData>({
       request: getData,
@@ -36,13 +43,9 @@ export default (
       );
     };
 
-    const [debouncedChangeText] = useDebouncedCallback((value: string) => {
-      loadOptions(getSearchEndpoint(value));
-    }, 500);
-
     const changeText = (event): void => {
       setSearchValue(event.target.value);
-      debouncedChangeText(event.target.value);
+      debouncedChangeText.current(event.target.value);
     };
 
     const openOptions = (): void => {
