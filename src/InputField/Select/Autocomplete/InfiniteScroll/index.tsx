@@ -115,12 +115,10 @@ export default (
         return;
       }
 
-      if (optionsOpen) {
-        loadOptions({
-          endpoint: getEndpoint({ search: searchValue, page }),
-          loadMore: page > 1,
-        });
-      }
+      loadOptions({
+        endpoint: getEndpoint({ search: searchValue, page }),
+        loadMore: page > 1,
+      });
     }, [optionsOpen, page]);
 
     const loading = sending || !options;
