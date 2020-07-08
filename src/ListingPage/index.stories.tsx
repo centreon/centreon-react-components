@@ -241,11 +241,9 @@ interface PanelProps {
   onClose?: () => void;
 }
 
-interface PanelPropsMandatory {
-  onClose: () => void;
-}
-
-const DetailsPanelHeader = ({ onClose }: PanelPropsMandatory): JSX.Element => {
+const DetailsPanelHeader = ({
+  onClose = () => undefined,
+}: PanelProps): JSX.Element => {
   const classes = useStyles();
   return (
     <div className={classes.detailsPanelHeader}>
