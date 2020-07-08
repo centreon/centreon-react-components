@@ -85,9 +85,9 @@ const configuration = [
   },
 ];
 
-const fifteenElements = new Array(25).fill(0);
+const twentyFiveElements = new Array(25).fill(0);
 
-const elements = [...fifteenElements].map((_, index) => ({
+const elements = [...twentyFiveElements].map((_, index) => ({
   id: index,
   name: `E${index}`,
   description: `Entity ${index}`,
