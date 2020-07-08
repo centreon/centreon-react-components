@@ -2,9 +2,9 @@ import axios, { CancelToken } from 'axios';
 
 const headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
 
-const getData = <TData>(cancelToken: CancelToken) => (
+const getData = <TResult>(cancelToken: CancelToken) => (
   endpoint: string,
-): Promise<TData> =>
+): Promise<TResult> =>
   axios.get(endpoint, { cancelToken }).then(({ data }) => data);
 
 interface RequestWithData<TData> {
@@ -34,10 +34,10 @@ const postData = <TData, TResult>(cancelToken: CancelToken) => ({
     })
     .then(({ data: result }) => result);
 
-const putData = <TData>(cancelToken: CancelToken) => ({
+const putData = <TData, TResult>(cancelToken: CancelToken) => ({
   endpoint,
   data,
-}: RequestWithData<TData>): Promise<TData> =>
+}: RequestWithData<TData>): Promise<TResult> =>
   axios
     .put(endpoint, data, {
       headers,
@@ -45,9 +45,9 @@ const putData = <TData>(cancelToken: CancelToken) => ({
     })
     .then(({ data: result }) => result);
 
-const deleteData = <TData>(cancelToken: CancelToken) => (
+const deleteData = <TResult>(cancelToken: CancelToken) => (
   endpoint: string,
-): Promise<TData> =>
+): Promise<TResult> =>
   axios
     .delete(endpoint, {
       headers,
