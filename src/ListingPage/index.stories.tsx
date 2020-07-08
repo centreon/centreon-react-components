@@ -16,8 +16,6 @@ import IconButton from '../Button/Icon';
 
 export default { title: 'Listing Page' };
 
-const noOp = (): void => undefined;
-
 const useStyles = makeStyles((theme) => ({
   filtersSummary: {
     display: 'grid',
@@ -114,9 +112,6 @@ const options = [
 const listing = (
   <Listing
     columnConfiguration={configuration}
-    onSort={noOp}
-    onPaginate={noOp}
-    onPaginationLimitChanged={noOp}
     limit={elements.length}
     currentPage={0}
     totalRows={elements.length}
