@@ -12,10 +12,21 @@ interface RequestWithData<TData> {
   data: TData;
 }
 
-const postData = <TData>(cancelToken: CancelToken) => ({
+const patchData = <TData, TResult>(cancelToken: CancelToken) => ({
   endpoint,
   data,
-}: RequestWithData<TData>): Promise<TData> =>
+}: RequestWithData<TData>): Promise<TResult> =>
+  axios
+    .patch(endpoint, data, {
+      headers,
+      cancelToken,
+    })
+    .then(({ data: result }) => result);
+
+const postData = <TData, TResult>(cancelToken: CancelToken) => ({
+  endpoint,
+  data,
+}: RequestWithData<TData>): Promise<TResult> =>
   axios
     .post(endpoint, data, {
       headers,
@@ -44,4 +55,4 @@ const deleteData = <TData>(cancelToken: CancelToken) => (
     })
     .then(({ data }) => data);
 
-export { getData, postData, putData, deleteData };
+export { getData, patchData, postData, putData, deleteData };

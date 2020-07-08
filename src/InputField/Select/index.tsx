@@ -12,6 +12,8 @@ import {
   Theme,
   SelectProps,
   FormHelperText,
+  ListSubheader,
+  Divider,
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -29,6 +31,7 @@ export interface SelectEntry {
   name: string;
   color?: string;
   url?: string;
+  type?: 'header';
 }
 
 type Props = {
@@ -84,15 +87,23 @@ const SelectField = ({
       >
         {options
           .filter(({ id }) => id !== '')
-          .map(({ id, name, color }) => (
-            <MenuItem
-              key={`${id}-${name}`}
-              value={id}
-              style={{ backgroundColor: color }}
-            >
-              {name}
-            </MenuItem>
-          ))}
+          .map(({ id, name, color, type }) => {
+            const key = `${id}-${name}`;
+            if (type === 'header') {
+              return (
+                <>
+                  <ListSubheader key={key}>{name}</ListSubheader>
+                  <Divider />
+                </>
+              );
+            }
+
+            return (
+              <MenuItem key={key} value={id} style={{ backgroundColor: color }}>
+                {name}
+              </MenuItem>
+            );
+          })}
       </Select>
       {error && <FormHelperText>{error}</FormHelperText>}
     </FormControl>
