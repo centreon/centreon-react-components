@@ -90,12 +90,10 @@ const SelectField = ({
           .map(({ id, name, color, type }) => {
             const key = `${id}-${name}`;
             if (type === 'header') {
-              return (
-                <>
-                  <ListSubheader key={key}>{name}</ListSubheader>
-                  <Divider />
-                </>
-              );
+              return [
+                <ListSubheader key={key}>{name}</ListSubheader>,
+                <Divider key={`${key}-divider`} />,
+              ];
             }
 
             return (
