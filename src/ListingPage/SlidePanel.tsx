@@ -10,7 +10,7 @@ const useStyles = makeStyles({
   },
   paperPanel: {
     display: 'grid',
-    gridTemplate: 'auto 1fr',
+    gridTemplateRows: 'auto 1fr',
     height: '100%',
   },
   slideContent: {

@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles, styled } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import Box from '@material-ui/core/Box';
+import {
+  List,
+  ListItem,
+  Box,
+  makeStyles,
+  styled,
+  CircularProgress,
+} from '@material-ui/core';
 import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos';
 
 import IconClose from '../Icon/IconClose2';
-import Loader from '../Loader';
 import ExpandableSection from './ExpandableSection';
 import SlidePanel from '../ListingPage/SlidePanel';
-
-// TODO this should be dynamic
-const topHeight = 52;
 
 const HeaderContainer = styled(Box)({
   paddingLeft: 20,
@@ -23,23 +23,22 @@ const HeaderContainer = styled(Box)({
 });
 
 const Body = styled(Box)({
-  height: '100%',
+  height: 'auto',
+  overflowY: 'hidden',
 });
 
 const MainPanel = styled(Box)({
   width: 540,
   overflowY: 'auto',
-  marginBottom: topHeight,
 });
 
 const SecondaryPanelBar = styled(Box)({
   border: '1px solid #D6D6D8',
   width: 20,
   cursor: 'pointer',
-  marginBottom: topHeight,
 });
 
-const useSecondaryPanelStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   secondaryPanel: {
     width: ({ active }) => (active ? 500 : 0),
     transition: '.1s ease-in-out',
@@ -47,7 +46,14 @@ const useSecondaryPanelStyles = makeStyles({
     backgroundColor: '#c7c8c9',
     padding: ({ active }) => (active ? 5 : 0),
   },
-});
+  loading: {
+    width: '100%',
+    display: 'grid',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: theme.spacing(2),
+  },
+}));
 
 const CloseSecondaryPanelIcon = styled(ArrowForwardIos)({
   width: 15,
@@ -64,7 +70,7 @@ const RightPanel = ({
   loading,
 }) => {
   const [secondaryPanelActive, setSecondaryPanelActive] = useState(false);
-  const { secondaryPanel } = useSecondaryPanelStyles({
+  const classes = useStyles({
     active: secondaryPanelActive,
   });
 
@@ -106,36 +112,45 @@ const RightPanel = ({
     <SlidePanel
       header={header}
       content={
-        !loading && active ? (
+        active && (
           <Body display="flex" flexDirection="row" flexGrow={1}>
-            <MainPanel flexGrow={1}>
-              <List>
-                {Sections.map(({ id, title, Section, expandable }) =>
-                  expandable ? (
-                    <ExpandableSection key={id} title={title}>
-                      {Section}
-                    </ExpandableSection>
-                  ) : (
-                    <ListItem key={id}>{Section}</ListItem>
-                  ),
-                )}
-              </List>
-            </MainPanel>
-            <SecondaryPanelBar
-              aria-label="Close Secondary Panel"
-              display="flex"
-              alignItems="center"
-              alignContent="center"
-              onClick={toggleSecondaryPanel}
-            >
-              {secondaryPanelActive && <CloseSecondaryPanelIcon />}
-            </SecondaryPanelBar>
-            <div className={secondaryPanel} onTransitionEnd={onTransitionEnd}>
-              {secondaryPanelComponent}
-            </div>
+            {loading ? (
+              <div className={classes.loading}>
+                <CircularProgress />
+              </div>
+            ) : (
+              <>
+                <MainPanel flexGrow={1}>
+                  <List>
+                    {Sections.map(({ id, title, Section, expandable }) =>
+                      expandable ? (
+                        <ExpandableSection key={id} title={title}>
+                          {Section}
+                        </ExpandableSection>
+                      ) : (
+                        <ListItem key={id}>{Section}</ListItem>
+                      ),
+                    )}
+                  </List>
+                </MainPanel>
+                <SecondaryPanelBar
+                  aria-label="Close Secondary Panel"
+                  display="flex"
+                  alignItems="center"
+                  alignContent="center"
+                  onClick={toggleSecondaryPanel}
+                >
+                  {secondaryPanelActive && <CloseSecondaryPanelIcon />}
+                </SecondaryPanelBar>
+                <div
+                  className={classes.secondaryPanel}
+                  onTransitionEnd={onTransitionEnd}
+                >
+                  {secondaryPanelComponent}
+                </div>
+              </>
+            )}
           </Body>
-        ) : (
-          <Loader fullContent />
         )
       }
     />
