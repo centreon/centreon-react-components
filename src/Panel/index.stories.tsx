@@ -2,12 +2,12 @@ import * as React from 'react';
 
 import { Typography } from '@material-ui/core';
 
-import RightPanel from '.';
+import Panel from '.';
 
-export default { title: 'Right Panel' };
+export default { title: 'Panel' };
 
 export const normal = (): JSX.Element => (
-  <RightPanel
+  <Panel
     active
     Header={<Typography>Header</Typography>}
     Sections={[

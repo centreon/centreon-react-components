@@ -100,7 +100,7 @@ export { default as SubmenuItems } from './Submenu/SubmenuHeader/SubmenuItems';
 export { default as SubmenuItem } from './Submenu/SubmenuHeader/SubmenuItem';
 
 export { default as MultiSelectEntries } from './MultiSelectEntries';
-export { default as RightPanel } from './RightPanel';
+export { default as Panel } from './Panel';
 
 export { default as StatusChip } from './StatusChip';
 export { SeverityCode, getStatusColors } from './StatusChip';
