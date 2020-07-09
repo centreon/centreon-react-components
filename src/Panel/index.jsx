@@ -5,16 +5,11 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Box from '@material-ui/core/Box';
 import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos';
-import Slide from '@material-ui/core/Slide';
 
 import IconClose from '../Icon/IconClose2';
 import Loader from '../Loader';
 import ExpandableSection from './ExpandableSection';
 import SlidePanel from '../ListingPage/SlidePanel';
-
-const panelWidth = 560;
-const inAnimationDurationMs = 150;
-const outAnimationDurationMs = 50;
 
 // TODO this should be dynamic
 const topHeight = 52;
@@ -25,24 +20,6 @@ const HeaderContainer = styled(Box)({
   WebkitBoxShadow: '0px 3px 4px 0px rgba(0,0,0,0.15)',
   MozBoxShadow: '0px 3px 4px 0px rgba(0,0,0,0.15)',
   height: 49,
-});
-
-const BodyContainer = styled('div')({
-  top: topHeight,
-  right: 0,
-  bottom: 30,
-  backgroundColor: '#ededed',
-  minWidth: panelWidth,
-  position: 'absolute',
-  pointerEvents: 'all',
-  outline: 'none',
-  boxShadow:
-    '0px 8px 10px -5px rgba(0,0,0,0.2), 0px 16px 24px 2px rgba(0,0,0,0.14), 0px 6px 30px 5px rgba(0,0,0,0.12)',
-  WebkitBoxShadow:
-    '0px 8px 10px -5px rgba(0,0,0,0.2), 0px 16px 24px 2px rgba(0,0,0,0.14), 0px 6px 30px 5px rgba(0,0,0,0.12)',
-  MozBoxShadow:
-    '0px 8px 10px -5px rgba(0,0,0,0.2), 0px 16px 24px 2px rgba(0,0,0,0.14), 0px 6px 30px 5px rgba(0,0,0,0.12)',
-  zIndex: 90,
 });
 
 const Body = styled(Box)({
