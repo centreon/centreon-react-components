@@ -48,6 +48,9 @@ export {
   RowColorCondition,
 } from './Listing/models';
 
+export { default as ListingPage } from './ListingPage';
+export { default as SlidePanel } from './ListingPage/SlidePanel';
+
 export { default as Title } from './Title';
 export { default as Wrapper } from './Wrapper';
 export { default as TopFilters } from './TopFilters';
@@ -104,7 +107,7 @@ export { SeverityCode, getStatusColors } from './StatusChip';
 
 export { Listing as ListingModel } from './api/models';
 export { default as useCancelTokenSource } from './api/useCancelTokenSource';
-export { getData, postData, putData, deleteData } from './api';
+export { getData, patchData, postData, putData, deleteData } from './api';
 export { default as useRequest } from './api/useRequest';
 export { default as buildListingEndpoint } from './api/buildListingEndpoint';
 export {
