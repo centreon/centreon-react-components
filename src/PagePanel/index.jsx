@@ -8,19 +8,11 @@ import {
   styled,
   CircularProgress,
 } from '@material-ui/core';
-import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos';
 
 import IconClose from '../Icon/IconClose2';
-import ExpandableSection from './ExpandableSection';
+import ExpandableSection from '../ListingPanel/ExpandableSection';
+import { CloseSecondaryPanelIcon, HeaderContainer } from '../ListingPanel';
 import SlidePanel from '../ListingPage/SlidePanel';
-
-const HeaderContainer = styled(Box)({
-  paddingLeft: 20,
-  boxShadow: '0px 3px 4px 0px rgba(0,0,0,0.15)',
-  WebkitBoxShadow: '0px 3px 4px 0px rgba(0,0,0,0.15)',
-  MozBoxShadow: '0px 3px 4px 0px rgba(0,0,0,0.15)',
-  height: 49,
-});
 
 const Body = styled(Box)({
   height: 'auto',
@@ -32,7 +24,7 @@ const MainPanel = styled(Box)({
   overflowY: 'auto',
 });
 
-const SecondaryPanelBar = styled(Box)({
+export const SecondaryPanelBar = styled(Box)({
   border: '1px solid #D6D6D8',
   width: 20,
   cursor: 'pointer',
@@ -55,12 +47,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CloseSecondaryPanelIcon = styled(ArrowForwardIos)({
-  width: 15,
-  margin: 'auto',
-});
-
-const RightPanel = ({
+const PagePanel = ({
   active,
   Header,
   secondaryPanelComponent,
@@ -155,72 +142,16 @@ const RightPanel = ({
       }
     />
   );
-
-  // return (
-  //   <Slide
-  //     in={active}
-  //     direction="left"
-  //     onEntered={onOpen}
-  //     timeout={{
-  //       enter: inAnimationDurationMs,
-  //       exit: outAnimationDurationMs,
-  //     }}
-  //   >
-  //     <BodyContainer>
-  //       {loading && <Loader fullContent />}
-  //       {active && !loading && (
-  //         <>
-  //           <HeaderContainer display="flex" flexDirection="row">
-  //             <Box flexGrow={1}>{Header}</Box>
-  //             <Box>
-  //               <IconClose
-  //                 onClick={close}
-  //                 style={{ width: 39, height: 39, padding: 5 }}
-  //               />
-  //             </Box>
-  //           </HeaderContainer>
-  //           <Body display="flex" flexDirection="row" flexGrow={1}>
-  //             <MainPanel flexGrow={1}>
-  //               <List>
-  //                 {Sections.map(({ id, title, Section, expandable }) =>
-  //                   expandable ? (
-  //                     <ExpandableSection key={id} title={title}>
-  //                       {Section}
-  //                     </ExpandableSection>
-  //                   ) : (
-  //                     <ListItem key={id}>{Section}</ListItem>
-  //                   ),
-  //                 )}
-  //               </List>
-  //             </MainPanel>
-  //             <SecondaryPanelBar
-  //               aria-label="Close Secondary Panel"
-  //               display="flex"
-  //               alignItems="center"
-  //               alignContent="center"
-  //               onClick={toggleSecondaryPanel}
-  //             >
-  //               {secondaryPanelActive && <CloseSecondaryPanelIcon />}
-  //             </SecondaryPanelBar>
-  //             <div className={secondaryPanel} onTransitionEnd={onTransitionEnd}>
-  //               {secondaryPanelComponent}
-  //             </div>
-  //           </Body>
-  //         </>
-  //       )}
-  //     </BodyContainer>
-  //   </Slide>
-  // );
 };
 
-RightPanel.defaultProps = {
+PagePanel.defaultProps = {
   onClose: () => {},
   onSecondaryPanelClose: () => {},
   secondaryPanelComponent: undefined,
   loading: false,
 };
 
-RightPanel.propTypes = {
+PagePanel.propTypes = {
   active: PropTypes.bool.isRequired,
   loading: PropTypes.bool,
   Header: PropTypes.node.isRequired,
@@ -230,4 +161,4 @@ RightPanel.propTypes = {
   onSecondaryPanelClose: PropTypes.func,
 };
 
-export default RightPanel;
+export default PagePanel;
