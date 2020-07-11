@@ -3,7 +3,14 @@ import * as React from 'react';
 import { concat, last, equals } from 'ramda';
 import { useDebouncedCallback } from 'use-debounce';
 
-import { Typography, Checkbox, makeStyles } from '@material-ui/core';
+import {
+  Typography,
+  Checkbox,
+  makeStyles,
+  CircularProgress,
+  useTheme,
+  FormControlLabel,
+} from '@material-ui/core';
 
 import { Props as AutocompleteFieldProps } from '..';
 import { SelectEntry } from '../..';
@@ -45,6 +52,7 @@ export default (
     const [page, setPage] = React.useState(1);
     const [maxPage, setMaxPage] = React.useState(initialPage);
     const classes = useStyles();
+    const theme = useTheme();
 
     const { sendRequest, sending } = useRequest<TestProps<TData>>({
       request: getData,
@@ -89,21 +97,37 @@ export default (
     };
 
     const renderOptions = (option, { selected }): JSX.Element => {
-      const typographyProps = equals(last(options), option)
-        ? { ref: lastItemElementRef }
-        : {};
-      const checkBox = multiple && (
+      const isLastElement = equals(last(options), option);
+      const refProp = isLastElement ? { ref: lastItemElementRef } : {};
+
+      const checkbox = (
         <Checkbox
           color="primary"
           checked={selected}
           className={classes.checkbox}
         />
       );
+
       return (
-        <>
-          {checkBox}
-          <Typography {...typographyProps}>{option.name}</Typography>
-        </>
+        <div style={{ width: '100%' }}>
+          <div>
+            {multiple ? (
+              <FormControlLabel
+                control={checkbox}
+                label={option.name}
+                labelPlacement="end"
+                {...refProp}
+              />
+            ) : (
+              <Typography {...refProp}>{option.name}</Typography>
+            )}
+          </div>
+          {isLastElement && page > 1 && sending && (
+            <div style={{ width: '100%', textAlign: 'center' }}>
+              <CircularProgress size={theme.spacing(2.5)} />
+            </div>
+          )}
+        </div>
       );
     };
 
