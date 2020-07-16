@@ -2,9 +2,9 @@ import React from 'react';
 
 import { render, fireEvent } from '@testing-library/react';
 
-import PagePanel from '.';
+import ListingPanel from '.';
 
-describe(PagePanel, () => {
+describe(ListingPanel, () => {
   it('displays given Header and sections', async () => {
     const Header = <>Header</>;
     const Sections = [
@@ -21,7 +21,7 @@ describe(PagePanel, () => {
       },
     ];
     const { getByText } = render(
-      <PagePanel Header={Header} Sections={Sections} active />,
+      <ListingPanel Header={Header} Sections={Sections} active />,
     );
 
     expect(getByText('Header')).toBeInTheDocument();
@@ -34,7 +34,7 @@ describe(PagePanel, () => {
     const secondaryPanelComponent = <>Secondary Panel</>;
 
     const { baseElement, getByText, queryByText } = render(
-      <PagePanel
+      <ListingPanel
         Header={<>Header</>}
         Sections={[]}
         active
