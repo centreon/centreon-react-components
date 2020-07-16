@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { concat, last, equals } from 'ramda';
-import { useDebouncedCallback } from 'use-debounce';
+import debounce from '@material-ui/core/utils/debounce';
 
 import {
   Typography,
@@ -29,6 +29,8 @@ interface TestProps<TData> {
   meta;
 }
 
+type SearchDebounce = (value: string) => void;
+
 const useStyles = makeStyles((theme) => ({
   checkbox: {
     padding: 0,
@@ -51,6 +53,16 @@ export default (
     const [searchValue, setSearchValue] = React.useState<string>('');
     const [page, setPage] = React.useState(1);
     const [maxPage, setMaxPage] = React.useState(initialPage);
+    const debouncedChangeText = React.useRef<SearchDebounce>(
+      debounce<SearchDebounce>((value): void => {
+        if (page === initialPage) {
+          loadOptions({
+            endpoint: getEndpoint({ search: value, page: initialPage }),
+          });
+        }
+        setPage(1);
+      }, 500),
+    );
     const classes = useStyles();
     const theme = useTheme();
 
@@ -74,17 +86,8 @@ export default (
       action: () => setPage(page + 1),
     });
 
-    const [debouncedChangeText] = useDebouncedCallback((value: string) => {
-      if (page === initialPage) {
-        loadOptions({
-          endpoint: getEndpoint({ search: value, page: initialPage }),
-        });
-      }
-      setPage(1);
-    }, 500);
-
     const changeText = (event): void => {
-      debouncedChangeText(event.target.value);
+      debouncedChangeText.current(event.target.value);
       setSearchValue(event.target.value);
     };
 
