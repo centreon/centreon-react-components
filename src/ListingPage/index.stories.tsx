@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable react/require-default-props */
 import * as React from 'react';
 
 import { Typography, makeStyles, Paper, Button } from '@material-ui/core';
