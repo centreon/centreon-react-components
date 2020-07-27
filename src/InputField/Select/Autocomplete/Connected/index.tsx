@@ -21,7 +21,6 @@ import { ListingModel } from '../../../..';
 
 interface Props {
   getEndpoint: ({ search, page }) => string;
-  getOptionsFromResult: (result) => Array<SelectEntry>;
   initialPage: number;
 }
 
@@ -41,7 +40,6 @@ const ConnectedAutocompleteField = (
   >({
     initialPage,
     getEndpoint,
-    getOptionsFromResult,
     ...props
   }: Props & Omit<AutocompleteFieldProps, 'options'>): JSX.Element => {
     const [options, setOptions] = React.useState<Array<SelectEntry>>();
@@ -59,9 +57,7 @@ const ConnectedAutocompleteField = (
 
     const loadOptions = ({ endpoint, loadMore = false }) => {
       sendRequest(endpoint).then(({ result, meta }) => {
-        setOptions(
-          concat(loadMore ? options : [], getOptionsFromResult(result)),
-        );
+        setOptions(concat(loadMore ? options : [], result));
         setMaxPage(Math.ceil(meta.total / meta.limit));
       });
     };

@@ -26,9 +26,7 @@ const useIntersectionObserver = ({
       }
 
       observer.current = new IntersectionObserver(([entry]) => {
-        console.log('page', page, 'maxPage', maxPage);
         if (entry.isIntersecting && page < maxPage) {
-          console.log('blabla');
           action();
         }
       });
