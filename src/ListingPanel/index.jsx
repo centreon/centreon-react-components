@@ -56,7 +56,7 @@ const PagePanel = ({
   onClose,
   loading,
 }) => {
-  const [secondaryPanelActive, setSecondaryPanelActive] = useState(false);
+  const [secondaryPanelActive, setSecondaryPanelActive] = React.useState(false);
   const classes = useStyles({
     active: secondaryPanelActive,
   });
