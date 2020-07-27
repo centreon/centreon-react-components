@@ -61,7 +61,7 @@ const PagePanel = ({
     active: secondaryPanelActive,
   });
 
-  useEffect(() => {
+  React.useEffect(() => {
     setSecondaryPanelActive(secondaryPanelComponent !== undefined);
   }, [secondaryPanelComponent]);
 
