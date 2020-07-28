@@ -1,20 +1,32 @@
 import * as React from 'react';
 
+import { isNil, prop, pipe } from 'ramda';
+
 import { makeStyles, Theme } from '@material-ui/core';
-import Filters, { FiltersProps } from './Filters';
+
+import useResizeObserver from '../utils/useResizeObserver';
+import getCumulativeOffset from '../utils/getCumulativeOffset';
 
 const useStyles = (
   slidePanelIntegrated: boolean,
 ): (() => Record<string, string>) =>
   makeStyles<Theme>((theme) => ({
     page: {
+      // display: 'grid',
+      // gridTemplateRows: 'auto 1fr',
+      // backgroundColor: theme.palette.background.default,
+      // overflowY: 'hidden',
+      // height: '100%',
+
       display: 'grid',
       gridTemplateRows: 'auto 1fr',
       backgroundColor: theme.palette.background.default,
       overflowY: 'hidden',
-      height: '100%',
     },
-    pageBody: {
+    filters: {
+      zIndex: 4,
+    },
+    body: {
       display: 'grid',
       gridTemplateRows: '1fr',
       gridTemplateColumns: '1fr 550px',
@@ -27,63 +39,60 @@ const useStyles = (
     },
   }));
 
+type DivRefObject = React.RefObject<HTMLDivElement>;
+
 interface Props {
+  filters: React.ReactElement;
   listing: React.ReactElement;
   slidePanel?: React.ReactElement;
   slidePanelOpen: boolean;
   slidePanelIntegrate?: boolean;
 }
 
-const cumulativeOffset = (element): number => {
-  if (!element || !element.offsetParent) {
-    return 0;
-  }
-
-  return cumulativeOffset(element.offsetParent) + element.offsetTop;
-};
-
 const ListingPage = ({
   listing,
-  filtersExpandable,
-  labelFiltersIcon,
   filters,
-  expandableFilters,
   slidePanel,
   slidePanelOpen,
   slidePanelIntegrate = false,
-}: Props & FiltersProps): JSX.Element => {
+}: Props): JSX.Element => {
   const classes = useStyles(slidePanelIntegrate && slidePanelOpen)();
-  const pageBody = React.useRef<HTMLDivElement>();
+  const bodyRef = React.useRef<HTMLDivElement>() as DivRefObject;
+  const filterRef = React.useRef<HTMLDivElement>() as DivRefObject;
   const [height, setHeight] = React.useState<string>('100%');
-  const filterSummaryElement = React.useRef<HTMLDivElement>();
+
+  useResizeObserver<HTMLDivElement>({
+    ref: filterRef,
+    onResize: () => {
+      setHeight(pageBodyHeight());
+    },
+  });
 
   React.useEffect(() => {
     setHeight(pageBodyHeight());
-  }, [pageBody.current]);
+  }, [bodyRef.current]);
 
   const pageBodyHeight = (): string => {
-    return pageBody.current
-      ? `calc(100vh - ${cumulativeOffset(pageBody.current)}px - ${Math.floor(
-          (filterSummaryElement.current?.clientHeight || 0) / 2,
-        )}px)`
-      : '100%';
+    if (isNil(bodyRef.current)) {
+      return '100%';
+    }
+
+    const element = bodyRef.current as HTMLElement;
+
+    return `calc(100vh - ${getCumulativeOffset(element)}px - ${Math.floor(
+      (filterRef.current?.clientHeight || 0) / 2,
+    )}px)`;
   };
 
   return (
     <div className={classes.page}>
-      <Filters
-        filtersExpandable={filtersExpandable}
-        labelFiltersIcon={labelFiltersIcon}
-        filters={filters}
-        expandableFilters={expandableFilters}
-        onExpandTransitionFinished={() => {
-          setHeight(pageBodyHeight());
-        }}
-        ref={filterSummaryElement}
-      />
+      <div ref={filterRef} className={classes.filters}>
+        {filters}
+      </div>
+
       <div
-        className={classes.pageBody}
-        ref={pageBody as React.RefObject<HTMLDivElement>}
+        className={classes.body}
+        ref={bodyRef}
         style={{
           height,
         }}

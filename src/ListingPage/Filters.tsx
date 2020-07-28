@@ -1,19 +1,12 @@
 import * as React from 'react';
 
 import {
-  makeStyles,
   withStyles,
   ExpansionPanel,
   ExpansionPanelSummary as MuiExpansionPanelSummary,
   ExpansionPanelDetails as MuiExpansionPanelDetails,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-
-const useStyles = makeStyles({
-  filters: {
-    zIndex: 4,
-  },
-});
 
 const ExpansionPanelSummary = withStyles((theme) => ({
   root: {
@@ -64,34 +57,31 @@ const Filters = React.forwardRef(
     ref,
   ): JSX.Element => {
     const [expanded, setExpanded] = React.useState(false);
-    const classes = useStyles();
 
     const toggleExpanded = () => setExpanded(!expanded);
 
     return (
-      <div className={classes.filters}>
-        <ExpansionPanel
-          square
-          expanded={filtersExpandable ? expanded : false}
-          onTransitionEnd={() => onExpandTransitionFinished?.()}
+      <ExpansionPanel
+        square
+        expanded={filtersExpandable ? expanded : false}
+        onTransitionEnd={() => onExpandTransitionFinished?.()}
+      >
+        <ExpansionPanelSummary
+          expandIcon={
+            filtersExpandable && (
+              <ExpandMoreIcon color="primary" aria-label={labelFiltersIcon} />
+            )
+          }
+          IconButtonProps={{ onClick: toggleExpanded }}
+          style={{ cursor: 'default' }}
+          ref={ref as React.RefObject<HTMLDivElement>}
         >
-          <ExpansionPanelSummary
-            expandIcon={
-              filtersExpandable && (
-                <ExpandMoreIcon color="primary" aria-label={labelFiltersIcon} />
-              )
-            }
-            IconButtonProps={{ onClick: toggleExpanded }}
-            style={{ cursor: 'default' }}
-            ref={ref as React.RefObject<HTMLDivElement>}
-          >
-            {filters}
-          </ExpansionPanelSummary>
-          {expandableFilters && (
-            <ExpansionPanelDetails>{expandableFilters}</ExpansionPanelDetails>
-          )}
-        </ExpansionPanel>
-      </div>
+          {filters}
+        </ExpansionPanelSummary>
+        {expandableFilters && (
+          <ExpansionPanelDetails>{expandableFilters}</ExpansionPanelDetails>
+        )}
+      </ExpansionPanel>
     );
   },
 );

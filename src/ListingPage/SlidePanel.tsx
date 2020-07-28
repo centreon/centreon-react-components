@@ -1,23 +1,26 @@
 import * as React from 'react';
 
-import { makeStyles, Paper, Slide } from '@material-ui/core';
+import { makeStyles, Paper, Slide, Divider } from '@material-ui/core';
 
 const useStyles = makeStyles({
-  rightPanel: {
+  container: {
     gridArea: '1 / 2',
     zIndex: 3,
-    overflowY: 'auto',
   },
-  paperPanel: {
-    display: 'grid',
-    gridTemplate: 'auto 1fr',
+  details: {
     height: '100%',
+    display: 'grid',
+    gridTemplate: 'auto auto 1fr / 1fr',
   },
-  slideContent: {
-    overflowY: 'auto',
+  header: {
+    gridArea: '1 / 1 / 2 / 1',
+    padding: 8,
   },
-  slideHeader: {
-    zIndex: 1,
+  divider: {
+    gridArea: '2 / 1 / 3 / 1',
+  },
+  body: {
+    gridArea: '3 / 1 / 4 / 1',
   },
 });
 
@@ -38,14 +41,15 @@ const SlidePanel = ({ header, content }: SlidePanelProps): JSX.Element => {
         exit: 50,
       }}
     >
-      <div className={classes.rightPanel}>
-        <Paper elevation={5} className={classes.paperPanel}>
+      <div className={classes.container}>
+        <Paper elevation={2} className={classes.details}>
           {header && (
-            <Paper elevation={3} className={classes.slideHeader}>
-              {header}
-            </Paper>
+            <>
+              <div className={classes.header}>{header}</div>
+              <Divider className={classes.divider} />
+            </>
           )}
-          <div className={classes.slideContent}>{content}</div>
+          <div className={classes.body}>{content}</div>
         </Paper>
       </div>
     </Slide>
