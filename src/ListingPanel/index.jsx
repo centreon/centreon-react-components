@@ -1,18 +1,12 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import {
-  List,
-  ListItem,
-  Box,
-  makeStyles,
-  styled,
-  CircularProgress,
-} from '@material-ui/core';
+import { List, ListItem, Box, makeStyles, styled } from '@material-ui/core';
 
 import IconClose from '../Icon/IconClose2';
 import ExpandableSection from '../PagePanel/ExpandableSection';
 import { CloseSecondaryPanelIcon, HeaderContainer } from '../PagePanel';
 import SlidePanel from '../ListingPage/SlidePanel';
+import ContentWithCircularLoading from '../ContentWithCircularProgress';
 
 const Body = styled(Box)({
   height: 'auto',
@@ -37,13 +31,6 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'hidden',
     backgroundColor: `${theme.palette.grey[100]}`,
     padding: ({ active }) => (active ? 5 : 0),
-  },
-  loading: {
-    width: '100%',
-    display: 'grid',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: theme.spacing(2),
   },
 }));
 
@@ -101,42 +88,36 @@ const PagePanel = ({
       content={
         active && (
           <Body display="flex" flexDirection="row" flexGrow={1}>
-            {loading ? (
-              <div className={classes.loading}>
-                <CircularProgress />
+            <ContentWithCircularLoading loading={loading}>
+              <MainPanel flexGrow={1}>
+                <List>
+                  {Sections.map(({ id, title, Section, expandable }) =>
+                    expandable ? (
+                      <ExpandableSection key={id} title={title}>
+                        {Section}
+                      </ExpandableSection>
+                    ) : (
+                      <ListItem key={id}>{Section}</ListItem>
+                    ),
+                  )}
+                </List>
+              </MainPanel>
+              <SecondaryPanelBar
+                aria-label="Close Secondary Panel"
+                display="flex"
+                alignItems="center"
+                alignContent="center"
+                onClick={toggleSecondaryPanel}
+              >
+                {secondaryPanelActive && <CloseSecondaryPanelIcon />}
+              </SecondaryPanelBar>
+              <div
+                className={classes.secondaryPanel}
+                onTransitionEnd={onTransitionEnd}
+              >
+                {secondaryPanelComponent}
               </div>
-            ) : (
-              <>
-                <MainPanel flexGrow={1}>
-                  <List>
-                    {Sections.map(({ id, title, Section, expandable }) =>
-                      expandable ? (
-                        <ExpandableSection key={id} title={title}>
-                          {Section}
-                        </ExpandableSection>
-                      ) : (
-                        <ListItem key={id}>{Section}</ListItem>
-                      ),
-                    )}
-                  </List>
-                </MainPanel>
-                <SecondaryPanelBar
-                  aria-label="Close Secondary Panel"
-                  display="flex"
-                  alignItems="center"
-                  alignContent="center"
-                  onClick={toggleSecondaryPanel}
-                >
-                  {secondaryPanelActive && <CloseSecondaryPanelIcon />}
-                </SecondaryPanelBar>
-                <div
-                  className={classes.secondaryPanel}
-                  onTransitionEnd={onTransitionEnd}
-                >
-                  {secondaryPanelComponent}
-                </div>
-              </>
-            )}
+            </ContentWithCircularLoading>
           </Body>
         )
       }

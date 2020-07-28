@@ -10,6 +10,7 @@ export const normal = (): JSX.Element => (
   <ListingPanel
     active
     Header={<Typography>Header</Typography>}
+    loading
     Sections={[
       {
         expandable: true,
@@ -30,5 +31,14 @@ export const normal = (): JSX.Element => (
         Section: <Typography>Third section</Typography>,
       },
     ]}
+  />
+);
+
+export const normalWithLoadingState = (): JSX.Element => (
+  <ListingPanel
+    active
+    Header={<Typography>Header</Typography>}
+    loading
+    Sections={[]}
   />
 );
