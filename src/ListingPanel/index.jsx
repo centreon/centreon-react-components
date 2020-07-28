@@ -24,18 +24,18 @@ const MainPanel = styled(Box)({
   overflowY: 'auto',
 });
 
-export const SecondaryPanelBar = styled(Box)({
-  border: '1px solid #D6D6D8',
+export const SecondaryPanelBar = styled(Box)(({ theme }) => ({
+  border: `1px solid ${theme.palette.grey[300]}`,
   width: 20,
   cursor: 'pointer',
-});
+}));
 
 const useStyles = makeStyles((theme) => ({
   secondaryPanel: {
     width: ({ active }) => (active ? 500 : 0),
     transition: '.1s ease-in-out',
     overflow: 'hidden',
-    backgroundColor: '#c7c8c9',
+    backgroundColor: `${theme.palette.grey[100]}`,
     padding: ({ active }) => (active ? 5 : 0),
   },
   loading: {

@@ -54,22 +54,22 @@ const MainPanel = styled(Box)({
   marginBottom: topHeight,
 });
 
-export const SecondaryPanelBar = styled(Box)({
-  border: '1px solid #D6D6D8',
+export const SecondaryPanelBar = styled(Box)(({ theme }) => ({
+  border: `1px solid ${theme.palette.grey[300]}`,
   width: 20,
   cursor: 'pointer',
   marginBottom: topHeight,
-});
+}));
 
-const useSecondaryPanelStyles = makeStyles({
+const useSecondaryPanelStyles = makeStyles((theme) => ({
   secondaryPanel: {
     width: ({ active }) => (active ? 500 : 0),
     transition: '.1s ease-in-out',
     overflow: 'hidden',
-    backgroundColor: '#c7c8c9',
+    backgroundColor: `${theme.palette.grey[100]}`,
     padding: ({ active }) => (active ? 5 : 0),
   },
-});
+}));
 
 export const CloseSecondaryPanelIcon = styled(ArrowForwardIos)({
   width: 15,
