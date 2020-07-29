@@ -8,7 +8,6 @@ const useStyles = (
   makeStyles<Theme>((theme) => ({
     page: {
       height: '100%',
-
       display: 'grid',
       gridTemplateRows: 'auto 1fr',
       backgroundColor: theme.palette.background.default,
