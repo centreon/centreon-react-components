@@ -4,10 +4,6 @@ import { makeStyles, Paper, Slide, Divider } from '@material-ui/core';
 
 const useStyles = makeStyles({
   container: {
-    gridArea: '1 / 2',
-    zIndex: 3,
-  },
-  details: {
     height: '100%',
     display: 'grid',
     gridTemplate: 'auto auto 1fr / 1fr',
@@ -41,17 +37,15 @@ const SlidePanel = ({ header, content }: SlidePanelProps): JSX.Element => {
         exit: 50,
       }}
     >
-      <div className={classes.container}>
-        <Paper elevation={2} className={classes.details}>
-          {header && (
-            <>
-              <div className={classes.header}>{header}</div>
-              <Divider className={classes.divider} />
-            </>
-          )}
-          <div className={classes.body}>{content}</div>
-        </Paper>
-      </div>
+      <Paper elevation={2} className={classes.container}>
+        {header && (
+          <>
+            <div className={classes.header}>{header}</div>
+            <Divider className={classes.divider} />
+          </>
+        )}
+        <div className={classes.body}>{content}</div>
+      </Paper>
     </Slide>
   );
 };

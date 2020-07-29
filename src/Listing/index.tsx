@@ -21,8 +21,8 @@ import { ColumnType } from './models';
 import PaginationActions from './PaginationActions';
 import StyledPagination from './Pagination';
 import ListingLoadingSkeleton from './Skeleton';
-import useResizeObserver from '../utils/useResizeObserver';
-import getCumulativeOffset from '../utils/getCumulativeOffset';
+import useResizeObserver from './useResizeObserver';
+import getCumulativeOffset from './getCumulativeOffset';
 
 const loadingIndicatorHeight = 3;
 

@@ -1,22 +1,13 @@
 import * as React from 'react';
 
-import { isNil, prop, pipe } from 'ramda';
-
 import { makeStyles, Theme } from '@material-ui/core';
-
-import useResizeObserver from '../utils/useResizeObserver';
-import getCumulativeOffset from '../utils/getCumulativeOffset';
 
 const useStyles = (
   slidePanelIntegrated: boolean,
 ): (() => Record<string, string>) =>
   makeStyles<Theme>((theme) => ({
     page: {
-      // display: 'grid',
-      // gridTemplateRows: 'auto 1fr',
-      // backgroundColor: theme.palette.background.default,
-      // overflowY: 'hidden',
-      // height: '100%',
+      height: '100%',
 
       display: 'grid',
       gridTemplateRows: 'auto 1fr',
@@ -31,6 +22,10 @@ const useStyles = (
       gridTemplateRows: '1fr',
       gridTemplateColumns: '1fr 550px',
     },
+    panel: {
+      gridArea: '1 / 2',
+      zIndex: 3,
+    },
     listing: {
       marginLeft: theme.spacing(2),
       marginRight: theme.spacing(2),
@@ -38,8 +33,6 @@ const useStyles = (
       height: '100%',
     },
   }));
-
-type DivRefObject = React.RefObject<HTMLDivElement>;
 
 interface Props {
   filters: React.ReactElement;
@@ -57,47 +50,13 @@ const ListingPage = ({
   slidePanelIntegrate = false,
 }: Props): JSX.Element => {
   const classes = useStyles(slidePanelIntegrate && slidePanelOpen)();
-  const bodyRef = React.useRef<HTMLDivElement>() as DivRefObject;
-  const filterRef = React.useRef<HTMLDivElement>() as DivRefObject;
-  const [height, setHeight] = React.useState<string>('100%');
-
-  useResizeObserver<HTMLDivElement>({
-    ref: filterRef,
-    onResize: () => {
-      setHeight(pageBodyHeight());
-    },
-  });
-
-  React.useEffect(() => {
-    setHeight(pageBodyHeight());
-  }, [bodyRef.current]);
-
-  const pageBodyHeight = (): string => {
-    if (isNil(bodyRef.current)) {
-      return '100%';
-    }
-
-    const element = bodyRef.current as HTMLElement;
-
-    return `calc(100vh - ${getCumulativeOffset(element)}px - ${Math.floor(
-      (filterRef.current?.clientHeight || 0) / 2,
-    )}px)`;
-  };
 
   return (
     <div className={classes.page}>
-      <div ref={filterRef} className={classes.filters}>
-        {filters}
-      </div>
+      <div className={classes.filters}>{filters}</div>
 
-      <div
-        className={classes.body}
-        ref={bodyRef}
-        style={{
-          height,
-        }}
-      >
-        {slidePanelOpen && slidePanel}
+      <div className={classes.body}>
+        {slidePanelOpen && <div className={classes.panel}>{slidePanel}</div>}
         <div className={classes.listing}>{listing}</div>
       </div>
     </div>
