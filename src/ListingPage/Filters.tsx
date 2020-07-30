@@ -38,8 +38,8 @@ const ExpansionPanelDetails = withStyles((theme) => ({
 }))(MuiExpansionPanelDetails);
 
 export interface FiltersProps {
-  filtersExpandable: boolean;
-  labelFiltersIcon?: string;
+  expandable?: boolean;
+  expandLabel?: string;
   filters: React.ReactElement;
   expandableFilters?: React.ReactElement;
   onExpandTransitionFinish?: (expanded: boolean) => void;
@@ -49,8 +49,8 @@ export interface FiltersProps {
 const Filters = React.forwardRef(
   (
     {
-      filtersExpandable,
-      labelFiltersIcon,
+      expandable = false,
+      expandLabel,
       filters,
       expandableFilters,
       onExpandTransitionFinish,
@@ -65,14 +65,14 @@ const Filters = React.forwardRef(
     return (
       <ExpansionPanel
         square
-        expanded={filtersExpandable ? expanded : false}
+        expanded={expandable ? expanded : false}
         onTransitionEnd={() => onExpandTransitionFinish?.(expanded)}
         onAnimationStart={() => onExpandTransitionStart?.(expanded)}
       >
         <ExpansionPanelSummary
           expandIcon={
-            filtersExpandable && (
-              <ExpandMoreIcon color="primary" aria-label={labelFiltersIcon} />
+            expandable && (
+              <ExpandMoreIcon color="primary" aria-label={expandLabel} />
             )
           }
           IconButtonProps={{ onClick: toggleExpanded }}
