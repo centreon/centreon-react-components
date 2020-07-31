@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 
-import { Typography, makeStyles, Paper, Button } from '@material-ui/core';
+import { Typography, makeStyles, Paper, Button, Tab } from '@material-ui/core';
 import { grey } from '@material-ui/core/colors';
 import CloseIcon from '@material-ui/icons/Close';
 
@@ -280,7 +280,17 @@ const DetailsPanel = ({
 }: PanelProps): JSX.Element => (
   <SlidePanel
     header={<DetailsPanelHeader onClose={onClose} />}
-    content={<DetailsPanelContent />}
+    selectedTab={<DetailsPanelContent />}
+  />
+);
+
+const DetailsPanelWithTabs = ({
+  onClose = () => undefined,
+}: PanelProps): JSX.Element => (
+  <SlidePanel
+    header={<DetailsPanelHeader onClose={onClose} />}
+    tabs={[<Tab key="tab1" label="Tab 1" />, <Tab key="tab2" label="Tab 2" />]}
+    selectedTab={<DetailsPanelContent />}
   />
 );
 
@@ -301,6 +311,15 @@ export const withOpenPanel = (): JSX.Element => (
   />
 );
 
+export const withOpenPanelAndTabs = (): JSX.Element => (
+  <ListingPage
+    slidePanelOpen
+    listing={listing}
+    filters={<NonExpandableFilters />}
+    slidePanel={<DetailsPanelWithTabs />}
+  />
+);
+
 export const withExpandableFilters = (): JSX.Element => (
   <ListingPage
     slidePanelOpen={false}
@@ -309,7 +328,7 @@ export const withExpandableFilters = (): JSX.Element => (
   />
 );
 
-export const withFiltersDetailsAndOpenedPanel = (): JSX.Element => (
+export const withFilterDetailsAndOpenPanel = (): JSX.Element => (
   <ListingPage
     slidePanelOpen
     listing={listing}

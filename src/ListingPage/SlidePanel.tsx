@@ -1,8 +1,17 @@
 import * as React from 'react';
 
-import { makeStyles, Paper, Slide, Divider } from '@material-ui/core';
+import { isEmpty } from 'ramda';
 
-const useStyles = makeStyles({
+import {
+  makeStyles,
+  Paper,
+  Slide,
+  Divider,
+  AppBar,
+  Tabs,
+} from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
   container: {
     height: '100%',
     display: 'grid',
@@ -17,15 +26,45 @@ const useStyles = makeStyles({
   },
   body: {
     gridArea: '3 / 1 / 4 / 1',
+    display: 'grid',
+    gridTemplateRows: 'auto 1fr',
+    height: '100%',
   },
-});
+  contentContainer: {
+    backgroundColor: theme.palette.background.default,
+    position: 'relative',
+  },
+  content: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    top: 0,
+    overflow: 'auto',
+    padding: theme.spacing(1),
+  },
+}));
+
+export interface Tab {
+  tab: JSX.Element;
+  id: number;
+}
 
 interface SlidePanelProps {
   header: React.ReactElement;
-  content: React.ReactElement;
+  selectedTab: React.ReactElement;
+  tabs?: Array<JSX.Element>;
+  selectedTabId?: number;
+  onTabSelect?: (event, id: number) => void;
 }
 
-const SlidePanel = ({ header, content }: SlidePanelProps): JSX.Element => {
+const SlidePanel = ({
+  header,
+  tabs = [],
+  selectedTabId = 0,
+  selectedTab,
+  onTabSelect = () => undefined,
+}: SlidePanelProps): JSX.Element => {
   const classes = useStyles();
 
   return (
@@ -44,7 +83,24 @@ const SlidePanel = ({ header, content }: SlidePanelProps): JSX.Element => {
             <Divider className={classes.divider} />
           </>
         )}
-        <div className={classes.body}>{content}</div>
+        <div className={classes.body}>
+          <AppBar position="static" color="default">
+            {!isEmpty(tabs) && (
+              <Tabs
+                variant="fullWidth"
+                value={selectedTabId}
+                indicatorColor="primary"
+                textColor="primary"
+                onChange={onTabSelect}
+              >
+                {tabs.map((tab) => tab)}
+              </Tabs>
+            )}
+          </AppBar>
+          <div className={classes.contentContainer}>
+            <div className={classes.content}>{selectedTab}</div>
+          </div>
+        </div>
       </Paper>
     </Slide>
   );

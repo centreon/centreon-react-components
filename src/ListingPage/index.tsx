@@ -40,6 +40,7 @@ const useStyles = ({
       panel: {
         gridArea: '1 / 2',
         zIndex: 3,
+        overflowY: 'auto',
       },
       listing: {
         marginLeft: theme.spacing(2),
