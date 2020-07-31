@@ -31,7 +31,7 @@ interface OptionalLabelInputAdornmentProps {
 }
 
 const OptionalLabelInputAdornment = ({
-  label,
+  label = '',
   position,
   children,
 }: OptionalLabelInputAdornmentProps): JSX.Element => {
@@ -42,10 +42,6 @@ const OptionalLabelInputAdornment = ({
       {children}
     </InputAdornment>
   );
-};
-
-OptionalLabelInputAdornment.defaultProps = {
-  label: '',
 };
 
 export type Props = {

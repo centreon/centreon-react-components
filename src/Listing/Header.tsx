@@ -47,8 +47,8 @@ const ListingHeader = React.forwardRef(
   (
     {
       onSelectAllClick,
-      order,
-      orderBy,
+      order = undefined,
+      orderBy = undefined,
       numSelected,
       rowCount,
       headColumns,
@@ -112,10 +112,5 @@ const ListingHeader = React.forwardRef(
     );
   },
 );
-
-ListingHeader.defaultProps = {
-  order: undefined,
-  orderBy: undefined,
-};
 
 export default ListingHeader;

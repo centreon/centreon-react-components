@@ -32,37 +32,33 @@ interface Props {
 const PersistentTooltip = ({
   children,
   labelSearchHelp,
-  openTooltip,
-  toggleTooltip: toggleTooltipProp,
-  closeTooltip: closeTooltipProp,
+  openTooltip = undefined,
+  toggleTooltip = undefined,
+  closeTooltip = undefined,
 }: Props): JSX.Element => {
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(openTooltip || false);
 
-  const toggleTooltip = (): void => {
+  const toggle = (): void => {
     cond([
       [isNil, (): void => setOpen(!open)],
-      [T, (): void => toggleTooltipProp?.()],
+      [T, (): void => toggleTooltip?.()],
     ])(openTooltip);
   };
 
-  const closeTooltip = (): void => {
+  const close = (): void => {
     if (!openTooltip) {
       setOpen(false);
       return;
     }
 
-    closeTooltipProp?.();
+    closeTooltip?.();
   };
 
   const title = (
     <>
-      <IconButton
-        size="small"
-        onClick={closeTooltip}
-        className={classes.buttonClose}
-      >
+      <IconButton size="small" onClick={close} className={classes.buttonClose}>
         <IconClose fontSize="small" />
       </IconButton>
       {children}
@@ -76,21 +72,11 @@ const PersistentTooltip = ({
       classes={{ tooltip: classes.tooltip }}
       interactive
     >
-      <IconButton
-        aria-label={labelSearchHelp}
-        size="small"
-        onClick={toggleTooltip}
-      >
+      <IconButton aria-label={labelSearchHelp} size="small" onClick={toggle}>
         <IconHelp />
       </IconButton>
     </Tooltip>
   );
-};
-
-PersistentTooltip.defaultProps = {
-  openTooltip: undefined,
-  toggleTooltip: undefined,
-  closeTooltip: undefined,
 };
 
 export default PersistentTooltip;

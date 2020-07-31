@@ -39,14 +39,14 @@ interface TooltipProps {
 }
 
 const RegexpHelpTooltip = ({
-  description,
+  description = undefined,
   labelSearchHelp,
-  labelExamples,
-  examples,
-  labelTips,
-  labelGetHelp,
-  urlTip,
-  labelUrlTip,
+  labelExamples = undefined,
+  examples = undefined,
+  labelTips = undefined,
+  labelGetHelp = undefined,
+  urlTip = undefined,
+  labelUrlTip = undefined,
 }: TooltipProps): JSX.Element => {
   const displayElement = (element): ((prop) => React.ReactElement | null) =>
     ifElse(isNil, always(null), always(element));
@@ -75,16 +75,6 @@ const RegexpHelpTooltip = ({
       {content}
     </PersistentTooltip>
   );
-};
-
-RegexpHelpTooltip.defaultProps = {
-  description: undefined,
-  labelExamples: undefined,
-  examples: undefined,
-  labelTips: undefined,
-  labelGetHelp: undefined,
-  urlTip: undefined,
-  labelUrlTip: undefined,
 };
 
 export default RegexpHelpTooltip;

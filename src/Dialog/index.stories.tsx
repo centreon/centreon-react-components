@@ -10,21 +10,21 @@ interface Props {
   confirmDisabled?: boolean;
   submitting?: boolean;
 }
-const Story = ({ children, ...props }: Props): JSX.Element => (
+const Story = ({
+  children,
+  confirmDisabled = false,
+  submitting = false,
+}: Props): JSX.Element => (
   <Dialog
     open
     onCancel={(): void => undefined}
     onConfirm={(): void => undefined}
-    {...props}
+    confirmDisabled={confirmDisabled}
+    submitting={submitting}
   >
     {children}
   </Dialog>
 );
-
-Story.defaultProps = {
-  confirmDisabled: false,
-  submitting: false,
-};
 
 export const normal = (): JSX.Element => (
   <Story>
