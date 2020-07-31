@@ -39,14 +39,14 @@ interface TooltipProps {
 }
 
 const RegexpHelpTooltip = ({
-  description = undefined,
+  description,
   labelSearchHelp,
-  labelExamples = undefined,
-  examples = undefined,
-  labelTips = undefined,
-  labelGetHelp = undefined,
-  urlTip = undefined,
-  labelUrlTip = undefined,
+  labelExamples,
+  examples,
+  labelTips,
+  labelGetHelp,
+  urlTip,
+  labelUrlTip,
 }: TooltipProps): JSX.Element => {
   const displayElement = (element): ((prop) => React.ReactElement | null) =>
     ifElse(isNil, always(null), always(element));

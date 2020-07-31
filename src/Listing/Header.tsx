@@ -47,8 +47,8 @@ const ListingHeader = React.forwardRef(
   (
     {
       onSelectAllClick,
-      order = undefined,
-      orderBy = undefined,
+      order,
+      orderBy,
       numSelected,
       rowCount,
       headColumns,

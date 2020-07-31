@@ -36,12 +36,7 @@ interface Props {
   severity: Severity;
 }
 
-const Snackbar = ({
-  message,
-  open,
-  onClose = undefined,
-  severity,
-}: Props): JSX.Element => {
+const Snackbar = ({ message, open, onClose, severity }: Props): JSX.Element => {
   const classes = useStyles();
 
   return (

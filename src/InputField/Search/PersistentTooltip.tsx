@@ -32,9 +32,9 @@ interface Props {
 const PersistentTooltip = ({
   children,
   labelSearchHelp,
-  openTooltip = undefined,
-  toggleTooltip = undefined,
-  closeTooltip = undefined,
+  openTooltip,
+  toggleTooltip,
+  closeTooltip,
 }: Props): JSX.Element => {
   const classes = useStyles();
 

@@ -89,7 +89,7 @@ const MultiSelectEntries = ({
   onClick,
   values = [],
   highlight = false,
-  error = undefined,
+  error,
 }: Props): JSX.Element => {
   const classes = useStyles();
 
