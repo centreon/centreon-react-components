@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
   header: {
     gridArea: '1 / 1 / 2 / 1',
-    padding: 8,
+    padding: theme.spacing(2),
   },
   divider: {
     gridArea: '2 / 1 / 3 / 1',
