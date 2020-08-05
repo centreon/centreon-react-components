@@ -4,17 +4,15 @@ import * as React from 'react';
 
 import { Typography, makeStyles, Paper, Button, Tab } from '@material-ui/core';
 import { grey } from '@material-ui/core/colors';
-import CloseIcon from '@material-ui/icons/Close';
 
 import ListingPage from '.';
 import Listing from '../Listing';
 import { ColumnType } from '../Listing/models';
 import { SearchField } from '..';
 import TextField from '../InputField/Text';
-import AutocompleteField from '../InputField/Select/Autocomplete';
-import SlidePanel from './SlidePanel';
-import IconButton from '../Button/Icon';
+import Panel from '../Panel';
 import Filters from './Filters';
+import AutocompleteField from '../InputField/Select/Autocomplete';
 
 export default { title: 'Listing Page' };
 
@@ -259,18 +257,13 @@ interface PanelProps {
   onClose?: () => void;
 }
 
-const DetailsPanelHeader = ({
-  onClose = () => undefined,
-}: PanelProps): JSX.Element => {
+const DetailsPanelHeader = (): JSX.Element => {
   const classes = useStyles();
   return (
     <div className={classes.detailsPanelHeader}>
       <Typography variant="h5" align="center">
         Details Panel
       </Typography>
-      <IconButton title="Close" ariaLabel="Close" onClick={onClose}>
-        <CloseIcon />
-      </IconButton>
     </div>
   );
 };
@@ -278,8 +271,9 @@ const DetailsPanelHeader = ({
 const DetailsPanel = ({
   onClose = () => undefined,
 }: PanelProps): JSX.Element => (
-  <SlidePanel
-    header={<DetailsPanelHeader onClose={onClose} />}
+  <Panel
+    onClose={onClose}
+    header={<DetailsPanelHeader />}
     selectedTab={<DetailsPanelContent />}
   />
 );
@@ -287,8 +281,9 @@ const DetailsPanel = ({
 const DetailsPanelWithTabs = ({
   onClose = () => undefined,
 }: PanelProps): JSX.Element => (
-  <SlidePanel
-    header={<DetailsPanelHeader onClose={onClose} />}
+  <Panel
+    onClose={onClose}
+    header={<DetailsPanelHeader />}
     tabs={[<Tab key="tab1" label="Tab 1" />, <Tab key="tab2" label="Tab 2" />]}
     selectedTab={<DetailsPanelContent />}
   />

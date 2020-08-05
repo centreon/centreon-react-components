@@ -43,7 +43,6 @@ export interface FiltersProps {
   filters: React.ReactElement;
   expandableFilters?: React.ReactElement;
   onExpandTransitionFinish?: (expanded: boolean) => void;
-  onExpandTransitionStart?: (expanded: boolean) => void;
 }
 
 const Filters = React.forwardRef(
@@ -54,7 +53,6 @@ const Filters = React.forwardRef(
       filters,
       expandableFilters,
       onExpandTransitionFinish,
-      onExpandTransitionStart,
     }: FiltersProps,
     ref,
   ): JSX.Element => {
@@ -67,7 +65,6 @@ const Filters = React.forwardRef(
         square
         expanded={expandable ? expanded : false}
         onTransitionEnd={() => onExpandTransitionFinish?.(expanded)}
-        onAnimationStart={() => onExpandTransitionStart?.(expanded)}
       >
         <ExpansionPanelSummary
           expandIcon={

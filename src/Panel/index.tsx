@@ -10,6 +10,8 @@ import {
   AppBar,
   Tabs,
 } from '@material-ui/core';
+import IconClose from '@material-ui/icons/Clear';
+import IconButton from '../Button/Icon';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -19,7 +21,10 @@ const useStyles = makeStyles((theme) => ({
   },
   header: {
     gridArea: '1 / 1 / 2 / 1',
-    padding: theme.spacing(2),
+    padding: theme.spacing(1),
+    display: 'grid',
+    gridTemplateColumns: '1fr auto',
+    alignItems: 'center',
   },
   divider: {
     gridArea: '2 / 1 / 3 / 1',
@@ -41,7 +46,6 @@ const useStyles = makeStyles((theme) => ({
     right: 0,
     top: 0,
     overflow: 'auto',
-    padding: theme.spacing(1),
   },
 }));
 
@@ -50,21 +54,25 @@ export interface Tab {
   id: number;
 }
 
-interface SlidePanelProps {
+interface Props {
   header: React.ReactElement;
   selectedTab: React.ReactElement;
   tabs?: Array<JSX.Element>;
   selectedTabId?: number;
   onTabSelect?: (event, id: number) => void;
+  onClose: () => void;
+  labelClose?: string;
 }
 
-const SlidePanel = ({
+const Panel = ({
   header,
   tabs = [],
   selectedTabId = 0,
   selectedTab,
+  onClose,
   onTabSelect = () => undefined,
-}: SlidePanelProps): JSX.Element => {
+  labelClose = 'Close',
+}: Props): JSX.Element => {
   const classes = useStyles();
 
   return (
@@ -79,7 +87,16 @@ const SlidePanel = ({
       <Paper elevation={2} className={classes.container}>
         {header && (
           <>
-            <div className={classes.header}>{header}</div>
+            <div className={classes.header}>
+              {header}
+              <IconButton
+                title={labelClose}
+                ariaLabel={labelClose}
+                onClick={onClose}
+              >
+                <IconClose color="action" />
+              </IconButton>
+            </div>
             <Divider className={classes.divider} />
           </>
         )}
@@ -106,4 +123,4 @@ const SlidePanel = ({
   );
 };
 
-export default SlidePanel;
+export default Panel;
