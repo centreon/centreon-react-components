@@ -4,9 +4,10 @@ import { render, fireEvent } from '@testing-library/react';
 
 import ListingPanel from '.';
 
+const Header = <>Header</>;
+
 describe(ListingPanel, () => {
   it('displays given Header and sections', async () => {
-    const Header = <>Header</>;
     const Sections = [
       {
         id: 0,
@@ -35,7 +36,7 @@ describe(ListingPanel, () => {
 
     const { baseElement, getByText, queryByText } = render(
       <ListingPanel
-        Header={<>Header</>}
+        Header={Header}
         Sections={[]}
         active
         secondaryPanelComponent={secondaryPanelComponent}
