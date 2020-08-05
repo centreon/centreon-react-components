@@ -26,17 +26,17 @@ const useStyles = makeStyles<Theme>((theme) => {
 interface Props {
   filters: JSX.Element;
   listing: JSX.Element;
-  slidePanel?: JSX.Element;
-  slidePanelOpen?: boolean;
-  slidePanelFixed?: boolean;
+  panel?: JSX.Element;
+  panelOpen?: boolean;
+  panelFixed?: boolean;
 }
 
 const ListingPage = ({
   listing,
   filters,
-  slidePanel,
-  slidePanelOpen = false,
-  slidePanelFixed = false,
+  panel,
+  panelOpen = false,
+  panelFixed = false,
 }: Props): JSX.Element => {
   const classes = useStyles();
 
@@ -44,11 +44,7 @@ const ListingPage = ({
     <div className={classes.page}>
       <div className={classes.filters}>{filters}</div>
 
-      <WithPanel
-        open={slidePanelOpen}
-        panel={slidePanel}
-        fixed={slidePanelFixed}
-      >
+      <WithPanel open={panelOpen} panel={panel} fixed={panelFixed}>
         <div className={classes.listing}>{listing}</div>
       </WithPanel>
     </div>

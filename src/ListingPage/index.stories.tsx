@@ -291,7 +291,7 @@ const DetailsPanelWithTabs = ({
 
 export const normal = (): JSX.Element => (
   <ListingPage
-    slidePanelOpen={false}
+    panelOpen={false}
     listing={listing}
     filters={<NonExpandableFilters />}
   />
@@ -299,25 +299,25 @@ export const normal = (): JSX.Element => (
 
 export const withOpenPanel = (): JSX.Element => (
   <ListingPage
-    slidePanelOpen
+    panelOpen
     listing={listing}
     filters={<NonExpandableFilters />}
-    slidePanel={<DetailsPanel />}
+    panel={<DetailsPanel />}
   />
 );
 
 export const withOpenPanelAndTabs = (): JSX.Element => (
   <ListingPage
-    slidePanelOpen
+    panelOpen
     listing={listing}
     filters={<NonExpandableFilters />}
-    slidePanel={<DetailsPanelWithTabs />}
+    panel={<DetailsPanelWithTabs />}
   />
 );
 
 export const withExpandableFilters = (): JSX.Element => (
   <ListingPage
-    slidePanelOpen={false}
+    panelOpen={false}
     listing={listing}
     filters={<ExpandableFilters />}
   />
@@ -325,22 +325,22 @@ export const withExpandableFilters = (): JSX.Element => (
 
 export const withFilterDetailsAndOpenPanel = (): JSX.Element => (
   <ListingPage
-    slidePanelOpen
+    panelOpen
     listing={listing}
     filters={<ExpandableFilters />}
-    slidePanel={<DetailsPanel />}
+    panel={<DetailsPanel />}
   />
 );
 
-export const withExpandableFiltersAndDynamicSlidePanel = (): JSX.Element => {
+export const withExpandableFiltersAndDynamicPanel = (): JSX.Element => {
   const [open, setOpen] = React.useState(true);
   return (
     <ListingPage
-      slidePanelOpen={open}
+      panelOpen={open}
       listing={listing}
       filters={<ExpandableFiltersWithOpenButton onOpen={() => setOpen(true)} />}
-      slidePanel={<DetailsPanel onClose={() => setOpen(false)} />}
-      slidePanelFixed={false}
+      panel={<DetailsPanel onClose={() => setOpen(false)} />}
+      panelFixed={false}
     />
   );
 };
