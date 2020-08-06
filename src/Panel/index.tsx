@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     display: 'grid',
     gridTemplate: 'auto auto 1fr / 1fr',
+    width: (width: number) => width,
   },
   header: {
     gridArea: '1 / 1 / 2 / 1',
@@ -62,6 +63,7 @@ interface Props {
   onTabSelect?: (event, id: number) => void;
   onClose: () => void;
   labelClose?: string;
+  width?: number;
 }
 
 const Panel = ({
@@ -72,8 +74,9 @@ const Panel = ({
   onClose,
   onTabSelect = () => undefined,
   labelClose = 'Close',
+  width = 550,
 }: Props): JSX.Element => {
-  const classes = useStyles();
+  const classes = useStyles(width);
 
   return (
     <Slide

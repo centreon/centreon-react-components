@@ -5,7 +5,7 @@ const useStyles = makeStyles(() => ({
   container: {
     display: 'grid',
     gridTemplateRows: '1fr',
-    gridTemplateColumns: '1fr 550px',
+    gridTemplateColumns: '1fr auto',
   },
   content: {
     gridArea: (panelDynamicAndOpen) =>

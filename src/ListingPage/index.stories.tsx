@@ -332,7 +332,7 @@ export const withFilterDetailsAndOpenPanel = (): JSX.Element => (
   />
 );
 
-export const withExpandableFiltersAndDynamicPanel = (): JSX.Element => {
+export const withExpandableFiltersAndFixedPanel = (): JSX.Element => {
   const [open, setOpen] = React.useState(true);
   return (
     <ListingPage
@@ -340,7 +340,7 @@ export const withExpandableFiltersAndDynamicPanel = (): JSX.Element => {
       listing={listing}
       filters={<ExpandableFiltersWithOpenButton onOpen={() => setOpen(true)} />}
       panel={<DetailsPanel onClose={() => setOpen(false)} />}
-      panelFixed={false}
+      panelFixed
     />
   );
 };

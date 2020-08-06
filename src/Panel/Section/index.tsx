@@ -7,24 +7,27 @@ import ExpandableSection from './ExpandableSection';
 import Panel from '..';
 import ContentWithCircularLoading from '../../ContentWithCircularProgress';
 
+const panelWidth = 550;
+const closeSecondaryPanelBarWidth = 20;
+
 const useStyles = makeStyles((theme) => ({
   container: {
     display: 'grid',
-    gridTemplateColumns: '1fr auto auto',
+    gridTemplateColumns: `${panelWidth}px ${closeSecondaryPanelBarWidth}px ${panelWidth}px`,
     height: '100%',
   },
   closeSecondaryPanelBar: {
     border: `1px solid ${theme.palette.grey[300]}`,
-    width: 20,
+    borderTop: 0,
+    borderBottom: 0,
     cursor: 'pointer',
   },
   closeIcon: {
     width: 15,
     margin: 'auto',
+    color: theme.palette.action.disabled,
   },
   secondaryPanel: {
-    width: (secondaryPanelOpen) => (secondaryPanelOpen ? 500 : 0),
-    transition: '.1s ease-in-out',
     overflow: 'hidden',
   },
 }));
@@ -53,30 +56,23 @@ const SectionPanel = ({
   onClose = () => undefined,
   loading = false,
 }: Props): JSX.Element => {
-  const [secondaryPanelOpen, setSecondaryPanelOpen] = React.useState(false);
-  const classes = useStyles(secondaryPanelOpen);
+  const hasSecondaryPanel = secondaryPanel !== undefined;
 
-  React.useEffect(() => {
-    setSecondaryPanelOpen(secondaryPanel !== undefined);
-  }, [secondaryPanel]);
+  const classes = useStyles(hasSecondaryPanel);
 
-  const toggleSecondaryPanel = () => {
-    if (!secondaryPanel) {
-      return;
+  const getWidth = (): number => {
+    if (hasSecondaryPanel) {
+      return panelWidth * 2 + closeSecondaryPanelBarWidth;
     }
-    setSecondaryPanelOpen(!secondaryPanelOpen);
-  };
 
-  const onTransitionEnd = () => {
-    if (!setSecondaryPanelOpen) {
-      onSecondaryPanelClose();
-    }
+    return panelWidth;
   };
 
   return (
     <Panel
       onClose={onClose}
       header={header}
+      width={getWidth()}
       selectedTab={
         <ContentWithCircularLoading alignCenter loading={loading}>
           <div className={classes.container}>
@@ -91,24 +87,19 @@ const SectionPanel = ({
                 ),
               )}
             </List>
-            {secondaryPanelOpen && (
+            {hasSecondaryPanel && (
               <Box
                 className={classes.closeSecondaryPanelBar}
                 aria-label="Close Secondary Panel"
                 display="flex"
                 alignItems="center"
                 alignContent="center"
-                onClick={toggleSecondaryPanel}
+                onClick={onSecondaryPanelClose}
               >
                 <ForwardIcon className={classes.closeIcon} />
               </Box>
             )}
-            <div
-              className={classes.secondaryPanel}
-              onTransitionEnd={onTransitionEnd}
-            >
-              {secondaryPanel}
-            </div>
+            <div className={classes.secondaryPanel}>{secondaryPanel}</div>
           </div>
         </ContentWithCircularLoading>
       }
