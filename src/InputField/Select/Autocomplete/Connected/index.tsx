@@ -57,12 +57,17 @@ const ConnectedAutocompleteField = (
       request: getData,
     });
 
-    const getPaginationProperty = ({ meta, prop }) => path(append(prop, paginationPath), meta)
+    const getPaginationProperty = ({ meta, prop }) =>
+      path(append(prop, paginationPath), meta);
 
     const loadOptions = ({ endpoint, loadMore = false }) => {
       sendRequest(endpoint).then(({ result, meta }) => {
         setOptions(concat(loadMore ? options : [], result));
-        setMaxPage(Math.ceil(getPaginationProperty({ meta, prop: 'total' }) / getPaginationProperty({ meta, prop: 'limit' })));
+
+        const total = getPaginationProperty({ meta, prop: 'total' });
+        const limit = getPaginationProperty({ meta, prop: 'limit' });
+
+        setMaxPage(Math.ceil(total / limit));
       });
     };
 
