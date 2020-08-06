@@ -55,6 +55,7 @@ export const single = (): JSX.Element => (
     getEndpoint={getEndpoint}
     getOptionsFromResult={(result): Array<SelectEntry> => result}
     placeholder="Type here..."
+    paginationPath={['pagination']}
   />
 );
 
@@ -65,5 +66,6 @@ export const multi = (): JSX.Element => (
     getEndpoint={getEndpoint}
     getOptionsFromResult={(result): Array<SelectEntry> => result}
     placeholder="Type here..."
+    paginationPath={['pagination']}
   />
 );

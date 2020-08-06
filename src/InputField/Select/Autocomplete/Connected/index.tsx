@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { concat, last, equals } from 'ramda';
+import { concat, last, equals, path, append } from 'ramda';
 import { useDebouncedCallback } from 'use-debounce';
 
 import {
@@ -22,6 +22,7 @@ import { ListingModel } from '../../../..';
 interface Props {
   getEndpoint: ({ search, page }) => string;
   initialPage: number;
+  paginationPath?: Array<string>;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -40,6 +41,7 @@ const ConnectedAutocompleteField = (
   >({
     initialPage,
     getEndpoint,
+    paginationPath = [''],
     ...props
   }: Props & Omit<AutocompleteFieldProps, 'options'>): JSX.Element => {
     const [options, setOptions] = React.useState<Array<SelectEntry>>();
@@ -55,10 +57,12 @@ const ConnectedAutocompleteField = (
       request: getData,
     });
 
+    const getPaginationProperty = ({ meta, prop }) => path(append(prop, paginationPath), meta)
+
     const loadOptions = ({ endpoint, loadMore = false }) => {
       sendRequest(endpoint).then(({ result, meta }) => {
         setOptions(concat(loadMore ? options : [], result));
-        setMaxPage(Math.ceil(meta.total / meta.limit));
+        setMaxPage(Math.ceil(getPaginationProperty({ meta, prop: 'total' }) / getPaginationProperty({ meta, prop: 'limit' })));
       });
     };
 
