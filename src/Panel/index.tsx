@@ -61,7 +61,7 @@ interface Props {
   tabs?: Array<JSX.Element>;
   selectedTabId?: number;
   onTabSelect?: (event, id: number) => void;
-  onClose: () => void;
+  onClose?: () => void;
   labelClose?: string;
   width?: number;
 }
@@ -71,7 +71,7 @@ const Panel = ({
   tabs = [],
   selectedTabId = 0,
   selectedTab,
-  onClose,
+  onClose = () => undefined,
   onTabSelect = () => undefined,
   labelClose = 'Close',
   width = 550,
