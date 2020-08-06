@@ -49,7 +49,7 @@ export {
 } from './Listing/models';
 
 export { default as ListingPage } from './ListingPage';
-export { default as FilteBar } from './ListingPage/Filters';
+export { default as Filters } from './ListingPage/Filters';
 export { default as Panel } from './Panel';
 
 export { default as Title } from './Title';
