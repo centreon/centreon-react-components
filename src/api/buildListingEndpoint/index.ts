@@ -1,5 +1,5 @@
 import getSearchParam from './getSearchParam';
-import { ListingOptions, Param } from './models';
+import { Listing, Param, BuildListingOptions } from './models';
 
 const buildParam = ({ name, value }): string => {
   return `${name}=${JSON.stringify(value)}`;
@@ -16,18 +16,17 @@ const getListingParams = ({
   page,
   limit,
   search,
-  searchOptions,
-  extraParams = [],
-}: ListingOptions): Array<Param> => {
+  filters = [],
+}: Listing): Array<Param> => {
   return [
     { name: 'page', value: page },
     { name: 'limit', value: limit },
     { name: 'sort_by', value: sort },
     {
       name: 'search',
-      value: getSearchParam({ searchValue: search, searchOptions }),
+      value: getSearchParam(search),
     },
-    ...extraParams,
+    ...filters,
   ];
 };
 
@@ -35,22 +34,14 @@ const buildEndpoint = ({ baseEndpoint, params }): string => {
   return `${baseEndpoint}?${buildParams(params)}`;
 };
 
-interface BuildListingParams {
-  baseEndpoint?: string;
-  searchOptions?: Array<string>;
-  params: ListingOptions;
-  extraParams?: Array<Param>;
-}
-
 const buildListingEndpoint = ({
   baseEndpoint,
-  searchOptions,
-  params,
-  extraParams,
-}: BuildListingParams): string => {
+  options,
+  filters,
+}: BuildListingOptions): string => {
   return buildEndpoint({
     baseEndpoint,
-    params: [...getListingParams({ searchOptions, ...params, extraParams })],
+    params: [...getListingParams({ ...options, filters })],
   });
 };
 

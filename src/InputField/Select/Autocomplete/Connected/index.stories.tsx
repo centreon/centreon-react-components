@@ -32,8 +32,8 @@ const buildResult = (page) => ({
 });
 
 const baseEndpoint = 'endpoint';
-const getEndpoint = (params): string =>
-  buildListingEndpoint({ baseEndpoint, params, searchOptions: ['host.name'] });
+const getEndpoint = (options): string =>
+  buildListingEndpoint({ baseEndpoint, options });
 
 const mockedAxios = new MockAdapter(axios, { delayResponse: 500 });
 
@@ -51,9 +51,9 @@ mockedAxios
 export const single = (): JSX.Element => (
   <SingleConnectedAutocompleteField
     label="Single Connected Autocomplete"
+    field="host.name"
     initialPage={1}
     getEndpoint={getEndpoint}
-    getOptionsFromResult={(result): Array<SelectEntry> => result}
     placeholder="Type here..."
   />
 );
@@ -61,9 +61,9 @@ export const single = (): JSX.Element => (
 export const multi = (): JSX.Element => (
   <MultiConnectedAutocompleteField
     label="Multi Infinite Autocomplete"
+    field="host.name"
     initialPage={1}
     getEndpoint={getEndpoint}
-    getOptionsFromResult={(result): Array<SelectEntry> => result}
     placeholder="Type here..."
   />
 );

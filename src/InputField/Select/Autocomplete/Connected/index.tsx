@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { concat, last, equals } from 'ramda';
+import { concat, last, equals, isEmpty } from 'ramda';
 import { useDebouncedCallback } from 'use-debounce';
 
 import {
@@ -21,6 +21,7 @@ import { ListingModel } from '../../../..';
 
 interface Props {
   getEndpoint: ({ search, page }) => string;
+  field: string;
   initialPage: number;
 }
 
@@ -40,6 +41,7 @@ const ConnectedAutocompleteField = (
   >({
     initialPage,
     getEndpoint,
+    field,
     ...props
   }: Props & Omit<AutocompleteFieldProps, 'options'>): JSX.Element => {
     const [options, setOptions] = React.useState<Array<SelectEntry>>();
@@ -69,10 +71,26 @@ const ConnectedAutocompleteField = (
       action: () => setPage(page + 1),
     });
 
+    const getSearchOption = (value: string) => {
+      if (isEmpty(searchValue)) {
+        return undefined;
+      }
+
+      return {
+        regex: {
+          fields: [field],
+          value,
+        },
+      };
+    };
+
     const [debouncedChangeText] = useDebouncedCallback((value: string) => {
       if (page === initialPage) {
         loadOptions({
-          endpoint: getEndpoint({ search: value, page: initialPage }),
+          endpoint: getEndpoint({
+            search: getSearchOption(value),
+            page: initialPage,
+          }),
         });
       }
 
@@ -137,7 +155,7 @@ const ConnectedAutocompleteField = (
       }
 
       loadOptions({
-        endpoint: getEndpoint({ search: searchValue, page }),
+        endpoint: getEndpoint({ search: getSearchOption(searchValue), page }),
         loadMore: page > 1,
       });
     }, [optionsOpen, page]);

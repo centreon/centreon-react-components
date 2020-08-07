@@ -1,52 +1,80 @@
-import { isEmpty } from 'ramda';
+import { isEmpty, isNil, reject, prop, head } from 'ramda';
+
 import {
-  SearchObject,
-  AndSearchParam,
-  OrSearchParam,
-  SearchInput,
+  SearchMatch,
+  RegexSearch,
+  SearchParam,
+  Search,
+  RegexSearchParam,
 } from './models';
 
-const getFoundSearchObjects = ({
-  searchValue,
-  searchOptions = [],
-}: SearchInput): Array<SearchObject> => {
-  const searchOptionMatches = searchOptions.map((searchOption) => {
-    const pattern = `${searchOption.replace('.', '\\.')}:([^\\s]+)`;
+const getFoundFields = ({ value, fields }: RegexSearch): Array<SearchMatch> => {
+  const fieldMatches = fields.map((field) => {
+    const pattern = `${field.replace('.', '\\.')}:([^\\s]+)`;
 
-    const [, searchOptionMatch] = searchValue?.match(pattern) || [];
+    const [, valueMatch] = value?.match(pattern) || [];
 
-    return { field: searchOption, value: searchOptionMatch };
+    return { field, value: valueMatch };
   });
 
-  return searchOptionMatches.filter(({ value }) => value);
+  return fieldMatches.filter(prop('value'));
 };
 
-const getSearchParam = ({
-  searchValue,
-  searchOptions = [],
-}: SearchInput): OrSearchParam | AndSearchParam | undefined => {
-  if (!searchValue) {
+const getRegexSearchParam = (
+  regexSearch: RegexSearch | undefined,
+): RegexSearchParam => {
+  if (regexSearch === undefined) {
     return undefined;
   }
 
-  const foundSearchObjects = getFoundSearchObjects({
-    searchValue,
-    searchOptions,
-  });
+  const foundFields = getFoundFields(regexSearch);
 
-  if (!isEmpty(foundSearchObjects)) {
+  if (!isEmpty(foundFields)) {
     return {
-      $and: foundSearchObjects.map(({ field, value }) => ({
+      $and: foundFields.map(({ field, value }) => ({
         [field]: { $rg: `${value}` },
       })),
     };
   }
 
+  const { value, fields } = regexSearch;
+
   return {
-    $or: searchOptions.map((searchOption) => ({
-      [searchOption]: { $rg: `${searchValue}` },
+    $or: fields.map((field) => ({
+      [field]: { $rg: `${value}` },
     })),
   };
+};
+
+const getListSearchesParam = (listSearches) => {
+  if (listSearches === undefined) {
+    return undefined;
+  }
+
+  return {
+    $and: listSearches.map(({ field, values }) => ({
+      [field]: { $in: values },
+    })),
+  };
+};
+
+const getSearchParam = (search: Search | undefined): SearchParam => {
+  if (search === undefined) {
+    return undefined;
+  }
+
+  const { regex, lists } = search;
+
+  const regexSearchParam = getRegexSearchParam(regex);
+  const listSearchesParam = getListSearchesParam(lists);
+
+  const result = reject(isNil, [regexSearchParam, listSearchesParam]);
+
+  if (result.length === 1) {
+    return head(result);
+  }
+
+  return { $and: result };
 };
 
 export default getSearchParam;

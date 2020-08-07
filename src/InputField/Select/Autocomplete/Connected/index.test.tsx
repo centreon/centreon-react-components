@@ -39,8 +39,8 @@ const optionsData = {
 };
 
 const baseEndpoint = 'endpoint';
-const getEndpoint = (params): string =>
-  buildListingEndpoint({ baseEndpoint, params, searchOptions: ['host.name'] });
+const getEndpoint = (options): string =>
+  buildListingEndpoint({ baseEndpoint, options });
 
 const renderSingleInfiniteAutocompleteField = (): RenderResult =>
   render(
@@ -48,7 +48,7 @@ const renderSingleInfiniteAutocompleteField = (): RenderResult =>
       label={label}
       initialPage={1}
       getEndpoint={getEndpoint}
-      getOptionsFromResult={(result): Array<SelectEntry> => result}
+      field="host.name"
       placeholder="Type here..."
     />,
   );
