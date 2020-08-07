@@ -114,7 +114,7 @@ export { default as buildListingEndpoint } from './api/buildListingEndpoint';
 export {
   Listing as ListingOptions,
   Search,
-  SearchMatch as SearchObject,
+  SearchMatch,
   Param,
 } from './api/buildListingEndpoint/models';
 export { default as buildListingDecoder } from './api/buildListingDecoder';
