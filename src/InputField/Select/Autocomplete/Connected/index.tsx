@@ -108,6 +108,7 @@ const ConnectedAutocompleteField = (
       const checkbox = (
         <Checkbox
           color="primary"
+          size="small"
           checked={selected}
           className={classes.checkbox}
         />
