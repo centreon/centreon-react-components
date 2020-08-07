@@ -41,7 +41,7 @@ const ConnectedAutocompleteField = (
   >({
     initialPage,
     getEndpoint,
-    paginationPath = [''],
+    paginationPath = [],
     ...props
   }: Props & Omit<AutocompleteFieldProps, 'options'>): JSX.Element => {
     const [options, setOptions] = React.useState<Array<SelectEntry>>();
