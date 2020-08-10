@@ -1,14 +1,14 @@
 import getSearchParam from './getSearchParam';
 import { Listing, Param, BuildListingOptions } from './models';
 
-const buildParam = ({ name, value }): string => {
+const toQueryParameter = ({ name, value }): string => {
   return `${name}=${JSON.stringify(value)}`;
 };
 
-const buildParams = (params): Array<string> =>
-  params
+const buildQueryParameters = (options): Array<string> =>
+  options
     .filter(({ value }) => value !== undefined && value.length !== 0)
-    .map(buildParam)
+    .map(toQueryParameter)
     .join('&');
 
 const getListingParams = ({
@@ -31,7 +31,7 @@ const getListingParams = ({
 };
 
 const buildEndpoint = ({ baseEndpoint, params }): string => {
-  return `${baseEndpoint}?${buildParams(params)}`;
+  return `${baseEndpoint}?${buildQueryParameters(params)}`;
 };
 
 const buildListingEndpoint = ({
