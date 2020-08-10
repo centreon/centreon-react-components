@@ -1,6 +1,7 @@
 import * as React from 'react';
 
-import { concat, last, equals } from 'ramda';
+import { concat, last, equals, path, append } from 'ramda';
+import { useDebouncedCallback } from 'use-debounce';
 
 import {
   Typography,
@@ -13,7 +14,6 @@ import {
 import debounce from '@material-ui/core/utils/debounce';
 
 import { Props as AutocompleteFieldProps } from '..';
-import { SelectEntry } from '../..';
 import useRequest from '../../../../api/useRequest';
 import { getData } from '../../../../api';
 import useIntersectionObserver from '../../../../utils/useIntersectionObserver';
@@ -22,6 +22,7 @@ import { ListingModel } from '../../../..';
 interface Props {
   getEndpoint: ({ search, page }) => string;
   initialPage: number;
+  paginationPath?: Array<string>;
 }
 
 type SearchDebounce = (value: string) => void;
@@ -42,9 +43,10 @@ const ConnectedAutocompleteField = (
   >({
     initialPage,
     getEndpoint,
+    paginationPath = [],
     ...props
   }: Props & Omit<AutocompleteFieldProps, 'options'>): JSX.Element => {
-    const [options, setOptions] = React.useState<Array<SelectEntry>>();
+    const [options, setOptions] = React.useState<Array<TData>>([]);
     const [optionsOpen, setOptionsOpen] = React.useState<boolean>(false);
     const [searchValue, setSearchValue] = React.useState<string>('');
     const [page, setPage] = React.useState(1);
@@ -57,10 +59,18 @@ const ConnectedAutocompleteField = (
       request: getData,
     });
 
+    const getPaginationProperty = ({ meta, prop }): number | undefined =>
+      path(append(prop, paginationPath), meta);
+
     const loadOptions = ({ endpoint, loadMore = false }) => {
       sendRequest(endpoint).then(({ result, meta }) => {
-        setOptions(concat(loadMore ? options : [], result));
-        setMaxPage(Math.ceil(meta.total / meta.limit));
+        const moreOptions = loadMore ? options : [];
+        setOptions(moreOptions.concat(result));
+
+        const total = getPaginationProperty({ meta, prop: 'total' }) || 1;
+        const limit = getPaginationProperty({ meta, prop: 'limit' }) || 1;
+
+        setMaxPage(Math.ceil(total / limit));
       });
     };
 
@@ -97,7 +107,7 @@ const ConnectedAutocompleteField = (
     };
 
     const renderOptions = (option, { selected }): JSX.Element => {
-      const isLastElement = equals(last(options), option);
+      const isLastElement = equals(last(options))(option);
       const refProp = isLastElement ? { ref: lastItemElementRef } : {};
 
       const checkbox = (
@@ -146,15 +156,13 @@ const ConnectedAutocompleteField = (
       });
     }, [optionsOpen, page]);
 
-    const loading = sending || !options;
-
     return (
       <AutocompleteField
         onOpen={openOptions}
         onClose={closeOptions}
-        options={options || []}
+        options={options}
         onTextChange={changeText}
-        loading={loading}
+        loading={sending}
         renderOption={renderOptions}
         filterOptions={(opt) => opt}
         {...props}
