@@ -102,7 +102,7 @@ const ConnectedAutocompleteField = (
     };
 
     const renderOptions = (option, { selected }): JSX.Element => {
-      const isLastElement = equals(last(options), option);
+      const isLastElement = equals(last(options))(option);
       const refProp = isLastElement ? { ref: lastItemElementRef } : {};
 
       const checkbox = (
