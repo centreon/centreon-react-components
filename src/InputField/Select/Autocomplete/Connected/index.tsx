@@ -62,7 +62,7 @@ const ConnectedAutocompleteField = (
     const loadOptions = ({ endpoint, loadMore = false }) => {
       sendRequest(endpoint).then(({ result, meta }) => {
         const moreOptions = loadMore ? options : [];
-        setOptions(result.concat(moreOptions));
+        setOptions(moreOptions.concat(result));
 
         const total = getPaginationProperty({ meta, prop: 'total' }) || 1;
         const limit = getPaginationProperty({ meta, prop: 'limit' }) || 1;
