@@ -87,7 +87,7 @@ export const single = (): JSX.Element => (
 
 export const multi = (): JSX.Element => (
   <MultiConnectedAutocompleteField
-    label="Multi Connedted Autocomplete"
+    label="Multi Connected Autocomplete"
     initialPage={1}
     getEndpoint={(params) => getEndpoint({ endpoint: baseEndpoint, params })}
     getOptionsFromResult={(result): Array<SelectEntry> => result}
