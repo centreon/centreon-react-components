@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { concat, equals, path, append, last } from 'ramda';
+import { equals, path, append, last } from 'ramda';
 import { useDebouncedCallback } from 'use-debounce';
 
 import {
@@ -63,10 +63,10 @@ const ConnectedAutocompleteField = (
       sendRequest(endpoint).then(({ result, meta }) => {
         const moreOptions = loadMore ? options : [];
         setOptions(result.concat(moreOptions));
-        
+
         const total = getPaginationProperty({ meta, prop: 'total' });
         const limit = getPaginationProperty({ meta, prop: 'limit' });
-        
+
         setMaxPage(Math.ceil(total / limit));
       });
     };
