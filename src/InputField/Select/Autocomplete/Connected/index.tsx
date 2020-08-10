@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { concat, last, equals, path, append, last } from 'ramda';
+import { concat, equals, path, append, last } from 'ramda';
 import { useDebouncedCallback } from 'use-debounce';
 
 import {
