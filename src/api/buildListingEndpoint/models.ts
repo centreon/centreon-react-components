@@ -1,7 +1,7 @@
 export interface BuildListingOptions {
   baseEndpoint?: string;
-  options: Listing;
-  filters?: Array<Filter>;
+  paremeters: Parameters;
+  queryParameters?: Array<QueryParemeter>;
 }
 
 interface Sort {
@@ -23,17 +23,12 @@ export interface SearchMatch {
   value: string;
 }
 
-export interface Filter {
-  name: string;
-  value: Array<string> | string;
-}
-
-export interface Listing {
+export interface Parameters {
   sort?: Sort;
   page?: number;
   limit?: number;
   search?: Search;
-  filters?: Array<Filter>;
+  queryParameters?: Array<QueryParemeter>;
 }
 
 type SearchPatterns = Array<{ [field: string]: { $rg: string } }>;
@@ -73,7 +68,7 @@ export type Value =
   | Array<string>
   | undefined;
 
-export interface Param {
+export interface QueryParemeter {
   name: string;
   value: Value;
 }

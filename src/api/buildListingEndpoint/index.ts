@@ -1,23 +1,23 @@
 import getSearchParam from './getSearchParam';
-import { Listing, Param, BuildListingOptions } from './models';
+import { Parameters, QueryParemeter, BuildListingOptions } from './models';
 
 const toQueryParameter = ({ name, value }): string => {
   return `${name}=${JSON.stringify(value)}`;
 };
 
-const buildQueryParameters = (options): Array<string> =>
-  options
+const toRawQueryParameters = (queryParameters): Array<string> =>
+  queryParameters
     .filter(({ value }) => value !== undefined && value.length !== 0)
     .map(toQueryParameter)
     .join('&');
 
-const getListingParams = ({
+const getQueryParameters = ({
   sort,
   page,
   limit,
   search,
-  filters = [],
-}: Listing): Array<Param> => {
+  queryParameters = [],
+}: Parameters): Array<QueryParemeter> => {
   return [
     { name: 'page', value: page },
     { name: 'limit', value: limit },
@@ -26,22 +26,24 @@ const getListingParams = ({
       name: 'search',
       value: getSearchParam(search),
     },
-    ...filters,
+    ...queryParameters,
   ];
 };
 
-const buildEndpoint = ({ baseEndpoint, params }): string => {
-  return `${baseEndpoint}?${buildQueryParameters(params)}`;
+const buildEndpoint = ({ baseEndpoint, queryParameters }): string => {
+  return `${baseEndpoint}?${toRawQueryParameters(queryParameters)}`;
 };
 
 const buildListingEndpoint = ({
   baseEndpoint,
-  options,
-  filters,
+  paremeters,
+  queryParameters,
 }: BuildListingOptions): string => {
   return buildEndpoint({
     baseEndpoint,
-    params: [...getListingParams({ ...options, filters })],
+    queryParameters: [
+      ...getQueryParameters({ ...paremeters, queryParameters }),
+    ],
   });
 };
 
