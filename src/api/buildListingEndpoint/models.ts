@@ -53,13 +53,13 @@ export interface Search {
   lists?: Array<ListSearch>;
 }
 
-interface ListSearchesParam {
+export interface ListSearchesParam {
   $and: Array<{ [field: string]: { [field: string]: { $in: Array<string> } } }>;
 }
 
 export type SearchParam =
   | {
-      $and: [RegexSearchParam, ListSearchesParam];
+      $and: Array<RegexSearchParam | ListSearchesParam>;
     }
   | RegexSearchParam
   | ListSearchesParam

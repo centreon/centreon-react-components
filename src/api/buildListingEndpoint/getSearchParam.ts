@@ -6,6 +6,7 @@ import {
   SearchParam,
   Search,
   RegexSearchParam,
+  ListSearchesParam,
 } from './models';
 
 const getFoundFields = ({ value, fields }: RegexSearch): Array<SearchMatch> => {
@@ -68,7 +69,10 @@ const getSearchParam = (search: Search | undefined): SearchParam => {
   const regexSearchParam = getRegexSearchParam(regex);
   const listSearchesParam = getListSearchesParam(lists);
 
-  const result = reject(isNil, [regexSearchParam, listSearchesParam]);
+  const result = reject<RegexSearchParam | ListSearchesParam>(isNil, [
+    regexSearchParam,
+    listSearchesParam,
+  ]);
 
   if (result.length === 1) {
     return head(result);

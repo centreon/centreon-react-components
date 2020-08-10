@@ -10,7 +10,6 @@ import {
 
 import { act } from 'react-test-renderer';
 import SingleInfiniteAutocomplete from './Single';
-import { SelectEntry } from '../..';
 import buildListingEndpoint from '../../../../api/buildListingEndpoint';
 
 const mockedAxios = axios as jest.Mocked<typeof axios>;
@@ -21,7 +20,7 @@ const cancelTokenRequestParam = {
   cancelToken: { promise: Promise.resolve({}) },
 };
 
-const label = 'Infnite Autocomplete';
+const label = 'Connected Autocomplete';
 const placeholder = 'Type here...';
 
 const optionsData = {
