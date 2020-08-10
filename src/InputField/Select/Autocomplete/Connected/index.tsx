@@ -56,7 +56,7 @@ const ConnectedAutocompleteField = (
       request: getData,
     });
 
-    const getPaginationProperty = ({ meta, prop }) =>
+    const getPaginationProperty = ({ meta, prop }): number | undefined =>
       path(append(prop, paginationPath), meta);
 
     const loadOptions = ({ endpoint, loadMore = false }) => {
@@ -64,8 +64,8 @@ const ConnectedAutocompleteField = (
         const moreOptions = loadMore ? options : [];
         setOptions(result.concat(moreOptions));
 
-        const total = getPaginationProperty({ meta, prop: 'total' });
-        const limit = getPaginationProperty({ meta, prop: 'limit' });
+        const total = getPaginationProperty({ meta, prop: 'total' }) || 1;
+        const limit = getPaginationProperty({ meta, prop: 'limit' }) || 1;
 
         setMaxPage(Math.ceil(total / limit));
       });
