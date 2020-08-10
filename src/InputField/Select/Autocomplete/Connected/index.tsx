@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { concat, last, equals, path, append } from 'ramda';
+import { concat, last, equals, path, append, last } from 'ramda';
 import { useDebouncedCallback } from 'use-debounce';
 
 import {
@@ -13,7 +13,6 @@ import {
 } from '@material-ui/core';
 
 import { Props as AutocompleteFieldProps } from '..';
-import { SelectEntry } from '../..';
 import useRequest from '../../../../api/useRequest';
 import { getData } from '../../../../api';
 import useIntersectionObserver from '../../../../utils/useIntersectionObserver';
@@ -44,7 +43,7 @@ const ConnectedAutocompleteField = (
     paginationPath = [],
     ...props
   }: Props & Omit<AutocompleteFieldProps, 'options'>): JSX.Element => {
-    const [options, setOptions] = React.useState<Array<SelectEntry>>();
+    const [options, setOptions] = React.useState<Array<TData>>([]);
     const [optionsOpen, setOptionsOpen] = React.useState<boolean>(false);
     const [searchValue, setSearchValue] = React.useState<string>('');
     const [page, setPage] = React.useState(1);
@@ -62,11 +61,12 @@ const ConnectedAutocompleteField = (
 
     const loadOptions = ({ endpoint, loadMore = false }) => {
       sendRequest(endpoint).then(({ result, meta }) => {
-        setOptions(concat(loadMore ? options : [], result));
-
+        const moreOptions = loadMore ? options : [];
+        setOptions(result.concat(moreOptions));
+        
         const total = getPaginationProperty({ meta, prop: 'total' });
         const limit = getPaginationProperty({ meta, prop: 'limit' });
-
+        
         setMaxPage(Math.ceil(total / limit));
       });
     };
@@ -151,15 +151,13 @@ const ConnectedAutocompleteField = (
       });
     }, [optionsOpen, page]);
 
-    const loading = sending || !options;
-
     return (
       <AutocompleteField
         onOpen={openOptions}
         onClose={closeOptions}
-        options={options || []}
+        options={options}
         onTextChange={changeText}
-        loading={loading}
+        loading={sending}
         renderOption={renderOptions}
         filterOptions={(opt) => opt}
         {...props}
