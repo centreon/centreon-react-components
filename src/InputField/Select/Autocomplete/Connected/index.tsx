@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { last, equals, isEmpty } from 'ramda';
+import { equals, path, append, last, isEmpty } from 'ramda';
 import { useDebouncedCallback } from 'use-debounce';
 
 import {
@@ -22,6 +22,7 @@ interface Props {
   getEndpoint: ({ search, page }) => string;
   field: string;
   initialPage: number;
+  paginationPath?: Array<string>;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -41,6 +42,7 @@ const ConnectedAutocompleteField = (
     initialPage,
     getEndpoint,
     field,
+    paginationPath = [],
     ...props
   }: Props & Omit<AutocompleteFieldProps, 'options'>): JSX.Element => {
     const [options, setOptions] = React.useState<Array<TData>>([]);
@@ -56,11 +58,18 @@ const ConnectedAutocompleteField = (
       request: getData,
     });
 
+    const getPaginationProperty = ({ meta, prop }): number | undefined =>
+      path(append(prop, paginationPath), meta);
+
     const loadOptions = ({ endpoint, loadMore = false }) => {
       sendRequest(endpoint).then(({ result, meta }) => {
         const moreOptions = loadMore ? options : [];
-        setOptions(result.concat(moreOptions));
-        setMaxPage(Math.ceil(meta.total / meta.limit));
+        setOptions(moreOptions.concat(result));
+
+        const total = getPaginationProperty({ meta, prop: 'total' }) || 1;
+        const limit = getPaginationProperty({ meta, prop: 'limit' }) || 1;
+
+        setMaxPage(Math.ceil(total / limit));
       });
     };
 
@@ -111,7 +120,7 @@ const ConnectedAutocompleteField = (
     };
 
     const renderOptions = (option, { selected }): JSX.Element => {
-      const isLastElement = equals(last(options), option);
+      const isLastElement = equals(last(options))(option);
       const refProp = isLastElement ? { ref: lastItemElementRef } : {};
 
       const checkbox = (

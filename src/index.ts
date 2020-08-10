@@ -113,6 +113,7 @@ export { default as useRequest } from './api/useRequest';
 export { default as buildListingEndpoint } from './api/buildListingEndpoint';
 export {
   Listing as ListingOptions,
+  RegexSearch,
   Search,
   SearchMatch,
   Param,
