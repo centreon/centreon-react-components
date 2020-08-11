@@ -56,8 +56,8 @@ describe(buildListingEndpoint, () => {
   it('builds the listing endpoint string with a "$and" search expression between list search options', () => {
     const endpoint = buildListingEndpoint({
       baseEndpoint,
-      options: {
-        ...options,
+      parameters: {
+        ...parameters,
         search: {
           lists: [
             {
