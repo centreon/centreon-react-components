@@ -39,7 +39,7 @@ const buildResult = ({ page, withPagination = false }) => ({
 
 const baseEndpoint = 'endpoint';
 const baseEndpointWithPagination = 'endpointWithPagination';
-const getEndpoint = ({ endpoint, options }): string =>
+const getEndpoint = ({ endpoint, parameters }): string =>
   buildListingEndpoint({
     baseEndpoint: endpoint,
     options,
