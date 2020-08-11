@@ -112,11 +112,11 @@ export { getData, patchData, postData, putData, deleteData } from './api';
 export { default as useRequest } from './api/useRequest';
 export { default as buildListingEndpoint } from './api/buildListingEndpoint';
 export {
-  Listing as ListingOptions,
+  Parameters as ListingParameters,
   RegexSearch,
   Search,
   SearchMatch,
-  Param,
+  QueryParemeter as Param,
 } from './api/buildListingEndpoint/models';
 export { default as buildListingDecoder } from './api/buildListingDecoder';
 
