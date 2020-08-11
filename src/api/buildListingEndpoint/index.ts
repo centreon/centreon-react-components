@@ -40,7 +40,7 @@ const buildEndpoint = ({ baseEndpoint, queryParameters }): string => {
 
 const buildListingEndpoint = ({
   baseEndpoint,
-  paremeters,
+  parameters,
   queryParameters,
 }: BuildListingEndpointParameters): string => {
   return buildEndpoint({
