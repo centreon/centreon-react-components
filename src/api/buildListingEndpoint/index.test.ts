@@ -37,8 +37,8 @@ describe(buildListingEndpoint, () => {
   it('builds the listing endpoint string with a "$or" search expression between search options when search option patterns are not found in the search input', () => {
     const endpoint = buildListingEndpoint({
       baseEndpoint,
-      options: {
-        ...options,
+      parameters: {
+        ...parameters,
         search: {
           regex: {
             value: 'searchValue',
