@@ -38,8 +38,9 @@ const optionsData = {
 };
 
 const baseEndpoint = 'endpoint';
-const getEndpoint = (parameters): string =>
-  buildListingEndpoint({ baseEndpoint, parameters });
+const getEndpoint = (parameters): string => {
+  return buildListingEndpoint({ baseEndpoint, parameters });
+};
 
 const renderSingleInfiniteAutocompleteField = (): RenderResult =>
   render(

@@ -1,6 +1,6 @@
 export interface BuildListingEndpointParameters {
   baseEndpoint?: string;
-  paremeters: Parameters;
+  parameters: Parameters;
   customQueryParameters?: Array<QueryParemeter>;
 }
 
