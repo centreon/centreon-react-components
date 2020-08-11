@@ -2,7 +2,7 @@ import buildListingEndpoint from '.';
 
 describe(buildListingEndpoint, () => {
   const baseEndpoint = 'resources';
-  const options = {
+  const parameters = {
     page: 1,
     limit: 10,
     sort: { name: 'asc' },
