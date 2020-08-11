@@ -4,7 +4,7 @@ export interface BuildListingEndpointParameters {
   customQueryParameters?: Array<QueryParemeter>;
 }
 
-interface SortParameterValue {
+interface SortQueryParameterValue {
   [sortf: string]: string;
 }
 
@@ -24,7 +24,7 @@ export interface SearchMatch {
 }
 
 export interface Parameters {
-  sort?: SortParameterValue;
+  sort?: SortQueryParameterValue;
   page?: number;
   limit?: number;
   search?: SearchParameter;
@@ -68,7 +68,7 @@ export type SearchQueryParameterValue =
 export type QueryParameterValue =
   | string
   | number
-  | SortParameterValue
+  | SortQueryParameterValue
   | SearchQueryParameterValue
   | Array<string>
   | undefined;
