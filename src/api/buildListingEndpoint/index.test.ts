@@ -8,7 +8,7 @@ describe(buildListingEndpoint, () => {
     sort: { name: 'asc' },
   };
   it('builds the listing endpoint string using the given params', () => {
-    const endpoint = buildListingEndpoint({ baseEndpoint, options });
+    const endpoint = buildListingEndpoint({ baseEndpoint, parameters });
 
     expect(endpoint).toEqual(
       'resources?page=1&limit=10&sort_by={"name":"asc"}',
