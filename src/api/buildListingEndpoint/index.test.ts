@@ -2,13 +2,13 @@ import buildListingEndpoint from '.';
 
 describe(buildListingEndpoint, () => {
   const baseEndpoint = 'resources';
-  const options = {
+  const parameters = {
     page: 1,
     limit: 10,
     sort: { name: 'asc' },
   };
   it('builds the listing endpoint string using the given params', () => {
-    const endpoint = buildListingEndpoint({ baseEndpoint, options });
+    const endpoint = buildListingEndpoint({ baseEndpoint, parameters });
 
     expect(endpoint).toEqual(
       'resources?page=1&limit=10&sort_by={"name":"asc"}',
@@ -18,8 +18,8 @@ describe(buildListingEndpoint, () => {
   it('builds the listing endpoint string with a "$and" search expression between search options when search option patterns are found in the search input', () => {
     const endpoint = buildListingEndpoint({
       baseEndpoint,
-      options: {
-        ...options,
+      parameters: {
+        ...parameters,
         search: {
           regex: {
             value: 'h.name:hvalue',
@@ -37,8 +37,8 @@ describe(buildListingEndpoint, () => {
   it('builds the listing endpoint string with a "$or" search expression between search options when search option patterns are not found in the search input', () => {
     const endpoint = buildListingEndpoint({
       baseEndpoint,
-      options: {
-        ...options,
+      parameters: {
+        ...parameters,
         search: {
           regex: {
             value: 'searchValue',
@@ -56,8 +56,8 @@ describe(buildListingEndpoint, () => {
   it('builds the listing endpoint string with a "$and" search expression between list search options', () => {
     const endpoint = buildListingEndpoint({
       baseEndpoint,
-      options: {
-        ...options,
+      parameters: {
+        ...parameters,
         search: {
           lists: [
             {

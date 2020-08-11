@@ -39,7 +39,7 @@ const buildResult = ({ page, withPagination = false }) => ({
 
 const baseEndpoint = 'endpoint';
 const baseEndpointWithPagination = 'endpointWithPagination';
-const getEndpoint = ({ endpoint, options }): string =>
+const getEndpoint = ({ endpoint, parameters }): string =>
   buildListingEndpoint({
     baseEndpoint: endpoint,
     options,
@@ -79,7 +79,7 @@ export const single = (): JSX.Element => (
     label="Single Connected Autocomplete"
     field="host.name"
     initialPage={1}
-    getEndpoint={(options) => getEndpoint({ endpoint: baseEndpoint, options })}
+    getEndpoint={(parameters) => getEndpoint({ endpoint: baseEndpoint, parameters })}
     getOptionsFromResult={(result): Array<SelectEntry> => result}
     placeholder="Type here..."
   />
@@ -90,14 +90,14 @@ export const multi = (): JSX.Element => (
     label="Multi Connected Autocomplete"
     initialPage={1}
     field="host.name"
-    getEndpoint={(options) => getEndpoint({ endpoint: baseEndpoint, options })}
+    getEndpoint={(parameters) => getEndpoint({ endpoint: baseEndpoint, parameters })}
     getOptionsFromResult={(result): Array<SelectEntry> => result}
     placeholder="Type here..."
   />
 );
 
-const getEndpointWithPagination = (options) =>
-  getEndpoint({ endpoint: baseEndpointWithPagination, options });
+const getEndpointWithPagination = (parameters) =>
+  getEndpoint({ endpoint: baseEndpointWithPagination, parameters });
 
 export const singleWithCustomPathToPaginationProperties = (): JSX.Element => (
   <SingleConnectedAutocompleteField
