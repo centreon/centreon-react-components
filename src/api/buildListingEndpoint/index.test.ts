@@ -18,8 +18,8 @@ describe(buildListingEndpoint, () => {
   it('builds the listing endpoint string with a "$and" search expression between search options when search option patterns are found in the search input', () => {
     const endpoint = buildListingEndpoint({
       baseEndpoint,
-      options: {
-        ...options,
+      parameters: {
+        ...parameters,
         search: {
           regex: {
             value: 'h.name:hvalue',
