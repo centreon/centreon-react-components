@@ -79,8 +79,9 @@ export const single = (): JSX.Element => (
     label="Single Connected Autocomplete"
     field="host.name"
     initialPage={1}
-    getEndpoint={(parameters) =>
-      getEndpoint({ endpoint: baseEndpoint, parameters })}
+    getEndpoint={(parameters) => {
+      return getEndpoint({ endpoint: baseEndpoint, parameters });
+    }}
     getOptionsFromResult={(result): Array<SelectEntry> => result}
     placeholder="Type here..."
   />
@@ -91,8 +92,9 @@ export const multi = (): JSX.Element => (
     label="Multi Connected Autocomplete"
     initialPage={1}
     field="host.name"
-    getEndpoint={(parameters) =>
-      getEndpoint({ endpoint: baseEndpoint, parameters })}
+    getEndpoint={(parameters) => {
+      return getEndpoint({ endpoint: baseEndpoint, parameters });
+    }}
     getOptionsFromResult={(result): Array<SelectEntry> => result}
     placeholder="Type here..."
   />
