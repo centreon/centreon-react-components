@@ -79,7 +79,7 @@ export const single = (): JSX.Element => (
     label="Single Connected Autocomplete"
     field="host.name"
     initialPage={1}
-    getEndpoint={(options) => getEndpoint({ endpoint: baseEndpoint, options })}
+    getEndpoint={(parameters) => getEndpoint({ endpoint: baseEndpoint, parameters })}
     getOptionsFromResult={(result): Array<SelectEntry> => result}
     placeholder="Type here..."
   />
