@@ -90,7 +90,7 @@ export const multi = (): JSX.Element => (
     label="Multi Connected Autocomplete"
     initialPage={1}
     field="host.name"
-    getEndpoint={(options) => getEndpoint({ endpoint: baseEndpoint, options })}
+    getEndpoint={(parameters) => getEndpoint({ endpoint: baseEndpoint, parameters })}
     getOptionsFromResult={(result): Array<SelectEntry> => result}
     placeholder="Type here..."
   />
