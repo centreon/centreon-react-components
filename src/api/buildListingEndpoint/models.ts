@@ -1,19 +1,19 @@
-export interface BuildListingOptions {
+export interface BuildListingEndpointParameters {
   baseEndpoint?: string;
   paremeters: Parameters;
-  queryParameters?: Array<QueryParemeter>;
+  customQueryParameters?: Array<QueryParemeter>;
 }
 
-interface Sort {
+interface SortParameterValue {
   [sortf: string]: string;
 }
 
-export interface RegexSearch {
+export interface RegexSearchParameter {
   value?: string;
   fields: Array<string>;
 }
 
-export interface ListSearch {
+export interface ListsSearchParameter {
   field: string;
   values: Array<string>;
 }
@@ -24,51 +24,56 @@ export interface SearchMatch {
 }
 
 export interface Parameters {
-  sort?: Sort;
+  sort?: SortParameterValue;
   page?: number;
   limit?: number;
-  search?: Search;
-  queryParameters?: Array<QueryParemeter>;
+  search?: SearchParameter;
+  customQueryParameters?: Array<QueryParemeter>;
 }
 
 type SearchPatterns = Array<{ [field: string]: { $rg: string } }>;
 
-export interface OrSearchParam {
+export interface OrSearchQueryParameterValue {
   $or: SearchPatterns;
 }
 
-export interface AndSearchParam {
+export interface AndSearchQueryParameterValue {
   $and: SearchPatterns;
 }
 
-export type RegexSearchParam = OrSearchParam | AndSearchParam | undefined;
+export type RegexSearchQueryParameterValue =
+  | OrSearchQueryParameterValue
+  | AndSearchQueryParameterValue
+  | undefined;
 
-export interface Search {
-  regex?: RegexSearch;
-  lists?: Array<ListSearch>;
+export interface SearchParameter {
+  regex?: RegexSearchParameter;
+  lists?: Array<ListsSearchParameter>;
 }
 
-export interface ListSearchesParam {
+export interface ListsSearchQueryParameterValue {
   $and: Array<{ [field: string]: { [field: string]: { $in: Array<string> } } }>;
 }
 
-export type SearchParam =
+export type SearchQueryParameterValue =
   | {
-      $and: Array<RegexSearchParam | ListSearchesParam>;
+      $and: Array<
+        RegexSearchQueryParameterValue | ListsSearchQueryParameterValue
+      >;
     }
-  | RegexSearchParam
-  | ListSearchesParam
+  | RegexSearchQueryParameterValue
+  | ListsSearchQueryParameterValue
   | undefined;
 
-export type Value =
+export type QueryParameterValue =
   | string
   | number
-  | Sort
-  | SearchParam
+  | SortParameterValue
+  | SearchQueryParameterValue
   | Array<string>
   | undefined;
 
 export interface QueryParemeter {
   name: string;
-  value: Value;
+  value: QueryParameterValue;
 }

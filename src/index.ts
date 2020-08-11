@@ -113,10 +113,12 @@ export { default as useRequest } from './api/useRequest';
 export { default as buildListingEndpoint } from './api/buildListingEndpoint';
 export {
   Parameters as ListingParameters,
-  RegexSearch,
-  Search,
+  BuildListingEndpointParameters,
+  RegexSearchParameter,
+  ListsSearchParameter as ListSearchParameter,
+  SearchParameter,
   SearchMatch,
-  QueryParemeter as Param,
+  QueryParemeter,
 } from './api/buildListingEndpoint/models';
 export { default as buildListingDecoder } from './api/buildListingDecoder';
 

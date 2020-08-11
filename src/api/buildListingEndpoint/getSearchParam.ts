@@ -2,14 +2,17 @@ import { isEmpty, isNil, reject, prop, head } from 'ramda';
 
 import {
   SearchMatch,
-  RegexSearch,
-  SearchParam,
-  Search,
-  RegexSearchParam,
-  ListSearchesParam,
+  RegexSearchParameter,
+  RegexSearchQueryParameterValue,
+  SearchParameter,
+  ListsSearchQueryParameterValue,
+  SearchQueryParameterValue,
 } from './models';
 
-const getFoundFields = ({ value, fields }: RegexSearch): Array<SearchMatch> => {
+const getFoundFields = ({
+  value,
+  fields,
+}: RegexSearchParameter): Array<SearchMatch> => {
   const fieldMatches = fields.map((field) => {
     const pattern = `${field.replace('.', '\\.')}:([^\\s]+)`;
 
@@ -21,14 +24,14 @@ const getFoundFields = ({ value, fields }: RegexSearch): Array<SearchMatch> => {
   return fieldMatches.filter(prop('value'));
 };
 
-const getRegexSearchParam = (
-  regexSearch: RegexSearch | undefined,
-): RegexSearchParam => {
-  if (regexSearch === undefined) {
+const getRegexSearchQueryParameterValue = (
+  regex: RegexSearchParameter | undefined,
+): RegexSearchQueryParameterValue => {
+  if (regex === undefined) {
     return undefined;
   }
 
-  const foundFields = getFoundFields(regexSearch);
+  const foundFields = getFoundFields(regex);
 
   if (!isEmpty(foundFields)) {
     return {
@@ -38,7 +41,7 @@ const getRegexSearchParam = (
     };
   }
 
-  const { value, fields } = regexSearch;
+  const { value, fields } = regex;
 
   return {
     $or: fields.map((field) => ({
@@ -47,32 +50,33 @@ const getRegexSearchParam = (
   };
 };
 
-const getListSearchesParam = (listSearches) => {
-  if (listSearches === undefined) {
+const getListsSearchQueryParameterValue = (lists) => {
+  if (lists === undefined) {
     return undefined;
   }
 
   return {
-    $and: listSearches.map(({ field, values }) => ({
+    $and: lists.map(({ field, values }) => ({
       [field]: { $in: values },
     })),
   };
 };
 
-const getSearchParam = (search: Search | undefined): SearchParam => {
+const getSearchQueryParameterValue = (
+  search: SearchParameter | undefined,
+): SearchQueryParameterValue => {
   if (search === undefined) {
     return undefined;
   }
 
   const { regex, lists } = search;
 
-  const regexSearchParam = getRegexSearchParam(regex);
-  const listSearchesParam = getListSearchesParam(lists);
+  const regexSearchParam = getRegexSearchQueryParameterValue(regex);
+  const listSearchesParam = getListsSearchQueryParameterValue(lists);
 
-  const result = reject<RegexSearchParam | ListSearchesParam>(isNil, [
-    regexSearchParam,
-    listSearchesParam,
-  ]);
+  const result = reject<
+    RegexSearchQueryParameterValue | ListsSearchQueryParameterValue
+  >(isNil, [regexSearchParam, listSearchesParam]);
 
   if (result.length === 1) {
     return head(result);
@@ -81,4 +85,4 @@ const getSearchParam = (search: Search | undefined): SearchParam => {
   return { $and: result };
 };
 
-export default getSearchParam;
+export default getSearchQueryParameterValue;

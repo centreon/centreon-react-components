@@ -1,5 +1,9 @@
-import getSearchParam from './getSearchParam';
-import { Parameters, QueryParemeter, BuildListingOptions } from './models';
+import getSearchQueryParameterValue from './getSearchParam';
+import {
+  Parameters,
+  QueryParemeter,
+  BuildListingEndpointParameters,
+} from './models';
 
 const toQueryParameter = ({ name, value }): string => {
   return `${name}=${JSON.stringify(value)}`;
@@ -16,7 +20,7 @@ const getQueryParameters = ({
   page,
   limit,
   search,
-  queryParameters = [],
+  customQueryParameters = [],
 }: Parameters): Array<QueryParemeter> => {
   return [
     { name: 'page', value: page },
@@ -24,9 +28,9 @@ const getQueryParameters = ({
     { name: 'sort_by', value: sort },
     {
       name: 'search',
-      value: getSearchParam(search),
+      value: getSearchQueryParameterValue(search),
     },
-    ...queryParameters,
+    ...customQueryParameters,
   ];
 };
 
@@ -38,7 +42,7 @@ const buildListingEndpoint = ({
   baseEndpoint,
   paremeters,
   queryParameters,
-}: BuildListingOptions): string => {
+}: BuildListingEndpointParameters): string => {
   return buildEndpoint({
     baseEndpoint,
     queryParameters: [
