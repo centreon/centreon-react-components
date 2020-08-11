@@ -96,8 +96,8 @@ export const multi = (): JSX.Element => (
   />
 );
 
-const getEndpointWithPagination = (options) =>
-  getEndpoint({ endpoint: baseEndpointWithPagination, options });
+const getEndpointWithPagination = (parameters) =>
+  getEndpoint({ endpoint: baseEndpointWithPagination, parameters });
 
 export const singleWithCustomPathToPaginationProperties = (): JSX.Element => (
   <SingleConnectedAutocompleteField
