@@ -118,7 +118,7 @@ export {
   ListsSearchParameter as ListSearchParameter,
   SearchParameter,
   SearchMatch,
-  QueryParemeter,
+  QueryParameter,
 } from './api/buildListingEndpoint/models';
 export { default as buildListingDecoder } from './api/buildListingDecoder';
 
