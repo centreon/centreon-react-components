@@ -36,7 +36,7 @@ const getRegexSearchQueryParameterValue = (
   if (!isEmpty(foundFields)) {
     return {
       $and: foundFields.map(({ field, value }) => ({
-        [field]: { $rg: `${value}` },
+        [field]: { $rg: value },
       })),
     };
   }

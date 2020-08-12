@@ -9,7 +9,7 @@ interface SortQueryParameterValue {
 }
 
 export interface RegexSearchParameter {
-  value?: string;
+  value: string;
   fields: Array<string>;
 }
 
