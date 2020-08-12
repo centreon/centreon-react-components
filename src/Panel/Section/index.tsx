@@ -13,6 +13,7 @@ const closeSecondaryPanelBarWidth = 20;
 const useStyles = makeStyles((theme) => ({
   container: {
     display: 'grid',
+    overflowX: 'hidden',
     gridTemplateColumns: (hasSecondaryPanel) =>
       hasSecondaryPanel
         ? `${panelWidth}px ${closeSecondaryPanelBarWidth}px ${panelWidth}px`
