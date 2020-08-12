@@ -28,7 +28,7 @@ export interface Parameters {
   page?: number;
   limit?: number;
   search?: SearchParameter;
-  customQueryParameters?: Array<QueryParemeter>;
+  customQueryParameters?: Array<QueryParameter>;
 }
 
 type SearchPatterns = Array<{ [field: string]: { $rg: string } }>;
