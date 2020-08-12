@@ -1,7 +1,7 @@
 export interface BuildListingEndpointParameters {
   baseEndpoint?: string;
   parameters: Parameters;
-  customQueryParameters?: Array<QueryParemeter>;
+  customQueryParameters?: Array<QueryParameter>;
 }
 
 interface SortQueryParameterValue {
