@@ -53,7 +53,7 @@ const renderSingleInfiniteAutocompleteField = (): RenderResult =>
     />,
   );
 
-describe('Infinite Autocomplete', () => {
+describe(SingleInfiniteAutocomplete, () => {
   beforeEach(() => {
     mockedAxios.get.mockResolvedValue({
       data: optionsData,

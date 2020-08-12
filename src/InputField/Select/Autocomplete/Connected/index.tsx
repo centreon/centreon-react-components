@@ -83,7 +83,7 @@ const ConnectedAutocompleteField = (
     });
 
     const getSearchOption = (value: string) => {
-      if (isEmpty(searchValue)) {
+      if (isEmpty(value)) {
         return undefined;
       }
 
