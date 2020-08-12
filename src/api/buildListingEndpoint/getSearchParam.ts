@@ -45,7 +45,7 @@ const getRegexSearchQueryParameterValue = (
 
   return {
     $or: fields.map((field) => ({
-      [field]: { $rg: `${value}` },
+      [field]: { $rg: value },
     })),
   };
 };
