@@ -1,4 +1,4 @@
-import getSearchQueryParameterValue from './getSearchParam';
+import getSearchQueryParameterValue from './getSearchQueryParameterValue';
 import {
   Parameters,
   QueryParameter,
