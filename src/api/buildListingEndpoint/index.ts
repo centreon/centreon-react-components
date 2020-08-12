@@ -21,7 +21,7 @@ const getQueryParameters = ({
   limit,
   search,
   customQueryParameters = [],
-}: Parameters): Array<QueryParemeter> => {
+}: Parameters): Array<QueryParameter> => {
   return [
     { name: 'page', value: page },
     { name: 'limit', value: limit },
