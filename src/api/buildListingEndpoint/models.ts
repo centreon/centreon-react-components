@@ -73,7 +73,7 @@ export type QueryParameterValue =
   | Array<string>
   | undefined;
 
-export interface QueryParemeter {
+export interface QueryParameter {
   name: string;
   value: QueryParameterValue;
 }

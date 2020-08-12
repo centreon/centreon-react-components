@@ -1,7 +1,7 @@
 import getSearchQueryParameterValue from './getSearchParam';
 import {
   Parameters,
-  QueryParemeter,
+  QueryParameter,
   BuildListingEndpointParameters,
 } from './models';
 
