@@ -76,9 +76,9 @@ const moreSections = [
   },
   {
     expandable: true,
-    id: 'eightth section',
-    title: 'Eightth section',
-    section: <Typography>Eightth section</Typography>,
+    id: 'eighth section',
+    title: 'Eighth section',
+    section: <Typography>Eighth section</Typography>,
   },
   {
     expandable: true,
