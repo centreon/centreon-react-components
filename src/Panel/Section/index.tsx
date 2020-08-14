@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { List, ListItem, Box, makeStyles } from '@material-ui/core';
+import { List, ListItem, makeStyles, Slide, Paper } from '@material-ui/core';
 import ForwardIcon from '@material-ui/icons/ArrowForwardIos';
 
 import ExpandableSection from './ExpandableSection';
@@ -13,23 +13,20 @@ const closeSecondaryPanelBarWidth = 20;
 const useStyles = makeStyles((theme) => ({
   container: {
     display: 'grid',
-    overflowX: 'hidden',
     gridTemplateColumns: (hasSecondaryPanel) =>
-      hasSecondaryPanel
-        ? `${panelWidth}px ${closeSecondaryPanelBarWidth}px ${panelWidth}px`
-        : `${panelWidth}px `,
+      hasSecondaryPanel ? `1fr ${closeSecondaryPanelBarWidth}px 1fr` : `100%`,
     height: '100%',
   },
   closeSecondaryPanelBar: {
-    border: `1px solid ${theme.palette.grey[300]}`,
-    borderTop: 0,
-    borderBottom: 0,
     cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    alignContent: 'center',
+    backgroundColor: theme.palette.background.default,
   },
   closeIcon: {
     width: 15,
     margin: 'auto',
-    color: theme.palette.action.disabled,
   },
   secondaryPanel: {
     overflow: 'hidden',
@@ -91,19 +88,22 @@ const SectionPanel = ({
                 ),
               )}
             </List>
-            {hasSecondaryPanel && (
-              <Box
-                className={classes.closeSecondaryPanelBar}
-                aria-label="Close Secondary Panel"
-                display="flex"
-                alignItems="center"
-                alignContent="center"
-                onClick={onSecondaryPanelClose}
-              >
-                <ForwardIcon className={classes.closeIcon} />
-              </Box>
-            )}
-            <div className={classes.secondaryPanel}>{secondaryPanel}</div>
+
+            <Paper
+              className={classes.closeSecondaryPanelBar}
+              aria-label="Close Secondary Panel"
+              onClick={onSecondaryPanelClose}
+            >
+              <ForwardIcon className={classes.closeIcon} color="action" />
+            </Paper>
+
+            <Slide
+              in={hasSecondaryPanel}
+              direction="left"
+              timeout={{ enter: 150, exit: 50 }}
+            >
+              <div className={classes.secondaryPanel}>{secondaryPanel}</div>
+            </Slide>
           </div>
         </ContentWithCircularLoading>
       }
