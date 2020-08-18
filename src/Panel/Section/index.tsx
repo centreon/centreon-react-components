@@ -3,6 +3,7 @@ import * as React from 'react';
 import { List, ListItem, makeStyles, Slide, Paper } from '@material-ui/core';
 import ForwardIcon from '@material-ui/icons/ArrowForwardIos';
 
+import { isNil } from 'ramda';
 import ExpandableSection from './ExpandableSection';
 import Panel from '..';
 import ContentWithCircularLoading from '../../ContentWithCircularProgress';
@@ -12,10 +13,22 @@ const closeSecondaryPanelBarWidth = 20;
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    display: 'grid',
-    gridTemplateColumns: (hasSecondaryPanel) =>
-      hasSecondaryPanel ? `1fr ${closeSecondaryPanelBarWidth}px 1fr` : `100%`,
+    display: (hasSecondaryPanel) => (hasSecondaryPanel ? 'grid' : 'block'),
+    gridTemplateColumns: (hasSecondaryPanel) => {
+      return hasSecondaryPanel
+        ? `1fr ${closeSecondaryPanelBarWidth}px 1fr`
+        : '100%';
+    },
     height: '100%',
+  },
+  mainPanel: {
+    position: (hasSecondaryPanel) => (hasSecondaryPanel ? 'unset' : 'absolute'),
+    bottom: 0,
+    left: 0,
+    right: 0,
+    top: 0,
+    overflow: 'auto',
+    width: panelWidth,
   },
   closeSecondaryPanelBar: {
     cursor: 'pointer',
@@ -27,9 +40,6 @@ const useStyles = makeStyles((theme) => ({
   closeIcon: {
     width: 15,
     margin: 'auto',
-  },
-  secondaryPanel: {
-    overflow: 'hidden',
   },
 }));
 
@@ -57,7 +67,7 @@ const SectionPanel = ({
   onClose = () => undefined,
   loading = false,
 }: Props): JSX.Element => {
-  const hasSecondaryPanel = secondaryPanel !== undefined;
+  const hasSecondaryPanel = !isNil(secondaryPanel);
 
   const classes = useStyles(hasSecondaryPanel);
 
@@ -77,7 +87,7 @@ const SectionPanel = ({
       selectedTab={
         <ContentWithCircularLoading alignCenter loading={loading}>
           <div className={classes.container}>
-            <List>
+            <List className={classes.mainPanel}>
               {sections.map(({ id, title, section, expandable }) =>
                 expandable ? (
                   <ExpandableSection key={id} title={title as string}>
@@ -89,20 +99,22 @@ const SectionPanel = ({
               )}
             </List>
 
-            <Paper
-              className={classes.closeSecondaryPanelBar}
-              aria-label="Close Secondary Panel"
-              onClick={onSecondaryPanelClose}
-            >
-              <ForwardIcon className={classes.closeIcon} color="action" />
-            </Paper>
+            {hasSecondaryPanel && (
+              <Paper
+                className={classes.closeSecondaryPanelBar}
+                aria-label="Close Secondary Panel"
+                onClick={onSecondaryPanelClose}
+              >
+                <ForwardIcon className={classes.closeIcon} color="action" />
+              </Paper>
+            )}
 
             <Slide
               in={hasSecondaryPanel}
               direction="left"
               timeout={{ enter: 150, exit: 50 }}
             >
-              <div className={classes.secondaryPanel}>{secondaryPanel}</div>
+              <div>{secondaryPanel}</div>
             </Slide>
           </div>
         </ContentWithCircularLoading>
