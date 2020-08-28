@@ -1,10 +1,14 @@
+import { isNil, isEmpty } from 'ramda';
+
+import { QueryParameter } from './models';
+
 const toRawQueryParameter = ({ name, value }): string => {
   return `${name}=${JSON.stringify(value)}`;
 };
 
-const toRawQueryParameters = (queryParameters): Array<string> =>
+const toRawQueryParameters = (queryParameters: Array<QueryParameter>): string =>
   queryParameters
-    .filter(({ value }) => value !== undefined && value.length !== 0)
+    .filter(({ value }) => !isNil(value) && !isEmpty(value))
     .map(toRawQueryParameter)
     .join('&');
 
