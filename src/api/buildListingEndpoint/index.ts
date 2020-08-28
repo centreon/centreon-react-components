@@ -1,10 +1,7 @@
 import getSearchQueryParameterValue from './getSearchQueryParameterValue';
-import {
-  Parameters,
-  QueryParameter,
-  BuildListingEndpointParameters,
-} from './models';
+import { Parameters, BuildListingEndpointParameters } from './models';
 import toRawQueryParameters from '../../queryParameters';
+import { QueryParameter } from '../../queryParameters/models';
 
 const getQueryParameters = ({
   sort,
