@@ -126,8 +126,8 @@ export {
   setUrlQueryParameters,
   getUrlQueryParameters,
 } from './queryParameters/url';
+export { QueryParameter } from './queryParameters/models';
 export {
-  QueryParameter,
   RegexSearchParameter,
-  ListsSearchParameter as ListSearchParameter,
-} from './queryParameters/models';
+  ListsSearchParameter,
+} from './api/buildListingEndpoint/models';
