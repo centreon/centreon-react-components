@@ -9,12 +9,13 @@ export interface Column {
   label: string;
   type: ColumnType;
   Component?: (props: ComponentColumnProps) => JSX.Element;
+  getDisplayedComponentId?: (isHovered) => number;
   clickable?: boolean;
   width?: number | string;
   getFormattedString?: (row) => string | null;
   getColSpan?: (isSelected) => number | undefined;
   getTruncateCondition?: (isSelected) => boolean;
-  getHiddenCondition?: (boolean) => boolean;
+  getHiddenCondition?: (isSelected) => boolean;
   disablePadding?: boolean;
   sortable?: boolean;
 }

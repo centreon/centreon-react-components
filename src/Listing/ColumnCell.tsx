@@ -127,9 +127,52 @@ const ColumnCell = React.memo<Props>(
     return cellByColumnType[column.type]();
   },
   (prevProps, nextProps) => {
+    const previousColumn = prevProps.column;
+    const previousRow = prevProps.row;
+    const previousIsRowHovered = prevProps.isRowHovered;
+    const previousIsRowSelected = prevProps.isRowSelected;
+
+    const nextColumn = nextProps.column;
+    const nextRow = nextProps.row;
+    const nextIsRowHovered = nextProps.isRowHovered;
+    const nextIsRowSelected = nextProps.isRowSelected;
+
+    const previousDisplayedComponentId = previousColumn.getDisplayedComponentId?.(
+      previousIsRowHovered,
+    );
+    const nextDisplayedComponentId = nextColumn.getDisplayedComponentId?.(
+      nextIsRowHovered,
+    );
+
+    const previousFormattedString = previousColumn.getFormattedString?.(
+      previousRow,
+    );
+    const nextFormatttedString = nextColumn.getFormattedString?.(nextRow);
+
+    const previousColSpan = previousColumn.getColSpan?.(previousIsRowSelected);
+    const nextColSpan = nextColumn.getColSpan?.(nextIsRowSelected);
+
+    const previousTruncateCondition = previousColumn.getTruncateCondition?.(
+      previousIsRowSelected,
+    );
+    const nextTruncateCondition = nextColumn.getTruncateCondition?.(
+      nextIsRowSelected,
+    );
+
+    const previousHiddenCondition = previousColumn.getHiddenCondition?.(
+      previousIsRowSelected,
+    );
+    const nextHiddenCondition = nextColumn.getHiddenCondition?.(
+      nextIsRowSelected,
+    );
+
     return (
-      equals(prevProps.isRowHovered, nextProps.isRowHovered) &&
-      equals(prevProps.row, nextProps.row)
+      equals(previousDisplayedComponentId, nextDisplayedComponentId) &&
+      equals(previousFormattedString, nextFormatttedString) &&
+      equals(previousColSpan, nextColSpan) &&
+      equals(previousTruncateCondition, nextTruncateCondition) &&
+      equals(previousHiddenCondition, nextHiddenCondition) &&
+      equals(previousHiddenCondition, nextHiddenCondition)
     );
   },
 );
