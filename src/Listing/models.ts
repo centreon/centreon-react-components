@@ -13,7 +13,8 @@ export interface Column {
   width?: number | string;
   getFormattedString?: (row) => string | null;
   getColSpan?: (isSelected) => number | undefined;
-  getTruncationState?: (isSelected) => boolean;
+  getTruncateCondition?: (isSelected) => boolean;
+  getHiddenCondition?: (boolean) => boolean;
   disablePadding?: boolean;
   sortable?: boolean;
 }
