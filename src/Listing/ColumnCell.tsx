@@ -131,18 +131,22 @@ const ColumnCell = React.memo<Props>(
     const previousRow = prevProps.row;
     const previousIsRowHovered = prevProps.isRowHovered;
     const previousIsRowSelected = prevProps.isRowSelected;
+    const previousHasHoverableComponent = previousColumn.hasHoverableComponent;
+    const previousRenderComponentOnRowUpdate =
+      previousColumn.renderComponentOnRowUpdate;
 
     const nextColumn = nextProps.column;
     const nextRow = nextProps.row;
     const nextIsRowHovered = nextProps.isRowHovered;
     const nextIsRowSelected = nextProps.isRowSelected;
+    const nextHasHoverableComponent = nextColumn.hasHoverableComponent;
+    const nextRenderComponentOnRowUpdate =
+      nextColumn.renderComponentOnRowUpdate;
 
-    const previousDisplayedComponentId = previousColumn.getDisplayedComponentId?.(
-      previousIsRowHovered,
-    );
-    const nextDisplayedComponentId = nextColumn.getDisplayedComponentId?.(
-      nextIsRowHovered,
-    );
+    const previousIsComponentHovered =
+      previousHasHoverableComponent && previousIsRowHovered;
+    const nextIsComponentHovered =
+      nextHasHoverableComponent && nextIsRowHovered;
 
     const previousFormattedString = previousColumn.getFormattedString?.(
       previousRow,
@@ -167,12 +171,16 @@ const ColumnCell = React.memo<Props>(
     );
 
     return (
-      equals(previousDisplayedComponentId, nextDisplayedComponentId) &&
+      equals(previousIsComponentHovered, nextIsComponentHovered) &&
       equals(previousFormattedString, nextFormatttedString) &&
       equals(previousColSpan, nextColSpan) &&
       equals(previousTruncateCondition, nextTruncateCondition) &&
       equals(previousHiddenCondition, nextHiddenCondition) &&
-      equals(previousHiddenCondition, nextHiddenCondition)
+      equals(previousHiddenCondition, nextHiddenCondition) &&
+      equals(
+        previousRenderComponentOnRowUpdate && previousRow,
+        nextRenderComponentOnRowUpdate && nextRow,
+      )
     );
   },
 );

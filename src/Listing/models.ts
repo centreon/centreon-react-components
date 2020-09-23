@@ -9,7 +9,7 @@ export interface Column {
   label: string;
   type: ColumnType;
   Component?: (props: ComponentColumnProps) => JSX.Element | null;
-  getDisplayedComponentId?: (isHovered) => number;
+  hasHoverableComponent?: boolean;
   clickable?: boolean;
   width?: number | string;
   getFormattedString?: (row) => string | null;
@@ -19,6 +19,7 @@ export interface Column {
   disablePadding?: boolean;
   sortable?: boolean;
   sortField?: string;
+  renderComponentOnRowUpdate?: boolean;
 }
 
 enum ColumnType {
