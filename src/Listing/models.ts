@@ -8,7 +8,7 @@ export interface Column {
   id: string;
   label: string;
   type: ColumnType;
-  Component?: (props: ComponentColumnProps) => JSX.Element;
+  Component?: (props: ComponentColumnProps) => JSX.Element | null;
   getDisplayedComponentId?: (isHovered) => number;
   clickable?: boolean;
   width?: number | string;
@@ -18,6 +18,7 @@ export interface Column {
   getHiddenCondition?: (isSelected) => boolean;
   disablePadding?: boolean;
   sortable?: boolean;
+  sortField?: string;
 }
 
 enum ColumnType {
