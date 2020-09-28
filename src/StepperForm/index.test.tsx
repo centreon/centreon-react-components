@@ -19,14 +19,17 @@ const renderWizardThreeSteps = (): RenderResult =>
       steps={[
         {
           stepName: 'step label 1',
+          skipFormChangeCheck: true,
           Component: () => <div>Step 1</div>,
         },
         {
           stepName: 'step label 2',
+          skipFormChangeCheck: true,
           Component: () => <div>Step 2</div>,
         },
         {
           stepName: 'step label 3',
+          skipFormChangeCheck: true,
           Component: () => <div>Step 3</div>,
         },
       ]}
@@ -40,6 +43,7 @@ const renderWizardOneStep = (): RenderResult =>
       steps={[
         {
           stepName: 'step label 1',
+          skipFormChangeCheck: true,
           Component: () => <div>Step 1</div>,
         },
       ]}
@@ -58,10 +62,12 @@ const renderWizardTwoStepsWithFormValidation = () =>
       steps={[
         {
           stepName: 'step label 1',
+          skipFormChangeCheck: true,
           Component: () => <div>Step 1</div>,
         },
         {
           stepName: 'step label 2',
+          skipFormChangeCheck: true,
           validationSchema: secondStepValidationSchema,
           Component: () => <div>Step 2</div>,
         },
@@ -92,10 +98,12 @@ const renderWizardTwoStepsWithSendingRequests = () =>
       steps={[
         {
           stepName: 'step label 1',
+          skipFormChangeCheck: true,
           Component: () => <div>Step 1</div>,
         },
         {
           stepName: 'step label 2',
+          skipFormChangeCheck: true,
           Component: SecondStep,
         },
       ]}

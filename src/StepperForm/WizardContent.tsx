@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { useFormikContext } from 'formik';
+import { equals } from 'ramda';
 
 import { DialogContent, makeStyles } from '@material-ui/core';
 
@@ -38,7 +39,10 @@ const WizardContent = ({
     validateForm,
   } = useFormikContext();
 
-  const { Component, noActionBar } = step;
+  const { Component, noActionBar, skipFormChangeCheck } = step;
+
+  const getFormChanged = () =>
+    equals(true, skipFormChangeCheck) ? false : !dirty;
 
   const submit = (): void => {
     handleSubmit();
@@ -49,7 +53,7 @@ const WizardContent = ({
   }, [currentStep]);
 
   const disableActionButtons =
-    sendingRequest || isSubmitting || !isValid || !dirty;
+    sendingRequest || isSubmitting || !isValid || getFormChanged();
 
   return (
     <form onSubmit={handleSubmit} className={classes.form}>

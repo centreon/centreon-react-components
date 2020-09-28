@@ -10,6 +10,7 @@ export interface Step {
   validationSchema?;
   Component: (props: StepComponentProps) => JSX.Element;
   noActionBar?: boolean;
+  skipFormChangeCheck?: boolean;
 }
 
 interface ActionsBarLabels {

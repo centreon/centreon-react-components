@@ -15,6 +15,7 @@ export const oneStep = (): JSX.Element => (
     steps={[
       {
         stepName: 'First step',
+        skipFormChangeCheck: true,
         Component: (): JSX.Element => (
           <Typography variant="h5" align="center">
             Step 1
@@ -32,6 +33,7 @@ export const threeStepsWithMediumSize = (): JSX.Element => (
     steps={[
       {
         stepName: 'First step',
+        skipFormChangeCheck: true,
         Component: (): JSX.Element => (
           <Typography variant="h5" align="center">
             Step 1
@@ -40,6 +42,7 @@ export const threeStepsWithMediumSize = (): JSX.Element => (
       },
       {
         stepName: 'Second step',
+        skipFormChangeCheck: true,
         Component: (): JSX.Element => (
           <Typography variant="h5" align="center">
             Step 2
@@ -48,6 +51,7 @@ export const threeStepsWithMediumSize = (): JSX.Element => (
       },
       {
         stepName: 'Third step',
+        skipFormChangeCheck: true,
         Component: (): JSX.Element => (
           <Typography variant="h5" align="center">
             Step 3
@@ -70,6 +74,7 @@ export const threeStepsWithCustomActionsBarLabels = (): JSX.Element => (
     steps={[
       {
         stepName: 'First step',
+        skipFormChangeCheck: true,
         Component: (): JSX.Element => (
           <Typography variant="h5" align="center">
             Step 1
@@ -78,6 +83,7 @@ export const threeStepsWithCustomActionsBarLabels = (): JSX.Element => (
       },
       {
         stepName: 'Second step',
+        skipFormChangeCheck: true,
         Component: (): JSX.Element => (
           <Typography variant="h5" align="center">
             Step 2
@@ -86,6 +92,7 @@ export const threeStepsWithCustomActionsBarLabels = (): JSX.Element => (
       },
       {
         stepName: 'Third step',
+        skipFormChangeCheck: true,
         Component: (): JSX.Element => (
           <Typography variant="h5" align="center">
             Step 3
@@ -104,6 +111,7 @@ export const threeStepsWithFullHeight = (): JSX.Element => (
     steps={[
       {
         stepName: 'First step',
+        skipFormChangeCheck: true,
         Component: (): JSX.Element => (
           <Typography variant="h5" align="center">
             Step 1
@@ -112,6 +120,7 @@ export const threeStepsWithFullHeight = (): JSX.Element => (
       },
       {
         stepName: 'Second step',
+        skipFormChangeCheck: true,
         Component: (): JSX.Element => (
           <Typography variant="h5" align="center">
             Step 2
@@ -120,6 +129,7 @@ export const threeStepsWithFullHeight = (): JSX.Element => (
       },
       {
         stepName: 'Third step',
+        skipFormChangeCheck: true,
         Component: (): JSX.Element => (
           <Typography variant="h5" align="center">
             Step 3
@@ -143,6 +153,7 @@ export const threeStepsWithCustomConfirmDialogLabels = (): JSX.Element => (
     steps={[
       {
         stepName: 'First step',
+        skipFormChangeCheck: true,
         Component: (): JSX.Element => (
           <Typography variant="h5" align="center">
             Step 1
@@ -151,6 +162,7 @@ export const threeStepsWithCustomConfirmDialogLabels = (): JSX.Element => (
       },
       {
         stepName: 'Second step',
+        skipFormChangeCheck: true,
         Component: (): JSX.Element => (
           <Typography variant="h5" align="center">
             Step 2
@@ -159,6 +171,7 @@ export const threeStepsWithCustomConfirmDialogLabels = (): JSX.Element => (
       },
       {
         stepName: 'Third step',
+        skipFormChangeCheck: true,
         Component: (): JSX.Element => (
           <Typography variant="h5" align="center">
             Step 3
@@ -190,10 +203,12 @@ export const twoStepsWithSendingRequest = (): JSX.Element => (
     steps={[
       {
         stepName: 'First step',
+        skipFormChangeCheck: true,
         Component: FirstStep,
       },
       {
         stepName: 'Second step',
+        skipFormChangeCheck: true,
         Component: (): JSX.Element => (
           <Typography variant="h5" align="center">
             Step 2
