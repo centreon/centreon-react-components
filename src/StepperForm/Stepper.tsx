@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { pipe, length, lt } from 'ramda';
+import { length, lt } from 'ramda';
 
 import {
   DialogTitle,
@@ -11,6 +11,7 @@ import {
 } from '@material-ui/core';
 
 import { Step as StepType } from './models';
+import StepIcon from './StepIcon';
 
 interface Props {
   steps: Array<StepType>;
@@ -49,6 +50,7 @@ const Stepper = ({ steps, currentStep }: Props): JSX.Element => {
                 classes={{
                   alternativeLabel: classes.label,
                 }}
+                StepIconComponent={StepIcon}
               >
                 {stepName}
               </StepLabel>
