@@ -13,7 +13,7 @@ const actionsBarLabels = {
 };
 
 describe('ActionsBar', () => {
-  it('cannot finish if form is not valid', () => {
+  it('cannot finish if the form is not valid', () => {
     render(
       <ActionsBar
         isLastStep={() => true}
@@ -74,7 +74,7 @@ describe('ActionsBar', () => {
     expect(screen.getByText('Custom finish')).toBeInTheDocument();
   });
 
-  it('goes to previous step when "Previous" button is clicked', () => {
+  it('goes to previous step when the "Previous" button is clicked', () => {
     render(
       <ActionsBar
         isLastStep={() => false}
@@ -92,7 +92,7 @@ describe('ActionsBar', () => {
     expect(goToPreviousStep).toHaveBeenCalled();
   });
 
-  it('goes to next step when "Next" button is clicked', () => {
+  it('goes to next step when the "Next" button is clicked', () => {
     render(
       <ActionsBar
         isLastStep={() => false}
@@ -110,7 +110,7 @@ describe('ActionsBar', () => {
     expect(goToNextStep).toHaveBeenCalled();
   });
 
-  it('submits the wizard when "Finish" button is clicked', () => {
+  it('submits the wizard when the "Finish" button is clicked', () => {
     render(
       <ActionsBar
         isLastStep={() => true}

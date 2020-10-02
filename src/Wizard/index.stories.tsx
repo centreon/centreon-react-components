@@ -7,7 +7,7 @@ import { Typography, TextField } from '@material-ui/core';
 import Wizard from '.';
 import { StepComponentProps } from './models';
 
-export default { title: 'WizardBeta' };
+export default { title: 'Wizard' };
 
 export const oneStep = (): JSX.Element => (
   <Wizard
