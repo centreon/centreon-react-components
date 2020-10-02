@@ -10,11 +10,11 @@ import Stepper from './Stepper';
 import WizardContent from './WizardContent';
 import Confirm from '../Dialog/Confirm';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   fullHeight: {
     height: '100%',
   },
-}));
+});
 
 const actionsBarLabelsDefaultValues = {
   labelPrevious: 'Previous',
