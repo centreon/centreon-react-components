@@ -356,6 +356,4 @@ const Form = (): JSX.Element => {
   );
 };
 
-export const wizardWithEmailAndPasswordInputsAndValidations = (): JSX.Element => (
-  <Form />
-);
+export const wizardWithInputsAndValidation = (): JSX.Element => <Form />;
