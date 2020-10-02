@@ -39,7 +39,7 @@ const WizardContent = ({
     validateForm,
   } = useFormikContext();
 
-  const { Component, noActionBar, skipFormChangeCheck } = step;
+  const { Component, noActionsBar, skipFormChangeCheck } = step;
 
   const getFormChanged = () =>
     equals(true, skipFormChangeCheck) ? false : !dirty;
@@ -62,7 +62,7 @@ const WizardContent = ({
           disableNextOnSendingRequests={disableNextOnSendingRequests}
         />
       </DialogContent>
-      {!noActionBar && (
+      {!noActionsBar && (
         <ActionsBar
           isFirstStep={isFirstStep}
           isLastStep={isLastStep}

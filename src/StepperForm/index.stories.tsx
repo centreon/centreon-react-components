@@ -26,6 +26,24 @@ export const oneStep = (): JSX.Element => (
   />
 );
 
+export const oneStepWithoutActionsBar = (): JSX.Element => (
+  <Wizard
+    open
+    steps={[
+      {
+        stepName: 'First step',
+        skipFormChangeCheck: true,
+        noActionsBar: true,
+        Component: (): JSX.Element => (
+          <Typography variant="h5" align="center">
+            Step 1
+          </Typography>
+        ),
+      },
+    ]}
+  />
+);
+
 export const threeStepsWithMediumSize = (): JSX.Element => (
   <Wizard
     open
