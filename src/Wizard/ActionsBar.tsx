@@ -13,7 +13,7 @@ import { ActionsBarProps } from './models';
 const useStyles = makeStyles((theme) => ({
   container: {
     bottom: 0,
-    padding: '0px 10px',
+    padding: theme.spacing(0, 2),
     backgroundColor: theme.palette.grey[100],
     borderTop: `1px solid ${theme.palette.grey[300]}`,
   },
