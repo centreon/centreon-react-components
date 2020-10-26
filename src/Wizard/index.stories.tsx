@@ -33,7 +33,7 @@ export const oneStepWithoutActionsBar = (): JSX.Element => (
       {
         stepName: 'First step',
         skipFormChangeCheck: true,
-        noActionsBar: true,
+        hasActionsBar: false,
         Component: (): JSX.Element => (
           <Typography variant="h5" align="center">
             Step 1

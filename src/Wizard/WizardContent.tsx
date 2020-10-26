@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { useFormikContext } from 'formik';
-import { equals } from 'ramda';
+import { equals, isNil } from 'ramda';
 
 import { DialogContent, makeStyles } from '@material-ui/core';
 
@@ -39,7 +39,7 @@ const WizardContent = ({
     validateForm,
   } = useFormikContext();
 
-  const { Component, noActionsBar, skipFormChangeCheck } = step;
+  const { Component, hasActionsBar, skipFormChangeCheck } = step;
 
   const getFormChanged = () =>
     equals(true, skipFormChangeCheck) ? false : !dirty;
@@ -62,7 +62,7 @@ const WizardContent = ({
           disableNextOnSendingRequests={disableNextOnSendingRequests}
         />
       </DialogContent>
-      {!noActionsBar && (
+      {(isNil(hasActionsBar) || hasActionsBar) && (
         <ActionsBar
           isFirstStep={isFirstStep}
           isLastStep={isLastStep}

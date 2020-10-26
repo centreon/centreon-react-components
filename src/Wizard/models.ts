@@ -9,7 +9,7 @@ export interface Step {
   validate?: (values: FormikValues) => FormikErrors<FormikValues>;
   validationSchema?;
   Component: (props: StepComponentProps) => JSX.Element;
-  noActionsBar?: boolean;
+  hasActionsBar?: boolean;
   skipFormChangeCheck?: boolean;
 }
 
