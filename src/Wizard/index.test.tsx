@@ -110,8 +110,8 @@ const renderWizardTwoStepsWithSendingRequests = () =>
     />,
   );
 
-describe('Wizard Beta', () => {
-  it('displays step labels', () => {
+describe(Wizard, () => {
+  it('displays the step labels', () => {
     renderWizardThreeSteps();
 
     expect(screen.getByText('step label 1')).toBeInTheDocument();
@@ -119,13 +119,13 @@ describe('Wizard Beta', () => {
     expect(screen.getByText('step label 3')).toBeInTheDocument();
   });
 
-  it('does not display step labels when there is only one step', () => {
+  it('does not display the step labels when there is only one step', () => {
     renderWizardOneStep();
 
     expect(screen.queryByText('step label 1')).not.toBeInTheDocument();
   });
 
-  it('goes to next and previous steps', async () => {
+  it('navigates between steps', async () => {
     renderWizardThreeSteps();
 
     fireEvent.click(screen.getByText('Next'));
@@ -163,7 +163,7 @@ describe('Wizard Beta', () => {
     });
   });
 
-  it('cannot finish the wizard while the step is sending requests then finish the wizard when "Finish" button is no longer disabled', async () => {
+  it('cannot finish the wizard while the step is sending requests', async () => {
     renderWizardTwoStepsWithSendingRequests();
 
     fireEvent.click(screen.getByText('Next'));
