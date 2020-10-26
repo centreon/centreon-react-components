@@ -44,7 +44,7 @@ export interface WizardProps {
   initialValues?: FormikValues;
   fullHeight?: boolean;
   open: boolean;
-  onClose?: (reason: string) => void;
+  onClose?: () => void;
   width?: 'lg' | 'md' | 'sm' | 'xl' | 'xs' | false;
   confirmDialogLabels?: ConfirmDialogLabels;
   actionsBarLabels?: ActionsBarLabels;

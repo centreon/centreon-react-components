@@ -72,22 +72,21 @@ const Wizard = ({
   };
 
   const handleClose = (event, reason) => {
-    if (equals(currentStep, 0)) {
-      onClose?.('cancel');
+    if (equals(reason, 'backdropClick')) {
+      setOpenConfirm(true);
       return;
     }
-    setOpenConfirm(true);
-    onClose?.(reason);
+    onClose?.();
   };
 
   const handleCloseConfirm = (confirm) => {
     setOpenConfirm(false);
 
-    if (equals(confirm, false)) {
+    if (!confirm) {
       return;
     }
 
-    onClose?.('cancel');
+    onClose?.();
   };
 
   const { validate, validationSchema } = steps[currentStep];
