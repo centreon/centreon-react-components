@@ -3,7 +3,6 @@ import * as React from 'react';
 import { length, gt } from 'ramda';
 
 import {
-  DialogTitle,
   Stepper as MUIStepper,
   Step,
   StepLabel,
