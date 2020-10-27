@@ -45,7 +45,7 @@ const ActionsBar = ({
     <Grid
       container
       direction="row"
-      justify="space-between"
+      justify="flex-end"
       alignItems="center"
       className={classes.container}
     >
