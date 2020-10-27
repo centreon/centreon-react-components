@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { useFormikContext } from 'formik';
-import { equals, isNil } from 'ramda';
+import { equals } from 'ramda';
 
 import { DialogContent, makeStyles } from '@material-ui/core';
 
