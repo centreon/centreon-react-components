@@ -3,18 +3,23 @@ import * as React from 'react';
 import { equals, length, dec, pipe, inc, filter, isEmpty, not } from 'ramda';
 import { Formik } from 'formik';
 
-import { Dialog, makeStyles } from '@material-ui/core';
+import { Dialog, makeStyles, DialogContent } from '@material-ui/core';
 
 import { WizardProps } from './models';
 import Stepper from './Stepper';
 import WizardContent from './WizardContent';
 import Confirm from '../Dialog/Confirm';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   fullHeight: {
     height: '100%',
   },
-});
+  dialogContent: {
+    display: 'flex',
+    backgroundColor: theme.palette.grey[100],
+    padding: 0,
+  },
+}));
 
 const actionsBarLabelsDefaultValues = {
   labelPrevious: 'Previous',
@@ -111,17 +116,19 @@ const Wizard = ({
           validateOnBlur={false}
           validateOnChange
         >
-          <WizardContent
-            step={steps[currentStep]}
-            sendingRequest={sendingRequest}
-            isLastStep={isLastStep}
-            isFirstStep={isFirstStep}
-            disableNextOnSendingRequests={disableNextOnSendingRequests}
-            goToPreviousStep={goToPreviousStep}
-            currentStep={currentStep}
-            actionsBarLabels={actionsBarLabels}
-            goToNextStep={goToNextStep}
-          />
+          <DialogContent className={classes.dialogContent}>
+            <WizardContent
+              step={steps[currentStep]}
+              sendingRequest={sendingRequest}
+              isLastStep={isLastStep}
+              isFirstStep={isFirstStep}
+              disableNextOnSendingRequests={disableNextOnSendingRequests}
+              goToPreviousStep={goToPreviousStep}
+              currentStep={currentStep}
+              actionsBarLabels={actionsBarLabels}
+              goToNextStep={goToNextStep}
+            />
+          </DialogContent>
         </Formik>
       </Dialog>
       <Confirm

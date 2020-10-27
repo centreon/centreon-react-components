@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import {
-  DialogActions,
+  Grid,
   Button,
   Typography,
   CircularProgress,
@@ -12,9 +12,9 @@ import { ActionsBarProps } from './models';
 
 const useStyles = makeStyles((theme) => ({
   container: {
+    position: 'sticky',
     bottom: 0,
-    padding: theme.spacing(0, 2),
-    backgroundColor: theme.palette.grey[100],
+    padding: '0px 10px',
     borderTop: `1px solid ${theme.palette.grey[300]}`,
   },
 }));
@@ -42,28 +42,38 @@ const ActionsBar = ({
   const labelNextFinish = isLastStep() ? labelFinish : labelNext;
 
   return (
-    <DialogActions className={classes.container}>
-      {!isFirstStep() && (
+    <Grid
+      container
+      direction="row"
+      justify="space-between"
+      alignItems="center"
+      className={classes.container}
+    >
+      <Grid item>
+        {!isFirstStep() && (
+          <Button
+            color="primary"
+            onClick={goToPreviousStep}
+            onKeyPress={preventEnterKey}
+            aria-label={labelPrevious}
+          >
+            <Typography>{labelPrevious}</Typography>
+          </Button>
+        )}
+      </Grid>
+      <Grid item>
         <Button
           color="primary"
-          onClick={goToPreviousStep}
+          onClick={() => (isLastStep() ? submit() : goToNextStep())}
+          disabled={disableActionButtons}
           onKeyPress={preventEnterKey}
-          aria-label={labelPrevious}
+          aria-label={labelNextFinish}
         >
-          <Typography>{labelPrevious}</Typography>
+          <Typography>{labelNextFinish}</Typography>
+          {isSubmitting && <CircularProgress size={20} />}
         </Button>
-      )}
-      <Button
-        color="primary"
-        onClick={() => (isLastStep() ? submit() : goToNextStep())}
-        disabled={disableActionButtons}
-        onKeyPress={preventEnterKey}
-        aria-label={labelNextFinish}
-      >
-        <Typography>{labelNextFinish}</Typography>
-        {isSubmitting && <CircularProgress size={20} />}
-      </Button>
-    </DialogActions>
+      </Grid>
+    </Grid>
   );
 };
 

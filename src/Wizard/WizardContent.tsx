@@ -3,19 +3,21 @@ import * as React from 'react';
 import { useFormikContext } from 'formik';
 import { equals } from 'ramda';
 
-import { DialogContent, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 
 import { WizardContentProps } from './models';
 import ActionsBar from './ActionsBar';
 
 const useStyles = makeStyles((theme) => ({
-  dialogContent: {
-    backgroundColor: theme.palette.grey[100],
-  },
   form: {
     display: 'flex',
     flexDirection: 'column',
     flex: 1,
+  },
+  content: {
+    height: '100%',
+    overflow: 'auto',
+    padding: theme.spacing(1, 3, 0, 3),
   },
 }));
 
@@ -57,11 +59,11 @@ const WizardContent = ({
 
   return (
     <form onSubmit={handleSubmit} className={classes.form}>
-      <DialogContent className={classes.dialogContent}>
+      <div className={classes.content}>
         <Component
           disableNextOnSendingRequests={disableNextOnSendingRequests}
         />
-      </DialogContent>
+      </div>
       {hasActionsBar && (
         <ActionsBar
           isFirstStep={isFirstStep}

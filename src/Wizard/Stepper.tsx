@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { length, lt } from 'ramda';
+import { length, gt } from 'ramda';
 
 import {
   DialogTitle,
@@ -34,31 +34,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Stepper = ({ steps, currentStep }: Props): JSX.Element => {
+const Stepper = ({ steps, currentStep }: Props): JSX.Element | null => {
   const classes = useStyles();
+
+  if (gt(1, length(steps))) {
+    return null;
+  }
+
   return (
-    <DialogTitle className={classes.dialogTitle}>
-      {lt(1, length(steps)) && (
-        <MUIStepper
-          alternativeLabel
-          activeStep={currentStep}
-          className={classes.stepper}
-        >
-          {steps.map(({ stepName }) => (
-            <Step key={stepName}>
-              <StepLabel
-                classes={{
-                  alternativeLabel: classes.label,
-                }}
-                StepIconComponent={StepIcon}
-              >
-                {stepName}
-              </StepLabel>
-            </Step>
-          ))}
-        </MUIStepper>
-      )}
-    </DialogTitle>
+    <MUIStepper
+      alternativeLabel
+      activeStep={currentStep}
+      className={classes.stepper}
+    >
+      {steps.map(({ stepName }) => (
+        <Step key={stepName}>
+          <StepLabel
+            classes={{
+              alternativeLabel: classes.label,
+            }}
+            StepIconComponent={StepIcon}
+          >
+            {stepName}
+          </StepLabel>
+        </Step>
+      ))}
+    </MUIStepper>
   );
 };
 
