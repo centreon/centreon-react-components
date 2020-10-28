@@ -2,11 +2,7 @@ import dayjs from 'dayjs';
 
 import 'dayjs/locale/en';
 
-import {
-  renderHook,
-  RenderHookResult,
-  act,
-} from '@testing-library/react-hooks';
+import { renderHook, RenderHookResult } from '@testing-library/react-hooks';
 import timezonePlugin from 'dayjs/plugin/timezone';
 import utcPlugin from 'dayjs/plugin/utc';
 import localizedFormatPlugin from 'dayjs/plugin/localizedFormat';
