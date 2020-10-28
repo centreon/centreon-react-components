@@ -26,7 +26,7 @@ const renderUseLocaleDateTimeFormat = (): RenderHookResult<
   return renderHook(() => useLocaleDateTimeFormat());
 };
 
-const dateTime = '1995-12-17T03:24:00';
+const dateTime = '1995-12-17T03:24:00Z';
 
 describe(useLocaleDateTimeFormat, () => {
   describe('toDateTime', () => {
@@ -35,7 +35,7 @@ describe(useLocaleDateTimeFormat, () => {
 
       const formattedDateTime = result.current.toDateTime(new Date(dateTime));
 
-      expect(formattedDateTime).toEqual('12/17/1995 03:24');
+      expect(formattedDateTime).toEqual('12/17/1995 04:24');
     });
   });
 
@@ -55,7 +55,7 @@ describe(useLocaleDateTimeFormat, () => {
 
       const formattedDateTime = result.current.toTime(new Date(dateTime));
 
-      expect(formattedDateTime).toEqual('03:24');
+      expect(formattedDateTime).toEqual('04:24');
     });
   });
 
@@ -65,7 +65,7 @@ describe(useLocaleDateTimeFormat, () => {
 
       const formattedDateTime = result.current.toIsoString(new Date(dateTime));
 
-      expect(formattedDateTime).toEqual('1995-12-17T02:24:00Z');
+      expect(formattedDateTime).toEqual('1995-12-17T03:24:00Z');
     });
   });
 });
