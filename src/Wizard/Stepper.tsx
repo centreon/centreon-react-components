@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { length, gt } from 'ramda';
+import { length, gte } from 'ramda';
 
 import {
   Stepper as MUIStepper,
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 const Stepper = ({ steps, currentStep }: Props): JSX.Element | null => {
   const classes = useStyles();
 
-  if (gt(1, length(steps))) {
+  if (gte(1, length(steps))) {
     return null;
   }
 
