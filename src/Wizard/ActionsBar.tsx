@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     position: 'sticky',
     bottom: 0,
-    padding: '0px 10px',
+    padding: theme.spacing(0, 1),
     borderTop: `1px solid ${theme.palette.grey[300]}`,
   },
   loader: {
