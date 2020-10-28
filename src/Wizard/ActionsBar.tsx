@@ -17,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
     padding: '0px 10px',
     borderTop: `1px solid ${theme.palette.grey[300]}`,
   },
+  loader: {
+    marginLeft: theme.spacing(1),
+  },
 }));
 
 const ActionsBar = ({
@@ -70,7 +73,9 @@ const ActionsBar = ({
           aria-label={labelNextFinish}
         >
           <Typography>{labelNextFinish}</Typography>
-          {isSubmitting && <CircularProgress size={20} />}
+          {isSubmitting && (
+            <CircularProgress size={20} className={classes.loader} />
+          )}
         </Button>
       </Grid>
     </Grid>
