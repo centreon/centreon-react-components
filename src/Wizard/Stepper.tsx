@@ -19,7 +19,7 @@ interface Props {
 
 const useStyles = makeStyles((theme) => ({
   stepper: {
-    padding: '18px 16px 14px 16px',
+    padding: theme.spacing(2),
     backgroundColor: theme.palette.grey[200],
   },
   label: {
