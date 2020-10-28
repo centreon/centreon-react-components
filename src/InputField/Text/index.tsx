@@ -45,8 +45,8 @@ const OptionalLabelInputAdornment = ({
 };
 
 export type Props = {
-  startAdornment?: JSX.Element;
-  endAdornment?: JSX.Element;
+  StartAdornment?: React.SFC;
+  EndAdornment?: React.SFC;
   error?: string;
   compact?: boolean;
   ariaLabel?: string;
@@ -54,8 +54,8 @@ export type Props = {
 } & Omit<TextFieldProps, 'variant' | 'size' | 'error'>;
 
 const TextField = ({
-  startAdornment,
-  endAdornment,
+  StartAdornment,
+  EndAdornment,
   label,
   error,
   ariaLabel,
@@ -74,14 +74,14 @@ const TextField = ({
         className: clsx({
           [classes.transparent]: transparent,
         }),
-        endAdornment: endAdornment && (
+        endAdornment: EndAdornment && (
           <OptionalLabelInputAdornment label={label} position="end">
-            {endAdornment}
+            <EndAdornment />
           </OptionalLabelInputAdornment>
         ),
-        startAdornment: startAdornment && (
+        startAdornment: StartAdornment && (
           <OptionalLabelInputAdornment label={label} position="start">
-            {startAdornment}
+            <StartAdornment />
           </OptionalLabelInputAdornment>
         ),
         disableUnderline: true,
