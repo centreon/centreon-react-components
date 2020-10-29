@@ -43,19 +43,19 @@ const Wizard = ({
   const [sendingRequest, setSendingRequest] = React.useState(false);
   const [openConfirm, setOpenConfirm] = React.useState(false);
 
-  const isLastStep = () => pipe(dec, equals(currentStep))(length(steps));
+  const isLastStep = pipe(dec, equals(currentStep))(length(steps));
 
-  const isFirstStep = () => equals(currentStep, 0);
+  const isFirstStep = equals(currentStep, 0);
 
   const goToNextStep = () => {
-    if (isLastStep()) {
+    if (isLastStep) {
       return;
     }
     setCurrentStep(inc(currentStep));
   };
 
   const goToPreviousStep = () => {
-    if (isFirstStep()) {
+    if (isFirstStep) {
       return;
     }
     setCurrentStep(dec(currentStep));

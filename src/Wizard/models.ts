@@ -22,8 +22,8 @@ interface ActionsBarLabels {
 export interface WizardContentProps {
   sendingRequest: boolean;
   step: Step;
-  isLastStep: () => boolean;
-  isFirstStep: () => boolean;
+  isLastStep: boolean;
+  isFirstStep: boolean;
   disableNextOnSendingRequests: (sendingRequests: Array<boolean>) => void;
   goToPreviousStep: () => void;
   goToNextStep: () => void;
@@ -51,8 +51,8 @@ export interface WizardProps {
 }
 
 export interface ActionsBarProps {
-  isLastStep: () => boolean;
-  isFirstStep: () => boolean;
+  isLastStep: boolean;
+  isFirstStep: boolean;
   goToPreviousStep: () => void;
   goToNextStep: () => void;
   disableActionButtons: boolean;

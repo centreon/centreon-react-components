@@ -42,7 +42,7 @@ const ActionsBar = ({
 
   const { labelFinish, labelNext, labelPrevious } = actionsBarLabels;
 
-  const labelNextFinish = isLastStep() ? labelFinish : labelNext;
+  const labelNextFinish = isLastStep ? labelFinish : labelNext;
 
   return (
     <Grid
@@ -53,7 +53,7 @@ const ActionsBar = ({
       className={classes.container}
     >
       <Grid item>
-        {!isFirstStep() && (
+        {!isFirstStep && (
           <Button
             color="primary"
             onClick={goToPreviousStep}
@@ -67,7 +67,7 @@ const ActionsBar = ({
       <Grid item>
         <Button
           color="primary"
-          onClick={() => (isLastStep() ? submit() : goToNextStep())}
+          onClick={() => (isLastStep ? submit() : goToNextStep())}
           disabled={disableActionButtons}
           onKeyPress={preventEnterKey}
           aria-label={labelNextFinish}
