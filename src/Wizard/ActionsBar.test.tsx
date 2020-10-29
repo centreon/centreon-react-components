@@ -16,8 +16,8 @@ describe('ActionsBar', () => {
   it('cannot finish if the form is not valid', () => {
     render(
       <ActionsBar
-        isLastStep={() => true}
-        isFirstStep={() => false}
+        isLastStep
+        isFirstStep={false}
         goToPreviousStep={goToPreviousStep}
         goToNextStep={goToNextStep}
         isSubmitting={false}
