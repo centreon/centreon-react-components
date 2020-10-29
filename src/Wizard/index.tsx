@@ -68,7 +68,7 @@ const Wizard = ({
   };
 
   const submit = (values, bag) => {
-    if (isLastStep() && onSubmit) {
+    if (isLastStep && onSubmit) {
       onSubmit(values, bag);
       return;
     }
