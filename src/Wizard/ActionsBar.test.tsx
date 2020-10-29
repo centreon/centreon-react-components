@@ -33,8 +33,8 @@ describe('ActionsBar', () => {
   it('displays the given previous and next labels when the current page is not the last one', () => {
     render(
       <ActionsBar
-        isLastStep={() => false}
-        isFirstStep={() => false}
+        isLastStep={false}
+        isFirstStep={false}
         goToPreviousStep={goToPreviousStep}
         goToNextStep={goToNextStep}
         isSubmitting={false}
@@ -55,8 +55,8 @@ describe('ActionsBar', () => {
   it('displays the given previous and finish labels when the current page is the last one', () => {
     render(
       <ActionsBar
-        isLastStep={() => true}
-        isFirstStep={() => false}
+        isLastStep
+        isFirstStep={false}
         goToPreviousStep={goToPreviousStep}
         goToNextStep={goToNextStep}
         isSubmitting={false}
@@ -77,8 +77,8 @@ describe('ActionsBar', () => {
   it('goes to previous step when the "Previous" button is clicked', () => {
     render(
       <ActionsBar
-        isLastStep={() => false}
-        isFirstStep={() => false}
+        isLastStep={false}
+        isFirstStep={false}
         goToPreviousStep={goToPreviousStep}
         goToNextStep={goToNextStep}
         isSubmitting={false}
@@ -95,8 +95,8 @@ describe('ActionsBar', () => {
   it('goes to next step when the "Next" button is clicked', () => {
     render(
       <ActionsBar
-        isLastStep={() => false}
-        isFirstStep={() => false}
+        isLastStep={false}
+        isFirstStep={false}
         goToPreviousStep={goToPreviousStep}
         goToNextStep={goToNextStep}
         isSubmitting={false}
@@ -113,8 +113,8 @@ describe('ActionsBar', () => {
   it('submits the wizard when the "Finish" button is clicked', () => {
     render(
       <ActionsBar
-        isLastStep={() => true}
-        isFirstStep={() => false}
+        isLastStep
+        isFirstStep={false}
         goToPreviousStep={goToPreviousStep}
         goToNextStep={goToNextStep}
         isSubmitting={false}
