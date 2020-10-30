@@ -68,4 +68,17 @@ describe(useLocaleDateTimeFormat, () => {
       expect(formattedDateTime).toEqual('1995-12-17T03:24:00Z');
     });
   });
+
+  describe('toHumanizedDuration', () => {
+    it('formats the given duration to a humanized duration', () => {
+      const { result } = renderUseLocaleDateTimeFormat();
+
+      const formattedDateTime = result.current.toHumanizedDuration({
+        duration: 22141,
+        labelConjunction: 'and',
+      });
+
+      expect(formattedDateTime).toEqual('6 hours, 9 minutes and 1 second');
+    });
+  });
 });
