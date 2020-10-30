@@ -78,7 +78,7 @@ describe(useLocaleDateTimeFormat, () => {
         labelConjunction: 'and',
       });
 
-      expect(formattedDateTime).toEqual('6 hours, 9 minutes and 1 second');
+      expect(formattedDateTime).toEqual('6 h, 9 m and 1 s');
     });
   });
 });

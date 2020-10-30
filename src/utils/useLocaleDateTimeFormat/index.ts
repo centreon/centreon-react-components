@@ -5,6 +5,8 @@ import 'dayjs/plugin/timezone';
 
 import { useUserContext } from '@centreon/ui-context';
 
+import shortLocales from './sortLocales';
+
 interface FormatParameters {
   date: Date | string;
   formatString: string;
@@ -72,14 +74,16 @@ const useLocaleDateTimeFormat = (): LocaleDateTimeFormat => {
     duration,
     labelConjunction,
   }: HumanizeDuration): string => {
-    const normalizedLocale = locale.substring(0, 2).toLowerCase();
+    const humanizer = humanizeDuration.humanizer();
+    humanizer.languages = shortLocales;
+    const normalizedLocale = locale.substring(0, 2).toUpperCase();
 
-    return humanizeDuration(duration * 1000, {
+    return humanizer(duration * 1000, {
       round: true,
-      language: normalizedLocale,
+      language: `short${normalizedLocale}`,
       conjunction: ` ${labelConjunction} `,
       serialComma: false,
-      fallbacks: ['en'],
+      fallbacks: ['shortEN'],
     });
   };
 
