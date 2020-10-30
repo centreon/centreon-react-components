@@ -79,6 +79,7 @@ const useLocaleDateTimeFormat = (): LocaleDateTimeFormat => {
       language: normalizedLocale,
       conjunction: ` ${labelConjunction} `,
       serialComma: false,
+      fallbacks: ['en'],
     });
   };
 
