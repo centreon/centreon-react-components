@@ -73,12 +73,9 @@ describe(useLocaleDateTimeFormat, () => {
     it('formats the given duration to a humanized duration', () => {
       const { result } = renderUseLocaleDateTimeFormat();
 
-      const formattedDateTime = result.current.toHumanizedDuration({
-        duration: 22141,
-        labelConjunction: 'and',
-      });
+      const formattedDateTime = result.current.toHumanizedDuration(22141);
 
-      expect(formattedDateTime).toEqual('6 h, 9 m and 1 s');
+      expect(formattedDateTime).toEqual('6h 9m 1s');
     });
   });
 });

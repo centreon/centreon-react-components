@@ -12,21 +12,13 @@ interface FormatParameters {
   formatString: string;
 }
 
-interface HumanizeDuration {
-  duration: number;
-  labelConjunction: string;
-}
-
 export interface LocaleDateTimeFormat {
   format: (dateFormat: FormatParameters) => string;
   toDate: (date: Date | string) => string;
   toDateTime: (date: Date | string) => string;
   toTime: (date: Date | string) => string;
   toIsoString: (date: Date) => string;
-  toHumanizedDuration: ({
-    duration,
-    labelConjunction,
-  }: HumanizeDuration) => string;
+  toHumanizedDuration: (duration: number) => string;
 }
 
 const dateTimeFormat = 'L HH:mm';
@@ -70,10 +62,7 @@ const useLocaleDateTimeFormat = (): LocaleDateTimeFormat => {
     return `${new Date(date).toISOString().substring(0, 19)}Z`;
   };
 
-  const toHumanizedDuration = ({
-    duration,
-    labelConjunction,
-  }: HumanizeDuration): string => {
+  const toHumanizedDuration = (duration: number): string => {
     const humanizer = humanizeDuration.humanizer();
     humanizer.languages = shortLocales;
     const normalizedLocale = locale.substring(0, 2).toUpperCase();
@@ -81,7 +70,8 @@ const useLocaleDateTimeFormat = (): LocaleDateTimeFormat => {
     return humanizer(duration * 1000, {
       round: true,
       language: `short${normalizedLocale}`,
-      conjunction: ` ${labelConjunction} `,
+      delimiter: ' ',
+      spacer: '',
       serialComma: false,
       fallbacks: ['shortEN'],
     });
