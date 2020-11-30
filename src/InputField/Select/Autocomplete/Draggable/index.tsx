@@ -49,6 +49,8 @@ const useStyles = makeStyles((theme) => ({
 interface Props {
   onSelectedValuesChange?: (values: Array<SelectEntry>) => Array<SelectEntry>;
   label?: string;
+  labelError?: string;
+  required?: string;
 }
 
 const DraggableAutocomplete = (
@@ -57,9 +59,14 @@ const DraggableAutocomplete = (
   const InnerDraggableAutocompleteField = ({
     onSelectedValuesChange,
     label,
+    labelError,
+    required,
     ...props
   }: Props &
-    (ConnectedAutoCompleteFieldProps | MultiAutocompleteFieldProps)) => {
+    (
+      | Omit<ConnectedAutoCompleteFieldProps, 'labelError' | 'required'>
+      | Omit<MultiAutocompleteFieldProps, 'labelError' | 'required'>
+    )) => {
     const [selectedValues, setSelectedValues] = React.useState<
       Array<SelectEntry>
     >([]);
@@ -179,7 +186,15 @@ const DraggableAutocomplete = (
         freeSolo
         handleHomeEndKeys
         renderTags={renderTags}
-        renderInput={(params) => <TextField {...params} label={label} />}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label={label}
+            helperText={labelError}
+            error={labelError}
+            required={required}
+          />
+        )}
         onChange={onChange}
         filterOptions={filterOptions}
         {...props}
