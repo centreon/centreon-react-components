@@ -62,7 +62,6 @@ const MultiDraggable = (): JSX.Element => (
     label="Draggable Autocomplete"
     placeholder="Type here..."
     open
-    labelError="coucou"
   />
 );
 
