@@ -19,7 +19,6 @@ import { Chip, makeStyles, lighten, useTheme } from '@material-ui/core';
 import { createFilterOptions } from '@material-ui/lab/Autocomplete';
 import CloseIcon from '@material-ui/icons/Close';
 
-import TextField from '../../../Text';
 import { SelectEntry } from '../..';
 import { ConnectedAutoCompleteFieldProps } from '../Connected';
 import { MultiAutocompleteFieldProps } from '../../../..';
@@ -48,9 +47,6 @@ const useStyles = makeStyles((theme) => ({
 
 interface Props {
   onSelectedValuesChange?: (values: Array<SelectEntry>) => Array<SelectEntry>;
-  label?: string;
-  labelError?: string;
-  required?: string;
 }
 
 const DraggableAutocomplete = (
@@ -58,15 +54,9 @@ const DraggableAutocomplete = (
 ): ((props) => JSX.Element) => {
   const InnerDraggableAutocompleteField = ({
     onSelectedValuesChange,
-    label,
-    labelError,
-    required,
     ...props
   }: Props &
-    (
-      | Omit<ConnectedAutoCompleteFieldProps, 'labelError' | 'required'>
-      | Omit<MultiAutocompleteFieldProps, 'labelError' | 'required'>
-    )) => {
+    (ConnectedAutoCompleteFieldProps | MultiAutocompleteFieldProps)) => {
     const [selectedValues, setSelectedValues] = React.useState<
       Array<SelectEntry>
     >([]);
@@ -186,15 +176,6 @@ const DraggableAutocomplete = (
         freeSolo
         handleHomeEndKeys
         renderTags={renderTags}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            label={label}
-            helperText={labelError}
-            error={labelError}
-            required={required}
-          />
-        )}
         onChange={onChange}
         filterOptions={filterOptions}
         {...props}
