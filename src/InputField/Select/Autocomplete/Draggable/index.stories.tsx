@@ -89,7 +89,7 @@ const MultiDraggableError = (): JSX.Element => (
     options={options}
     label="Draggable Autocomplete"
     placeholder="Type here..."
-    labelError="Error"
+    error="Error"
   />
 );
 
