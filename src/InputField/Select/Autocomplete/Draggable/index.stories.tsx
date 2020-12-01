@@ -107,3 +107,16 @@ const MultiDraggableRequired = (): JSX.Element => (
 export const draggableWithRequired = (): JSX.Element => (
   <MultiDraggableRequired />
 );
+
+const MultiDraggableInitialValues = (): JSX.Element => (
+  <MultiDraggableAutocompleteField
+    options={options}
+    label="Draggable Autocomplete"
+    placeholder="Type here..."
+    initialValues={[options[0]]}
+  />
+);
+
+export const draggableWithInitialValues = (): JSX.Element => (
+  <MultiDraggableInitialValues />
+);
