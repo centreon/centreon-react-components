@@ -120,7 +120,6 @@ const AutocompleteField = ({
           }}
           required={required}
           error={error}
-          helperText={error}
           InputProps={{
             ...params.InputProps,
             endAdornment: (
