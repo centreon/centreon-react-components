@@ -28,7 +28,7 @@ interface Props {
 const useStyles = makeStyles((theme) => ({
   helper: {
     boxShadow: theme.shadows[3],
-    zIndex: 9999,
+    zIndex: theme.zIndex.tooltip,
   },
 }));
 
