@@ -26,7 +26,10 @@ interface Props {
 }
 
 const useStyles = makeStyles((theme) => ({
-  helper: { boxShadow: theme.shadows[3] },
+  helper: {
+    boxShadow: theme.shadows[3],
+    zIndex: 9999,
+  },
 }));
 
 const DraggableAutocomplete = (
