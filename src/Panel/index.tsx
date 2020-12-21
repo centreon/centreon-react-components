@@ -1,7 +1,8 @@
 import * as React from 'react';
 
-import { isEmpty } from 'ramda';
+import { isEmpty, prop } from 'ramda';
 
+import { isNil } from 'lodash';
 import {
   makeStyles,
   Paper,
@@ -53,6 +54,14 @@ const useStyles = makeStyles<Theme, StylesProps>((theme) => ({
     top: 0,
     overflow: 'auto',
   },
+  dragger: {
+    cursor: 'ew-resize',
+    position: 'absolute',
+    bottom: 0,
+    right: ({ width }) => width,
+    top: 0,
+    width: 5,
+  },
 }));
 
 export interface Tab {
@@ -70,7 +79,11 @@ interface Props {
   labelClose?: string;
   width?: number;
   headerBackgroundColor?: string;
+  onResize?: (newWidth: number) => void;
 }
+
+const minWidth = 550;
+const maxWidth = 1000;
 
 const Panel = ({
   header,
@@ -82,8 +95,27 @@ const Panel = ({
   labelClose = 'Close',
   width = 550,
   headerBackgroundColor,
+  onResize,
 }: Props): JSX.Element => {
   const classes = useStyles({ width, headerBackgroundColor });
+
+  const handleMouseDown = (e) => {
+    document.addEventListener('mouseup', handleMouseUp, true);
+    document.addEventListener('mousemove', handleMouseMove, true);
+  };
+
+  const handleMouseUp = () => {
+    document.removeEventListener('mouseup', handleMouseUp, true);
+    document.removeEventListener('mousemove', handleMouseMove, true);
+  };
+
+  const handleMouseMove = React.useCallback((e) => {
+    e.preventDefault();
+
+    const newWidth = document.body.clientWidth - e.clientX;
+    // onResize?.(newWidth)
+    onResize?.(newWidth <= minWidth ? width : newWidth);
+  }, []);
 
   return (
     <Slide
@@ -94,7 +126,11 @@ const Panel = ({
         exit: 50,
       }}
     >
-      <Paper elevation={2} className={classes.container}>
+      <Paper elevation={2} className={classes.container} style={{ resize: 'horizontal'}}>
+      >
+        {!isNil(onResize) && (
+          <div className={classes.dragger} onMouseDown={handleMouseDown}></div>
+        )}
         {header && (
           <>
             <div className={classes.header}>
