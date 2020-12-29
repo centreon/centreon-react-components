@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import { isEmpty, prop } from 'ramda';
-
+import { isEmpty } from 'ramda';
 import { isNil } from 'lodash';
+
 import {
   makeStyles,
   Paper,
@@ -61,6 +61,7 @@ const useStyles = makeStyles<Theme, StylesProps>((theme) => ({
     right: ({ width }) => width,
     top: 0,
     width: 5,
+    zIndex: theme.zIndex.drawer,
   },
 }));
 
@@ -78,12 +79,10 @@ interface Props {
   onClose?: () => void;
   labelClose?: string;
   width?: number;
+  minWidth?: number;
   headerBackgroundColor?: string;
   onResize?: (newWidth: number) => void;
 }
-
-const minWidth = 550;
-const maxWidth = 1000;
 
 const Panel = ({
   header,
@@ -94,27 +93,41 @@ const Panel = ({
   onTabSelect = () => undefined,
   labelClose = 'Close',
   width = 550,
+  minWidth = 550,
   headerBackgroundColor,
   onResize,
 }: Props): JSX.Element => {
   const classes = useStyles({ width, headerBackgroundColor });
 
-  const handleMouseDown = (e) => {
-    document.addEventListener('mouseup', handleMouseUp, true);
-    document.addEventListener('mousemove', handleMouseMove, true);
+  const resize = () => {
+    document.addEventListener('mouseup', releaseMouse, true);
+    document.addEventListener('mousemove', moveMouse, true);
   };
 
-  const handleMouseUp = () => {
-    document.removeEventListener('mouseup', handleMouseUp, true);
-    document.removeEventListener('mousemove', handleMouseMove, true);
+  const releaseMouse = () => {
+    document.removeEventListener('mouseup', releaseMouse, true);
+    document.removeEventListener('mousemove', moveMouse, true);
   };
 
-  const handleMouseMove = React.useCallback((e) => {
+  const moveMouse = React.useCallback((e) => {
     e.preventDefault();
 
+    const maxWidth = window.innerWidth * 0.85;
     const newWidth = document.body.clientWidth - e.clientX;
-    // onResize?.(newWidth)
-    onResize?.(newWidth <= minWidth ? width : newWidth);
+
+    const getResizedWidth = (): number => {
+      if (newWidth <= minWidth) {
+        return width;
+      }
+
+      if (newWidth > maxWidth) {
+        return maxWidth;
+      }
+
+      return newWidth;
+    };
+
+    onResize?.(getResizedWidth());
   }, []);
 
   return (
@@ -126,10 +139,9 @@ const Panel = ({
         exit: 50,
       }}
     >
-      <Paper elevation={2} className={classes.container} style={{ resize: 'horizontal'}}>
-      >
+      <Paper elevation={2} className={classes.container}>
         {!isNil(onResize) && (
-          <div className={classes.dragger} onMouseDown={handleMouseDown}></div>
+          <div className={classes.dragger} onMouseDown={resize} role="none" />
         )}
         {header && (
           <>
