@@ -7,11 +7,7 @@ import Panel from '.';
 export default { title: 'Panel' };
 
 const header = <Typography>Header</Typography>;
-const tab = (
-  <div style={{ height: 200, position: 'relative' }}>
-    <Typography>Tab</Typography>
-  </div>
-);
+const tab = <Typography>Tab</Typography>;
 
 const Story = (props): JSX.Element => {
   return (
