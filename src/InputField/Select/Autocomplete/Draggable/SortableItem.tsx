@@ -1,45 +1,54 @@
 import * as React from 'react';
 
-import clsx from 'clsx';
-import { SortableElement } from 'react-sortable-hoc';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
-import { Chip, makeStyles, lighten } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
+import Item from './Item';
 
-const useStyles = makeStyles((theme) => ({
-  tag: {
-    margin: theme.spacing(0.5),
-  },
-  createdTag: {
-    backgroundColor: lighten(theme.palette.primary.main, 0.7),
-  },
-  sorting: {
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-      easing: theme.transitions.easing.easeOut,
-    }),
-  },
-}));
+interface Props {
+  name;
+  createOption;
+  id;
+  index;
+  deleteValue;
+}
 
-const SortableItem = SortableElement(
-  ({ name, createOption, idx, deleteValue, isSorting }): JSX.Element => {
-    const classes = useStyles();
+const SortableItem = ({
+  name,
+  createOption,
+  id,
+  index,
+  deleteValue,
+}: Props): JSX.Element => {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id });
 
-    return (
-      <Chip
-        size="small"
-        label={name}
-        className={clsx(
-          classes.tag,
-          createOption && classes.createdTag,
-          isSorting && classes.sorting,
-        )}
-        clickable
-        onDelete={() => deleteValue(idx)}
-        deleteIcon={<CloseIcon />}
-      />
-    );
-  },
-);
+  const style = {
+    position: 'relative',
+    display: 'inline-block',
+    opacity: isDragging ? '0.7' : '1',
+    transform: CSS.Translate.toString(transform),
+    transition,
+  };
+
+  return (
+    <Item
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      listeners={listeners}
+      name={name}
+      createOption={createOption}
+      deleteValue={deleteValue}
+      index={index}
+    />
+  );
+};
 
 export default SortableItem;
