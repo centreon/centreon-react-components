@@ -7,7 +7,6 @@ import {
   props,
   pipe,
   equals,
-  and,
   not,
   path,
   isNil,
