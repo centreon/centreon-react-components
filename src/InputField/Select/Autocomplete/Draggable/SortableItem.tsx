@@ -1,25 +1,26 @@
 import * as React from 'react';
 
 import { useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
+import { CSS, Transform } from '@dnd-kit/utilities';
 import { equals } from 'ramda';
+import { DraggableSyntheticListeners } from '@dnd-kit/core';
 
 import Item from './Item';
 
-interface Props {
-  name;
-  createOption;
-  id;
-  index;
-  deleteValue;
+export interface ItemProps {
+  name: string;
+  createOption?: string;
+  id: string;
+  index: number;
+  deleteValue: (id: number) => void;
 }
 
-interface StyledProps extends Props {
-  transform;
-  isDragging;
-  transition;
-  setNodeRef;
-  listeners;
+interface StyledSortableProps extends ItemProps {
+  transform: Transform | null;
+  isDragging: boolean;
+  transition?: string;
+  setNodeRef: (node: HTMLElement | null) => void;
+  listeners: DraggableSyntheticListeners;
 }
 
 const StyledSortableItem = ({
@@ -33,8 +34,8 @@ const StyledSortableItem = ({
   setNodeRef,
   listeners,
   ...props
-}: Omit<StyledProps, 'id'>): JSX.Element => {
-  const style = {
+}: Omit<StyledSortableProps, 'id'>): JSX.Element => {
+  const style: React.CSSProperties = {
     position: 'relative',
     display: 'inline-block',
     opacity: isDragging ? '0.7' : '1',
@@ -72,7 +73,7 @@ const SortableItem = ({
   id,
   index,
   deleteValue,
-}: Props): JSX.Element => {
+}: ItemProps): JSX.Element => {
   const {
     attributes,
     listeners,

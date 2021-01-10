@@ -1,10 +1,12 @@
 import * as React from 'react';
 
 import clsx from 'clsx';
-import { equals } from 'ramda';
+import { DraggableSyntheticListeners } from '@dnd-kit/core';
 
 import { Chip, lighten, makeStyles } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
+
+import { ItemProps } from './SortableItem';
 
 const useStyles = makeStyles((theme) => ({
   tag: {
@@ -15,14 +17,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface Props {
-  name;
-  createOption;
-  deleteValue;
-  index;
-  style?;
-  chipStyle?;
-  listeners?;
+interface Props extends Omit<ItemProps, 'id'> {
+  style?: React.CSSProperties;
+  chipStyle?: React.CSSProperties;
+  listeners?: DraggableSyntheticListeners;
 }
 
 const Item = React.forwardRef(

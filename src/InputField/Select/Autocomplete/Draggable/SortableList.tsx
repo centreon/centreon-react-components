@@ -28,13 +28,15 @@ import {
 
 import { useTheme } from '@material-ui/core';
 
+import { SelectEntry } from '../..';
+
 import SortableItem from './SortableItem';
 import Item from './Item';
 
 interface Props {
-  items;
-  deleteValue;
-  changeItemsOrder;
+  items: Array<SelectEntry>;
+  deleteValue: (id: number) => void;
+  changeItemsOrder: (newItems: Array<SelectEntry>) => void;
 }
 
 const SortableList = ({
@@ -115,10 +117,10 @@ const SortableList = ({
         <DragOverlay>
           {activeId && (
             <Item
-              name={activeElement.name}
+              name={activeElement?.name as string}
               deleteValue={deleteValue}
-              createOption={activeElement.createOption}
-              index={activeElement.index}
+              createOption={activeElement?.createOption}
+              index={activeElement?.index as number}
               style={{
                 zIndex: theme.zIndex.tooltip,
               }}
