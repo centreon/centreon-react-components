@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import clsx from 'clsx';
+import { equals } from 'ramda';
 
 import { Chip, lighten, makeStyles } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
