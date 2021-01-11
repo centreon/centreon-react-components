@@ -53,6 +53,8 @@ const SortableList = ({
   );
   const theme = useTheme();
 
+  console.log(items);
+
   const sortableItems = React.useMemo(
     () => map(pipe(props(['name', 'id']), join('_')), items),
     [items],

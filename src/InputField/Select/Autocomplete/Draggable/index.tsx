@@ -34,14 +34,14 @@ const DraggableAutocomplete = (
     };
 
     const deleteValue = (index) => {
-      setSelectedValues(remove(index, 1, selectedValues));
+      setSelectedValues((values) => remove(index, 1, values));
     };
 
     const onChange = (_, newValue) => {
       const lastValue = last(newValue);
       if (pipe(type, equals('String'))(lastValue)) {
-        setSelectedValues([
-          ...selectedValues,
+        setSelectedValues((values) => [
+          ...values,
           {
             id: totalValues,
             name: lastValue,
@@ -52,8 +52,8 @@ const DraggableAutocomplete = (
         return;
       }
       const lastItem = last<SelectEntry>(newValue) as SelectEntry;
-      setSelectedValues([
-        ...selectedValues,
+      setSelectedValues((values) => [
+        ...values,
         {
           id: totalValues,
           name: lastItem.name,
