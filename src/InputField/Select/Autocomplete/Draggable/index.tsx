@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { remove, equals, pipe, type, last, length, inc, F } from 'ramda';
+import { remove, equals, pipe, type, last, inc, F, length } from 'ramda';
 
 import { SelectEntry } from '../..';
 import { ConnectedAutoCompleteFieldProps } from '../Connected';
@@ -38,6 +38,10 @@ const DraggableAutocomplete = (
     };
 
     const onChange = (_, newValue) => {
+      if (equals(length(newValue), 0)) {
+        setSelectedValues(newValue);
+        return;
+      }
       const lastValue = last(newValue);
       if (pipe(type, equals('String'))(lastValue)) {
         setSelectedValues((values) => [
