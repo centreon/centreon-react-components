@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Checkbox, Chip, makeStyles } from '@material-ui/core';
+import { Checkbox, Chip, makeStyles, Typography } from '@material-ui/core';
 import { UseAutocompleteProps } from '@material-ui/lab';
 
 import Autocomplete, { Props as AutocompleteProps } from '..';
@@ -72,6 +72,7 @@ const MultiAutocompleteField = ({
         </>
       )}
       renderTags={renderTags}
+      getLimitTagsText={(more) => <Option>{`+${more}`}</Option>}
       {...props}
     />
   );
