@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
     '&&': {
       transform: 'translate(12px, 14px) scale(1)',
       fontSize: theme.typography.body1.fontSize,
+      whiteSpace: 'nowrap',
       maxWidth: '72%',
       overflow: 'hidden',
       textOverflow: 'ellipsis',
