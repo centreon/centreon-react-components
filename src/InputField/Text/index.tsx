@@ -12,8 +12,11 @@ import {
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) => ({
+  input: {
+    fontSize: theme.typography.body1.fontSize,
+  },
   noLabelInput: {
-    padding: theme.spacing(1.5),
+    padding: theme.spacing(1.25),
   },
   compact: {
     padding: theme.spacing(1),
@@ -89,6 +92,7 @@ const TextField = ({
       inputProps={{
         'aria-label': ariaLabel,
         className: clsx({
+          [classes.input]: true,
           [classes.noLabelInput]: !label && !compact,
           [classes.compact]: compact,
         }),
