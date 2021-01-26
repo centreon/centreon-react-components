@@ -86,8 +86,7 @@ const SelectField = ({
       <Select
         inputProps={{
           'aria-label': ariaLabel,
-          className: clsx({
-            [classes.input]: true,
+          className: clsx(classes.input, {
             [classes.noLabelInput]: !label && !compact,
             [classes.compact]: compact,
           }),
