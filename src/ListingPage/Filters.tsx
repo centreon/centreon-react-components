@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { isNil } from 'ramda';
+import { isNil, map, nth, toPairs } from 'ramda';
 
 import {
   withStyles,
@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import memoizeComponent from '../utils/memoizeComponent';
+import useDeepCompare from '../utils/useDeepCompare';
 
 const ExpansionPanelSummary = withStyles((theme) => ({
   root: {
@@ -41,7 +41,7 @@ const ExpansionPanelDetails = withStyles((theme) => ({
   },
 }))(AccordionDetails);
 
-export interface FiltersProps extends Record<string, unknown> {
+export interface FiltersProps {
   expandLabel?: string;
   expanded?: boolean;
   onExpand?: () => void;
@@ -49,7 +49,7 @@ export interface FiltersProps extends Record<string, unknown> {
   expandableFilters?: React.ReactElement;
 }
 
-const Filters = React.forwardRef(
+const FiltersContent = React.forwardRef(
   (
     {
       expandLabel,
@@ -84,12 +84,26 @@ const Filters = React.forwardRef(
   },
 );
 
-const memoizedFilters = (
-  memoProps: Array<string> = [],
-): React.NamedExoticComponent<FiltersProps> =>
-  memoizeComponent<FiltersProps>({
-    memoProps: [...memoProps, 'expanded'],
-    Component: Filters as (props) => JSX.Element,
-  });
+const Filters = ({
+  expandLabel,
+  expanded,
+  onExpand,
+  filters,
+  expandableFilters,
+  ...props
+}: FiltersProps & Record<string, unknown>): JSX.Element => {
+  return React.useMemo(
+    () => (
+      <FiltersContent
+        expandLabel={expandLabel}
+        expanded={expanded}
+        onExpand={onExpand}
+        filters={filters}
+        expandableFilters={expandableFilters}
+      />
+    ),
+    useDeepCompare(map(nth(1), toPairs(props))),
+  );
+};
 
-export default memoizedFilters;
+export default Filters;

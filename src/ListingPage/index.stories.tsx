@@ -12,7 +12,7 @@ import TextField from '../InputField/Text';
 import AutocompleteField from '../InputField/Select/Autocomplete';
 import memoizedPanel from '../Panel';
 
-import memoizedFilters from './Filters';
+import Filters from './Filters';
 
 import ListingPage from '.';
 
@@ -132,8 +132,6 @@ const FiltersSummary = (): JSX.Element => {
     </div>
   );
 };
-
-const Filters = memoizedFilters();
 
 const NonExpandableFilters = (): JSX.Element => {
   return <Filters filters={<FiltersSummary />} />;
