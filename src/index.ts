@@ -52,7 +52,7 @@ export {
 
 export { default as ListingPage } from './ListingPage';
 export { default as memoizedFilters } from './ListingPage/Filters';
-export { default as memoizedPanelTest } from './Panel';
+export { default as memoizedPanel } from './Panel';
 
 export { default as Title } from './Title';
 export { default as Wrapper } from './Wrapper';
