@@ -132,7 +132,7 @@ const memoizedSectionPanel = (
   memoProps: Array<string> = [],
 ): React.NamedExoticComponent<Props> =>
   memoizeComponent<Props>({
-    memoProps: [...memoProps, 'section', 'secondaryPanel', 'loading'],
+    memoProps: [...memoProps, 'sections', 'secondaryPanel', 'loading'],
     Component: SectionPanel,
   });
 
