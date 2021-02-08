@@ -14,6 +14,7 @@ import {
 import IconClose from '@material-ui/icons/Clear';
 
 import IconButton from '../Button/Icon';
+import memoizeComponent from '../utils/memoizeComponent';
 
 type StylesProps = Pick<Props, 'headerBackgroundColor' | 'width'>;
 
@@ -70,7 +71,7 @@ export interface Tab {
   id: number;
 }
 
-interface Props {
+interface Props extends Record<string, unknown> {
   header: React.ReactElement;
   selectedTab: React.ReactElement;
   tabs?: Array<JSX.Element>;
@@ -183,4 +184,20 @@ const Panel = ({
   );
 };
 
-export default Panel;
+const memoizedPanel = (
+  memoProps: Array<string> = [],
+): React.NamedExoticComponent<Props> =>
+  memoizeComponent<Props>({
+    memoProps: [
+      ...memoProps,
+      'tabs',
+      'selectedTabId',
+      'labelClose',
+      'width',
+      'minWidth',
+      'headerBackgroundColor',
+    ],
+    Component: Panel,
+  });
+
+export default memoizedPanel;

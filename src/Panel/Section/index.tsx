@@ -5,8 +5,9 @@ import { isNil } from 'ramda';
 import { List, ListItem, makeStyles, Slide, Paper } from '@material-ui/core';
 import ForwardIcon from '@material-ui/icons/ArrowForwardIos';
 
-import Panel from '..';
+import memoizedPanel from '..';
 import ContentWithCircularLoading from '../../ContentWithCircularProgress';
+import memoizeComponent from '../../utils/memoizeComponent';
 
 import ExpandableSection from './ExpandableSection';
 
@@ -60,6 +61,8 @@ interface Props {
   onSecondaryPanelClose?: () => void;
   loading?: boolean;
 }
+
+const Panel = memoizedPanel();
 
 const SectionPanel = ({
   header,
@@ -125,4 +128,12 @@ const SectionPanel = ({
   );
 };
 
-export default SectionPanel;
+const memoizedSectionPanel = (
+  memoProps: Array<string> = [],
+): React.NamedExoticComponent<Props> =>
+  memoizeComponent<Props>({
+    memoProps: [...memoProps, 'section', 'secondaryPanel', 'loading'],
+    Component: SectionPanel,
+  });
+
+export default memoizedSectionPanel;

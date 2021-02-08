@@ -2,12 +2,14 @@ import * as React from 'react';
 
 import { Typography } from '@material-ui/core';
 
-import Panel from '.';
+import memoizedPanel from '.';
 
 export default { title: 'Panel' };
 
 const header = <Typography>Header</Typography>;
 const tab = <Typography>Tab</Typography>;
+
+const Panel = memoizedPanel();
 
 const Story = (props): JSX.Element => {
   return (

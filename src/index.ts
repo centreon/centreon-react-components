@@ -52,7 +52,7 @@ export {
 
 export { default as ListingPage } from './ListingPage';
 export { default as memoizedFilters } from './ListingPage/Filters';
-export { default as Panel } from './Panel';
+export { default as memoizedPanel } from './Panel';
 
 export { default as Title } from './Title';
 export { default as Wrapper } from './Wrapper';
@@ -103,7 +103,7 @@ export { default as SubmenuItems } from './Submenu/SubmenuHeader/SubmenuItems';
 export { default as SubmenuItem } from './Submenu/SubmenuHeader/SubmenuItem';
 
 export { default as MultiSelectEntries } from './MultiSelectEntries';
-export { default as SectionPanel } from './Panel/Section';
+export { default as memoizedSectionPanel } from './Panel/Section';
 
 export { default as StatusChip } from './StatusChip';
 export { SeverityCode, getStatusColors } from './StatusChip';

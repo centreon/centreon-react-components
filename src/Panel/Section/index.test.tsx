@@ -2,7 +2,9 @@ import React from 'react';
 
 import { render, fireEvent } from '@testing-library/react';
 
-import SectionPanel from '.';
+import memoizedSectionPanel from '.';
+
+const SectionPanel = memoizedSectionPanel();
 
 describe(SectionPanel, () => {
   it('displays given Header and sections', async () => {

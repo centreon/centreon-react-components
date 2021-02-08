@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { Typography } from '@material-ui/core';
 
-import Panel from '.';
+import memoizedSectionPanel from '.';
 
 export default { title: 'Panel/Section' };
 
@@ -12,6 +12,8 @@ interface Props {
   loading?;
 }
 
+const SectionPanel = memoizedSectionPanel();
+
 const PanelWithHeader = ({
   sections,
   secondaryPanel = undefined,
@@ -20,7 +22,7 @@ const PanelWithHeader = ({
   <div
     style={{ height: '100vh', display: 'flex', flexDirection: 'row-reverse' }}
   >
-    <Panel
+    <SectionPanel
       header={<Typography>Header</Typography>}
       sections={sections}
       loading={loading}

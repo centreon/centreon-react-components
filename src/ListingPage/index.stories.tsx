@@ -9,8 +9,8 @@ import Listing from '../Listing';
 import { ColumnType } from '../Listing/models';
 import { SearchField } from '..';
 import TextField from '../InputField/Text';
-import Panel from '../Panel';
 import AutocompleteField from '../InputField/Select/Autocomplete';
+import memoizedPanel from '../Panel';
 
 import memoizedFilters from './Filters';
 
@@ -264,6 +264,8 @@ const DetailsPanelContent = (): JSX.Element => {
 interface PanelProps {
   onClose?: () => void;
 }
+
+const Panel = memoizedPanel();
 
 const DetailsPanelHeader = (): JSX.Element => {
   const classes = useStyles();
