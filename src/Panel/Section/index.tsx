@@ -53,7 +53,7 @@ interface Section {
   section: JSX.Element;
 }
 
-interface Props {
+interface Props extends Record<string, unknown> {
   header: JSX.Element;
   sections: Array<Section>;
   onClose: () => void;
