@@ -88,7 +88,7 @@ const memoizedFilters = (
   memoProps: Array<string> = [],
 ): React.NamedExoticComponent<FiltersProps> =>
   memoizeComponent<FiltersProps>({
-    memoProps,
+    memoProps: [...memoProps, 'expanded'],
     Component: Filters as (props) => JSX.Element,
   });
 
