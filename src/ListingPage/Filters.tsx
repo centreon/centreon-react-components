@@ -10,6 +10,8 @@ import {
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
+import memoizeComponent from '../utils/memoizeComponent';
+
 const ExpansionPanelSummary = withStyles((theme) => ({
   root: {
     padding: theme.spacing(0, 3, 0, 2),
@@ -39,7 +41,7 @@ const ExpansionPanelDetails = withStyles((theme) => ({
   },
 }))(AccordionDetails);
 
-export interface FiltersProps {
+export interface FiltersProps extends Record<string, unknown> {
   expandLabel?: string;
   expanded?: boolean;
   onExpand?: () => void;
@@ -82,4 +84,12 @@ const Filters = React.forwardRef(
   },
 );
 
-export default Filters;
+const memoizedFilters = (
+  memoProps: Array<string> = [],
+): React.NamedExoticComponent<FiltersProps> =>
+  memoizeComponent<FiltersProps>({
+    memoProps,
+    Component: Filters as (props) => JSX.Element,
+  });
+
+export default memoizedFilters;

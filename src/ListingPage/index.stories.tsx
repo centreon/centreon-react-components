@@ -12,7 +12,7 @@ import TextField from '../InputField/Text';
 import Panel from '../Panel';
 import AutocompleteField from '../InputField/Select/Autocomplete';
 
-import Filters from './Filters';
+import memoizedFilters from './Filters';
 
 import ListingPage from '.';
 
@@ -133,6 +133,8 @@ const FiltersSummary = (): JSX.Element => {
   );
 };
 
+const Filters = memoizedFilters();
+
 const NonExpandableFilters = (): JSX.Element => {
   return <Filters filters={<FiltersSummary />} />;
 };
@@ -140,6 +142,7 @@ const NonExpandableFilters = (): JSX.Element => {
 interface ExpandableFiltersWithOpenButtonProps {
   onOpen?: () => void;
 }
+
 const ExpandableFiltersWithOpenButton = ({
   onOpen = () => undefined,
 }: ExpandableFiltersWithOpenButtonProps): JSX.Element => {
