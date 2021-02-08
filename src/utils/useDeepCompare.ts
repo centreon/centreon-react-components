@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { equals } from 'ramda';
+import { equals, map, nth, toPairs } from 'ramda';
 
 const useDeepCompare = (value: React.DependencyList): Array<number> => {
   const ref = React.useRef<React.DependencyList>();
@@ -13,5 +13,8 @@ const useDeepCompare = (value: React.DependencyList): Array<number> => {
 
   return [signalRef.current];
 };
+
+export const toList = (object: Record<string, unknown>): Array<unknown> =>
+  map(nth(1), toPairs(object));
 
 export default useDeepCompare;

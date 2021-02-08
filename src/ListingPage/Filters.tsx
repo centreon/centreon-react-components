@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { isNil, map, nth, toPairs } from 'ramda';
+import { isNil } from 'ramda';
 
 import {
   withStyles,
@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import useDeepCompare from '../utils/useDeepCompare';
+import useDeepCompare, { toList } from '../utils/useDeepCompare';
 
 const ExpansionPanelSummary = withStyles((theme) => ({
   root: {
@@ -102,7 +102,7 @@ const Filters = ({
         expandableFilters={expandableFilters}
       />
     ),
-    useDeepCompare(map(nth(1), toPairs(props))),
+    useDeepCompare(toList({ ...props, expanded })),
   );
 };
 
