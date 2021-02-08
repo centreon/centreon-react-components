@@ -62,7 +62,7 @@ interface Props extends Record<string, unknown> {
   loading?: boolean;
 }
 
-const Panel = memoizedPanel();
+const Panel = memoizedPanel(['sections', 'secondaryPanel', 'loading']);
 
 const SectionPanel = ({
   header,
@@ -124,6 +124,9 @@ const SectionPanel = ({
           </div>
         </ContentWithCircularLoading>
       }
+      sections={sections}
+      secondaryPanel={secondaryPanel}
+      loading={loading}
     />
   );
 };
