@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import useDeepCompare, { toList } from '../utils/useDeepCompare';
+import useMemoComponent from '../utils/useMemoComponent';
 
 const ExpansionPanelSummary = withStyles((theme) => ({
   root: {
@@ -47,9 +47,10 @@ export interface FiltersProps {
   onExpand?: () => void;
   filters: React.ReactElement;
   expandableFilters?: React.ReactElement;
+  memoProps?: Array<unknown>;
 }
 
-const FiltersContent = React.forwardRef(
+const Filters = React.forwardRef(
   (
     {
       expandLabel,
@@ -57,53 +58,35 @@ const FiltersContent = React.forwardRef(
       onExpand,
       filters,
       expandableFilters,
+      memoProps = [],
     }: FiltersProps,
     ref,
   ): JSX.Element => {
     const expandable = !isNil(onExpand);
 
-    return (
-      <Accordion square expanded={expandable ? expanded : false}>
-        <ExpansionPanelSummary
-          expandIcon={
-            expandable && (
-              <ExpandMoreIcon color="primary" aria-label={expandLabel} />
-            )
-          }
-          IconButtonProps={{ onClick: onExpand }}
-          style={{ cursor: 'default' }}
-          ref={ref as React.RefObject<HTMLDivElement>}
-        >
-          {filters}
-        </ExpansionPanelSummary>
-        {expandableFilters && (
-          <ExpansionPanelDetails>{expandableFilters}</ExpansionPanelDetails>
-        )}
-      </Accordion>
-    );
+    return useMemoComponent({
+      Component: (
+        <Accordion square expanded={expandable ? expanded : false}>
+          <ExpansionPanelSummary
+            expandIcon={
+              expandable && (
+                <ExpandMoreIcon color="primary" aria-label={expandLabel} />
+              )
+            }
+            IconButtonProps={{ onClick: onExpand }}
+            style={{ cursor: 'default' }}
+            ref={ref as React.RefObject<HTMLDivElement>}
+          >
+            {filters}
+          </ExpansionPanelSummary>
+          {expandableFilters && (
+            <ExpansionPanelDetails>{expandableFilters}</ExpansionPanelDetails>
+          )}
+        </Accordion>
+      ),
+      memoProps: [...memoProps, expanded],
+    });
   },
 );
-
-const Filters = ({
-  expandLabel,
-  expanded,
-  onExpand,
-  filters,
-  expandableFilters,
-  ...props
-}: FiltersProps & Record<string, unknown>): JSX.Element => {
-  return React.useMemo(
-    () => (
-      <FiltersContent
-        expandLabel={expandLabel}
-        expanded={expanded}
-        onExpand={onExpand}
-        filters={filters}
-        expandableFilters={expandableFilters}
-      />
-    ),
-    useDeepCompare(toList({ ...props, expanded })),
-  );
-};
 
 export default Filters;

@@ -5,9 +5,9 @@ import { isNil } from 'ramda';
 import { List, ListItem, makeStyles, Slide, Paper } from '@material-ui/core';
 import ForwardIcon from '@material-ui/icons/ArrowForwardIos';
 
-import memoizedPanel from '..';
+import Panel from '..';
 import ContentWithCircularLoading from '../../ContentWithCircularProgress';
-import memoizeComponent from '../../utils/memoizeComponent';
+import useMemoComponent from '../../utils/useMemoComponent';
 
 import ExpandableSection from './ExpandableSection';
 
@@ -60,9 +60,8 @@ interface Props extends Record<string, unknown> {
   secondaryPanel?: JSX.Element;
   onSecondaryPanelClose?: () => void;
   loading?: boolean;
+  memoProps?: Array<unknown>;
 }
-
-const Panel = memoizedPanel(['sections', 'secondaryPanel', 'loading']);
 
 const SectionPanel = ({
   header,
@@ -71,7 +70,8 @@ const SectionPanel = ({
   onSecondaryPanelClose = () => undefined,
   onClose = () => undefined,
   loading = false,
-}: Props): JSX.Element => {
+  memoProps = [],
+}: Props & Record<string, unknown>): JSX.Element => {
   const hasSecondaryPanel = !isNil(secondaryPanel);
 
   const classes = useStyles(hasSecondaryPanel);
@@ -83,6 +83,8 @@ const SectionPanel = ({
 
     return panelWidth;
   };
+
+  const propsToMemoize = [...memoProps, sections, secondaryPanel, loading];
 
   return (
     <Panel
@@ -124,19 +126,9 @@ const SectionPanel = ({
           </div>
         </ContentWithCircularLoading>
       }
-      sections={sections}
-      secondaryPanel={secondaryPanel}
-      loading={loading}
+      memoProps={propsToMemoize}
     />
   );
 };
 
-const memoizedSectionPanel = (
-  memoProps: Array<string> = [],
-): React.NamedExoticComponent<Props> =>
-  memoizeComponent<Props>({
-    memoProps: [...memoProps, 'sections', 'secondaryPanel', 'loading'],
-    Component: SectionPanel,
-  });
-
-export default memoizedSectionPanel;
+export default SectionPanel;

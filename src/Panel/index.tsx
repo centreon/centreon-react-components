@@ -14,7 +14,7 @@ import {
 import IconClose from '@material-ui/icons/Clear';
 
 import IconButton from '../Button/Icon';
-import memoizeComponent from '../utils/memoizeComponent';
+import useMemoComponent from '../utils/useMemoComponent';
 
 type StylesProps = Pick<Props, 'headerBackgroundColor' | 'width'>;
 
@@ -83,6 +83,7 @@ interface Props extends Record<string, unknown> {
   minWidth?: number;
   headerBackgroundColor?: string;
   onResize?: (newWidth: number) => void;
+  memoProps?: Array<unknown>;
 }
 
 const Panel = ({
@@ -97,6 +98,7 @@ const Panel = ({
   minWidth = 550,
   headerBackgroundColor,
   onResize,
+  memoProps = [],
 }: Props): JSX.Element => {
   const classes = useStyles({ width, headerBackgroundColor });
 
@@ -131,73 +133,68 @@ const Panel = ({
     onResize?.(getResizedWidth());
   }, []);
 
-  return (
-    <Slide
-      direction="left"
-      in
-      timeout={{
-        enter: 150,
-        exit: 50,
-      }}
-    >
-      <Paper elevation={2} className={classes.container}>
-        {!isNil(onResize) && (
-          <div className={classes.dragger} onMouseDown={resize} role="none" />
-        )}
-        {header && (
-          <>
-            <div className={classes.header}>
-              {header}
-              {onClose && (
-                <IconButton
-                  title={labelClose}
-                  ariaLabel={labelClose}
-                  onClick={onClose}
+  return useMemoComponent({
+    Component: (
+      <Slide
+        direction="left"
+        in
+        timeout={{
+          enter: 150,
+          exit: 50,
+        }}
+      >
+        <Paper elevation={2} className={classes.container}>
+          {!isNil(onResize) && (
+            <div className={classes.dragger} onMouseDown={resize} role="none" />
+          )}
+          {header && (
+            <>
+              <div className={classes.header}>
+                {header}
+                {onClose && (
+                  <IconButton
+                    title={labelClose}
+                    ariaLabel={labelClose}
+                    onClick={onClose}
+                  >
+                    <IconClose color="action" />
+                  </IconButton>
+                )}
+              </div>
+              <Divider className={classes.divider} />
+            </>
+          )}
+          <div className={classes.body}>
+            <AppBar position="static" color="default">
+              {!isEmpty(tabs) && (
+                <Tabs
+                  variant="fullWidth"
+                  value={selectedTabId}
+                  indicatorColor="primary"
+                  textColor="primary"
+                  onChange={onTabSelect}
                 >
-                  <IconClose color="action" />
-                </IconButton>
+                  {tabs.map((tab) => tab)}
+                </Tabs>
               )}
+            </AppBar>
+            <div className={classes.contentContainer}>
+              <div className={classes.content}>{selectedTab}</div>
             </div>
-            <Divider className={classes.divider} />
-          </>
-        )}
-        <div className={classes.body}>
-          <AppBar position="static" color="default">
-            {!isEmpty(tabs) && (
-              <Tabs
-                variant="fullWidth"
-                value={selectedTabId}
-                indicatorColor="primary"
-                textColor="primary"
-                onChange={onTabSelect}
-              >
-                {tabs.map((tab) => tab)}
-              </Tabs>
-            )}
-          </AppBar>
-          <div className={classes.contentContainer}>
-            <div className={classes.content}>{selectedTab}</div>
           </div>
-        </div>
-      </Paper>
-    </Slide>
-  );
-};
-
-const memoizedPanel = (
-  memoProps: Array<string> = [],
-): React.NamedExoticComponent<Props> =>
-  memoizeComponent<Props>({
+        </Paper>
+      </Slide>
+    ),
     memoProps: [
       ...memoProps,
-      'tabs',
-      'selectedTabId',
-      'labelClose',
-      'width',
-      'minWidth',
-      'headerBackgroundColor',
+      tabs,
+      selectedTabId,
+      labelClose,
+      width,
+      minWidth,
+      headerBackgroundColor,
     ],
-    Component: Panel,
   });
+};
 
-export default memoizedPanel;
+export default Panel;

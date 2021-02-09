@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { Typography } from '@material-ui/core';
 
-import memoizedSectionPanel from '.';
+import SectionPanel from '.';
 
 export default { title: 'Panel/Section' };
 
@@ -11,8 +11,6 @@ interface Props {
   secondaryPanel?;
   loading?;
 }
-
-const SectionPanel = memoizedSectionPanel();
 
 const PanelWithHeader = ({
   sections,
@@ -104,9 +102,19 @@ export const withLoading = (): JSX.Element => (
   <PanelWithHeader loading sections={[]} />
 );
 
-export const withSecondaryPanel = (): JSX.Element => (
-  <PanelWithHeader
-    sections={sections}
-    secondaryPanel={<Typography variant="h6">Secondary Panel</Typography>}
-  />
-);
+export const withSecondaryPanel = (): JSX.Element => {
+  const [open, setOpen] = React.useState(false);
+  const [open2, setOpen2] = React.useState(false);
+  return (
+    <>
+      <button onClick={() => setOpen((v) => !v)}>Open</button>
+      <button onClick={() => setOpen2((v) => !v)}>Open 2</button>
+      <PanelWithHeader
+        sections={sections}
+        secondaryPanel={
+          open ? <Typography variant="h6">Secondary Panel</Typography> : null
+        }
+      />
+    </>
+  );
+};
