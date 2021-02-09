@@ -70,7 +70,7 @@ const SectionPanel = ({
   onClose = () => undefined,
   loading = false,
   memoProps = [],
-}: Props & Record<string, unknown>): JSX.Element => {
+}: Props): JSX.Element => {
   const hasSecondaryPanel = !isNil(secondaryPanel);
 
   const classes = useStyles(hasSecondaryPanel);

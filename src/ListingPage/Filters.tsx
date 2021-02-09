@@ -89,23 +89,12 @@ interface FiltersProps extends FiltersContentProps {
 }
 
 const Filters = ({
-  expandLabel,
-  expanded,
-  onExpand,
-  filters,
-  expandableFilters,
   memoProps = [],
+  expanded,
+  ...props
 }: FiltersProps): JSX.Element =>
   useMemoComponent({
-    Component: (
-      <FiltersContent
-        expandLabel={expandLabel}
-        expanded={expanded}
-        onExpand={onExpand}
-        filters={filters}
-        expandableFilters={expandableFilters}
-      />
-    ),
+    Component: <FiltersContent expanded={expanded} {...props} />,
     memoProps: [...memoProps, expanded],
   });
 

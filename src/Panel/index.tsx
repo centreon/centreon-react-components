@@ -71,7 +71,7 @@ export interface Tab {
   id: number;
 }
 
-interface Props extends Record<string, unknown> {
+interface Props {
   header: React.ReactElement;
   selectedTab: React.ReactElement;
   tabs?: Array<JSX.Element>;
@@ -86,7 +86,7 @@ interface Props extends Record<string, unknown> {
   memoProps?: Array<unknown>;
 }
 
-const Panel = ({
+const PanelContent = ({
   header,
   tabs = [],
   selectedTabId = 0,
@@ -98,8 +98,7 @@ const Panel = ({
   minWidth = 550,
   headerBackgroundColor,
   onResize,
-  memoProps = [],
-}: Props): JSX.Element => {
+}: Omit<Props, 'memoProps'>): JSX.Element => {
   const classes = useStyles({ width, headerBackgroundColor });
 
   const resize = () => {
@@ -133,57 +132,80 @@ const Panel = ({
     onResize?.(getResizedWidth());
   }, []);
 
-  return useMemoComponent({
-    Component: (
-      <Slide
-        direction="left"
-        in
-        timeout={{
-          enter: 150,
-          exit: 50,
-        }}
-      >
-        <Paper elevation={2} className={classes.container}>
-          {!isNil(onResize) && (
-            <div className={classes.dragger} onMouseDown={resize} role="none" />
-          )}
-          {header && (
-            <>
-              <div className={classes.header}>
-                {header}
-                {onClose && (
-                  <IconButton
-                    title={labelClose}
-                    ariaLabel={labelClose}
-                    onClick={onClose}
-                  >
-                    <IconClose color="action" />
-                  </IconButton>
-                )}
-              </div>
-              <Divider className={classes.divider} />
-            </>
-          )}
-          <div className={classes.body}>
-            <AppBar position="static" color="default">
-              {!isEmpty(tabs) && (
-                <Tabs
-                  variant="fullWidth"
-                  value={selectedTabId}
-                  indicatorColor="primary"
-                  textColor="primary"
-                  onChange={onTabSelect}
+  return (
+    <Slide
+      direction="left"
+      in
+      timeout={{
+        enter: 150,
+        exit: 50,
+      }}
+    >
+      <Paper elevation={2} className={classes.container}>
+        {!isNil(onResize) && (
+          <div className={classes.dragger} onMouseDown={resize} role="none" />
+        )}
+        {header && (
+          <>
+            <div className={classes.header}>
+              {header}
+              {onClose && (
+                <IconButton
+                  title={labelClose}
+                  ariaLabel={labelClose}
+                  onClick={onClose}
                 >
-                  {tabs.map((tab) => tab)}
-                </Tabs>
+                  <IconClose color="action" />
+                </IconButton>
               )}
-            </AppBar>
-            <div className={classes.contentContainer}>
-              <div className={classes.content}>{selectedTab}</div>
             </div>
+            <Divider className={classes.divider} />
+          </>
+        )}
+        <div className={classes.body}>
+          <AppBar position="static" color="default">
+            {!isEmpty(tabs) && (
+              <Tabs
+                variant="fullWidth"
+                value={selectedTabId}
+                indicatorColor="primary"
+                textColor="primary"
+                onChange={onTabSelect}
+              >
+                {tabs.map((tab) => tab)}
+              </Tabs>
+            )}
+          </AppBar>
+          <div className={classes.contentContainer}>
+            <div className={classes.content}>{selectedTab}</div>
           </div>
-        </Paper>
-      </Slide>
+        </div>
+      </Paper>
+    </Slide>
+  );
+};
+
+const Panel = ({
+  memoProps = [],
+  tabs,
+  selectedTabId,
+  labelClose,
+  width,
+  minWidth,
+  headerBackgroundColor,
+  ...props
+}: Props): JSX.Element =>
+  useMemoComponent({
+    Component: (
+      <PanelContent
+        tabs={tabs}
+        selectedTabId={selectedTabId}
+        labelClose={labelClose}
+        width={width}
+        minWidth={minWidth}
+        headerBackgroundColor={headerBackgroundColor}
+        {...props}
+      />
     ),
     memoProps: [
       ...memoProps,
@@ -195,6 +217,5 @@ const Panel = ({
       headerBackgroundColor,
     ],
   });
-};
 
 export default Panel;
