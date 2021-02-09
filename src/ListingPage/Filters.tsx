@@ -51,41 +51,41 @@ export interface FiltersProps {
 }
 
 const Filters = React.forwardRef(
-  (
-    {
-      expandLabel,
-      expanded = false,
-      onExpand,
-      filters,
-      expandableFilters,
-      memoProps = [],
-    }: FiltersProps,
-    ref,
-  ): JSX.Element => {
+  ({
+    expandLabel,
+    expanded = false,
+    onExpand,
+    filters,
+    expandableFilters,
+    memoProps = [],
+  }: FiltersProps): JSX.Element => {
     const expandable = !isNil(onExpand);
 
-    return useMemoComponent({
-      Component: (
-        <Accordion square expanded={expandable ? expanded : false}>
-          <ExpansionPanelSummary
-            expandIcon={
-              expandable && (
-                <ExpandMoreIcon color="primary" aria-label={expandLabel} />
-              )
-            }
-            IconButtonProps={{ onClick: onExpand }}
-            style={{ cursor: 'default' }}
-            ref={ref as React.RefObject<HTMLDivElement>}
-          >
-            {filters}
-          </ExpansionPanelSummary>
-          {expandableFilters && (
-            <ExpansionPanelDetails>{expandableFilters}</ExpansionPanelDetails>
-          )}
-        </Accordion>
-      ),
-      memoProps: [...memoProps, expanded],
-    });
+    const FiltersContent = (): JSX.Element => {
+      return useMemoComponent({
+        Component: (
+          <Accordion square expanded={expandable ? expanded : false}>
+            <ExpansionPanelSummary
+              expandIcon={
+                expandable && (
+                  <ExpandMoreIcon color="primary" aria-label={expandLabel} />
+                )
+              }
+              IconButtonProps={{ onClick: onExpand }}
+              style={{ cursor: 'default' }}
+            >
+              {filters}
+            </ExpansionPanelSummary>
+            {expandableFilters && (
+              <ExpansionPanelDetails>{expandableFilters}</ExpansionPanelDetails>
+            )}
+          </Accordion>
+        ),
+        memoProps: [...memoProps, expanded],
+      });
+    };
+
+    return <FiltersContent />;
   },
 );
 
