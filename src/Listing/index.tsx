@@ -367,13 +367,11 @@ const Listing = ({
     memoProps: [
       ...memoProps,
       limit,
-      columnConfiguration,
       tableData,
       currentPage,
       totalRows,
       checkable,
       emptyDataMessage,
-      rowColorConditions,
       labelRowsPerPage,
       loading,
       paginated,
