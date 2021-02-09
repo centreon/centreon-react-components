@@ -7,7 +7,6 @@ import ForwardIcon from '@material-ui/icons/ArrowForwardIos';
 
 import Panel from '..';
 import ContentWithCircularLoading from '../../ContentWithCircularProgress';
-import useMemoComponent from '../../utils/useMemoComponent';
 
 import ExpandableSection from './ExpandableSection';
 

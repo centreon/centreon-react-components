@@ -102,19 +102,9 @@ export const withLoading = (): JSX.Element => (
   <PanelWithHeader loading sections={[]} />
 );
 
-export const withSecondaryPanel = (): JSX.Element => {
-  const [open, setOpen] = React.useState(false);
-  const [open2, setOpen2] = React.useState(false);
-  return (
-    <>
-      <button onClick={() => setOpen((v) => !v)}>Open</button>
-      <button onClick={() => setOpen2((v) => !v)}>Open 2</button>
-      <PanelWithHeader
-        sections={sections}
-        secondaryPanel={
-          open ? <Typography variant="h6">Secondary Panel</Typography> : null
-        }
-      />
-    </>
-  );
-};
+export const withSecondaryPanel = (): JSX.Element => (
+  <PanelWithHeader
+    sections={sections}
+    secondaryPanel={<Typography variant="h6">Secondary Panel</Typography>}
+  />
+);
