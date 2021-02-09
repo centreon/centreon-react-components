@@ -86,7 +86,7 @@ interface Props {
   memoProps?: Array<unknown>;
 }
 
-const PanelContent = ({
+const Panel = ({
   header,
   tabs = [],
   selectedTabId = 0,
@@ -185,7 +185,7 @@ const PanelContent = ({
   );
 };
 
-const Panel = ({
+export const MemoizedPanel = ({
   memoProps = [],
   tabs,
   selectedTabId,
@@ -197,7 +197,7 @@ const Panel = ({
 }: Props): JSX.Element =>
   useMemoComponent({
     Component: (
-      <PanelContent
+      <Panel
         tabs={tabs}
         selectedTabId={selectedTabId}
         labelClose={labelClose}

@@ -41,7 +41,7 @@ const ExpansionPanelDetails = withStyles((theme) => ({
   },
 }))(AccordionDetails);
 
-export interface FiltersContentProps {
+export interface FiltersProps {
   expandLabel?: string;
   expanded?: boolean;
   onExpand?: () => void;
@@ -49,7 +49,7 @@ export interface FiltersContentProps {
   expandableFilters?: React.ReactElement;
 }
 
-const FiltersContent = React.forwardRef(
+const Filters = React.forwardRef(
   (
     {
       expandLabel,
@@ -57,7 +57,7 @@ const FiltersContent = React.forwardRef(
       onExpand,
       filters,
       expandableFilters,
-    }: FiltersContentProps,
+    }: FiltersProps,
     ref,
   ): JSX.Element => {
     const expandable = !isNil(onExpand);
@@ -84,17 +84,17 @@ const FiltersContent = React.forwardRef(
   },
 );
 
-interface FiltersProps extends FiltersContentProps {
+interface MemoizedFiltersProps extends FiltersProps {
   memoProps?: Array<unknown>;
 }
 
-const Filters = ({
+export const MemoizedFilters = ({
   memoProps = [],
   expanded,
   ...props
-}: FiltersProps): JSX.Element =>
+}: MemoizedFiltersProps): JSX.Element =>
   useMemoComponent({
-    Component: <FiltersContent expanded={expanded} {...props} />,
+    Component: <Filters expanded={expanded} {...props} />,
     memoProps: [...memoProps, expanded],
   });
 

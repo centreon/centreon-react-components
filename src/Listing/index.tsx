@@ -80,7 +80,7 @@ export interface Props {
   onSort?: (sortParams) => void;
 }
 
-const ListingContent = ({
+const Listing = ({
   limit = 10,
   columnConfiguration,
   tableData = [],
@@ -320,11 +320,11 @@ const ListingContent = ({
   );
 };
 
-interface MemoListingProps extends Props {
+interface MemoizedListingProps extends Props {
   memoProps: Array<unknown>;
 }
 
-const Listing = ({
+export const MemoizedListing = ({
   memoProps,
   limit = 10,
   columnConfiguration,
@@ -342,10 +342,10 @@ const Listing = ({
   sortf = undefined,
   innerScrollDisabled = false,
   ...props
-}: MemoListingProps): JSX.Element =>
+}: MemoizedListingProps): JSX.Element =>
   useMemoComponent({
     Component: (
-      <ListingContent
+      <Listing
         limit={limit}
         columnConfiguration={columnConfiguration}
         tableData={tableData}
