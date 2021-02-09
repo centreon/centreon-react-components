@@ -10,7 +10,6 @@ import {
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import useDeepCompare, { toList } from '../utils/useDeepCompare';
 import { useMemoComponent } from '..';
 
 const ExpansionPanelSummary = withStyles((theme) => ({
