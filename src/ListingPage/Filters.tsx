@@ -10,7 +10,8 @@ import {
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import useMemoComponent from '../utils/useMemoComponent';
+import useDeepCompare, { toList } from '../utils/useDeepCompare';
+import { useMemoComponent } from '..';
 
 const ExpansionPanelSummary = withStyles((theme) => ({
   root: {
@@ -41,52 +42,72 @@ const ExpansionPanelDetails = withStyles((theme) => ({
   },
 }))(AccordionDetails);
 
-export interface FiltersProps {
+export interface FiltersContentProps {
   expandLabel?: string;
   expanded?: boolean;
   onExpand?: () => void;
   filters: React.ReactElement;
   expandableFilters?: React.ReactElement;
+}
+
+const FiltersContent = React.forwardRef(
+  (
+    {
+      expandLabel,
+      expanded = false,
+      onExpand,
+      filters,
+      expandableFilters,
+    }: FiltersContentProps,
+    ref,
+  ): JSX.Element => {
+    const expandable = !isNil(onExpand);
+
+    return (
+      <Accordion square expanded={expandable ? expanded : false}>
+        <ExpansionPanelSummary
+          expandIcon={
+            expandable && (
+              <ExpandMoreIcon color="primary" aria-label={expandLabel} />
+            )
+          }
+          IconButtonProps={{ onClick: onExpand }}
+          style={{ cursor: 'default' }}
+          ref={ref as React.RefObject<HTMLDivElement>}
+        >
+          {filters}
+        </ExpansionPanelSummary>
+        {expandableFilters && (
+          <ExpansionPanelDetails>{expandableFilters}</ExpansionPanelDetails>
+        )}
+      </Accordion>
+    );
+  },
+);
+
+interface FiltersProps extends FiltersContentProps {
   memoProps?: Array<unknown>;
 }
 
-const Filters = React.forwardRef(
-  ({
-    expandLabel,
-    expanded = false,
-    onExpand,
-    filters,
-    expandableFilters,
-    memoProps = [],
-  }: FiltersProps): JSX.Element => {
-    const expandable = !isNil(onExpand);
-
-    const FiltersContent = (): JSX.Element => {
-      return useMemoComponent({
-        Component: (
-          <Accordion square expanded={expandable ? expanded : false}>
-            <ExpansionPanelSummary
-              expandIcon={
-                expandable && (
-                  <ExpandMoreIcon color="primary" aria-label={expandLabel} />
-                )
-              }
-              IconButtonProps={{ onClick: onExpand }}
-              style={{ cursor: 'default' }}
-            >
-              {filters}
-            </ExpansionPanelSummary>
-            {expandableFilters && (
-              <ExpansionPanelDetails>{expandableFilters}</ExpansionPanelDetails>
-            )}
-          </Accordion>
-        ),
-        memoProps: [...memoProps, expanded],
-      });
-    };
-
-    return <FiltersContent />;
-  },
-);
+const Filters = ({
+  expandLabel,
+  expanded,
+  onExpand,
+  filters,
+  expandableFilters,
+  memoProps = [],
+}: FiltersProps): JSX.Element =>
+  useMemoComponent({
+    Component: (
+      <FiltersContent
+        expandLabel={expandLabel}
+        expanded={expanded}
+        onExpand={onExpand}
+        filters={filters}
+        expandableFilters={expandableFilters}
+      />
+    ),
+    memoProps: [...memoProps, expanded],
+  });
 
 export default Filters;
