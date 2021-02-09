@@ -321,11 +321,11 @@ const Listing = ({
 };
 
 interface MemoizedListingProps extends Props {
-  memoProps: Array<unknown>;
+  memoProps?: Array<unknown>;
 }
 
 export const MemoizedListing = ({
-  memoProps,
+  memoProps = [],
   limit = 10,
   columnConfiguration,
   tableData = [],
