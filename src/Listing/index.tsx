@@ -10,6 +10,8 @@ import {
   Checkbox,
 } from '@material-ui/core';
 
+import useMemoComponent from '../utils/useMemoComponent';
+
 import ListingHeader from './Header';
 import ListingRow from './Row';
 import PaginationActions from './PaginationActions';
@@ -52,57 +54,57 @@ const useStyles = makeStyles<Theme>((theme) => ({
 
 export interface Props {
   checkable?: boolean;
-  disableRowCheckCondition?;
   currentPage?;
   columnConfiguration;
   emptyDataMessage?: string;
   rowColorConditions?;
-  labelDisplayedRows?: (fromToCount) => string;
   labelRowsPerPage?: string;
   limit?: number;
   loading?: boolean;
   loadingDataMessage?: string;
-  onPaginate?: (event, value) => void;
-  onPaginationLimitChanged?: (event) => void;
-  onRowClick?: (row) => void;
-  onSelectRows?: (rows) => void;
-  onSort?: (sortParams) => void;
   paginated?: boolean;
   selectedRows?;
   sorto?: 'asc' | 'desc';
   sortf?: string;
   tableData?;
   totalRows?;
-  Actions?: JSX.Element;
   innerScrollDisabled?: boolean;
   expanded?: boolean;
+  Actions?: JSX.Element;
+  disableRowCheckCondition?;
+  labelDisplayedRows?: (fromToCount) => string;
+  onPaginate?: (event, value) => void;
+  onPaginationLimitChanged?: (event) => void;
+  onRowClick?: (row) => void;
+  onSelectRows?: (rows) => void;
+  onSort?: (sortParams) => void;
 }
 
-const Listing = ({
+const ListingContent = ({
   limit = 10,
   columnConfiguration,
   tableData = [],
   currentPage = 0,
   totalRows = 0,
   checkable = false,
-  disableRowCheckCondition = (): boolean => false,
   emptyDataMessage = 'No results found',
   rowColorConditions = [],
-  labelDisplayedRows = ({ from, to, count }): string =>
-    `${from}-${to} of ${count}`,
   labelRowsPerPage = 'Rows per page',
   loading = false,
+  paginated = true,
+  selectedRows = [],
+  sorto = undefined,
+  sortf = undefined,
+  innerScrollDisabled = false,
+  Actions,
+  disableRowCheckCondition = (): boolean => false,
   onPaginate = (): void => undefined,
   onPaginationLimitChanged = (): void => undefined,
   onRowClick = (): void => undefined,
   onSelectRows = (): void => undefined,
   onSort = (): void => undefined,
-  paginated = true,
-  selectedRows = [],
-  sorto = undefined,
-  sortf = undefined,
-  Actions,
-  innerScrollDisabled = false,
+  labelDisplayedRows = ({ from, to, count }): string =>
+    `${from}-${to} of ${count}`,
 }: Props): JSX.Element => {
   const [tableTopOffset, setTableTopOffset] = useState(0);
   const [hoveredRowId, setHoveredRowId] = useState<string | number | null>(
@@ -317,5 +319,69 @@ const Listing = ({
     </>
   );
 };
+
+interface MemoListingProps extends Props {
+  memoProps: Array<unknown>;
+}
+
+const Listing = ({
+  memoProps,
+  limit = 10,
+  columnConfiguration,
+  tableData = [],
+  currentPage = 0,
+  totalRows = 0,
+  checkable = false,
+  emptyDataMessage = 'No results found',
+  rowColorConditions = [],
+  labelRowsPerPage = 'Rows per page',
+  loading = false,
+  paginated = true,
+  selectedRows = [],
+  sorto = undefined,
+  sortf = undefined,
+  innerScrollDisabled = false,
+  ...props
+}: MemoListingProps): JSX.Element =>
+  useMemoComponent({
+    Component: (
+      <ListingContent
+        limit={limit}
+        columnConfiguration={columnConfiguration}
+        tableData={tableData}
+        currentPage={currentPage}
+        totalRows={totalRows}
+        checkable={checkable}
+        emptyDataMessage={emptyDataMessage}
+        rowColorConditions={rowColorConditions}
+        labelRowsPerPage={labelRowsPerPage}
+        loading={loading}
+        paginated={paginated}
+        selectedRows={selectedRows}
+        sorto={sorto}
+        sortf={sortf}
+        innerScrollDisabled={innerScrollDisabled}
+        {...props}
+      />
+    ),
+    memoProps: [
+      ...memoProps,
+      limit,
+      columnConfiguration,
+      tableData,
+      currentPage,
+      totalRows,
+      checkable,
+      emptyDataMessage,
+      rowColorConditions,
+      labelRowsPerPage,
+      loading,
+      paginated,
+      selectedRows,
+      sorto,
+      sortf,
+      innerScrollDisabled,
+    ],
+  });
 
 export default Listing;
