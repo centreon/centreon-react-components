@@ -209,7 +209,6 @@ const Panel = ({
     ),
     memoProps: [
       ...memoProps,
-      tabs,
       selectedTabId,
       labelClose,
       width,
