@@ -22,7 +22,7 @@ interface MemoComponent {
 const useMemoComponent = ({
   Component,
   memoProps,
-}: IUseMemoComponent): JSX.Element =>
+}: MemoComponent): JSX.Element =>
   React.useMemo(() => Component, useDeepCompare(memoProps));
 
 export default useMemoComponent;
