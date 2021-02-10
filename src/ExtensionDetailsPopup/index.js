@@ -45,7 +45,10 @@ class ExtensionDetailPopup extends React.Component {
         {loading ? (
           <SliderSkeleton animate={animate} />
         ) : (
-          <Slider type={type} images={(loading && modalDetails.images) || []}>
+          <Slider
+            type={type}
+            images={!loading && modalDetails.images ? modalDetails.images : []}
+          >
             {modalDetails.version.installed && modalDetails.version.outdated ? (
               <IconContent
                 customClass="content-icon-popup-wrapper"
