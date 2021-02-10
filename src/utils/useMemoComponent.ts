@@ -14,7 +14,7 @@ const useDeepCompare = (value: React.DependencyList): Array<number> => {
   return [signalRef.current];
 };
 
-interface IUseMemoComponent {
+interface MemoComponent {
   Component: React.ReactElement;
   memoProps: Array<unknown>;
 }
