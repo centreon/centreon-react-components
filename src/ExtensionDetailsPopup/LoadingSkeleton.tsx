@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { useTheme, makeStyles } from '@material-ui/core';
-import { Skeleton } from '@material-ui/lab';
+import { Skeleton, SkeletonProps } from '@material-ui/lab';
 
 const headerHeight = 3.8;
 
@@ -11,72 +11,96 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const SliderSkeleton = (): JSX.Element => {
+interface Props {
+  animate?: boolean;
+}
+
+const BaseSkeleton = ({
+  animate,
+  ...props
+}: Pick<Props, 'animate'> & SkeletonProps): JSX.Element => (
+  <Skeleton animation={animate ? 'wave' : false} {...props} />
+);
+
+export const SliderSkeleton = ({ animate = true }: Props): JSX.Element => {
   const theme = useTheme();
 
   return (
-    <Skeleton
+    <BaseSkeleton
       variant="rect"
       width="100%"
       height={theme.spacing(50)}
-      animation="wave"
+      animate={animate}
     />
   );
 };
 
-export const HeaderSkeleton = (): JSX.Element => {
+export const HeaderSkeleton = ({ animate = true }: Props): JSX.Element => {
   const theme = useTheme();
   const classes = useStyles();
 
   return (
     <>
-      <Skeleton
+      <BaseSkeleton
         variant="rect"
         height={theme.spacing(headerHeight)}
         width={theme.spacing(10)}
+        animate={animate}
       />
-      <Skeleton
+      <BaseSkeleton
         variant="rect"
         height={theme.spacing(headerHeight)}
         width={theme.spacing(20)}
         className={classes.nextContent}
+        animate={animate}
       />
     </>
   );
 };
 
-export const ContentSkeleton = (): JSX.Element => {
+export const ContentSkeleton = ({ animate = true }: Props): JSX.Element => {
   const theme = useTheme();
   const classes = useStyles();
 
   return (
     <>
-      <Skeleton variant="text" width={theme.spacing(20)} />
-      <Skeleton
+      <BaseSkeleton
+        variant="text"
+        width={theme.spacing(20)}
+        animate={animate}
+      />
+      <BaseSkeleton
         variant="text"
         width={theme.spacing(15)}
         className={classes.nextContent}
+        animate={animate}
       />
-      <Skeleton
+      <BaseSkeleton
         variant="text"
         width={theme.spacing(25)}
         className={classes.nextContent}
+        animate={animate}
       />
     </>
   );
 };
 
-export const ReleaseNoteSkeleton = (): JSX.Element => {
+export const ReleaseNoteSkeleton = ({ animate = true }: Props): JSX.Element => {
   const theme = useTheme();
   const classes = useStyles();
 
   return (
     <>
-      <Skeleton variant="text" width={theme.spacing(15)} />
-      <Skeleton
+      <BaseSkeleton
+        variant="text"
+        width={theme.spacing(15)}
+        animate={animate}
+      />
+      <BaseSkeleton
         variant="text"
         width={theme.spacing(25)}
         className={classes.nextContent}
+        animate={animate}
       />
     </>
   );

@@ -27,6 +27,7 @@ const commonProps = {
   onDeleteClicked: noOp,
   onUpdateClicked: noOp,
   onInstallClicked: noOp,
+  animate: false,
 };
 
 export const normal = (): JSX.Element => (

@@ -33,6 +33,7 @@ class ExtensionDetailPopup extends React.Component {
       onUpdateClicked,
       onInstallClicked,
       loading,
+      animate,
     } = this.props;
 
     if (modalDetails === null) {
@@ -42,7 +43,7 @@ class ExtensionDetailPopup extends React.Component {
     return (
       <Popup popupType="big">
         {loading ? (
-          <SliderSkeleton />
+          <SliderSkeleton animate={animate} />
         ) : (
           <Slider type={type} images={(loading && modalDetails.images) || []}>
             {modalDetails.version.installed && modalDetails.version.outdated ? (
@@ -78,7 +79,7 @@ class ExtensionDetailPopup extends React.Component {
         )}
         <div className={clsx(styles['popup-header'])}>
           {loading ? (
-            <HeaderSkeleton />
+            <HeaderSkeleton animate={animate} />
           ) : (
             <>
               <Title label={modalDetails.title} />
@@ -103,7 +104,7 @@ class ExtensionDetailPopup extends React.Component {
         <HorizontalLine />
         <div className={clsx(styles['popup-body'])}>
           {loading ? (
-            <ContentSkeleton />
+            <ContentSkeleton animate={animate} />
           ) : (
             <>
               {modalDetails.last_update ? (
@@ -117,7 +118,7 @@ class ExtensionDetailPopup extends React.Component {
         <HorizontalLine />
         <div className={clsx(styles['popup-footer'])}>
           {loading ? (
-            <ReleaseNoteSkeleton />
+            <ReleaseNoteSkeleton animate={animate} />
           ) : (
             <Description note={modalDetails.release_note} link />
           )}
