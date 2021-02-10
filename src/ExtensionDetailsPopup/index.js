@@ -16,12 +16,19 @@ import HorizontalLine from '../HorizontalLines';
 import Description from '../Description';
 import IconClose from '../Icon/IconClose';
 
+import {
+  SliderSkeleton,
+  HeaderSkeleton,
+  ContentSkeleton,
+  ReleaseNoteSkeleton,
+} from './LoadingSkeleton';
+
 class ExtensionDetailPopup extends React.Component {
   render() {
     const {
       type,
-      onCloseClicked,
       modalDetails,
+      onCloseClicked,
       onDeleteClicked,
       onUpdateClicked,
       onInstallClicked,
@@ -31,69 +38,89 @@ class ExtensionDetailPopup extends React.Component {
     if (modalDetails === null) {
       return null;
     }
+
     return (
       <Popup popupType="big">
-        {loading ? <Loader fullContent /> : null}
-        <Slider type={type} images={modalDetails.images || []}>
-          {modalDetails.version.installed && modalDetails.version.outdated ? (
-            <IconContent
-              customClass="content-icon-popup-wrapper"
-              iconContentType="update"
-              iconContentColor="orange"
-              onClick={() => {
-                onUpdateClicked(modalDetails.id, modalDetails.type);
-              }}
-            />
-          ) : null}
-          {modalDetails.version.installed ? (
-            <IconContent
-              customClass="content-icon-popup-wrapper"
-              iconContentType="delete"
-              iconContentColor="red"
-              onClick={() => {
-                onDeleteClicked(modalDetails.id, modalDetails.type);
-              }}
-            />
-          ) : (
-            <IconContent
-              customClass="content-icon-popup-wrapper"
-              iconContentType="add"
-              iconContentColor="green"
-              onClick={() => {
-                onInstallClicked(modalDetails.id, modalDetails.type);
-              }}
-            />
-          )}
-        </Slider>
+        {loading ? (
+          <SliderSkeleton />
+        ) : (
+          <Slider type={type} images={(loading && modalDetails.images) || []}>
+            {modalDetails.version.installed && modalDetails.version.outdated ? (
+              <IconContent
+                customClass="content-icon-popup-wrapper"
+                iconContentType="update"
+                iconContentColor="orange"
+                onClick={() => {
+                  onUpdateClicked(modalDetails.id, modalDetails.type);
+                }}
+              />
+            ) : null}
+            {modalDetails.version.installed ? (
+              <IconContent
+                customClass="content-icon-popup-wrapper"
+                iconContentType="delete"
+                iconContentColor="red"
+                onClick={() => {
+                  onDeleteClicked(modalDetails.id, modalDetails.type);
+                }}
+              />
+            ) : (
+              <IconContent
+                customClass="content-icon-popup-wrapper"
+                iconContentType="add"
+                iconContentColor="green"
+                onClick={() => {
+                  onInstallClicked(modalDetails.id, modalDetails.type);
+                }}
+              />
+            )}
+          </Slider>
+        )}
         <div className={clsx(styles['popup-header'])}>
-          <Title label={modalDetails.title} />
-          <Button
-            style={{ cursor: 'default' }}
-            label={
-              (!modalDetails.version.installed ? 'Available ' : '') +
-              modalDetails.version.available
-            }
-            buttonType="regular"
-            color="blue"
-          />
-          <Button
-            label={modalDetails.stability}
-            buttonType="bordered"
-            color="gray"
-            style={{ margin: '15px', cursor: 'default' }}
-          />
+          {loading ? (
+            <HeaderSkeleton />
+          ) : (
+            <>
+              <Title label={modalDetails.title} />
+              <Button
+                style={{ cursor: 'default' }}
+                label={
+                  (!modalDetails.version.installed ? 'Available ' : '') +
+                  modalDetails.version.available
+                }
+                buttonType="regular"
+                color="blue"
+              />
+              <Button
+                label={modalDetails.stability}
+                buttonType="bordered"
+                color="gray"
+                style={{ margin: '15px', cursor: 'default' }}
+              />
+            </>
+          )}
         </div>
         <HorizontalLine />
         <div className={clsx(styles['popup-body'])}>
-          {modalDetails.last_update ? (
-            <Description date={`Last update ${modalDetails.last_update}`} />
-          ) : null}
-          <Description title="Description:" />
-          <Description text={modalDetails.description} />
+          {loading ? (
+            <ContentSkeleton />
+          ) : (
+            <>
+              {modalDetails.last_update ? (
+                <Description date={`Last update ${modalDetails.last_update}`} />
+              ) : null}
+              <Description title="Description:" />
+              <Description text={modalDetails.description} />
+            </>
+          )}
         </div>
         <HorizontalLine />
         <div className={clsx(styles['popup-footer'])}>
-          <Description note={modalDetails.release_note} link />
+          {loading ? (
+            <ReleaseNoteSkeleton />
+          ) : (
+            <Description note={modalDetails.release_note} link />
+          )}
         </div>
         <IconClose
           iconPosition="icon-close-position-big"
