@@ -1,8 +1,10 @@
 import * as React from 'react';
 
-import { makeStyles, useTheme } from '@material-ui/core';
-import { Skeleton} from '@material-ui/lab';
 import clsx from 'clsx';
+
+import { makeStyles, useTheme } from '@material-ui/core';
+import { Skeleton } from '@material-ui/lab';
+
 import BaseRectSkeleton from './BaseSkeleton';
 import ContentSkeleton from './ContentSkeleton';
 
@@ -21,39 +23,53 @@ const useStyles = makeStyles((theme) => ({
   },
   breadcrumbSkeleton: {
     margin: theme.spacing(0.5, 2),
-    width: theme.spacing(30)
+    width: theme.spacing(30),
   },
   headerContentFooterContainer: {
     height: '100%',
     display: 'grid',
     gridTemplateRows: `auto ${theme.spacing(footerHeight)}`,
     alignContent: 'space-between',
-  }
+  },
 }));
 
 interface Props {
   displayHeaderAndNavigation?: boolean;
 }
 
-const PageSkeleton = ({ displayHeaderAndNavigation = false }: Props): JSX.Element => {
+const PageSkeleton = ({
+  displayHeaderAndNavigation = false,
+}: Props): JSX.Element => {
   const classes = useStyles();
   const theme = useTheme();
 
   return (
     <div className={classes.skeletonContainer}>
-      <div className={clsx({ [classes.menuContentContainer]: displayHeaderAndNavigation })}>
-        <BaseRectSkeleton height='100%' />
+      <div
+        className={clsx({
+          [classes.menuContentContainer]: displayHeaderAndNavigation,
+        })}
+      >
+        <BaseRectSkeleton height="100%" />
         <div className={classes.headerContentFooterContainer}>
           <div>
-            {displayHeaderAndNavigation && <BaseRectSkeleton height={theme.spacing(headerHeight)} />}
-            <Skeleton variant="text" className={classes.breadcrumbSkeleton} animation="wave" />
+            {displayHeaderAndNavigation && (
+              <BaseRectSkeleton height={theme.spacing(headerHeight)} />
+            )}
+            <Skeleton
+              variant="text"
+              className={classes.breadcrumbSkeleton}
+              animation="wave"
+            />
             <ContentSkeleton />
           </div>
-          {displayHeaderAndNavigation && <BaseRectSkeleton height={theme.spacing(footerHeight)} />}
+          {displayHeaderAndNavigation && (
+            <BaseRectSkeleton height={theme.spacing(footerHeight)} />
+          )}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default PageSkeleton;
