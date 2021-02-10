@@ -4,6 +4,8 @@ import { useTheme, makeStyles } from '@material-ui/core';
 
 import BaseRectSkeleton from './BaseSkeleton';
 
+import { PageSkeletonProps } from '.';
+
 const numberOfActionButtons = 2;
 const filterHeight = 6.5;
 const paginationHeight = 5;
@@ -32,13 +34,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ContentSkeleton = (): JSX.Element => {
+const ContentSkeleton = ({
+  animate,
+}: Pick<PageSkeletonProps, 'animate'>): JSX.Element => {
   const theme = useTheme();
   const classes = useStyles();
 
   return (
     <>
-      <BaseRectSkeleton height={theme.spacing(filterHeight)} />
+      <BaseRectSkeleton
+        height={theme.spacing(filterHeight)}
+        animate={animate}
+      />
       <div className={classes.actionBarPaginationContainer}>
         <div className={classes.actionBarSkeleton}>
           {Array(numberOfActionButtons)
@@ -47,13 +54,20 @@ const ContentSkeleton = (): JSX.Element => {
               <BaseRectSkeleton
                 key={idx.toString()}
                 height={theme.spacing(actionBarHeight)}
+                animate={animate}
               />
             ))}
         </div>
-        <BaseRectSkeleton height={theme.spacing(paginationHeight)} />
+        <BaseRectSkeleton
+          height={theme.spacing(paginationHeight)}
+          animate={animate}
+        />
       </div>
       <div className={classes.contentSkeleton}>
-        <BaseRectSkeleton height={theme.spacing(contentHeight)} />
+        <BaseRectSkeleton
+          height={theme.spacing(contentHeight)}
+          animate={animate}
+        />
       </div>
     </>
   );

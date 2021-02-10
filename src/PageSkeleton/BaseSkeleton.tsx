@@ -2,8 +2,18 @@ import * as React from 'react';
 
 import { Skeleton, SkeletonProps } from '@material-ui/lab';
 
-const BaseRectSkeleton = (props: SkeletonProps): JSX.Element => (
-  <Skeleton variant="rect" width="100%" animation="wave" {...props} />
+import { PageSkeletonProps } from '.';
+
+const BaseRectSkeleton = ({
+  animate,
+  ...props
+}: Pick<PageSkeletonProps, 'animate'> & SkeletonProps): JSX.Element => (
+  <Skeleton
+    variant="rect"
+    width="100%"
+    animation={animate ? 'wave' : false}
+    {...props}
+  />
 );
 
 export default BaseRectSkeleton;

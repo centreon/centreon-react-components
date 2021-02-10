@@ -33,13 +33,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface Props {
+export interface PageSkeletonProps {
   displayHeaderAndNavigation?: boolean;
+  animate?: boolean;
 }
 
 const PageSkeleton = ({
   displayHeaderAndNavigation = false,
-}: Props): JSX.Element => {
+  animate = true,
+}: PageSkeletonProps): JSX.Element => {
   const classes = useStyles();
   const theme = useTheme();
 
@@ -50,21 +52,27 @@ const PageSkeleton = ({
           [classes.menuContentContainer]: displayHeaderAndNavigation,
         })}
       >
-        <BaseRectSkeleton height="100%" />
+        <BaseRectSkeleton height="100%" animate={animate} />
         <div className={classes.headerContentFooterContainer}>
           <div>
             {displayHeaderAndNavigation && (
-              <BaseRectSkeleton height={theme.spacing(headerHeight)} />
+              <BaseRectSkeleton
+                height={theme.spacing(headerHeight)}
+                animate={animate}
+              />
             )}
             <Skeleton
               variant="text"
               className={classes.breadcrumbSkeleton}
-              animation="wave"
+              animation={animate ? 'wave' : false}
             />
-            <ContentSkeleton />
+            <ContentSkeleton animate={animate} />
           </div>
           {displayHeaderAndNavigation && (
-            <BaseRectSkeleton height={theme.spacing(footerHeight)} />
+            <BaseRectSkeleton
+              height={theme.spacing(footerHeight)}
+              animate={animate}
+            />
           )}
         </div>
       </div>
