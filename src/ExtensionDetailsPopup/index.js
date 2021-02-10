@@ -8,7 +8,6 @@ import clsx from 'clsx';
 
 import styles from '../Popup/popup.scss';
 import Popup from '../Popup';
-import Loader from '../Loader';
 import Slider from '../Slider/SliderContent';
 import IconContent from '../Icon/IconContent';
 import Title from '../Title';
