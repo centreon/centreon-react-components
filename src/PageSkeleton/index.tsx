@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 
-import BaseRectSkeleton from './BaseSkeleton';
+import BaseRectSkeleton, { useSkeletonStyles } from './BaseSkeleton';
 import ContentSkeleton from './ContentSkeleton';
 
 const headerHeight = 6.5;
@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'grid',
     gridTemplateRows: `auto ${theme.spacing(footerHeight)}`,
     alignContent: 'space-between',
+    rowGap: `${theme.spacing(1)}px`,
   },
 }));
 
@@ -43,6 +44,7 @@ const PageSkeleton = ({
   animate = true,
 }: PageSkeletonProps): JSX.Element => {
   const classes = useStyles();
+  const skeletonClasses = useSkeletonStyles();
   const theme = useTheme();
 
   return (
@@ -52,7 +54,11 @@ const PageSkeleton = ({
           [classes.menuContentContainer]: displayHeaderAndNavigation,
         })}
       >
-        <BaseRectSkeleton height="100%" animate={animate} />
+        <BaseRectSkeleton
+          height="100%"
+          animate={animate}
+          width={`calc(100% - ${theme.spacing(0.5)}px)`}
+        />
         <div className={classes.headerContentFooterContainer}>
           <div>
             {displayHeaderAndNavigation && (
@@ -63,7 +69,10 @@ const PageSkeleton = ({
             )}
             <Skeleton
               variant="text"
-              className={classes.breadcrumbSkeleton}
+              className={clsx(
+                classes.breadcrumbSkeleton,
+                skeletonClasses.skeletonLayout,
+              )}
               animation={animate ? 'wave' : false}
             />
             <ContentSkeleton animate={animate} />
