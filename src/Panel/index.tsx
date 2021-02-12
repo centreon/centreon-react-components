@@ -102,6 +102,7 @@ const Panel = React.forwardRef<HTMLDivElement, Props>(
     ref,
   ): JSX.Element => {
     const classes = useStyles({ width, headerBackgroundColor });
+
     const resize = () => {
       document.addEventListener('mouseup', releaseMouse, true);
       document.addEventListener('mousemove', moveMouse, true);
