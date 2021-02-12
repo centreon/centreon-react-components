@@ -14,6 +14,7 @@ import {
 import IconClose from '@material-ui/icons/Clear';
 
 import IconButton from '../Button/Icon';
+import useMemoComponent from '../utils/useMemoComponent';
 
 type StylesProps = Pick<Props, 'headerBackgroundColor' | 'width'>;
 
@@ -82,6 +83,7 @@ interface Props {
   minWidth?: number;
   headerBackgroundColor?: string;
   onResize?: (newWidth: number) => void;
+  memoProps?: Array<unknown>;
 }
 
 const Panel = React.forwardRef<HTMLDivElement, Props>(
@@ -98,7 +100,7 @@ const Panel = React.forwardRef<HTMLDivElement, Props>(
       minWidth = 550,
       headerBackgroundColor,
       onResize,
-    }: Props,
+    }: Omit<Props, 'memoProps'>,
     ref,
   ): JSX.Element => {
     const classes = useStyles({ width, headerBackgroundColor });
@@ -187,5 +189,37 @@ const Panel = React.forwardRef<HTMLDivElement, Props>(
     );
   },
 );
+
+export const MemoizedPanel = ({
+  memoProps = [],
+  tabs,
+  selectedTabId,
+  labelClose,
+  width,
+  minWidth,
+  headerBackgroundColor,
+  ...props
+}: Props): JSX.Element =>
+  useMemoComponent({
+    Component: (
+      <Panel
+        tabs={tabs}
+        selectedTabId={selectedTabId}
+        labelClose={labelClose}
+        width={width}
+        minWidth={minWidth}
+        headerBackgroundColor={headerBackgroundColor}
+        {...props}
+      />
+    ),
+    memoProps: [
+      ...memoProps,
+      selectedTabId,
+      labelClose,
+      width,
+      minWidth,
+      headerBackgroundColor,
+    ],
+  });
 
 export default Panel;
