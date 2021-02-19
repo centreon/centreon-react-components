@@ -62,10 +62,18 @@ const ListingHeader = React.forwardRef(
     const getSortField = (column): string => column.sortField || column.id;
 
     return (
-      <TableHead ref={ref as React.RefObject<HTMLTableSectionElement>}>
-        <TableRow>
+      <TableHead
+        ref={ref as React.RefObject<HTMLTableSectionElement>}
+        component="div"
+      >
+        <TableRow component="div">
           {checkable ? (
-            <HeaderCell padding="checkbox">
+            <HeaderCell
+              padding="checkbox"
+              component="div"
+              style={{ width: '30px' }}
+              variant="head"
+            >
               <Checkbox
                 size="small"
                 color="primary"
@@ -84,6 +92,13 @@ const ListingHeader = React.forwardRef(
               padding={column.disablePadding ? 'none' : 'default'}
               sortDirection={orderBy === column.id ? order : false}
               className={classes.cell}
+              style={{
+                flexBasis: column.width || false,
+                width: column.width,
+                minWidth: '120px',
+              }}
+              scope="col"
+              component="div"
             >
               {column.sortable === false ? (
                 <HeaderTypography variant="body2">

@@ -14,6 +14,7 @@ export default { title: 'Listing' };
 const useStyles = makeStyles((theme) => ({
   listing: {
     backgroundColor: theme.palette.background.default,
+    height: '800px',
   },
 }));
 
@@ -37,6 +38,7 @@ const configuration = [
     label: 'Name',
     type: ColumnType.string,
     getFormattedString: ({ name }): string => name,
+    width: 250,
   },
   {
     id: 'description',
@@ -49,12 +51,13 @@ const configuration = [
     label: 'Custom',
     type: ColumnType.component,
     Component: ComponentColumn,
+    width: 300,
   },
 ];
 
 const noOp = (): void => undefined;
 
-const tenElements = new Array(10).fill(0);
+const tenElements = new Array(500).fill(0);
 
 const listing = [...tenElements].map((_, index) => ({
   id: index,

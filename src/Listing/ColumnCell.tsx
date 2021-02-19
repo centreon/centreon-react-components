@@ -68,6 +68,7 @@ const ColumnCell = ({
 
       return (
         <BodyTableCell
+          component="div"
           align="left"
           style={{ width: width || 'auto' }}
           className={classes.cell}

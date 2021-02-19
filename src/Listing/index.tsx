@@ -1,5 +1,8 @@
 import React, { useState, useRef, RefObject } from 'react';
 
+import AutoSizer from 'react-virtualized-auto-sizer';
+import { FixedSizeList } from 'react-window';
+
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import {
   Table,
@@ -7,25 +10,32 @@ import {
   Paper,
   LinearProgress,
   TableRow,
-  Checkbox,
 } from '@material-ui/core';
 
 import useMemoComponent from '../utils/useMemoComponent';
 
 import ListingHeader from './Header';
-import ListingRow from './Row';
 import PaginationActions from './PaginationActions';
 import StyledPagination from './Pagination';
 import ListingLoadingSkeleton from './Skeleton';
 import useResizeObserver from './useResizeObserver';
 import getCumulativeOffset from './getCumulativeOffset';
-import ColumnCell, { BodyTableCell } from './ColumnCell';
+import { BodyTableCell } from './ColumnCell';
+import Row from './ListingRow';
 
 const loadingIndicatorHeight = 3;
 
 const haveSameIds = (a, b): boolean => a.id === b.id;
 
 const useStyles = makeStyles<Theme>((theme) => ({
+  table: {
+    width: '100%',
+    height: '100%',
+  },
+  tbody: {
+    width: '100%',
+    height: '100%',
+  },
   paperElement: {
     width: '100%',
     height: '100%',
@@ -190,6 +200,8 @@ const Listing = ({
     return `calc(100vh - ${tableTopOffset}px - ${paginationElement.current?.clientHeight}px - ${tableHeaderElement.current?.clientHeight}px)`;
   };
 
+  const itemKey = (index, data) => data[index].id;
+
   return (
     <>
       {loading && tableData.length > 0 && (
@@ -228,13 +240,20 @@ const Listing = ({
         </div>
         <Paper
           style={{
-            overflow: 'auto',
+            overflow: 'hidden',
             maxHeight: tableMaxHeight(),
+            width: '100%',
+            height: '100%',
           }}
           elevation={1}
           square
         >
-          <Table size="small" stickyHeader>
+          <Table
+            size="small"
+            stickyHeader
+            component="div"
+            className={classes.table}
+          >
             <ListingHeader
               numSelected={selectedRows.length}
               order={sorto}
@@ -246,62 +265,44 @@ const Listing = ({
               headColumns={columnConfiguration}
               ref={tableHeaderElement as RefObject<HTMLTableSectionElement>}
             />
-
             <TableBody
               onMouseLeave={clearHoveredRow}
-              style={{
-                position: 'relative',
-              }}
+              component="div"
+              className={classes.tbody}
             >
-              {tableData.map((row) => {
-                const isRowSelected = isSelected(row);
-                const isRowHovered = hoveredRowId === row.id;
-
-                return (
-                  <ListingRow
-                    tabIndex={-1}
-                    key={row.id}
-                    onMouseOver={(): void => hoverRow(row.id)}
-                    onFocus={(): void => hoverRow(row.id)}
-                    onClick={(): void => {
-                      onRowClick(row);
-                    }}
-                    isHovered={isRowHovered}
-                    isSelected={isRowSelected}
-                    row={row}
-                    rowColorConditions={rowColorConditions}
+              <AutoSizer>
+                {({ height, width }) => (
+                  <FixedSizeList
+                    className={classes.list}
+                    height={height}
+                    width={width}
+                    itemCount={tableData.length}
+                    itemSize={25}
+                    itemKey={itemKey}
+                    itemData={tableData}
                   >
-                    {checkable ? (
-                      <BodyTableCell
-                        align="left"
-                        onClick={(event): void => selectRow(event, row)}
-                        padding="checkbox"
-                      >
-                        <Checkbox
-                          size="small"
-                          color="primary"
-                          checked={isRowSelected}
-                          inputProps={{
-                            'aria-label': `Select row ${row.id}`,
-                          }}
-                          disabled={disableRowCheckCondition(row)}
-                        />
-                      </BodyTableCell>
-                    ) : null}
+                    {({ index, style, data }) => {
+                      const item = data[index];
+                      const isRowHovered = hoveredRowId === item.id;
+                      const isRowSelected = isSelected(item);
 
-                    {columnConfiguration.map((column) => (
-                      <ColumnCell
-                        key={`${row.id}-${column.id}`}
-                        column={column}
-                        row={row}
-                        listingCheckable={checkable}
-                        isRowSelected={isRowSelected}
-                        isRowHovered={isRowHovered}
-                      />
-                    ))}
-                  </ListingRow>
-                );
-              })}
+                      return Row({
+                        item,
+                        isRowHovered,
+                        isRowSelected,
+                        rowStyle: style,
+                        rowColorConditions,
+                        disableRowCheckCondition,
+                        onRowClick,
+                        selectRow,
+                        hoverRow,
+                        checkable,
+                        columnConfiguration,
+                      });
+                    }}
+                  </FixedSizeList>
+                )}
+              </AutoSizer>
               {tableData.length < 1 && (
                 <TableRow tabIndex={-1}>
                   <BodyTableCell
