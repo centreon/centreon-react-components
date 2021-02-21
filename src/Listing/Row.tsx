@@ -29,6 +29,8 @@ const useStyles = (rowColorConditions): (() => Record<string, string>) =>
 
     return {
       row: {
+        display: 'contents',
+        width: '100%',
         cursor: 'pointer',
         '&:hover': {
           backgroundColor: fade(theme.palette.primary.main, 0.08),

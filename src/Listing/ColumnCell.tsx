@@ -16,22 +16,21 @@ import { Column, ColumnType, ComponentColumnProps } from './models';
 
 const BodyTableCell = withStyles((theme) => ({
   root: {
-    paddingTop: theme.spacing(0.5),
-    paddingBottom: theme.spacing(0.5),
-    paddingRight: theme.spacing(0.5),
+    padding: theme.spacing(0, 0, 0, 1.5),
   },
 }))(TableCell);
 
 const useStyles = makeStyles<Theme, { listingCheckable: boolean }>((theme) => ({
   cell: {
-    paddingLeft: ({ listingCheckable }): number =>
-      theme.spacing(listingCheckable ? 0 : 1.5),
-  },
-  truncated: {
+    alignSelf: 'stretch',
+    display: 'flex',
+    alignItems: 'center',
+    whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
+  },
+  truncated: {
     maxWidth: 150,
-    whiteSpace: 'nowrap',
   },
 }));
 
@@ -54,24 +53,20 @@ const ColumnCell = ({
 
   const cellByColumnType = {
     [ColumnType.string]: (): JSX.Element => {
-      const {
-        getFormattedString,
-        width,
-        getTruncateCondition,
-        getColSpan,
-      } = column;
+      const { getFormattedString, getTruncateCondition, getColSpan } = column;
 
       const isTruncated = getTruncateCondition?.(isRowSelected);
       const colSpan = getColSpan?.(isRowSelected);
 
       const formattedString = getFormattedString?.(row) || '';
 
+      const gridColumn = colSpan ? `auto / span ${colSpan}` : 'auto / auto';
+
       return (
         <BodyTableCell
           align="left"
-          style={{ width: width || 'auto' }}
           className={classes.cell}
-          colSpan={colSpan}
+          style={{ gridColumn }}
         >
           {isTruncated && (
             <Tooltip title={formattedString}>
@@ -88,7 +83,7 @@ const ColumnCell = ({
       );
     },
     [ColumnType.component]: (): JSX.Element | null => {
-      const { getHiddenCondition, width, clickable } = column;
+      const { getHiddenCondition, clickable } = column;
       const Component = column.Component as (
         props: ComponentColumnProps,
       ) => JSX.Element;
@@ -102,7 +97,6 @@ const ColumnCell = ({
       return (
         <BodyTableCell
           align="left"
-          style={{ width: width || 'auto' }}
           onClick={(e): void => {
             if (!clickable) {
               return;
