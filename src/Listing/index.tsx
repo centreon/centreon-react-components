@@ -21,7 +21,7 @@ import ListingLoadingSkeleton from './Skeleton';
 import useResizeObserver from './useResizeObserver';
 import getCumulativeOffset from './getCumulativeOffset';
 import { BodyTableCell } from './ColumnCell';
-import Row from './ListingRow';
+import ListingRow from './Row';
 
 const loadingIndicatorHeight = 3;
 
@@ -243,7 +243,7 @@ const Listing = ({
             overflow: 'hidden',
             maxHeight: tableMaxHeight(),
             width: '100%',
-            height: '100%',
+            minHeight: '100%',
           }}
           elevation={1}
           square
@@ -277,28 +277,35 @@ const Listing = ({
                     height={height}
                     width={width}
                     itemCount={tableData.length}
-                    itemSize={25}
+                    itemSize={33}
                     itemKey={itemKey}
                     itemData={tableData}
                   >
                     {({ index, style, data }) => {
-                      const item = data[index];
-                      const isRowHovered = hoveredRowId === item.id;
-                      const isRowSelected = isSelected(item);
+                      const row = data[index];
+                      const isRowHovered = hoveredRowId === row.id;
+                      const isRowSelected = isSelected(row);
 
-                      return Row({
-                        item,
-                        isRowHovered,
-                        isRowSelected,
-                        rowStyle: style,
-                        rowColorConditions,
-                        disableRowCheckCondition,
-                        onRowClick,
-                        selectRow,
-                        hoverRow,
-                        checkable,
-                        columnConfiguration,
-                      });
+                      return (
+                        <div style={style}>
+                          <ListingRow
+                            tabIndex={-1}
+                            onMouseOver={(): void => hoverRow(row.id)}
+                            onFocus={(): void => hoverRow(row.id)}
+                            onClick={(): void => {
+                              onRowClick(row);
+                            }}
+                            row={row}
+                            rowColorConditions={rowColorConditions}
+                            checkable={checkable}
+                            columnConfiguration={columnConfiguration}
+                            disableRowCheckCondition={disableRowCheckCondition}
+                            selectRow={selectRow}
+                            isRowHovered={isRowHovered}
+                            isRowSelected={isRowSelected}
+                          />
+                        </div>
+                      );
                     }}
                   </FixedSizeList>
                 )}

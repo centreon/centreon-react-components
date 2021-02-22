@@ -68,12 +68,7 @@ const ListingHeader = React.forwardRef(
       >
         <TableRow component="div">
           {checkable ? (
-            <HeaderCell
-              padding="checkbox"
-              component="div"
-              style={{ width: '30px' }}
-              variant="head"
-            >
+            <HeaderCell padding="checkbox" component="div" variant="head">
               <Checkbox
                 size="small"
                 color="primary"
@@ -95,7 +90,6 @@ const ListingHeader = React.forwardRef(
               style={{
                 flexBasis: column.width || false,
                 width: column.width,
-                minWidth: '120px',
               }}
               scope="col"
               component="div"

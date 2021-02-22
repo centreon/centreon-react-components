@@ -14,7 +14,7 @@ export default { title: 'Listing' };
 const useStyles = makeStyles((theme) => ({
   listing: {
     backgroundColor: theme.palette.background.default,
-    height: '800px',
+    height: '90vh',
   },
 }));
 
@@ -38,7 +38,6 @@ const configuration = [
     label: 'Name',
     type: ColumnType.string,
     getFormattedString: ({ name }): string => name,
-    width: 250,
   },
   {
     id: 'description',
@@ -51,7 +50,6 @@ const configuration = [
     label: 'Custom',
     type: ColumnType.component,
     Component: ComponentColumn,
-    width: 300,
   },
 ];
 

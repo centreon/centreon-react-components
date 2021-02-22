@@ -18,7 +18,7 @@ const BodyTableCell = withStyles((theme) => ({
   root: {
     paddingTop: theme.spacing(0.5),
     paddingBottom: theme.spacing(0.5),
-    paddingRight: theme.spacing(0.5),
+    paddingRight: theme.spacing(3),
   },
 }))(TableCell);
 
@@ -70,7 +70,11 @@ const ColumnCell = ({
         <BodyTableCell
           component="div"
           align="left"
-          style={{ width: width || 'auto' }}
+          style={{
+            flexBasis: width || undefined,
+            width,
+            flexGrow: width ? undefined : 1,
+          }}
           className={classes.cell}
           colSpan={colSpan}
         >
@@ -103,7 +107,12 @@ const ColumnCell = ({
       return (
         <BodyTableCell
           align="left"
-          style={{ width: width || 'auto' }}
+          style={{
+            flexBasis: width || undefined,
+            width,
+            flexGrow: width ? undefined : 1,
+          }}
+          scope="col"
           onClick={(e): void => {
             if (!clickable) {
               return;
