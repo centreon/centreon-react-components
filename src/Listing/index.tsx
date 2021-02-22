@@ -7,7 +7,6 @@ import {
   Paper,
   LinearProgress,
   TableRow,
-  Checkbox,
   useTheme,
 } from '@material-ui/core';
 
@@ -20,7 +19,9 @@ import StyledPagination from './Pagination';
 import ListingLoadingSkeleton from './Skeleton';
 import useResizeObserver from './useResizeObserver';
 import getCumulativeOffset from './getCumulativeOffset';
-import ColumnCell, { BodyTableCell } from './ColumnCell';
+import DataCell from './Cell/DataCell';
+import Cell from './Cell';
+import Checkbox from './Checkbox';
 
 const loadingIndicatorHeight = 3;
 
@@ -73,7 +74,7 @@ const useStyles = makeStyles<Theme>((theme) => ({
 
 export interface Props {
   checkable?: boolean;
-  currentPage?;
+  currentPage?: number;
   columnConfiguration;
   emptyDataMessage?: string;
   rowColorConditions?;
@@ -309,34 +310,34 @@ const Listing = ({
                     isHovered={isRowHovered}
                     isSelected={isRowSelected}
                     row={row}
-                    rowColorConditions={rowColorConditions}
                   >
                     {checkable && (
-                      <BodyTableCell
+                      <Cell
                         align="left"
                         onClick={(event): void => selectRow(event, row)}
+                        isRowHovered={isRowHovered}
+                        row={row}
+                        rowColorConditions={rowColorConditions}
                       >
                         <Checkbox
-                          size="small"
-                          color="primary"
                           checked={isRowSelected}
-                          style={{ padding: 4 }}
                           inputProps={{
                             'aria-label': `Select row ${row.id}`,
                           }}
                           disabled={disableRowCheckCondition(row)}
                         />
-                      </BodyTableCell>
+                      </Cell>
                     )}
 
                     {columnConfiguration.map((column) => (
-                      <ColumnCell
+                      <DataCell
                         key={`${row.id}-${column.id}`}
                         column={column}
                         row={row}
                         listingCheckable={checkable}
                         isRowSelected={isRowSelected}
                         isRowHovered={isRowHovered}
+                        rowColorConditions={rowColorConditions}
                       />
                     ))}
                   </ListingRow>
@@ -344,17 +345,18 @@ const Listing = ({
               })}
               {tableData.length < 1 && (
                 <TableRow tabIndex={-1} className={classes.emptyDataRow}>
-                  <BodyTableCell
+                  <Cell
                     className={classes.emptyDataCell}
+                    isRowHovered={false}
+                    align="center"
                     style={{
                       gridColumn: `auto / span ${
                         columnConfiguration.length + 1
                       }`,
                     }}
-                    align="center"
                   >
                     {loading ? <ListingLoadingSkeleton /> : emptyDataMessage}
-                  </BodyTableCell>
+                  </Cell>
                 </TableRow>
               )}
             </TableBody>

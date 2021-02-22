@@ -1,85 +1,82 @@
 import * as React from 'react';
 
 import { equals } from 'ramda';
-import clsx from 'clsx';
+
+import { makeStyles, Tooltip, Typography, Theme } from '@material-ui/core';
 
 import {
-  makeStyles,
-  withStyles,
-  TableCell,
-  Tooltip,
-  Typography,
-  Theme,
-} from '@material-ui/core';
+  Column,
+  ColumnType,
+  ComponentColumnProps,
+  RowColorCondition,
+} from '../models';
 
-import { Column, ColumnType, ComponentColumnProps } from './models';
+import Cell from '.';
 
-const BodyTableCell = withStyles((theme) => ({
-  root: {
-    padding: theme.spacing(0, 0, 0, 1.5),
-  },
-}))(TableCell);
+interface Props {
+  row?;
+  isRowSelected: boolean;
+  isRowHovered: boolean;
+  rowColorConditions?: Array<RowColorCondition>;
+  listingCheckable: boolean;
+  column: Column;
+}
 
-const useStyles = makeStyles<Theme, { listingCheckable: boolean }>((theme) => ({
+const useStyles = makeStyles<Theme, { listingCheckable: boolean }>(() => ({
   cell: {
     alignSelf: 'stretch',
     display: 'flex',
     alignItems: 'center',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
-    textOverflow: 'ellipsis',
   },
-  truncated: {
-    maxWidth: 150,
+  text: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   },
 }));
 
-interface Props {
-  row;
-  column: Column;
-  listingCheckable: boolean;
-  isRowSelected: boolean;
-  isRowHovered: boolean;
-}
-
-const ColumnCell = ({
+const DataCell = ({
   row,
   column,
   listingCheckable,
   isRowSelected,
   isRowHovered,
+  rowColorConditions,
 }: Props): JSX.Element | null => {
   const classes = useStyles({ listingCheckable });
 
+  const commonCellProps = {
+    isRowHovered,
+    rowColorConditions,
+    className: classes.cell,
+    align: 'left' as const,
+    row,
+  };
+
   const cellByColumnType = {
     [ColumnType.string]: (): JSX.Element => {
-      const { getFormattedString, getTruncateCondition, getColSpan } = column;
+      const { getFormattedString, isTruncated, getColSpan } = column;
 
-      const isTruncated = getTruncateCondition?.(isRowSelected);
       const colSpan = getColSpan?.(isRowSelected);
 
       const formattedString = getFormattedString?.(row) || '';
 
       const gridColumn = colSpan ? `auto / span ${colSpan}` : 'auto / auto';
 
+      const typography = (
+        <Typography variant="body2" className={classes.text}>
+          {formattedString}
+        </Typography>
+      );
+
       return (
-        <BodyTableCell
-          align="left"
-          className={classes.cell}
-          style={{ gridColumn }}
-        >
+        <Cell style={{ gridColumn }} {...commonCellProps}>
           {isTruncated && (
-            <Tooltip title={formattedString}>
-              <Typography
-                variant="body2"
-                className={clsx({ [classes.truncated]: isTruncated })}
-              >
-                {formattedString}
-              </Typography>
-            </Tooltip>
+            <Tooltip title={formattedString}>{typography}</Tooltip>
           )}
-          {!isTruncated && formattedString}
-        </BodyTableCell>
+          {!isTruncated && typography}
+        </Cell>
       );
     },
     [ColumnType.component]: (): JSX.Element | null => {
@@ -95,8 +92,7 @@ const ColumnCell = ({
       }
 
       return (
-        <BodyTableCell
-          align="left"
+        <Cell
           onClick={(e): void => {
             if (!clickable) {
               return;
@@ -104,14 +100,14 @@ const ColumnCell = ({
             e.preventDefault();
             e.stopPropagation();
           }}
-          className={classes.cell}
+          {...commonCellProps}
         >
           <Component
             row={row}
             isSelected={isRowSelected}
             isHovered={isRowHovered}
           />
-        </BodyTableCell>
+        </Cell>
       );
     },
   };
@@ -120,7 +116,7 @@ const ColumnCell = ({
 };
 
 const MemoizedColumnCell = React.memo<Props>(
-  ColumnCell,
+  DataCell,
   (prevProps, nextProps) => {
     const previousColumn = prevProps.column;
     const previousRow = prevProps.row;
@@ -138,9 +134,7 @@ const MemoizedColumnCell = React.memo<Props>(
     const previousFormattedString = previousColumn.getFormattedString?.(
       previousRow,
     );
-    const previousTruncateCondition = previousColumn.getTruncateCondition?.(
-      previousIsRowSelected,
-    );
+    const previousIsTruncated = previousColumn.isTruncated;
     const previousColSpan = previousColumn.getColSpan?.(previousIsRowSelected);
     const previousHiddenCondition = previousColumn.getHiddenCondition?.(
       previousIsRowSelected,
@@ -164,13 +158,10 @@ const MemoizedColumnCell = React.memo<Props>(
 
     const nextColSpan = nextColumn.getColSpan?.(nextIsRowSelected);
 
-    const nextTruncateCondition = nextColumn.getTruncateCondition?.(
-      nextIsRowSelected,
-    );
-
     const nextHiddenCondition = nextColumn.getHiddenCondition?.(
       nextIsRowSelected,
     );
+    const nextisTruncated = nextColumn.isTruncated;
 
     if (previousRenderComponentCondition && nextRenderComponentCondition) {
       return false;
@@ -178,18 +169,20 @@ const MemoizedColumnCell = React.memo<Props>(
 
     return (
       equals(previousIsComponentHovered, nextIsComponentHovered) &&
+      equals(previousIsRowHovered, nextIsRowHovered) &&
       equals(previousFormattedString, nextFormatttedString) &&
       equals(previousColSpan, nextColSpan) &&
-      equals(previousTruncateCondition, nextTruncateCondition) &&
+      equals(previousIsTruncated, nextisTruncated) &&
       equals(previousHiddenCondition, nextHiddenCondition) &&
       equals(previousHiddenCondition, nextHiddenCondition) &&
       equals(
         previousRenderComponentOnRowUpdate && previousRow,
         nextRenderComponentOnRowUpdate && nextRow,
-      )
+      ) &&
+      equals(previousRow, nextRow)
     );
   },
 );
 
 export default MemoizedColumnCell;
-export { BodyTableCell, useStyles };
+export { useStyles, Props };
