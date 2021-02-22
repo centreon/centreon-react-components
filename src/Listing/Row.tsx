@@ -4,7 +4,6 @@ import * as React from 'react';
 
 import { equals } from 'ramda';
 import clsx from 'clsx';
-import { areEqual } from 'react-window';
 
 import {
   TableRowProps,

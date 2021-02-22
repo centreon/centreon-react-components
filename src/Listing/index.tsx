@@ -11,7 +11,6 @@ import {
   LinearProgress,
   TableRow,
   useTheme,
-  Checkbox,
 } from '@material-ui/core';
 
 import useMemoComponent from '../utils/useMemoComponent';
@@ -23,7 +22,7 @@ import StyledPagination from './Pagination';
 import ListingLoadingSkeleton from './Skeleton';
 import useResizeObserver from './useResizeObserver';
 import getCumulativeOffset from './getCumulativeOffset';
-import ColumnCell, { BodyTableCell } from './ColumnCell';
+import { BodyTableCell } from './ColumnCell';
 
 const loadingIndicatorHeight = 3;
 
