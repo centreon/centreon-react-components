@@ -1,5 +1,7 @@
 import React, { useState, useRef, RefObject } from 'react';
 
+import { isNil } from 'ramda';
+
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import {
   Table,
@@ -220,7 +222,11 @@ const Listing = ({
 
     const columns = columnConfiguration
       .map(({ width }) => {
-        return width || 'auto';
+        if (isNil(width)) {
+          return 'auto';
+        }
+
+        return typeof width === 'number' ? `${width}px` : width;
       })
       .join(' ');
 
