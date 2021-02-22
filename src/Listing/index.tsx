@@ -11,6 +11,7 @@ import {
   LinearProgress,
   TableRow,
   useTheme,
+  Checkbox,
 } from '@material-ui/core';
 
 import useMemoComponent from '../utils/useMemoComponent';
@@ -22,7 +23,7 @@ import StyledPagination from './Pagination';
 import ListingLoadingSkeleton from './Skeleton';
 import useResizeObserver from './useResizeObserver';
 import getCumulativeOffset from './getCumulativeOffset';
-import { BodyTableCell } from './ColumnCell';
+import ColumnCell, { BodyTableCell } from './ColumnCell';
 
 const loadingIndicatorHeight = 3;
 
@@ -55,12 +56,13 @@ const useStyles = makeStyles<Theme>((theme) => ({
   },
   table: {
     position: 'relative',
-    display: 'grid',
-    alignItems: 'center',
+    width: '100%',
+    height: '100%',
   },
   tableBody: {
     position: 'relative',
-    display: 'contents',
+    width: '100%',
+    height: '100%',
   },
   paper: {
     overflow: 'auto',
@@ -217,11 +219,11 @@ const Listing = ({
   };
 
   const getGridTemplateColumn = (): string => {
-    const checkbox = checkable ? 'auto ' : '';
+    const checkbox = checkable ? 'min-content ' : '';
 
     const columns = columnConfiguration
       .map(({ width }) => {
-        return width || 'auto';
+        return width || '1fr';
       })
       .join(' ');
 
@@ -271,7 +273,7 @@ const Listing = ({
             overflow: 'hidden',
             maxHeight: tableMaxHeight(),
             width: '100%',
-            minHeight: '100%',
+            height: '100%',
           }}
           className={classes.paper}
           elevation={1}
@@ -282,30 +284,61 @@ const Listing = ({
             stickyHeader
             component="div"
             className={classes.table}
-            style={{
-              gridTemplateColumns: getGridTemplateColumn(),
-            }}
           >
-            <ListingHeader
-              numSelected={selectedRows.length}
-              order={sorto}
-              checkable={checkable}
-              orderBy={sortf}
-              onSelectAllClick={selectAllRows}
-              onRequestSort={handleRequestSort}
-              rowCount={limit - emptyRows}
-              headColumns={columnConfiguration}
-            />
-            <TableBody
-              onMouseLeave={clearHoveredRow}
-              component="div"
-              className={classes.tableBody}
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: getGridTemplateColumn(),
+              }}
             >
-              <AutoSizer>
-                {({ height, width }) => (
+              <ListingHeader
+                numSelected={selectedRows.length}
+                order={sorto}
+                checkable={checkable}
+                orderBy={sortf}
+                onSelectAllClick={selectAllRows}
+                onRequestSort={handleRequestSort}
+                rowCount={limit - emptyRows}
+                headColumns={columnConfiguration}
+              />
+            </div>
+            <AutoSizer defaultHeight={500} defaultWidth="100%">
+              {({ height, width }) => (
+                <TableBody
+                  onMouseLeave={clearHoveredRow}
+                  component="div"
+                  className={classes.tableBody}
+                >
+                  {tableData.length < 1 && (
+                    <TableRow
+                      tabIndex={-1}
+                      className={classes.emptyDataRow}
+                      component="div"
+                      style={{
+                        display: 'grid',
+                        gridTemplateColumns: getGridTemplateColumn(),
+                      }}
+                    >
+                      <BodyTableCell
+                        className={classes.emptyDataCell}
+                        style={{
+                          gridColumn: `auto / span ${
+                            columnConfiguration.length + 1
+                          }`,
+                        }}
+                        align="center"
+                        component="div"
+                      >
+                        {loading ? (
+                          <ListingLoadingSkeleton />
+                        ) : (
+                          emptyDataMessage
+                        )}
+                      </BodyTableCell>
+                    </TableRow>
+                  )}
                   <FixedSizeList
-                    className={classes.list}
-                    height={height}
+                    height={height - 29}
                     width={width}
                     itemCount={tableData.length}
                     itemSize={33}
@@ -318,45 +351,62 @@ const Listing = ({
                       const isRowSelected = isSelected(row);
 
                       return (
-                        <div style={style}>
+                        <div
+                          style={{
+                            ...style,
+                            display: 'grid',
+                            gridTemplateColumns: getGridTemplateColumn(),
+                          }}
+                        >
                           <ListingRow
                             tabIndex={-1}
+                            key={row.id}
                             onMouseOver={(): void => hoverRow(row.id)}
                             onFocus={(): void => hoverRow(row.id)}
                             onClick={(): void => {
                               onRowClick(row);
                             }}
+                            isHovered={isRowHovered}
+                            isSelected={isRowSelected}
                             row={row}
                             rowColorConditions={rowColorConditions}
-                            checkable={checkable}
-                            columnConfiguration={columnConfiguration}
-                            disableRowCheckCondition={disableRowCheckCondition}
-                            selectRow={selectRow}
-                            isRowHovered={isRowHovered}
-                            isRowSelected={isRowSelected}
-                          />
+                          >
+                            {checkable && (
+                              <BodyTableCell
+                                align="left"
+                                onClick={(event): void => selectRow(event, row)}
+                              >
+                                <Checkbox
+                                  size="small"
+                                  color="primary"
+                                  checked={isRowSelected}
+                                  style={{ padding: 4 }}
+                                  inputProps={{
+                                    'aria-label': `Select row ${row.id}`,
+                                  }}
+                                  disabled={disableRowCheckCondition(row)}
+                                />
+                              </BodyTableCell>
+                            )}
+
+                            {columnConfiguration.map((column) => (
+                              <ColumnCell
+                                key={`${row.id}-${column.id}`}
+                                column={column}
+                                row={row}
+                                listingCheckable={checkable}
+                                isRowSelected={isRowSelected}
+                                isRowHovered={isRowHovered}
+                              />
+                            ))}
+                          </ListingRow>
                         </div>
                       );
                     }}
                   </FixedSizeList>
-                )}
-              </AutoSizer>
-              {tableData.length < 1 && (
-                <TableRow tabIndex={-1} className={classes.emptyDataRow}>
-                  <BodyTableCell
-                    className={classes.emptyDataCell}
-                    style={{
-                      gridColumn: `auto / span ${
-                        columnConfiguration.length + 1
-                      }`,
-                    }}
-                    align="center"
-                  >
-                    {loading ? <ListingLoadingSkeleton /> : emptyDataMessage}
-                  </BodyTableCell>
-                </TableRow>
+                </TableBody>
               )}
-            </TableBody>
+            </AutoSizer>
           </Table>
         </Paper>
       </div>

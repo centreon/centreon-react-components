@@ -11,11 +11,9 @@ import {
   makeStyles,
   Theme,
   fade,
-  Checkbox,
 } from '@material-ui/core';
 
 import { RowColorCondition } from './models';
-import MemoizedColumnCell, { BodyTableCell } from './ColumnCell';
 
 const useStyles = (rowColorConditions): (() => Record<string, string>) =>
   makeStyles<Theme>((theme) => {
@@ -43,14 +41,11 @@ const useStyles = (rowColorConditions): (() => Record<string, string>) =>
   });
 
 type Props = {
-  isRowHovered?: boolean;
-  isRowSelected?: boolean;
+  children;
+  isHovered?: boolean;
+  isSelected?: boolean;
   row;
   rowColorConditions;
-  checkable;
-  selectRow;
-  disableRowCheckCondition;
-  columnConfiguration;
 } & TableRowProps;
 
 const getRowColor = ({ conditions, row }): RowColorCondition =>
@@ -58,18 +53,13 @@ const getRowColor = ({ conditions, row }): RowColorCondition =>
 
 const Row = React.memo<Props>(
   ({
-    checkable,
+    children,
     tabIndex,
     onMouseOver,
     onFocus,
     onClick,
-    selectRow,
-    disableRowCheckCondition,
     row,
     rowColorConditions,
-    columnConfiguration,
-    isRowSelected,
-    isRowHovered,
   }: Props & TableRowProps): JSX.Element => {
     const classes = useStyles(rowColorConditions)();
 
@@ -84,42 +74,14 @@ const Row = React.memo<Props>(
         onClick={onClick}
         component="div"
       >
-        {checkable ? (
-          <BodyTableCell
-            align="left"
-            onClick={(event): void => selectRow(event, row)}
-            padding="checkbox"
-            component="div"
-          >
-            <Checkbox
-              size="small"
-              color="primary"
-              checked={isRowSelected}
-              inputProps={{
-                'aria-label': `Select row ${row.id}`,
-              }}
-              disabled={disableRowCheckCondition(row)}
-            />
-          </BodyTableCell>
-        ) : null}
-
-        {columnConfiguration.map((column) => (
-          <MemoizedColumnCell
-            key={`${row.id}-${column.id}`}
-            column={column}
-            row={row}
-            listingCheckable={checkable}
-            isRowSelected={isRowSelected || false}
-            isRowHovered={isRowHovered || false}
-          />
-        ))}
+        {children}
       </TableRow>
     );
   },
   (prevProps, nextProps) => {
     return (
-      equals(prevProps.isRowHovered, nextProps.isRowHovered) &&
-      equals(prevProps.isRowSelected, nextProps.isRowSelected) &&
+      equals(prevProps.isHovered, nextProps.isHovered) &&
+      equals(prevProps.isSelected, nextProps.isSelected) &&
       equals(prevProps.row, nextProps.row) &&
       equals(prevProps.className, nextProps.className) &&
       equals(
