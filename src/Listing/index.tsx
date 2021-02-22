@@ -10,33 +10,26 @@ import {
   Paper,
   LinearProgress,
   TableRow,
+  useTheme,
 } from '@material-ui/core';
 
 import useMemoComponent from '../utils/useMemoComponent';
 
-import ListingHeader from './Header';
+import ListingHeader, { headerHeight } from './Header';
+import ListingRow from './Row';
 import PaginationActions from './PaginationActions';
 import StyledPagination from './Pagination';
 import ListingLoadingSkeleton from './Skeleton';
 import useResizeObserver from './useResizeObserver';
 import getCumulativeOffset from './getCumulativeOffset';
 import { BodyTableCell } from './ColumnCell';
-import ListingRow from './Row';
 
 const loadingIndicatorHeight = 3;
 
 const haveSameIds = (a, b): boolean => a.id === b.id;
 
 const useStyles = makeStyles<Theme>((theme) => ({
-  table: {
-    width: '100%',
-    height: '100%',
-  },
-  tbody: {
-    width: '100%',
-    height: '100%',
-  },
-  paperElement: {
+  container: {
     width: '100%',
     height: '100%',
     display: 'flex',
@@ -59,6 +52,24 @@ const useStyles = makeStyles<Theme>((theme) => ({
   loadingIndicator: {
     width: '100%',
     height: loadingIndicatorHeight,
+  },
+  table: {
+    position: 'relative',
+    display: 'grid',
+    alignItems: 'center',
+  },
+  tableBody: {
+    position: 'relative',
+    display: 'contents',
+  },
+  paper: {
+    overflow: 'auto',
+  },
+  emptyDataRow: {
+    display: 'contents',
+  },
+  emptyDataCell: {
+    paddingLeft: theme.spacing(2),
   },
 }));
 
@@ -121,16 +132,17 @@ const Listing = ({
     null,
   );
 
-  const paperRef = useRef<HTMLDivElement>();
-  const paginationElement = useRef<HTMLDivElement>();
-  const tableHeaderElement = useRef<HTMLTableSectionElement>();
+  const containerRef = useRef<HTMLDivElement>();
+  const actionBarRef = useRef<HTMLDivElement>();
 
   const classes = useStyles();
 
+  const theme = useTheme();
+
   useResizeObserver({
-    ref: paperRef,
+    ref: containerRef,
     onResize: () => {
-      setTableTopOffset(getCumulativeOffset(paperRef.current));
+      setTableTopOffset(getCumulativeOffset(containerRef.current));
     },
   });
 
@@ -197,7 +209,23 @@ const Listing = ({
       return '100%';
     }
 
-    return `calc(100vh - ${tableTopOffset}px - ${paginationElement.current?.clientHeight}px - ${tableHeaderElement.current?.clientHeight}px)`;
+    return `calc(100vh - ${tableTopOffset}px - ${
+      actionBarRef.current?.offsetHeight
+    }px - ${headerHeight}px - ${loadingIndicatorHeight}px - ${theme.spacing(
+      1,
+    )}px)`;
+  };
+
+  const getGridTemplateColumn = (): string => {
+    const checkbox = checkable ? 'auto ' : '';
+
+    const columns = columnConfiguration
+      .map(({ width }) => {
+        return width || 'auto';
+      })
+      .join(' ');
+
+    return `${checkbox}${columns}`;
   };
 
   const itemKey = (index, data) => data[index].id;
@@ -211,12 +239,12 @@ const Listing = ({
         <div className={classes.loadingIndicator} />
       )}
       <div
-        className={classes.paperElement}
-        ref={paperRef as RefObject<HTMLDivElement>}
+        className={classes.container}
+        ref={containerRef as RefObject<HTMLDivElement>}
       >
         <div
           className={classes.actionBar}
-          ref={paginationElement as RefObject<HTMLDivElement>}
+          ref={actionBarRef as RefObject<HTMLDivElement>}
         >
           <div className={classes.actions}>{Actions}</div>
           {paginated ? (
@@ -245,6 +273,7 @@ const Listing = ({
             width: '100%',
             minHeight: '100%',
           }}
+          className={classes.paper}
           elevation={1}
           square
         >
@@ -253,6 +282,9 @@ const Listing = ({
             stickyHeader
             component="div"
             className={classes.table}
+            style={{
+              gridTemplateColumns: getGridTemplateColumn(),
+            }}
           >
             <ListingHeader
               numSelected={selectedRows.length}
@@ -263,12 +295,11 @@ const Listing = ({
               onRequestSort={handleRequestSort}
               rowCount={limit - emptyRows}
               headColumns={columnConfiguration}
-              ref={tableHeaderElement as RefObject<HTMLTableSectionElement>}
             />
             <TableBody
               onMouseLeave={clearHoveredRow}
               component="div"
-              className={classes.tbody}
+              className={classes.tableBody}
             >
               <AutoSizer>
                 {({ height, width }) => (
@@ -311,9 +342,14 @@ const Listing = ({
                 )}
               </AutoSizer>
               {tableData.length < 1 && (
-                <TableRow tabIndex={-1}>
+                <TableRow tabIndex={-1} className={classes.emptyDataRow}>
                   <BodyTableCell
-                    colSpan={columnConfiguration.length + 1}
+                    className={classes.emptyDataCell}
+                    style={{
+                      gridColumn: `auto / span ${
+                        columnConfiguration.length + 1
+                      }`,
+                    }}
                     align="center"
                   >
                     {loading ? <ListingLoadingSkeleton /> : emptyDataMessage}

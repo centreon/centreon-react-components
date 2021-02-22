@@ -31,12 +31,7 @@ const useStyles = (rowColorConditions): (() => Record<string, string>) =>
 
     return {
       row: {
-        display: 'flex',
-        flexDirection: 'row',
-        flexWrap: 'nowrap',
-        alignItems: 'center',
-        boxSizing: 'border-box',
-        minWidth: '100%',
+        display: 'contents',
         width: '100%',
         cursor: 'pointer',
         '&:hover': {
