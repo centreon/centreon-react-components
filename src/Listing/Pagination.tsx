@@ -12,6 +12,10 @@ const styles = {
     paddingLeft: 5,
     overflow: 'hidden',
   },
+  root: {
+    marginLeft: 'auto',
+    padding: 0,
+  },
 };
 
 const Pagination = (props): JSX.Element => (

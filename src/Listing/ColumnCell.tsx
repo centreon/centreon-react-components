@@ -97,6 +97,7 @@ const ColumnCell = ({
 
       return (
         <BodyTableCell
+          component="div"
           align="left"
           onClick={(e): void => {
             if (!clickable) {
