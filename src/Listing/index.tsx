@@ -28,59 +28,45 @@ const loadingIndicatorHeight = 3;
 
 const haveSameIds = (a, b): boolean => a.id === b.id;
 
-const useStyles = (rowColorConditions): (() => Record<string, string>) =>
-  makeStyles<Theme>((theme) => {
-    const rowColorClasses = rowColorConditions.reduce(
-      (rowColorConditionClasses, { name, color }) => ({
-        ...rowColorConditionClasses,
-        [name]: {
-          backgroundColor: color,
-        },
-      }),
-      {},
-    );
+const useStyles = makeStyles<Theme>((theme) => ({
+  container: {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    background: 'none',
+  },
+  actionBar: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  actions: {
+    padding: theme.spacing(1),
+  },
+  loadingIndicator: {
+    width: '100%',
+    height: loadingIndicatorHeight,
+  },
+  table: {
+    position: 'relative',
+    width: '100%',
+    height: '100%',
+  },
+  tableBody: {
+    position: 'relative',
+    width: '100%',
+    height: '100%',
+    backgroundColor: theme.palette.common.white,
+  },
+  emptyDataRow: {
+    display: 'contents',
+  },
+  emptyDataCell: {
+    paddingLeft: theme.spacing(2),
+  },
+}));
 
-    return {
-      container: {
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        background: 'none',
-      },
-      actionBar: {
-        display: 'flex',
-        alignItems: 'center',
-      },
-      actions: {
-        padding: theme.spacing(1),
-      },
-      loadingIndicator: {
-        width: '100%',
-        height: loadingIndicatorHeight,
-      },
-      table: {
-        position: 'relative',
-        width: '100%',
-        height: '100%',
-      },
-      tableBody: {
-        position: 'relative',
-        width: '100%',
-        height: '100%',
-      },
-      paper: {
-        overflow: 'auto',
-      },
-      emptyDataRow: {
-        display: 'contents',
-      },
-      emptyDataCell: {
-        paddingLeft: theme.spacing(2),
-      },
-      ...rowColorClasses,
-    };
-  });
+const rowHeight = 29;
 
 const itemKey = (index, data) => data.items[index].id;
 
@@ -151,7 +137,7 @@ const Listing = ({
   const containerRef = useRef<HTMLDivElement>();
   const actionBarRef = useRef<HTMLDivElement>();
 
-  const classes = useStyles(rowColorConditions)();
+  const classes = useStyles();
 
   const theme = useTheme();
 
@@ -257,6 +243,7 @@ const Listing = ({
       checkable,
       disableRowCheckCondition,
       columnConfiguration,
+      rowHeight,
     },
   });
 
@@ -355,10 +342,12 @@ const Listing = ({
                   </TableRow>
                 )}
                 <FixedSizeList
-                  height={height - 29}
+                  height={
+                    height - (actionBarRef.current?.clientHeight || rowHeight)
+                  }
                   width={width}
                   itemCount={tableData.length}
-                  itemSize={29}
+                  itemSize={rowHeight}
                   itemKey={itemKey}
                   itemData={itemsData}
                 >
