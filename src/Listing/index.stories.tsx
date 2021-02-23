@@ -50,14 +50,15 @@ const configuration = [
     label: 'Custom',
     type: ColumnType.component,
     Component: ComponentColumn,
+    width: '250px',
   },
 ];
 
 const noOp = (): void => undefined;
 
-const tenElements = new Array(500).fill(0);
+const hundredElements = new Array(100).fill(0);
 
-const listing = [...tenElements].map((_, index) => ({
+const listing = [...hundredElements].map((_, index) => ({
   id: index,
   name: `E${index}`,
   description: `Entity ${index}`,
