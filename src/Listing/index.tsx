@@ -3,6 +3,7 @@ import React, { useState, useRef, RefObject } from 'react';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { FixedSizeList } from 'react-window';
 import memoize from 'memoize-one';
+import { pathOr, subtract } from 'ramda';
 
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import {
@@ -63,6 +64,10 @@ const useStyles = makeStyles<Theme>((theme) => ({
   },
   emptyDataCell: {
     paddingLeft: theme.spacing(2),
+  },
+  listingHeader: {
+    display: 'grid',
+    backgroundColor: theme.palette.common.white,
   },
 }));
 
@@ -136,6 +141,7 @@ const Listing = ({
 
   const containerRef = useRef<HTMLDivElement>();
   const actionBarRef = useRef<HTMLDivElement>();
+  const fixedListRef = useRef<HTMLDivElement>();
 
   const classes = useStyles();
 
@@ -295,9 +301,21 @@ const Listing = ({
           component="div"
         >
           <div
+            className={classes.listingHeader}
             style={{
-              display: 'grid',
               gridTemplateColumns: getGridTemplateColumn(),
+              paddingRight: subtract(
+                pathOr(
+                  0,
+                  ['current', 'parentElement', 'offsetWidth'],
+                  fixedListRef,
+                ),
+                pathOr(
+                  0,
+                  ['current', 'parentElement', 'clientWidth'],
+                  fixedListRef,
+                ),
+              ),
             }}
           >
             <ListingHeader
@@ -351,6 +369,7 @@ const Listing = ({
                   itemKey={itemKey}
                   itemData={itemsData}
                   overscanCount={5}
+                  innerRef={fixedListRef}
                 >
                   {Row}
                 </FixedSizeList>
