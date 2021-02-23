@@ -7,6 +7,15 @@ import { ColumnType } from './models';
 import Table from '.';
 
 describe('Table', () => {
+  const originalOffsetHeight = Object.getOwnPropertyDescriptor(
+    HTMLElement.prototype,
+    'offsetHeight',
+  );
+  const originalOffsetWidth = Object.getOwnPropertyDescriptor(
+    HTMLElement.prototype,
+    'offsetWidth',
+  );
+
   const getAllCheckboxes = (container) => {
     return container.querySelectorAll('[type = "checkbox"]');
   };
@@ -66,6 +75,30 @@ describe('Table', () => {
       />
     );
   };
+
+  beforeAll(() => {
+    Object.defineProperty(HTMLElement.prototype, 'offsetHeight', {
+      configurable: true,
+      value: 50,
+    });
+    Object.defineProperty(HTMLElement.prototype, 'offsetWidth', {
+      configurable: true,
+      value: 50,
+    });
+  });
+
+  afterAll(() => {
+    Object.defineProperty(
+      HTMLElement.prototype,
+      'offsetHeight',
+      originalOffsetHeight,
+    );
+    Object.defineProperty(
+      HTMLElement.prototype,
+      'offsetWidth',
+      originalOffsetWidth,
+    );
+  });
 
   it('selects a row when the corresponding checkbox is clicked', () => {
     const { container } = render(
