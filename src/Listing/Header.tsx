@@ -68,10 +68,10 @@ const ListingHeader = ({
   const getSortField = (column): string => column.sortField || column.id;
 
   return (
-    <TableHead className={classes.row}>
-      <TableRow className={classes.row}>
+    <TableHead className={classes.row} component="div">
+      <TableRow className={classes.row} component="div">
         {checkable && (
-          <HeaderCell>
+          <HeaderCell component="div">
             <Checkbox
               inputProps={{ 'aria-label': 'Select all' }}
               indeterminate={numSelected > 0 && numSelected < rowCount}
@@ -88,6 +88,7 @@ const ListingHeader = ({
             padding={column.disablePadding ? 'none' : 'default'}
             sortDirection={orderBy === column.id ? order : false}
             className={cellClasses.cell}
+            component="div"
           >
             {column.sortable === false ? (
               <HeaderTypography variant="body2">
