@@ -115,74 +115,79 @@ const DataCell = ({
   return cellByColumnType[column.type]();
 };
 
-const MemoizedColumnCell = React.memo<Props>(
-  DataCell,
-  (prevProps, nextProps) => {
-    const previousColumn = prevProps.column;
-    const previousRow = prevProps.row;
-    const previousIsRowHovered = prevProps.isRowHovered;
-    const previousIsRowSelected = prevProps.isRowSelected;
-    const previousHasHoverableComponent = previousColumn.hasHoverableComponent;
-    const previousRenderComponentOnRowUpdate = previousColumn.getRenderComponentOnRowUpdateCondition?.(
-      previousRow,
-    );
-    const previousRenderComponentCondition = previousColumn.getRenderComponentCondition?.(
-      previousRow,
-    );
-    const previousIsComponentHovered =
-      previousHasHoverableComponent && previousIsRowHovered;
-    const previousFormattedString = previousColumn.getFormattedString?.(
-      previousRow,
-    );
-    const previousIsTruncated = previousColumn.isTruncated;
-    const previousColSpan = previousColumn.getColSpan?.(previousIsRowSelected);
-    const previousHiddenCondition = previousColumn.getHiddenCondition?.(
-      previousIsRowSelected,
-    );
+const MemoizedDataCell = React.memo<Props>(DataCell, (prevProps, nextProps) => {
+  const previousColumn = prevProps.column;
+  const previousRow = prevProps.row;
+  const previousIsRowHovered = prevProps.isRowHovered;
+  const previousIsRowSelected = prevProps.isRowSelected;
+  const previousHasHoverableComponent = previousColumn.hasHoverableComponent;
+  const previousRenderComponentOnRowUpdate = previousColumn.getRenderComponentOnRowUpdateCondition?.(
+    previousRow,
+  );
+  const previousRenderComponentCondition = previousColumn.getRenderComponentCondition?.(
+    previousRow,
+  );
+  const previousIsComponentHovered =
+    previousHasHoverableComponent && previousIsRowHovered;
+  const previousFormattedString = previousColumn.getFormattedString?.(
+    previousRow,
+  );
+  const previousIsTruncated = previousColumn.isTruncated;
+  const previousColSpan = previousColumn.getColSpan?.(previousIsRowSelected);
+  const previousHiddenCondition = previousColumn.getHiddenCondition?.(
+    previousIsRowSelected,
+  );
 
-    const nextColumn = nextProps.column;
-    const nextRow = nextProps.row;
-    const nextIsRowHovered = nextProps.isRowHovered;
-    const nextIsRowSelected = nextProps.isRowSelected;
-    const nextHasHoverableComponent = nextColumn.hasHoverableComponent;
-    const nextRenderComponentOnRowUpdate = nextColumn.getRenderComponentOnRowUpdateCondition?.(
-      nextRow,
-    );
-    const nextRenderComponentCondition = nextColumn.getRenderComponentCondition?.(
-      nextRow,
-    );
-    const nextIsComponentHovered =
-      nextHasHoverableComponent && nextIsRowHovered;
+  const nextColumn = nextProps.column;
+  const nextRow = nextProps.row;
+  const nextIsRowHovered = nextProps.isRowHovered;
+  const nextIsRowSelected = nextProps.isRowSelected;
+  const nextHasHoverableComponent = nextColumn.hasHoverableComponent;
+  const nextRenderComponentOnRowUpdate = nextColumn.getRenderComponentOnRowUpdateCondition?.(
+    nextRow,
+  );
+  const nextRenderComponentCondition = nextColumn.getRenderComponentCondition?.(
+    nextRow,
+  );
+  const nextIsComponentHovered = nextHasHoverableComponent && nextIsRowHovered;
 
-    const nextFormatttedString = nextColumn.getFormattedString?.(nextRow);
+  const nextFormatttedString = nextColumn.getFormattedString?.(nextRow);
 
-    const nextColSpan = nextColumn.getColSpan?.(nextIsRowSelected);
+  const nextColSpan = nextColumn.getColSpan?.(nextIsRowSelected);
 
-    const nextHiddenCondition = nextColumn.getHiddenCondition?.(
-      nextIsRowSelected,
-    );
-    const nextisTruncated = nextColumn.isTruncated;
+  const nextHiddenCondition = nextColumn.getHiddenCondition?.(
+    nextIsRowSelected,
+  );
+  const nextisTruncated = nextColumn.isTruncated;
 
-    if (previousRenderComponentCondition && nextRenderComponentCondition) {
-      return false;
-    }
+  // Explicitely render the Component.
+  if (previousRenderComponentCondition && nextRenderComponentCondition) {
+    return false;
+  }
 
-    return (
-      equals(previousIsComponentHovered, nextIsComponentHovered) &&
-      equals(previousIsRowHovered, nextIsRowHovered) &&
-      equals(previousFormattedString, nextFormatttedString) &&
-      equals(previousColSpan, nextColSpan) &&
-      equals(previousIsTruncated, nextisTruncated) &&
-      equals(previousHiddenCondition, nextHiddenCondition) &&
-      equals(previousHiddenCondition, nextHiddenCondition) &&
-      equals(
-        previousRenderComponentOnRowUpdate && previousRow,
-        nextRenderComponentOnRowUpdate && nextRow,
-      ) &&
-      equals(previousRow, nextRow)
-    );
-  },
-);
+  // Explicitely prevent the component from rendering.
+  if (
+    previousRenderComponentCondition === false &&
+    nextRenderComponentCondition === false
+  ) {
+    return true;
+  }
 
-export default MemoizedColumnCell;
+  return (
+    equals(previousIsComponentHovered, nextIsComponentHovered) &&
+    equals(previousIsRowHovered, nextIsRowHovered) &&
+    equals(previousFormattedString, nextFormatttedString) &&
+    equals(previousColSpan, nextColSpan) &&
+    equals(previousIsTruncated, nextisTruncated) &&
+    equals(previousHiddenCondition, nextHiddenCondition) &&
+    equals(previousHiddenCondition, nextHiddenCondition) &&
+    equals(
+      previousRenderComponentOnRowUpdate && previousRow,
+      nextRenderComponentOnRowUpdate && nextRow,
+    ) &&
+    equals(previousRow, nextRow)
+  );
+});
+
+export default MemoizedDataCell;
 export { useStyles, Props };
