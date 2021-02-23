@@ -84,14 +84,14 @@ const ListingRow = ({
   );
 };
 
-interface I {
-  index;
+interface RowProps {
+  index: number;
   style;
   data;
 }
 
 const Row = React.memo(
-  ({ index, style, data }: I): JSX.Element => {
+  ({ index, style, data }: RowProps): JSX.Element => {
     const row = data.items[index];
 
     const {
@@ -105,6 +105,7 @@ const Row = React.memo(
       checkable,
       disableRowCheckCondition,
       columnConfiguration,
+      rowHeight,
     } = data.properties;
 
     const isRowHovered = hoveredRowId === row.id;
@@ -126,6 +127,7 @@ const Row = React.memo(
           rowStyle={{
             display: 'grid',
             gridTemplateColumns: getGridTemplateColumn(),
+            height: rowHeight,
           }}
           rowColorConditions={rowColorConditions}
         >
