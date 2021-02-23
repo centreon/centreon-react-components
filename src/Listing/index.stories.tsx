@@ -50,7 +50,6 @@ const configuration = [
     label: 'Custom',
     type: ColumnType.component,
     Component: ComponentColumn,
-    width: '250px',
   },
 ];
 

@@ -64,6 +64,9 @@ const useStyles = makeStyles((theme) => ({
     justifyItems: 'center',
     width: '95%',
   },
+  storyContainer: {
+    height: '95vh',
+  },
 }));
 
 const configuration = [
@@ -292,57 +295,75 @@ const DetailsPanelWithTabs = (): JSX.Element => (
   />
 );
 
+interface Props {
+  FiltersStory: JSX.Element;
+  PanelStory?: JSX.Element;
+  panelOpen?: boolean;
+  panelFixed?: boolean;
+}
+
+const ListingPageStory = ({
+  FiltersStory,
+  PanelStory,
+  panelOpen = false,
+  panelFixed = false,
+}: Props) => {
+  const classes = useStyles();
+
+  return (
+    <div className={classes.storyContainer}>
+      <ListingPage
+        panelOpen={panelOpen}
+        listing={listing}
+        filters={FiltersStory}
+        panel={PanelStory}
+        panelFixed={panelFixed}
+      />
+    </div>
+  );
+};
+
 export const normal = (): JSX.Element => (
-  <ListingPage
-    panelOpen={false}
-    listing={listing}
-    filters={<NonExpandableFilters />}
-  />
+  <ListingPageStory FiltersStory={<NonExpandableFilters />} />
 );
 
 export const withOpenPanel = (): JSX.Element => (
-  <ListingPage
+  <ListingPageStory
     panelOpen
-    listing={listing}
-    filters={<NonExpandableFilters />}
-    panel={<DetailsPanel />}
+    FiltersStory={<NonExpandableFilters />}
+    PanelStory={<DetailsPanel />}
   />
 );
 
 export const withOpenPanelAndTabs = (): JSX.Element => (
-  <ListingPage
+  <ListingPageStory
     panelOpen
-    listing={listing}
-    filters={<NonExpandableFilters />}
-    panel={<DetailsPanelWithTabs />}
+    FiltersStory={<NonExpandableFilters />}
+    PanelStory={<DetailsPanelWithTabs />}
   />
 );
 
 export const withExpandableFilters = (): JSX.Element => (
-  <ListingPage
-    panelOpen={false}
-    listing={listing}
-    filters={<ExpandableFilters />}
-  />
+  <ListingPageStory FiltersStory={<ExpandableFilters />} />
 );
 
 export const withFilterDetailsAndOpenPanel = (): JSX.Element => (
-  <ListingPage
+  <ListingPageStory
     panelOpen
-    listing={listing}
-    filters={<ExpandableFilters />}
-    panel={<DetailsPanel />}
+    FiltersStory={<ExpandableFilters />}
+    PanelStory={<DetailsPanel />}
   />
 );
 
 export const withExpandableFiltersAndFixedPanel = (): JSX.Element => {
   const [open, setOpen] = React.useState(true);
   return (
-    <ListingPage
+    <ListingPageStory
       panelOpen={open}
-      listing={listing}
-      filters={<ExpandableFiltersWithOpenButton onOpen={() => setOpen(true)} />}
-      panel={<DetailsPanel onClose={() => setOpen(false)} />}
+      FiltersStory={
+        <ExpandableFiltersWithOpenButton onOpen={() => setOpen(true)} />
+      }
+      PanelStory={<DetailsPanel onClose={() => setOpen(false)} />}
       panelFixed
     />
   );
