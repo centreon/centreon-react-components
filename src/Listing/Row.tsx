@@ -3,57 +3,28 @@
 import * as React from 'react';
 
 import { equals, path } from 'ramda';
-import clsx from 'clsx';
 
-import {
-  TableRowProps,
-  TableRow,
-  makeStyles,
-  Theme,
-  fade,
-  Checkbox,
-} from '@material-ui/core';
+import { TableRowProps, TableRow, makeStyles, Theme } from '@material-ui/core';
 
-import { RowColorCondition } from './models';
-import ColumnCell, { BodyTableCell } from './ColumnCell';
+import Cell from './Cell';
+import DataCell from './Cell/DataCell';
+import Checkbox from './Checkbox';
 
-const useStyles = (rowColorConditions): (() => Record<string, string>) =>
-  makeStyles<Theme>((theme) => {
-    const rowColorClasses = rowColorConditions.reduce(
-      (rowColorConditionClasses, { name, color }) => ({
-        ...rowColorConditionClasses,
-        [name]: {
-          backgroundColor: color,
-        },
-      }),
-      {},
-    );
-
-    return {
-      row: {
-        display: 'contents',
-        width: '100%',
-        cursor: 'pointer',
-        backgroundColor: theme.palette.common.white,
-        '&:hover': {
-          backgroundColor: fade(theme.palette.primary.main, 0.08),
-        },
-      },
-      ...rowColorClasses,
-    };
-  });
+const useStyles = makeStyles<Theme>((theme) => ({
+  row: {
+    display: 'contents',
+    width: '100%',
+    cursor: 'pointer',
+    backgroundColor: theme.palette.common.white,
+  },
+}));
 
 type Props = {
   children;
   isHovered?: boolean;
   isSelected?: boolean;
-  row;
-  rowColorConditions;
   rowStyle;
 } & TableRowProps;
-
-const getRowColor = ({ conditions, row }): RowColorCondition =>
-  conditions.find(({ condition }) => condition(row));
 
 const ListingRow = ({
   children,
@@ -61,13 +32,9 @@ const ListingRow = ({
   onMouseOver,
   onFocus,
   onClick,
-  row,
-  rowColorConditions,
   rowStyle,
 }: Props & TableRowProps): JSX.Element => {
-  const classes = useStyles(rowColorConditions)();
-
-  const rowColor = getRowColor({ conditions: rowColorConditions, row });
+  const classes = useStyles();
 
   return (
     <TableRow
@@ -77,7 +44,7 @@ const ListingRow = ({
       onClick={onClick}
       component="div"
       style={rowStyle}
-      className={clsx([classes.row, classes[rowColor?.name]])}
+      className={classes.row}
     >
       {children}
     </TableRow>
@@ -105,11 +72,11 @@ const Row = React.memo(
       selectRow,
       onRowClick,
       getGridTemplateColumn,
-      rowColorConditions,
       checkable,
       disableRowCheckCondition,
       columnConfiguration,
       rowHeight,
+      rowColorConditions,
     } = data.properties;
 
     const isRowHovered = hoveredRowId === row.id;
@@ -127,41 +94,39 @@ const Row = React.memo(
           }}
           isHovered={isRowHovered}
           isSelected={isRowSelected}
-          row={row}
           rowStyle={{
             display: 'grid',
             gridTemplateColumns: getGridTemplateColumn(),
             height: rowHeight,
           }}
-          rowColorConditions={rowColorConditions}
         >
           {checkable && (
-            <BodyTableCell
+            <Cell
               align="left"
               onClick={(event): void => selectRow(event, row)}
-              component="div"
+              isRowHovered={isRowHovered}
+              row={row}
+              rowColorConditions={rowColorConditions}
             >
               <Checkbox
-                size="small"
-                color="primary"
                 checked={isRowSelected}
-                style={{ padding: 4 }}
                 inputProps={{
                   'aria-label': `Select row ${row.id}`,
                 }}
                 disabled={disableRowCheckCondition(row)}
               />
-            </BodyTableCell>
+            </Cell>
           )}
 
           {columnConfiguration.map((column) => (
-            <ColumnCell
+            <DataCell
               key={`${row.id}-${column.id}`}
               column={column}
               row={row}
               listingCheckable={checkable}
               isRowSelected={isRowSelected}
               isRowHovered={isRowHovered}
+              rowColorConditions={rowColorConditions}
             />
           ))}
         </ListingRow>
@@ -195,23 +160,7 @@ const Row = React.memo(
           nextRow?.id,
       ) &&
       equals(prevRow, nextRow) &&
-      equals(prevIsRowSelected, nextIsRowSelected) &&
-      equals(
-        getRowColor({
-          conditions: getPropertyFromProps({
-            property: 'rowColorConditions',
-            props: prevProps,
-          }),
-          row: prevRow,
-        }),
-        getRowColor({
-          conditions: getPropertyFromProps({
-            property: 'rowColorConditions',
-            props: nextProps,
-          }),
-          row: nextRow,
-        }),
-      )
+      equals(prevIsRowSelected, nextIsRowSelected)
     );
   },
 );

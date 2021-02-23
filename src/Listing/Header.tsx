@@ -12,7 +12,7 @@ import {
   makeStyles,
 } from '@material-ui/core';
 
-import { useStyles as useCellStyles } from './ColumnCell';
+import { useStyles as useCellStyles } from './Cell/DataCell';
 import Checkbox from './Checkbox';
 
 const height = 28;

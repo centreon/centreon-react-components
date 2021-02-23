@@ -3,7 +3,7 @@ import React, { useState, useRef, RefObject } from 'react';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { FixedSizeList } from 'react-window';
 import memoize from 'memoize-one';
-import { pathOr, subtract } from 'ramda';
+import { pathOr, subtract, isNil } from 'ramda';
 
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import {
@@ -23,7 +23,7 @@ import StyledPagination from './Pagination';
 import ListingLoadingSkeleton from './Skeleton';
 import useResizeObserver from './useResizeObserver';
 import getCumulativeOffset from './getCumulativeOffset';
-import { BodyTableCell } from './ColumnCell';
+import Cell from './Cell';
 
 const loadingIndicatorHeight = 3;
 
@@ -82,7 +82,7 @@ const createItemsData = memoize(({ items, properties }) => ({
 
 export interface Props {
   checkable?: boolean;
-  currentPage?;
+  currentPage?: number;
   columnConfiguration;
   emptyDataMessage?: string;
   rowColorConditions?;
@@ -229,7 +229,11 @@ const Listing = ({
 
     const columns = columnConfiguration
       .map(({ width }) => {
-        return width || '1fr';
+        if (isNil(width)) {
+          return '1fr';
+        }
+
+        return typeof width === 'number' ? `${width}px` : width;
       })
       .join(' ');
 
@@ -346,7 +350,7 @@ const Listing = ({
                     }}
                     component="div"
                   >
-                    <BodyTableCell
+                    <Cell
                       className={classes.emptyDataCell}
                       style={{
                         gridColumn: `auto / span ${
@@ -355,9 +359,10 @@ const Listing = ({
                       }}
                       align="center"
                       component="div"
+                      isRowHovered={false}
                     >
                       {loading ? <ListingLoadingSkeleton /> : emptyDataMessage}
-                    </BodyTableCell>
+                    </Cell>
                   </TableRow>
                 )}
                 <FixedSizeList
