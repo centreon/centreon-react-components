@@ -350,6 +350,7 @@ const Listing = ({
                   itemSize={rowHeight}
                   itemKey={itemKey}
                   itemData={itemsData}
+                  overscanCount={5}
                 >
                   {Row}
                 </FixedSizeList>
