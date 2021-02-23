@@ -218,7 +218,7 @@ const Listing = ({
   };
 
   const getGridTemplateColumn = (): string => {
-    const checkbox = checkable ? 'min-content' : '';
+    const checkbox = checkable ? 'min-content ' : '';
 
     const columns = columnConfiguration
       .map(({ width }) => {
