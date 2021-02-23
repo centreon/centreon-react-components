@@ -57,13 +57,13 @@ const useStyles = makeStyles<Theme>((theme) => ({
     position: 'relative',
     width: '100%',
     height: '100%',
-    backgroundColor: theme.palette.common.white,
   },
   emptyDataRow: {
     display: 'contents',
   },
   emptyDataCell: {
     paddingLeft: theme.spacing(2),
+    backgroundColor: theme.palette.common.white,
   },
   listingHeader: {
     display: 'grid',
@@ -354,6 +354,7 @@ const Listing = ({
                         }`,
                       }}
                       align="center"
+                      component="div"
                     >
                       {loading ? <ListingLoadingSkeleton /> : emptyDataMessage}
                     </BodyTableCell>
