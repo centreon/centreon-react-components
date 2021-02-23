@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 
-import { equals } from 'ramda';
+import { equals, path } from 'ramda';
 import clsx from 'clsx';
 
 import {
@@ -90,6 +90,10 @@ interface RowProps {
   data;
 }
 
+const getPropertyFromProps = <T extends unknown>({ props, property }) => {
+  return path<T>(['data', 'properties', property], props);
+};
+
 const Row = React.memo(
   ({ index, style, data }: RowProps): JSX.Element => {
     const row = data.items[index];
@@ -165,25 +169,46 @@ const Row = React.memo(
     );
   },
   (prevProps, nextProps) => {
-    const prevRow = prevProps.data.items[prevProps.index];
-    const nextRow = nextProps.data.items[nextProps.index];
+    const prevRow = path<Record<string, unknown>>(
+      ['data', 'items', prevProps.index],
+      prevProps,
+    ) as Record<string, unknown>;
+    const nextRow = path<Record<string, unknown>>(
+      ['data', 'items', nextProps.index],
+      nextProps,
+    );
 
-    const prevIsRowSelected = prevProps.data.properties.isSelected(prevRow);
-    const nextIsRowSelected = nextProps.data.properties.isSelected(nextRow);
+    const prevIsRowSelected = getPropertyFromProps<(row) => boolean>({
+      property: 'isSelected',
+      props: prevProps,
+    })?.(prevRow);
+    const nextIsRowSelected = getPropertyFromProps<(row) => boolean>({
+      property: 'isSelected',
+      props: nextProps,
+    })?.(nextRow);
+
     return (
       equals(
-        prevProps.data.properties.hoveredRowId === prevRow.id,
-        nextProps.data.properties.hoveredRowId === nextRow.id,
+        getPropertyFromProps({ property: 'hoveredRowId', props: prevProps }) ===
+          prevRow?.id,
+        getPropertyFromProps({ property: 'hoveredRowId', props: nextProps }) ===
+          nextRow?.id,
       ) &&
       equals(prevRow, nextRow) &&
       equals(prevIsRowSelected, nextIsRowSelected) &&
       equals(
         getRowColor({
-          conditions: prevProps.data.properties.rowColorConditions,
+          conditions: getPropertyFromProps({
+            property: 'rowColorConditions',
+            props: prevProps,
+          }),
           row: prevRow,
         }),
         getRowColor({
-          conditions: nextProps.data.properties.rowColorConditions,
+          conditions: getPropertyFromProps({
+            property: 'rowColorConditions',
+            props: nextProps,
+          }),
           row: nextRow,
         }),
       )
