@@ -182,7 +182,7 @@ const MemoizedDataCell = React.memo<Props>(DataCell, (prevProps, nextProps) => {
     equals(previousIsRowHovered, nextIsRowHovered) &&
     equals(previousFormattedString, nextFormatttedString) &&
     equals(previousColSpan, nextColSpan) &&
-    equals(previousIsTruncated, nextisTruncated) &&
+    equals(previousIsTruncated, nextIsTruncated) &&
     equals(previousHiddenCondition, nextHiddenCondition) &&
     equals(
       previousRenderComponentOnRowUpdate && previousRow,
