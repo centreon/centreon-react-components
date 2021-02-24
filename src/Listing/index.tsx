@@ -257,6 +257,14 @@ const Listing = ({
     },
   });
 
+  React.useEffect(() => {
+    fixedListRef.current?.addEventListener('mouseleave', clearHoveredRow);
+
+    return () => {
+      fixedListRef.current?.removeEventListener('mouseleave', clearHoveredRow);
+    };
+  }, [fixedListRef.current]);
+
   return (
     <>
       {loading && tableData.length > 0 && (
@@ -334,11 +342,7 @@ const Listing = ({
           </div>
           <AutoSizer>
             {({ height, width }) => (
-              <TableBody
-                onMouseLeave={clearHoveredRow}
-                className={classes.tableBody}
-                component="div"
-              >
+              <TableBody className={classes.tableBody} component="div">
                 {tableData.length < 1 && (
                   <TableRow
                     tabIndex={-1}
