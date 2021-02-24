@@ -2,7 +2,6 @@ import React, { useState, useRef, RefObject } from 'react';
 
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { FixedSizeList } from 'react-window';
-import memoize from 'memoize-one';
 import { pathOr, subtract, isNil } from 'ramda';
 
 import { makeStyles, Theme } from '@material-ui/core/styles';
