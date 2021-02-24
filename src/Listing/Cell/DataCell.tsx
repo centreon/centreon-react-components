@@ -162,7 +162,7 @@ const MemoizedDataCell = React.memo<Props>(DataCell, (prevProps, nextProps) => {
   const nextHiddenCondition = nextColumn.getHiddenCondition?.(
     nextIsRowSelected,
   );
-  const nextisTruncated = nextColumn.isTruncated;
+  const nextIsTruncated = nextColumn.isTruncated;
 
   // Explicitely render the Component.
   if (previousRenderComponentCondition && nextRenderComponentCondition) {
