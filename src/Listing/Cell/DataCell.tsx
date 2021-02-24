@@ -140,10 +140,12 @@ const MemoizedDataCell = React.memo<Props>(DataCell, (prevProps, nextProps) => {
     previousIsRowSelected,
   );
 
-  const nextColumn = nextProps.column;
-  const nextRow = nextProps.row;
-  const nextIsRowHovered = nextProps.isRowHovered;
-  const nextIsRowSelected = nextProps.isRowSelected;
+  const {
+    column: nextColumn,
+    row: nextRow,
+    isRowHovered: nextIsRowHovered,
+    isRowSelected: nextIsRowSelected,
+  } = nextProps;
   const nextHasHoverableComponent = nextColumn.hasHoverableComponent;
   const nextRenderComponentOnRowUpdate = nextColumn.getRenderComponentOnRowUpdateCondition?.(
     nextRow,
