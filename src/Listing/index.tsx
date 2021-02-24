@@ -75,10 +75,10 @@ const rowHeight = 29;
 
 const itemKey = (index, data) => data.items[index].id;
 
-const createItemsData = memoize(({ items, properties }) => ({
+const createItemsData = ({ items, properties }) => ({
   items,
   properties,
-}));
+});
 
 export interface Props {
   checkable?: boolean;
