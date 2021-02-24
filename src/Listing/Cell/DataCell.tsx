@@ -116,10 +116,12 @@ const DataCell = ({
 };
 
 const MemoizedDataCell = React.memo<Props>(DataCell, (prevProps, nextProps) => {
-  const previousColumn = prevProps.column;
-  const previousRow = prevProps.row;
-  const previousIsRowHovered = prevProps.isRowHovered;
-  const previousIsRowSelected = prevProps.isRowSelected;
+  const {
+    column: previousColumn,
+    row: previousRow,
+    isRowHovered: previousIsRowHovered,
+    isRowSelected: previousIsRowSelected,
+  } = prevProps;
   const previousHasHoverableComponent = previousColumn.hasHoverableComponent;
   const previousRenderComponentOnRowUpdate = previousColumn.getRenderComponentOnRowUpdateCondition?.(
     previousRow,
@@ -138,10 +140,12 @@ const MemoizedDataCell = React.memo<Props>(DataCell, (prevProps, nextProps) => {
     previousIsRowSelected,
   );
 
-  const nextColumn = nextProps.column;
-  const nextRow = nextProps.row;
-  const nextIsRowHovered = nextProps.isRowHovered;
-  const nextIsRowSelected = nextProps.isRowSelected;
+  const {
+    column: nextColumn,
+    row: nextRow,
+    isRowHovered: nextIsRowHovered,
+    isRowSelected: nextIsRowSelected,
+  } = nextProps;
   const nextHasHoverableComponent = nextColumn.hasHoverableComponent;
   const nextRenderComponentOnRowUpdate = nextColumn.getRenderComponentOnRowUpdateCondition?.(
     nextRow,
@@ -158,7 +162,7 @@ const MemoizedDataCell = React.memo<Props>(DataCell, (prevProps, nextProps) => {
   const nextHiddenCondition = nextColumn.getHiddenCondition?.(
     nextIsRowSelected,
   );
-  const nextisTruncated = nextColumn.isTruncated;
+  const nextIsTruncated = nextColumn.isTruncated;
 
   // Explicitely render the Component.
   if (previousRenderComponentCondition && nextRenderComponentCondition) {
@@ -178,8 +182,7 @@ const MemoizedDataCell = React.memo<Props>(DataCell, (prevProps, nextProps) => {
     equals(previousIsRowHovered, nextIsRowHovered) &&
     equals(previousFormattedString, nextFormatttedString) &&
     equals(previousColSpan, nextColSpan) &&
-    equals(previousIsTruncated, nextisTruncated) &&
-    equals(previousHiddenCondition, nextHiddenCondition) &&
+    equals(previousIsTruncated, nextIsTruncated) &&
     equals(previousHiddenCondition, nextHiddenCondition) &&
     equals(
       previousRenderComponentOnRowUpdate && previousRow,

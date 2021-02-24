@@ -297,7 +297,6 @@ const Listing = ({
           stickyHeader
           className={classes.table}
           style={{
-            overflow: 'hidden',
             maxHeight: tableMaxHeight(),
             width: '100%',
             height: '100%',
