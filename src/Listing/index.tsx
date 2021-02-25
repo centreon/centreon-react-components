@@ -306,8 +306,6 @@ const Listing = ({
           className={classes.table}
           style={{
             maxHeight: tableMaxHeight(),
-            width: '100%',
-            height: '100%',
           }}
           component="div"
         >
