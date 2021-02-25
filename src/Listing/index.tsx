@@ -16,7 +16,7 @@ import {
 
 import useMemoComponent from '../utils/useMemoComponent';
 
-import ListingHeader, { headerHeight } from './Header';
+import Header, { headerHeight } from './Header';
 import Row from './Row';
 import PaginationActions from './PaginationActions';
 import StyledPagination from './Pagination';
@@ -329,7 +329,7 @@ const Listing = ({
               ),
             }}
           >
-            <ListingHeader
+            <Header
               numSelected={selectedRows.length}
               order={sorto}
               checkable={checkable}
