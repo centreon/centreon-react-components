@@ -265,6 +265,11 @@ const Listing = ({
     };
   }, [fixedListRef.current]);
 
+  const scrollbarShift = subtract(
+    pathOr(0, ['current', 'parentElement', 'offsetWidth'], fixedListRef),
+    pathOr(0, ['current', 'parentElement', 'clientWidth'], fixedListRef),
+  );
+
   return (
     <>
       {loading && tableData.length > 0 && (
@@ -313,18 +318,7 @@ const Listing = ({
             className={classes.listingHeader}
             style={{
               gridTemplateColumns: getGridTemplateColumn(),
-              paddingRight: subtract(
-                pathOr(
-                  0,
-                  ['current', 'parentElement', 'offsetWidth'],
-                  fixedListRef,
-                ),
-                pathOr(
-                  0,
-                  ['current', 'parentElement', 'clientWidth'],
-                  fixedListRef,
-                ),
-              ),
+              paddingRight: scrollbarShift,
             }}
           >
             <Header
@@ -339,49 +333,56 @@ const Listing = ({
             />
           </div>
           <AutoSizer>
-            {({ height, width }) => (
-              <TableBody className={classes.tableBody} component="div">
-                {tableData.length < 1 && (
-                  <TableRow
-                    tabIndex={-1}
-                    className={classes.emptyDataRow}
-                    style={{
-                      display: 'grid',
-                      gridTemplateColumns: getGridTemplateColumn(),
-                    }}
-                    component="div"
-                  >
-                    <Cell
-                      className={classes.emptyDataCell}
+            {({ height, width }) => {
+              const listHeight =
+                height - (actionBarRef.current?.clientHeight || rowHeight);
+
+              return (
+                <TableBody className={classes.tableBody} component="div">
+                  {tableData.length < 1 && (
+                    <TableRow
+                      tabIndex={-1}
+                      className={classes.emptyDataRow}
                       style={{
-                        gridColumn: `auto / span ${
-                          columnConfiguration.length + 1
-                        }`,
+                        display: 'grid',
+                        gridTemplateColumns: getGridTemplateColumn(),
                       }}
-                      align="center"
                       component="div"
-                      isRowHovered={false}
                     >
-                      {loading ? <ListingLoadingSkeleton /> : emptyDataMessage}
-                    </Cell>
-                  </TableRow>
-                )}
-                <FixedSizeList
-                  height={
-                    height - (actionBarRef.current?.clientHeight || rowHeight)
-                  }
-                  width={width}
-                  itemCount={tableData.length}
-                  itemSize={rowHeight}
-                  itemKey={itemKey}
-                  itemData={itemsData}
-                  overscanCount={5}
-                  innerRef={fixedListRef}
-                >
-                  {Row}
-                </FixedSizeList>
-              </TableBody>
-            )}
+                      <Cell
+                        className={classes.emptyDataCell}
+                        style={{
+                          gridColumn: `auto / span ${
+                            columnConfiguration.length + 1
+                          }`,
+                        }}
+                        align="center"
+                        component="div"
+                        isRowHovered={false}
+                      >
+                        {loading ? (
+                          <ListingLoadingSkeleton />
+                        ) : (
+                          emptyDataMessage
+                        )}
+                      </Cell>
+                    </TableRow>
+                  )}
+                  <FixedSizeList
+                    height={listHeight}
+                    width={width}
+                    itemCount={tableData.length}
+                    itemSize={rowHeight}
+                    itemKey={itemKey}
+                    itemData={itemsData}
+                    overscanCount={5}
+                    innerRef={fixedListRef}
+                  >
+                    {Row}
+                  </FixedSizeList>
+                </TableBody>
+              );
+            }}
           </AutoSizer>
         </Table>
       </div>
