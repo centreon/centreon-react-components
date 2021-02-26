@@ -9,6 +9,7 @@ import { TableRowProps, TableRow, makeStyles, Theme } from '@material-ui/core';
 import Cell from './Cell';
 import DataCell from './Cell/DataCell';
 import Checkbox from './Checkbox';
+import { RowColorCondition } from './models';
 
 const useStyles = makeStyles<Theme>((theme) => ({
   row: {
@@ -137,7 +138,7 @@ const Row = React.memo(
     const prevRow = path<Record<string, unknown>>(
       ['data', 'items', prevProps.index],
       prevProps,
-    ) as Record<string, unknown>;
+    );
     const nextRow = path<Record<string, unknown>>(
       ['data', 'items', nextProps.index],
       nextProps,
@@ -151,7 +152,24 @@ const Row = React.memo(
       property: 'isSelected',
       props: nextProps,
     })?.(nextRow);
-
+    const previousRowColorConditions = getPropertyFromProps<
+      Array<RowColorCondition>
+    >({
+      property: 'rowColorConditions',
+      props: prevProps,
+    });
+    const nextRowColorConditions = getPropertyFromProps<
+      Array<RowColorCondition>
+    >({
+      property: 'rowColorConditions',
+      props: nextProps,
+    });
+    const prevRowColors = previousRowColorConditions?.map(({ condition }) =>
+      condition(prevRow),
+    );
+    const nextRowColors = nextRowColorConditions?.map(({ condition }) =>
+      condition(nextRow),
+    );
     return (
       equals(
         getPropertyFromProps({ property: 'hoveredRowId', props: prevProps }) ===
@@ -160,7 +178,8 @@ const Row = React.memo(
           nextRow?.id,
       ) &&
       equals(prevRow, nextRow) &&
-      equals(prevIsRowSelected, nextIsRowSelected)
+      equals(prevIsRowSelected, nextIsRowSelected) &&
+      equals(prevRowColors, nextRowColors)
     );
   },
 );

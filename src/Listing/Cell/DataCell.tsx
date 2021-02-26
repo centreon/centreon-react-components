@@ -121,7 +121,11 @@ const MemoizedDataCell = React.memo<Props>(DataCell, (prevProps, nextProps) => {
     row: previousRow,
     isRowHovered: previousIsRowHovered,
     isRowSelected: previousIsRowSelected,
+    rowColorConditions: previousRowColorConditions,
   } = prevProps;
+  const previousRowColors = previousRowColorConditions?.map(({ condition }) =>
+    condition(previousRow),
+  );
   const previousHasHoverableComponent = previousColumn.hasHoverableComponent;
   const previousRenderComponentOnRowUpdate = previousColumn.getRenderComponentOnRowUpdateCondition?.(
     previousRow,
@@ -145,7 +149,11 @@ const MemoizedDataCell = React.memo<Props>(DataCell, (prevProps, nextProps) => {
     row: nextRow,
     isRowHovered: nextIsRowHovered,
     isRowSelected: nextIsRowSelected,
+    rowColorConditions: nextRowColorConditions,
   } = nextProps;
+  const nextRowColors = nextRowColorConditions?.map(({ condition }) =>
+    condition(nextRow),
+  );
   const nextHasHoverableComponent = nextColumn.hasHoverableComponent;
   const nextRenderComponentOnRowUpdate = nextColumn.getRenderComponentOnRowUpdateCondition?.(
     nextRow,
@@ -188,7 +196,8 @@ const MemoizedDataCell = React.memo<Props>(DataCell, (prevProps, nextProps) => {
       previousRenderComponentOnRowUpdate && previousRow,
       nextRenderComponentOnRowUpdate && nextRow,
     ) &&
-    equals(previousRow, nextRow)
+    equals(previousRow, nextRow) &&
+    equals(previousRowColors, nextRowColors)
   );
 });
 
