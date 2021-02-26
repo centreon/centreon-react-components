@@ -42,6 +42,7 @@ const Cell = (props: Props): JSX.Element => {
     <TableCell
       classes={{ root: classes.root }}
       {...omit(['isRowHovered', 'row', 'rowColorConditions'], props)}
+      component="div"
     >
       {children}
     </TableCell>
