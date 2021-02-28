@@ -32,6 +32,7 @@ const useStyles = makeStyles<Theme, { listingCheckable: boolean }>(() => ({
   },
   text: {
     overflow: 'hidden',
+    whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
   },
 }));
@@ -121,6 +122,7 @@ const MemoizedDataCell = React.memo<Props>(DataCell, (prevProps, nextProps) => {
     row: previousRow,
     isRowHovered: previousIsRowHovered,
     isRowSelected: previousIsRowSelected,
+    rowColorConditions: previousRowColorConditions,
   } = prevProps;
   const previousHasHoverableComponent = previousColumn.hasHoverableComponent;
   const previousRenderComponentOnRowUpdate = previousColumn.getRenderComponentOnRowUpdateCondition?.(
@@ -145,6 +147,7 @@ const MemoizedDataCell = React.memo<Props>(DataCell, (prevProps, nextProps) => {
     row: nextRow,
     isRowHovered: nextIsRowHovered,
     isRowSelected: nextIsRowSelected,
+    rowColorConditions: nextRowColorConditions,
   } = nextProps;
   const nextHasHoverableComponent = nextColumn.hasHoverableComponent;
   const nextRenderComponentOnRowUpdate = nextColumn.getRenderComponentOnRowUpdateCondition?.(
@@ -163,6 +166,13 @@ const MemoizedDataCell = React.memo<Props>(DataCell, (prevProps, nextProps) => {
     nextIsRowSelected,
   );
   const nextIsTruncated = nextColumn.isTruncated;
+
+  const prevRowColors = previousRowColorConditions?.map(({ condition }) =>
+    condition(previousRow),
+  );
+  const nextRowColors = nextRowColorConditions?.map(({ condition }) =>
+    condition(nextRow),
+  );
 
   // Explicitely render the Component.
   if (previousRenderComponentCondition && nextRenderComponentCondition) {
@@ -188,7 +198,8 @@ const MemoizedDataCell = React.memo<Props>(DataCell, (prevProps, nextProps) => {
       previousRenderComponentOnRowUpdate && previousRow,
       nextRenderComponentOnRowUpdate && nextRow,
     ) &&
-    equals(previousRow, nextRow)
+    equals(previousRow, nextRow) &&
+    equals(prevRowColors, nextRowColors)
   );
 });
 
