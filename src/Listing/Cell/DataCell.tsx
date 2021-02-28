@@ -32,6 +32,7 @@ const useStyles = makeStyles<Theme, { listingCheckable: boolean }>(() => ({
   },
   text: {
     overflow: 'hidden',
+    whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
   },
 }));

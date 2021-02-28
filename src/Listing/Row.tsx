@@ -170,6 +170,7 @@ const Row = React.memo(
     const nextRowColors = nextRowColorConditions?.map(({ condition }) =>
       condition(nextRow),
     );
+
     return (
       equals(
         getPropertyFromProps({ property: 'hoveredRowId', props: prevProps }) ===
@@ -179,7 +180,8 @@ const Row = React.memo(
       ) &&
       equals(prevRow, nextRow) &&
       equals(prevIsRowSelected, nextIsRowSelected) &&
-      equals(prevRowColors, nextRowColors)
+      equals(prevRowColors, nextRowColors) &&
+      equals(prevProps.index, nextProps.index)
     );
   },
 );
