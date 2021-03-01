@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 
-import { equals, path } from 'ramda';
+import { equals, path, prop } from 'ramda';
 
 import { TableRowProps, TableRow, makeStyles, Theme } from '@material-ui/core';
 
@@ -144,6 +144,9 @@ const Row = React.memo(
       nextProps,
     );
 
+    const prevIndex = prop('index', prevProps);
+    const nextIndex = prop('index', nextProps);
+
     const prevIsRowSelected = getPropertyFromProps<(row) => boolean>({
       property: 'isSelected',
       props: prevProps,
@@ -181,7 +184,7 @@ const Row = React.memo(
       equals(prevRow, nextRow) &&
       equals(prevIsRowSelected, nextIsRowSelected) &&
       equals(prevRowColors, nextRowColors) &&
-      equals(prevProps.index, nextProps.index)
+      equals(prevIndex, nextIndex)
     );
   },
 );
