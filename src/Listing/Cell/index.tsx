@@ -25,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
 
       return 'unset';
     },
+    '&:last-child': {
+      paddingRight: ({ compact }: Props) => theme.spacing(compact ? 0 : 2),
+    },
   },
 }));
 
@@ -42,7 +45,7 @@ const Cell = (props: Props): JSX.Element => {
   return (
     <TableCell
       classes={{ root: classes.root }}
-      {...omit(['isRowHovered', 'row', 'rowColorConditions'], props)}
+      {...omit(['isRowHovered', 'row', 'rowColorConditions', 'compact'], props)}
       component="div"
     >
       {children}
