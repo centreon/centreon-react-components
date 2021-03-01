@@ -20,7 +20,6 @@ interface Props {
   rowColorConditions?: Array<RowColorCondition>;
   listingCheckable: boolean;
   column: Column;
-  compact?: boolean;
 }
 
 const useStyles = makeStyles<Theme, { listingCheckable: boolean }>(() => ({
@@ -45,7 +44,6 @@ const DataCell = ({
   isRowSelected,
   isRowHovered,
   rowColorConditions,
-  compact,
 }: Props): JSX.Element | null => {
   const classes = useStyles({ listingCheckable });
 
@@ -55,7 +53,7 @@ const DataCell = ({
     className: classes.cell,
     align: 'left' as const,
     row,
-    compact,
+    compact: column.compact,
   };
 
   const cellByColumnType = {
