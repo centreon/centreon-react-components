@@ -8,7 +8,8 @@ import { Props as DataCellProps } from './DataCell';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    padding: theme.spacing(0, 0, 0, 1.5),
+    padding: ({ compact }: Props) =>
+      theme.spacing(0, 0, 0, compact ? 0.5 : 1.5),
     backgroundColor: ({ isRowHovered, row, rowColorConditions }: Props) => {
       if (isRowHovered) {
         return fade(theme.palette.primary.main, 0.08);
@@ -29,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 
 type Props = Pick<
   DataCellProps,
-  'isRowHovered' | 'row' | 'rowColorConditions'
+  'isRowHovered' | 'row' | 'rowColorConditions' | 'compact'
 > &
   TableCellProps;
 
