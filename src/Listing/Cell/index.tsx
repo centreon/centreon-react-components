@@ -28,11 +28,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-type Props = Pick<
-  DataCellProps,
-  'isRowHovered' | 'row' | 'rowColorConditions' | 'compact'
-> &
-  TableCellProps;
+interface Props
+  extends Pick<DataCellProps, 'isRowHovered' | 'row' | 'rowColorConditions'>,
+    TableCellProps {
+  compact?: boolean;
+}
 
 const Cell = (props: Props): JSX.Element => {
   const classes = useStyles(props);
