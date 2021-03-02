@@ -85,8 +85,6 @@ const ConnectedAutocompleteField = (
         return search;
       }
 
-      console.log(search);
-
       return {
         ...(search || {}),
         regex: {
