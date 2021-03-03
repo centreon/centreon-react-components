@@ -322,6 +322,7 @@ const Listing = ({
                     isHovered={isRowHovered}
                     isSelected={isRowSelected}
                     row={row}
+                    rowColorConditions={rowColorConditions}
                   >
                     {checkable && (
                       <Cell
