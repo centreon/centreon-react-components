@@ -98,7 +98,7 @@ export interface Props {
   onRowClick?: (row) => void;
   onSelectRows?: (rows) => void;
   onSort?: (sortParams) => void;
-  getCompositeId?: (row) => [number, number];
+  getCompositeId?: (row) => [number, number?];
 }
 
 const Listing = ({
@@ -126,7 +126,7 @@ const Listing = ({
   onSort = (): void => undefined,
   labelDisplayedRows = ({ from, to, count }): string =>
     `${from}-${to} of ${count}`,
-  getCompositeId = ({ id }) => [id, id],
+  getCompositeId = ({ id }) => [id],
 }: Props): JSX.Element => {
   const [tableTopOffset, setTableTopOffset] = useState(0);
   const [hoveredRowId, setHoveredRowId] = useState<string | null>(null);
