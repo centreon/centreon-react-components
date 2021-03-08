@@ -9,6 +9,7 @@ import {
   TableCell,
   Tooltip,
   Typography,
+  Theme,
 } from '@material-ui/core';
 
 import { Column, ColumnType, ComponentColumnProps } from './models';
@@ -21,11 +22,10 @@ const BodyTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 
-const useStyles = makeStyles((theme) => ({
-  cell: {
-    paddingLeft: (listingCheckable: boolean): number =>
-      theme.spacing(listingCheckable ? 0 : 1.5),
-  },
+const useStyles = makeStyles<Theme>((theme) => ({
+  cell: (listingCheckable) => ({
+    paddingLeft: theme.spacing(listingCheckable ? 0 : 1.5),
+  }),
   truncated: {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
