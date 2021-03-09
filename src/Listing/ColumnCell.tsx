@@ -23,10 +23,9 @@ const BodyTableCell = withStyles((theme) => ({
 }))(TableCell);
 
 const useStyles = makeStyles<Theme, { listingCheckable: boolean }>((theme) => ({
-  cell: {
-    paddingLeft: ({ listingCheckable }): number =>
-      theme.spacing(listingCheckable ? 0 : 1.5),
-  },
+  cell: ({ listingCheckable }) => ({
+    paddingLeft: theme.spacing(listingCheckable ? 0 : 1.5),
+  }),
   truncated: {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
