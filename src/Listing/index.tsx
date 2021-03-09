@@ -139,7 +139,7 @@ const Listing = ({
   sortf = undefined,
 }: Props): JSX.Element => {
   const [tableTopOffset, setTableTopOffset] = useState(0);
-  const [hovered, setHovered] = useState();
+  const [hovered, setHovered] = useState<number | null>();
 
   const tableBody = useRef<Element>();
 
@@ -411,7 +411,7 @@ const Listing = ({
             />
 
             <TableBody
-              ref={tableBody}
+              ref={tableBody as React.RefObject<HTMLTableSectionElement>}
               onMouseLeave={clearHoveredRow}
               style={{
                 position: 'relative',
