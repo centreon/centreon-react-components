@@ -75,8 +75,6 @@ export { default as IconDelete } from './Icon/IconDelete';
 export { default as IconDone } from './Icon/IconDone';
 export { default as IconInsertChart } from './Icon/IconInsertChart';
 export { default as IconLibraryAdd } from './Icon/IconLibraryAdd';
-export { default as IconPowerSettings } from './Icon/IconPowerSettings';
-export { default as IconPowerSettingsDisable } from './Icon/IconPowerSettingsDisable';
 export { default as IconRefresh } from './Icon/IconRefresh';
 export { default as IconReportProblem } from './Icon/IconReportProblem';
 export { default as CustomRow } from './Custom/CustomRow';
