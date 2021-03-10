@@ -108,7 +108,7 @@ export { default as SubmenuItem } from './Submenu/SubmenuHeader/SubmenuItem';
 export { default as MultiSelectEntries } from './MultiSelectEntries';
 export { default as SectionPanel, MemoizedSectionPanel } from './Panel/Section';
 
-export { default as StatusChip } from './StatusChip';
+export { default as StatusChip, Props as StatusChipProps } from './StatusChip';
 export { SeverityCode, getStatusColors } from './StatusChip';
 
 export { Listing as ListingModel } from './api/models';
