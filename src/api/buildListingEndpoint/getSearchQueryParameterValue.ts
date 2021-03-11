@@ -81,7 +81,7 @@ const getConditionsSearchQueryParameterValue = (
   }
 
   const toIndividualOperatorValues = ({ field, values }) =>
-    toPairs(values).map(([operator, operatorValue]) => ({
+    toPairs(values || {}).map(([operator, operatorValue]) => ({
       [field]: {
         [operator]: operatorValue,
       },
