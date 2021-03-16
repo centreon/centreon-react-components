@@ -23,8 +23,6 @@ import ColumnCell, { BodyTableCell } from './ColumnCell';
 
 const loadingIndicatorHeight = 3;
 
-const haveSameIds = (a, b): boolean => a.id === b.id;
-
 const useStyles = makeStyles<Theme>((theme) => ({
   paperElement: {
     width: '100%',
