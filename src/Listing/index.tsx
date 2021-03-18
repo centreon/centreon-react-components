@@ -1,5 +1,7 @@
 import React, { useState, useRef, RefObject } from 'react';
 
+import { equals } from 'ramda';
+
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import {
   Table,
@@ -20,8 +22,6 @@ import getCumulativeOffset from './getCumulativeOffset';
 import ColumnCell, { BodyTableCell } from './ColumnCell';
 
 const loadingIndicatorHeight = 3;
-
-const haveSameIds = (a, b): boolean => a.id === b.id;
 
 const useStyles = makeStyles<Theme>((theme) => ({
   paperElement: {
@@ -50,6 +50,8 @@ const useStyles = makeStyles<Theme>((theme) => ({
   },
 }));
 
+type RowId = number | string;
+
 export interface Props {
   checkable?: boolean;
   disableRowCheckCondition?;
@@ -67,6 +69,7 @@ export interface Props {
   onRowClick?: (row) => void;
   onSelectRows?: (rows) => void;
   onSort?: (sortParams) => void;
+  getId?: (row) => RowId;
   paginated?: boolean;
   selectedRows?;
   sorto?: 'asc' | 'desc';
@@ -97,6 +100,7 @@ const Listing = ({
   onRowClick = (): void => undefined,
   onSelectRows = (): void => undefined,
   onSort = (): void => undefined,
+  getId = ({ id }) => id,
   paginated = true,
   selectedRows = [],
   sorto = undefined,
@@ -105,9 +109,7 @@ const Listing = ({
   innerScrollDisabled = false,
 }: Props): JSX.Element => {
   const [tableTopOffset, setTableTopOffset] = useState(0);
-  const [hoveredRowId, setHoveredRowId] = useState<string | number | null>(
-    null,
-  );
+  const [hoveredRowId, setHoveredRowId] = useState<RowId | null>(null);
 
   const paperRef = useRef<HTMLDivElement>();
   const paginationElement = useRef<HTMLDivElement>();
@@ -123,7 +125,9 @@ const Listing = ({
   });
 
   const selectedRowsInclude = (row): boolean => {
-    return !!selectedRows.find((includedRow) => haveSameIds(includedRow, row));
+    return !!selectedRows.find((includedRow) =>
+      equals(getId(includedRow), getId(row)),
+    );
   };
 
   const handleRequestSort = (_, property): void => {
@@ -152,17 +156,19 @@ const Listing = ({
     event.stopPropagation();
 
     if (selectedRowsInclude(row)) {
-      onSelectRows(selectedRows.filter((entity) => !haveSameIds(entity, row)));
+      onSelectRows(
+        selectedRows.filter((entity) => !equals(getId(entity), getId(row))),
+      );
       return;
     }
     onSelectRows([...selectedRows, row]);
   };
 
-  const hoverRow = (id): void => {
-    if (hoveredRowId === id) {
+  const hoverRow = (row): void => {
+    if (equals(hoveredRowId, getId(row))) {
       return;
     }
-    setHoveredRowId(id);
+    setHoveredRowId(getId(row));
   };
 
   const clearHoveredRow = (): void => {
@@ -253,14 +259,14 @@ const Listing = ({
             >
               {tableData.map((row) => {
                 const isRowSelected = isSelected(row);
-                const isRowHovered = hoveredRowId === row.id;
+                const isRowHovered = equals(hoveredRowId, getId(row));
 
                 return (
                   <ListingRow
                     tabIndex={-1}
-                    key={row.id}
-                    onMouseOver={(): void => hoverRow(row.id)}
-                    onFocus={(): void => hoverRow(row.id)}
+                    key={getId(row)}
+                    onMouseOver={(): void => hoverRow(row)}
+                    onFocus={(): void => hoverRow(row)}
                     onClick={(): void => {
                       onRowClick(row);
                     }}
@@ -280,7 +286,7 @@ const Listing = ({
                           color="primary"
                           checked={isRowSelected}
                           inputProps={{
-                            'aria-label': `Select row ${row.id}`,
+                            'aria-label': `Select row ${getId(row)}`,
                           }}
                           disabled={disableRowCheckCondition(row)}
                         />
@@ -289,7 +295,7 @@ const Listing = ({
 
                     {columnConfiguration.map((column) => (
                       <ColumnCell
-                        key={`${row.id}-${column.id}`}
+                        key={`${getId(row)}-${column.id}`}
                         column={column}
                         row={row}
                         listingCheckable={checkable}
