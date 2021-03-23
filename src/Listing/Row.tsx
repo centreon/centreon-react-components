@@ -43,6 +43,7 @@ const Row = React.memo<Props>(
         className={classes.row}
         onFocus={onFocus}
         onClick={onClick}
+        component="div"
       >
         {children}
       </TableRow>

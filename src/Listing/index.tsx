@@ -14,7 +14,7 @@ import {
 
 import useMemoComponent from '../utils/useMemoComponent';
 
-import ListingHeader, { headerHeight } from './Header';
+import ListingHeader, { headerHeight } from './Header/index';
 import ListingRow from './Row';
 import PaginationActions from './PaginationActions';
 import StyledPagination from './Pagination';
@@ -285,6 +285,7 @@ const Listing = ({
             size="small"
             stickyHeader
             className={classes.table}
+            component="div"
             style={{
               gridTemplateColumns: getGridTemplateColumn(),
             }}
@@ -303,6 +304,7 @@ const Listing = ({
             <TableBody
               onMouseLeave={clearHoveredRow}
               className={classes.tableBody}
+              component="div"
             >
               {tableData.map((row) => {
                 const isRowSelected = isSelected(row);
