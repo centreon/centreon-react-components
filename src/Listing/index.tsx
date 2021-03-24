@@ -1,6 +1,7 @@
 import React, { useState, useRef, RefObject } from 'react';
 
-import { equals, isNil } from 'ramda';
+import { equals, isNil, prop } from 'ramda';
+import { useTranslation } from 'react-i18next';
 
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import {
@@ -16,14 +17,20 @@ import useMemoComponent from '../utils/useMemoComponent';
 
 import ListingHeader, { headerHeight } from './Header/index';
 import ListingRow from './Row';
-import PaginationActions from './PaginationActions';
-import StyledPagination from './Pagination';
 import ListingLoadingSkeleton from './Skeleton';
 import useResizeObserver from './useResizeObserver';
 import getCumulativeOffset from './getCumulativeOffset';
 import DataCell from './Cell/DataCell';
 import Cell from './Cell';
 import Checkbox from './Checkbox';
+import { labelNoResultFound } from './translatedLabels';
+import {
+  Column,
+  ColumnConfiguration,
+  RowColorCondition,
+  RowId,
+} from './models';
+import ListingActionBar from './ActionBar';
 
 const loadingIndicatorHeight = 3;
 
@@ -38,15 +45,6 @@ const useStyles = makeStyles<Theme>((theme) => ({
   actionBar: {
     display: 'flex',
     alignItems: 'center',
-  },
-  actions: {
-    padding: theme.spacing(1),
-  },
-  paginationElement: {
-    marginLeft: 'auto',
-    display: 'flex',
-    flexDirection: 'row-reverse',
-    padding: 0,
   },
   loadingIndicator: {
     width: '100%',
@@ -72,64 +70,65 @@ const useStyles = makeStyles<Theme>((theme) => ({
   },
 }));
 
-type RowId = number | string;
-
-export interface Props {
+export interface Props<TRow> {
   checkable?: boolean;
   currentPage?: number;
-  columnConfiguration;
-  emptyDataMessage?: string;
-  rowColorConditions?;
-  labelRowsPerPage?: string;
+  columns: Array<Column>;
+  columnConfiguration?: ColumnConfiguration;
+  onColumnSort?: (sortedColumns: Array<Column>) => void;
+  rowColorConditions?: Array<RowColorCondition>;
   limit?: number;
   loading?: boolean;
   loadingDataMessage?: string;
   paginated?: boolean;
-  selectedRows?;
-  sorto?: 'asc' | 'desc';
-  sortf?: string;
-  tableData?;
-  totalRows?;
+  selectedRows?: Array<TRow>;
+  sortOrder?: 'asc' | 'desc';
+  sortField?: string;
+  rows?: Array<TRow>;
+  totalRows?: number;
   innerScrollDisabled?: boolean;
   expanded?: boolean;
-  Actions?: JSX.Element;
+  actions?: JSX.Element;
   disableRowCheckCondition?;
-  labelDisplayedRows?: (fromToCount) => string;
-  onPaginate?: (event, value) => void;
-  onPaginationLimitChanged?: (event) => void;
-  onRowClick?: (row) => void;
-  onSelectRows?: (rows) => void;
+  onPaginate?: (page) => void;
+  onLimitChange?: (limit) => void;
+  onRowClick?: (row: TRow) => void;
+  onSelectRows?: (rows: Array<TRow>) => void;
   onSort?: (sortParams) => void;
-  getId?: (row) => RowId;
+  getId?: (row: TRow) => RowId;
 }
 
-const Listing = ({
+const defaultColumnConfiguration = {
+  sortable: false,
+  selectable: false,
+};
+
+const Listing = <TRow extends { id: RowId }>({
   limit = 10,
-  columnConfiguration,
-  tableData = [],
+  columns,
+  columnConfiguration = defaultColumnConfiguration,
+  onColumnSort,
+  rows = [],
   currentPage = 0,
   totalRows = 0,
   checkable = false,
-  emptyDataMessage = 'No results found',
   rowColorConditions = [],
-  labelRowsPerPage = 'Rows per page',
   loading = false,
   paginated = true,
   selectedRows = [],
-  sorto = undefined,
-  sortf = undefined,
+  sortOrder = undefined,
+  sortField = undefined,
   innerScrollDisabled = false,
-  Actions,
+  actions,
   disableRowCheckCondition = (): boolean => false,
-  onPaginate = (): void => undefined,
-  onPaginationLimitChanged = (): void => undefined,
+  onPaginate,
+  onLimitChange,
   onRowClick = (): void => undefined,
   onSelectRows = (): void => undefined,
-  onSort = (): void => undefined,
-  labelDisplayedRows = ({ from, to, count }): string =>
-    `${from}-${to} of ${count}`,
+  onSort,
   getId = ({ id }) => id,
-}: Props): JSX.Element => {
+}: Props<TRow>): JSX.Element => {
+  const { t } = useTranslation();
   const [tableTopOffset, setTableTopOffset] = useState(0);
   const [hoveredRowId, setHoveredRowId] = useState<RowId | null>(null);
 
@@ -153,21 +152,12 @@ const Listing = ({
     );
   };
 
-  const handleRequestSort = (_, property): void => {
-    const isDesc = sortf === property && sorto === 'desc';
-
-    onSort({
-      order: isDesc ? 'asc' : 'desc',
-      orderBy: property,
-    });
-  };
-
   const selectAllRows = (event): void => {
     if (
       event.target.checked &&
       event.target.getAttribute('data-indeterminate') === 'false'
     ) {
-      onSelectRows(tableData);
+      onSelectRows(rows);
       return;
     }
 
@@ -202,11 +192,6 @@ const Listing = ({
     return selectedRowsInclude(row);
   };
 
-  const onLimitChanged = (event): void => {
-    onPaginationLimitChanged(event);
-    onPaginate(null, 0);
-  };
-
   const emptyRows = limit - Math.min(limit, totalRows - currentPage * limit);
 
   const tableMaxHeight = (): string => {
@@ -224,7 +209,7 @@ const Listing = ({
   const getGridTemplateColumn = (): string => {
     const checkbox = checkable ? 'min-content ' : '';
 
-    const columns = columnConfiguration
+    const columnTemplate = columns
       .map(({ width }) => {
         if (isNil(width)) {
           return 'auto';
@@ -234,15 +219,15 @@ const Listing = ({
       })
       .join(' ');
 
-    return `${checkbox}${columns}`;
+    return `${checkbox}${columnTemplate}`;
   };
 
   return (
     <>
-      {loading && tableData.length > 0 && (
+      {loading && rows.length > 0 && (
         <LinearProgress className={classes.loadingIndicator} />
       )}
-      {(!loading || (loading && tableData.length < 1)) && (
+      {(!loading || (loading && rows.length < 1)) && (
         <div className={classes.loadingIndicator} />
       )}
       <div
@@ -253,25 +238,15 @@ const Listing = ({
           className={classes.actionBar}
           ref={actionBarRef as RefObject<HTMLDivElement>}
         >
-          <div className={classes.actions}>{Actions}</div>
-          {paginated ? (
-            <StyledPagination
-              className={classes.paginationElement}
-              rowsPerPageOptions={[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
-              labelDisplayedRows={labelDisplayedRows}
-              labelRowsPerPage={labelRowsPerPage}
-              colSpan={3}
-              count={totalRows}
-              rowsPerPage={limit}
-              page={currentPage}
-              SelectProps={{
-                native: true,
-              }}
-              onChangePage={onPaginate}
-              onChangeRowsPerPage={onLimitChanged}
-              ActionsComponent={PaginationActions}
-            />
-          ) : null}
+          <ListingActionBar
+            limit={limit}
+            actions={actions}
+            onLimitChange={onLimitChange}
+            onPaginate={onPaginate}
+            paginated={paginated}
+            currentPage={currentPage}
+            totalRows={totalRows}
+          />
         </div>
         <Paper
           style={{
@@ -291,14 +266,16 @@ const Listing = ({
             }}
           >
             <ListingHeader
-              numSelected={selectedRows.length}
-              order={sorto}
+              selectedRowCount={selectedRows.length}
+              sortOrder={sortOrder}
+              sortField={sortField}
               checkable={checkable}
-              orderBy={sortf}
               onSelectAllClick={selectAllRows}
-              onRequestSort={handleRequestSort}
+              onSort={onSort}
               rowCount={limit - emptyRows}
-              headColumns={columnConfiguration}
+              columns={columns}
+              columnConfiguration={columnConfiguration}
+              onColumnSort={onColumnSort}
             />
 
             <TableBody
@@ -306,7 +283,7 @@ const Listing = ({
               className={classes.tableBody}
               component="div"
             >
-              {tableData.map((row) => {
+              {rows.map((row) => {
                 const isRowSelected = isSelected(row);
                 const isRowHovered = equals(hoveredRowId, getId(row));
 
@@ -323,6 +300,7 @@ const Listing = ({
                     isSelected={isRowSelected}
                     row={row}
                     rowColorConditions={rowColorConditions}
+                    columnIds={columns.map(prop('id'))}
                   >
                     {checkable && (
                       <Cell
@@ -342,7 +320,7 @@ const Listing = ({
                       </Cell>
                     )}
 
-                    {columnConfiguration.map((column) => (
+                    {columns.map((column) => (
                       <DataCell
                         key={`${getId(row)}-${column.id}`}
                         column={column}
@@ -356,19 +334,25 @@ const Listing = ({
                   </ListingRow>
                 );
               })}
-              {tableData.length < 1 && (
-                <TableRow tabIndex={-1} className={classes.emptyDataRow}>
+              {rows.length < 1 && (
+                <TableRow
+                  tabIndex={-1}
+                  className={classes.emptyDataRow}
+                  component="div"
+                >
                   <Cell
                     className={classes.emptyDataCell}
                     isRowHovered={false}
                     align="center"
                     style={{
-                      gridColumn: `auto / span ${
-                        columnConfiguration.length + 1
-                      }`,
+                      gridColumn: `auto / span ${columns.length + 1}`,
                     }}
                   >
-                    {loading ? <ListingLoadingSkeleton /> : emptyDataMessage}
+                    {loading ? (
+                      <ListingLoadingSkeleton />
+                    ) : (
+                      t(labelNoResultFound)
+                    )}
                   </Cell>
                 </TableRow>
               )}
@@ -380,64 +364,59 @@ const Listing = ({
   );
 };
 
-interface MemoizedListingProps extends Props {
+interface MemoizedListingProps<TRow> extends Props<TRow> {
   memoProps?: Array<unknown>;
 }
 
-export const MemoizedListing = ({
+export const MemoizedListing = <TRow extends { id: string | number }>({
   memoProps = [],
   limit = 10,
-  columnConfiguration,
-  tableData = [],
+  columns,
+  rows = [],
   currentPage = 0,
   totalRows = 0,
   checkable = false,
-  emptyDataMessage = 'No results found',
   rowColorConditions = [],
-  labelRowsPerPage = 'Rows per page',
   loading = false,
   paginated = true,
   selectedRows = [],
-  sorto = undefined,
-  sortf = undefined,
+  sortOrder = undefined,
+  sortField = undefined,
   innerScrollDisabled = false,
   ...props
-}: MemoizedListingProps): JSX.Element =>
+}: MemoizedListingProps<TRow>): JSX.Element =>
   useMemoComponent({
     Component: (
       <Listing
         limit={limit}
-        columnConfiguration={columnConfiguration}
-        tableData={tableData}
+        columns={columns}
+        rows={rows}
         currentPage={currentPage}
         totalRows={totalRows}
         checkable={checkable}
-        emptyDataMessage={emptyDataMessage}
         rowColorConditions={rowColorConditions}
-        labelRowsPerPage={labelRowsPerPage}
         loading={loading}
         paginated={paginated}
         selectedRows={selectedRows}
-        sorto={sorto}
-        sortf={sortf}
+        sortOrder={sortOrder}
+        sortField={sortField}
         innerScrollDisabled={innerScrollDisabled}
         {...props}
       />
     ),
     memoProps: [
       ...memoProps,
+      columns,
       limit,
-      tableData,
+      rows,
       currentPage,
       totalRows,
       checkable,
-      emptyDataMessage,
-      labelRowsPerPage,
       loading,
       paginated,
       selectedRows,
-      sorto,
-      sortf,
+      sortOrder,
+      sortField,
       innerScrollDisabled,
     ],
   });

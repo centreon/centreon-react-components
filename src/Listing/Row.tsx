@@ -24,6 +24,7 @@ type Props = {
   isSelected?: boolean;
   row;
   rowColorConditions: Array<RowColorCondition>;
+  columnIds: Array<string>;
 } & TableRowProps;
 
 const Row = React.memo<Props>(
@@ -71,7 +72,8 @@ const Row = React.memo<Props>(
       equals(prevProps.isSelected, nextProps.isSelected) &&
       equals(prevProps.row, nextProps.row) &&
       equals(prevProps.className, nextProps.className) &&
-      equals(previousRowColors, nextRowColors)
+      equals(previousRowColors, nextRowColors) &&
+      equals(prevProps.columnIds, nextProps.columnIds)
     );
   },
 );

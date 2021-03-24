@@ -1,26 +1,16 @@
 import * as React from 'react';
 
-import {
-  equals,
-  indexOf,
-  isNil,
-  move,
-  not,
-  path,
-  pipe,
-  prop,
-  propEq,
-} from 'ramda';
-import clsx from 'clsx';
+import { equals, indexOf, move, path, prop } from 'ramda';
 import {
   DndContext,
-  DragOverlay,
   PointerSensor,
-  rectIntersection,
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
-import { SortableContext } from '@dnd-kit/sortable';
+import {
+  horizontalListSortingStrategy,
+  SortableContext,
+} from '@dnd-kit/sortable';
 
 import {
   TableHead,
@@ -30,10 +20,9 @@ import {
   makeStyles,
 } from '@material-ui/core';
 
-import { useStyles as useCellStyles } from '../Cell/DataCell';
 import Checkbox from '../Checkbox';
+import { Props as ListingProps } from '..';
 
-import HeaderLabel from './Label';
 import SortableHeaderItem from './SortableHeaderItem';
 
 const height = 28;
@@ -58,62 +47,58 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface Props {
+type Props = Pick<
+  ListingProps<unknown>,
+  | 'sortField'
+  | 'sortOrder'
+  | 'onSort'
+  | 'columns'
+  | 'checkable'
+  | 'onColumnSort'
+  | 'columnConfiguration'
+  | 'totalRows'
+> & {
   onSelectAllClick: (event) => void;
-  order?: 'desc' | 'asc';
-  orderBy?: string;
-  numSelected: number;
+  selectedRowCount: number;
   rowCount: number;
-  headColumns;
-  checkable: boolean;
-  onRequestSort: (event, property) => void;
-}
+};
 
 const ListingHeader = ({
   onSelectAllClick,
-  order,
-  orderBy,
-  numSelected,
+  sortOrder,
+  sortField,
+  selectedRowCount,
   rowCount,
-  headColumns,
+  columns,
+  columnConfiguration,
+  onSort,
+  onColumnSort,
   checkable,
-  onRequestSort,
 }: Props): JSX.Element => {
   const classes = useStyles();
-  const cellClasses = useCellStyles({ listingCheckable: checkable });
 
   const sensors = useSensors(useSensor(PointerSensor));
 
-  const [activeId, setActiveId] = React.useState<string>();
+  const [draggedColumnId, setDraggedColumnId] = React.useState<string>();
 
-  const ids = headColumns.map(prop('id'));
+  const columnIds = columns.map(prop('id'));
 
-  // const sortableItems = React.useMemo(
-  //   () => map(pipe(Rprops(['label', 'id']), join('_')), headColumns),
-  //   [headColumns],
-  // );
-
-  const dragStart = (event) => {
-    setActiveId(path<string>(['active', 'id'], event));
+  const startDrag = (event) => {
+    setDraggedColumnId(path<string>(['active', 'id'], event));
   };
 
-  const dragCancel = () => {
-    setActiveId(undefined);
+  const cancelDrag = () => {
+    setDraggedColumnId(undefined);
   };
 
-  const dragEnd = () => {
-    setActiveId(undefined);
-  };
+  const endDrag = ({ over }) => {
+    const { id } = over;
 
-  const dragOver = (event): void => {
-    const overId = path<string>(['over', 'id'], event);
+    const oldIndex = indexOf(draggedColumnId, columnIds);
+    const newIndex = indexOf(id, columnIds);
 
-    if (pipe(isNil, not)(overId) && pipe(equals(activeId), not)(overId)) {
-      const oldIndex = indexOf(activeId, ids);
-      const newIndex = indexOf(overId, ids);
-
-      console.log(move(oldIndex, newIndex, headColumns));
-    }
+    onColumnSort?.(move(oldIndex, newIndex, columns));
+    setDraggedColumnId(undefined);
   };
 
   return (
@@ -121,51 +106,37 @@ const ListingHeader = ({
       <TableRow className={classes.row} component="div">
         <DndContext
           sensors={sensors}
-          collisionDetection={rectIntersection}
-          onDragOver={dragOver}
-          onDragStart={dragStart}
-          onDragCancel={dragCancel}
-          onDragEnd={dragEnd}
+          onDragStart={startDrag}
+          onDragCancel={cancelDrag}
+          onDragEnd={endDrag}
         >
-          <SortableContext items={ids}>
+          <SortableContext
+            items={columnIds}
+            strategy={horizontalListSortingStrategy}
+          >
             {checkable && (
               <HeaderCell component="div">
                 <Checkbox
                   inputProps={{ 'aria-label': 'Select all' }}
-                  indeterminate={numSelected > 0 && numSelected < rowCount}
-                  checked={numSelected === rowCount}
+                  indeterminate={
+                    selectedRowCount > 0 && selectedRowCount < rowCount
+                  }
+                  checked={selectedRowCount === rowCount}
                   onChange={onSelectAllClick}
                 />
               </HeaderCell>
             )}
-            {headColumns.map((column) => (
-              <HeaderCell
+            {columns.map((column) => (
+              <SortableHeaderItem
                 key={column.id}
-                align={column.numeric ? 'left' : 'inherit'}
-                padding={column.compact ? 'none' : 'default'}
-                sortDirection={orderBy === column.id ? order : false}
-                component="div"
-                className={clsx(
-                  cellClasses.cell,
-                  column.compact && classes.compactCell,
-                )}
-              >
-                <SortableHeaderItem
-                  column={column}
-                  onSort={onRequestSort}
-                  order={order}
-                  orderBy={orderBy}
-                />
-              </HeaderCell>
+                columnConfiguration={columnConfiguration}
+                column={column}
+                onSort={onSort}
+                sortOrder={sortOrder}
+                sortField={sortField}
+              />
             ))}
           </SortableContext>
-          <DragOverlay>
-            {activeId && (
-              <HeaderLabel className={classes.headerLabelDragging}>
-                {headColumns.find(propEq('id', activeId)).label}
-              </HeaderLabel>
-            )}
-          </DragOverlay>
         </DndContext>
       </TableRow>
     </TableHead>
@@ -175,13 +146,14 @@ const ListingHeader = ({
 const MemoizedListingHeader = React.memo(
   ListingHeader,
   (prevProps, nextProps) =>
-    equals(prevProps.order, nextProps.order) &&
-    equals(prevProps.orderBy, nextProps.orderBy) &&
-    equals(prevProps.numSelected, nextProps.numSelected) &&
+    equals(prevProps.sortField, nextProps.sortField) &&
+    equals(prevProps.sortOrder, nextProps.sortOrder) &&
+    equals(prevProps.selectedRowCount, nextProps.selectedRowCount) &&
     equals(prevProps.rowCount, nextProps.rowCount) &&
-    equals(prevProps.headColumns, nextProps.headColumns) &&
-    equals(prevProps.checkable, nextProps.checkable),
+    equals(prevProps.columns, nextProps.columns) &&
+    equals(prevProps.checkable, nextProps.checkable) &&
+    equals(prevProps.columnConfiguration, nextProps.columnConfiguration),
 );
 
 export default MemoizedListingHeader;
-export { height as headerHeight };
+export { height as headerHeight, HeaderCell };

@@ -3,13 +3,18 @@ import * as React from 'react';
 import { useDroppable } from '@dnd-kit/core';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS, Transform } from '@dnd-kit/utilities';
+import clsx from 'clsx';
 
 import DragIndicatorIcon from '@material-ui/icons/MoreVert';
-import { Box, makeStyles, TableSortLabel, Theme } from '@material-ui/core';
+import { makeStyles, TableSortLabel, Theme } from '@material-ui/core';
 
 import { Column } from '../models';
+import { useStyles as useCellStyles } from '../Cell/DataCell';
+import { ListingProps } from '../..';
 
 import HeaderLabel from './Label';
+
+import { HeaderCell } from '.';
 
 interface StylesProps {
   isDragging: boolean;
@@ -18,85 +23,104 @@ interface StylesProps {
   isOver: boolean;
 }
 
-const useStyles = makeStyles<Theme, StylesProps>(() => ({
+const useStyles = makeStyles<Theme, StylesProps>((theme) => ({
   box: {
     display: 'flex',
   },
-  item: {
-    opacity: ({ isDragging }) => (isDragging ? 0.5 : 1),
-    // transform: ({ transform }) => CSS.Translate.toString(transform),
-    transition: ({ transition }) => transition,
-    transform: ({ isOver }) => (isOver ? 'translate(20px,0)' : 'unset'),
+  item: ({ isDragging, isOver, transform, transition }) => {
+    const isActive = isDragging || isOver;
 
-    display: 'flex',
-    cursor: 'grab',
+    return {
+      opacity: isDragging ? 0.5 : 1,
+      transition: isActive ? transition : 'unset',
+      zIndex: isDragging ? theme.zIndex.tooltip : 'unset',
+      transform: isActive ? CSS.Translate.toString(transform) : 'unset',
+      cursor: isDragging ? 'grabbing' : 'grab',
+    };
   },
 }));
 
-export interface Props {
-  column: Column;
-  onSort: (event, sortField: string) => void;
-  order?: 'asc' | 'desc';
-  orderBy?: string;
-}
+type Props = Pick<
+  ListingProps<unknown>,
+  'onSort' | 'sortOrder' | 'sortField' | 'columnConfiguration'
+> & { column: Column };
 
 const SortableHeaderItem = ({
   column,
+  columnConfiguration,
   onSort,
-  order,
-  orderBy,
+  sortOrder,
+  sortField,
 }: Props): JSX.Element => {
   const { id } = column;
 
   const {
     attributes,
     listeners,
-    setNodeRef,
-    transform,
+    setNodeRef: sortableRef,
     transition,
+    transform,
     isDragging,
   } = useSortable({ id });
 
   const { isOver, setNodeRef: otherRef } = useDroppable({ id });
 
   const classes = useStyles({
-    transform,
     transition,
     isDragging,
+    transform,
     isOver,
   });
+  const cellClasses = useCellStyles({ listingCheckable: true });
 
-  const sortField = column.sortField || column.id;
+  const columnSortField = column.sortField || column.id;
 
-  const onSortClick = (event): void => {
-    onSort(event, sortField);
+  const sort = (event): void => {
+    const isDesc = columnSortField === sortField && sortOrder === 'desc';
+
+    console.log(event, {
+      sortOrder: isDesc ? 'asc' : 'desc',
+      sortField: columnSortField,
+    });
+
+    onSort?.({
+      sortOrder: isDesc ? 'asc' : 'desc',
+      sortField: columnSortField,
+    });
   };
 
   return (
-    <div className={classes.item} ref={otherRef}>
-      <div
-        className={classes.box}
-        ref={setNodeRef}
-        {...listeners}
-        {...attributes}
-      >
-        <DragIndicatorIcon fontSize="small" />
-      </div>
-      <div className={classes.box}>
+    <HeaderCell
+      key={column.id}
+      padding={column.compact ? 'none' : 'default'}
+      sortDirection={sortField === column.id ? sortOrder : false}
+      component="div"
+      className={clsx([cellClasses.cell, classes.item])}
+      ref={sortableRef}
+      onDragEnd={() => console.log('dragend')}
+      {...listeners}
+      {...attributes}
+    >
+      <div style={{ display: 'flex' }} ref={otherRef}>
+        {columnConfiguration?.sortable && (
+          <div className={classes.box}>
+            <DragIndicatorIcon fontSize="small" />
+          </div>
+        )}
         {column.sortable === false ? (
           <HeaderLabel>{column.label}</HeaderLabel>
         ) : (
           <TableSortLabel
             aria-label={`Column ${column.label}`}
-            active={orderBy === sortField}
-            direction={order || 'desc'}
-            onClick={onSortClick}
+            active={sortField === columnSortField}
+            direction={sortOrder || 'desc'}
+            onClick={sort}
           >
             <HeaderLabel>{column.label}</HeaderLabel>
           </TableSortLabel>
         )}
       </div>
-    </div>
+    </HeaderCell>
   );
 };
 
