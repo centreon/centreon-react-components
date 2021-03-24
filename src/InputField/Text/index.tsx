@@ -22,6 +22,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: theme.spacing(0.75),
     fontSize: 'x-small',
   },
+  small: {
+    padding: theme.spacing(0.75),
+    fontSize: 'small',
+  },
   transparent: {
     backgroundColor: 'transparent',
   },
@@ -52,6 +56,7 @@ export type Props = {
   EndAdornment?: React.SFC;
   error?: string;
   compact?: boolean;
+  small?: boolean;
   ariaLabel?: string;
   transparent?: boolean;
 } & Omit<TextFieldProps, 'variant' | 'size' | 'error'>;
@@ -66,6 +71,7 @@ const TextField = React.forwardRef(
       ariaLabel,
       transparent = false,
       compact = false,
+      small = false,
       ...rest
     }: Props,
     ref: React.ForwardedRef<HTMLDivElement>,
@@ -98,6 +104,7 @@ const TextField = React.forwardRef(
           'aria-label': ariaLabel,
           className: clsx(classes.input, {
             [classes.noLabelInput]: !label && !compact,
+            [classes.small]: small,
             [classes.compact]: compact,
           }),
         }}
