@@ -20,22 +20,20 @@ interface StylesProps {
   isDragging: boolean;
   transition?: string;
   transform: Transform | null;
-  isOver: boolean;
+  isSorting: boolean;
 }
 
 const useStyles = makeStyles<Theme, StylesProps>((theme) => ({
-  box: {
+  dragHandle: ({ isDragging }) => ({
     display: 'flex',
-  },
-  item: ({ isDragging, isOver, transform, transition }) => {
-    const isActive = isDragging || isOver;
-
+    cursor: isDragging ? 'grabbing' : 'grab',
+  }),
+  item: ({ isDragging, transform, transition, isSorting }) => {
     return {
       opacity: isDragging ? 0.5 : 1,
-      transition: isActive ? transition : 'unset',
-      zIndex: isDragging ? theme.zIndex.tooltip : 'unset',
-      transform: isActive ? CSS.Translate.toString(transform) : 'unset',
-      cursor: isDragging ? 'grabbing' : 'grab',
+      transition: isSorting ? transition : undefined,
+      zIndex: isDragging ? theme.zIndex.tooltip : undefined,
+      transform: isSorting ? CSS.Translate.toString(transform) : undefined,
     };
   },
 }));
@@ -61,27 +59,21 @@ const SortableHeaderItem = ({
     transition,
     transform,
     isDragging,
+    isSorting,
   } = useSortable({ id });
-
-  const { isOver, setNodeRef: otherRef } = useDroppable({ id });
 
   const classes = useStyles({
     transition,
     isDragging,
     transform,
-    isOver,
+    isSorting,
   });
   const cellClasses = useCellStyles({ listingCheckable: true });
 
   const columnSortField = column.sortField || column.id;
 
-  const sort = (event): void => {
+  const sort = (): void => {
     const isDesc = columnSortField === sortField && sortOrder === 'desc';
-
-    console.log(event, {
-      sortOrder: isDesc ? 'asc' : 'desc',
-      sortField: columnSortField,
-    });
 
     onSort?.({
       sortOrder: isDesc ? 'asc' : 'desc',
@@ -97,29 +89,24 @@ const SortableHeaderItem = ({
       component="div"
       className={clsx([cellClasses.cell, classes.item])}
       ref={sortableRef}
-      onDragEnd={() => console.log('dragend')}
-      {...listeners}
-      {...attributes}
     >
-      <div style={{ display: 'flex' }} ref={otherRef}>
-        {columnConfiguration?.sortable && (
-          <div className={classes.box}>
-            <DragIndicatorIcon fontSize="small" />
-          </div>
-        )}
-        {column.sortable === false ? (
+      {columnConfiguration?.sortable && (
+        <div className={classes.dragHandle} {...listeners} {...attributes}>
+          <DragIndicatorIcon fontSize="small" />
+        </div>
+      )}
+      {column.sortable === false ? (
+        <HeaderLabel>{column.label}</HeaderLabel>
+      ) : (
+        <TableSortLabel
+          aria-label={`Column ${column.label}`}
+          active={sortField === columnSortField}
+          direction={sortOrder || 'desc'}
+          onClick={sort}
+        >
           <HeaderLabel>{column.label}</HeaderLabel>
-        ) : (
-          <TableSortLabel
-            aria-label={`Column ${column.label}`}
-            active={sortField === columnSortField}
-            direction={sortOrder || 'desc'}
-            onClick={sort}
-          >
-            <HeaderLabel>{column.label}</HeaderLabel>
-          </TableSortLabel>
-        )}
-      </div>
+        </TableSortLabel>
+      )}
     </HeaderCell>
   );
 };
