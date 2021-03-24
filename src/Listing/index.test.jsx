@@ -62,7 +62,9 @@ describe('Table', () => {
         limit={limit}
         currentPage={page}
         onPaginate={(_, value) => setPage(value)}
-        onPaginationLimitChanged={({ target }) => setLimit(target.value)}
+        onPaginationLimitChanged={({ target }) =>
+          setLimit(parseInt(target.value, 10))
+        }
       />
     );
   };

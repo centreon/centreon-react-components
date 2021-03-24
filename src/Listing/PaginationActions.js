@@ -44,6 +44,9 @@ class PaginationActions extends Component {
 
   render() {
     const { classes, count, page, theme, rowsPerPage } = this.props;
+
+    const parsedRowPerPage = parseInt(rowsPerPage, 10);
+
     return (
       <div className={classes.root}>
         <IconButton
@@ -66,7 +69,7 @@ class PaginationActions extends Component {
         </IconButton>
         <IconButton
           onClick={this.handleNextButtonClick}
-          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+          disabled={page >= Math.ceil(count / parsedRowPerPage) - 1}
           aria-label="Next Page"
         >
           {theme.direction === 'rtl' ? (
@@ -77,7 +80,7 @@ class PaginationActions extends Component {
         </IconButton>
         <IconButton
           onClick={this.handleLastPageButtonClick}
-          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+          disabled={page >= Math.ceil(count / parsedRowPerPage) - 1}
           aria-label="Last Page"
         >
           {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
