@@ -21,10 +21,12 @@ export const fullWidth = (): JSX.Element => (
 );
 
 export const compact = (): JSX.Element => (
-  <TextField compact placeholder="Compact" />
+  <TextField size="compact" placeholder="Compact" />
 );
 
-export const small = (): JSX.Element => <TextField small placeholder="Small" />;
+export const small = (): JSX.Element => (
+  <TextField size="small" placeholder="Small" />
+);
 
 export const transparent = (): JSX.Element => (
   <TextField transparent placeholder="Transparent" />
