@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import { useDroppable } from '@dnd-kit/core';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS, Transform } from '@dnd-kit/utilities';
 import clsx from 'clsx';

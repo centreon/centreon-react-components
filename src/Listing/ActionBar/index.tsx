@@ -9,14 +9,21 @@ import { labelOf, labelRowsPerPage } from '../translatedLabels';
 
 import StyledPagination from './Pagination';
 import PaginationActions from './PaginationActions';
+import ColumnMultiSelect from './ColumnMultiSelect';
 
 const useStyles = makeStyles((theme) => ({
-  actions: { padding: theme.spacing(1) },
+  container: {
+    display: 'grid',
+    gridTemplateColumns: '1fr auto auto',
+    width: '100%',
+    alignItems: 'center',
+    gridGap: theme.spacing(1),
+  },
   pagination: {
-    marginLeft: 'auto',
-    display: 'flex',
-    flexDirection: 'row-reverse',
     padding: 0,
+  },
+  actions: {
+    padding: theme.spacing(1),
   },
 }));
 
@@ -29,6 +36,9 @@ type Props = Pick<
   | 'currentPage'
   | 'limit'
   | 'totalRows'
+  | 'columns'
+  | 'columnConfiguration'
+  | 'onSelectColumns'
 >;
 
 const ListingActionBar = ({
@@ -39,6 +49,9 @@ const ListingActionBar = ({
   totalRows,
   currentPage,
   limit,
+  columns,
+  columnConfiguration,
+  onSelectColumns,
 }: Props): JSX.Element => {
   const { t } = useTranslation();
   const classes = useStyles();
@@ -50,14 +63,21 @@ const ListingActionBar = ({
 
   const changePage = (_, value: number): void => {
     onPaginate?.(value);
-  }
+  };
 
   const labelDisplayedRows = ({ from, to, count }): string =>
     `${from}-${to} ${t(labelOf)} ${count}`;
 
   return (
-    <>
+    <div className={classes.container}>
       <div className={classes.actions}>{actions}</div>
+      {columnConfiguration?.selectable && (
+        <ColumnMultiSelect
+          columns={columns}
+          columnConfiguration={columnConfiguration}
+          onSelectColumns={onSelectColumns}
+        />
+      )}
       {paginated && (
         <StyledPagination
           className={classes.pagination}
@@ -76,7 +96,7 @@ const ListingActionBar = ({
           ActionsComponent={PaginationActions}
         />
       )}
-    </>
+    </div>
   );
 };
 

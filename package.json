@@ -44,6 +44,7 @@
     "dayjs": "^1.10.4",
     "formik": "^2.2.6",
     "humanize-duration": "^3.25.1",
+    "i18next": "^20.1.0",
     "prop-types": "^15.7.2",
     "ramda": "^0.27.1",
     "react": "^17.0.2",

@@ -1,6 +1,6 @@
 import React, { useState, useRef, RefObject } from 'react';
 
-import { equals, isNil, prop } from 'ramda';
+import { equals, flip, includes, isNil, prop, propSatisfies } from 'ramda';
 import { useTranslation } from 'react-i18next';
 
 import { makeStyles, Theme } from '@material-ui/core/styles';
@@ -31,6 +31,22 @@ import {
   RowId,
 } from './models';
 import ListingActionBar from './ActionBar';
+
+const isIn = flip(includes);
+const idIsIn = (ids: Array<string>) => propSatisfies(isIn(ids), 'id');
+
+const getVisibleColumns = ({
+  columnConfiguration,
+  columns,
+}: Pick<Props<unknown>, 'columnConfiguration' | 'columns'>): Array<Column> => {
+  const columnIds = columns.map(prop('id'));
+
+  const selectedIds = columnConfiguration?.selectable
+    ? columnConfiguration.selectedColumnIds
+    : columnIds;
+
+  return columns.filter(idIsIn(selectedIds as Array<string>));
+};
 
 const loadingIndicatorHeight = 3;
 
@@ -75,7 +91,8 @@ export interface Props<TRow> {
   currentPage?: number;
   columns: Array<Column>;
   columnConfiguration?: ColumnConfiguration;
-  onColumnSort?: (sortedColumns: Array<Column>) => void;
+  onColumnSort?: (sortedColumnIds: Array<string>) => void;
+  onSelectColumns?: (selectedColumnIds: Array<string>) => void;
   rowColorConditions?: Array<RowColorCondition>;
   limit?: number;
   loading?: boolean;
@@ -108,6 +125,7 @@ const Listing = <TRow extends { id: RowId }>({
   columns,
   columnConfiguration = defaultColumnConfiguration,
   onColumnSort,
+  onSelectColumns,
   rows = [],
   currentPage = 0,
   totalRows = 0,
@@ -209,7 +227,10 @@ const Listing = <TRow extends { id: RowId }>({
   const getGridTemplateColumn = (): string => {
     const checkbox = checkable ? 'min-content ' : '';
 
-    const columnTemplate = columns
+    const columnTemplate = getVisibleColumns({
+      columns,
+      columnConfiguration,
+    })
       .map(({ width }) => {
         if (isNil(width)) {
           return 'auto';
@@ -242,10 +263,13 @@ const Listing = <TRow extends { id: RowId }>({
             limit={limit}
             actions={actions}
             onLimitChange={onLimitChange}
+            onSelectColumns={onSelectColumns}
             onPaginate={onPaginate}
             paginated={paginated}
             currentPage={currentPage}
             totalRows={totalRows}
+            columns={columns}
+            columnConfiguration={columnConfiguration}
           />
         </div>
         <Paper
@@ -301,6 +325,7 @@ const Listing = <TRow extends { id: RowId }>({
                     row={row}
                     rowColorConditions={rowColorConditions}
                     columnIds={columns.map(prop('id'))}
+                    columnConfiguration={columnConfiguration}
                   >
                     {checkable && (
                       <Cell
@@ -320,7 +345,10 @@ const Listing = <TRow extends { id: RowId }>({
                       </Cell>
                     )}
 
-                    {columns.map((column) => (
+                    {getVisibleColumns({
+                      columns,
+                      columnConfiguration,
+                    }).map((column) => (
                       <DataCell
                         key={`${getId(row)}-${column.id}`}
                         column={column}
@@ -422,3 +450,4 @@ export const MemoizedListing = <TRow extends { id: string | number }>({
   });
 
 export default Listing;
+export { getVisibleColumns };

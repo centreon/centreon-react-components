@@ -2,6 +2,8 @@
 
 import React from 'react';
 
+import { prop, propEq } from 'ramda';
+
 import { makeStyles, Button } from '@material-ui/core';
 import { grey } from '@material-ui/core/colors';
 
@@ -128,21 +130,31 @@ export const withActions = (): JSX.Element => <Story actions={actions} />;
 export const withoutCheckboxes = (): JSX.Element => <Story checkable={false} />;
 
 const ListingWithSortableColumns = (): JSX.Element => {
-  const [columns, setColumns] = React.useState<Array<Column>>(defaultColumns);
-
-  const sortColumns = (sortedColumns: Array<Column>): void => {
-    setColumns(sortedColumns);
-  };
+  const [sortedColumnIds, setSortedColumnIds] = React.useState<Array<string>>(
+    defaultColumns.map(prop('id')),
+  );
+  const [selectedColumnIds, setSelectedColumnIds] = React.useState<
+    Array<string>
+  >(defaultColumns.map(prop('id')));
 
   return (
     <Story
-      columnConfiguration={{ sortable: true, selectable: false }}
-      columns={columns}
-      onColumnSort={sortColumns}
+      columnConfiguration={{
+        sortable: true,
+        selectable: true,
+        selectedColumnIds,
+      }}
+      columns={
+        sortedColumnIds.map((id) =>
+          defaultColumns.find(propEq('id', id)),
+        ) as Array<Column>
+      }
+      onColumnSort={setSortedColumnIds}
+      onSelectColumns={setSelectedColumnIds}
     />
   );
 };
 
-export const withSortableColumns = (): JSX.Element => (
+export const withEditableColumns = (): JSX.Element => (
   <ListingWithSortableColumns />
 );

@@ -6,7 +6,7 @@ import { equals } from 'ramda';
 
 import { TableRowProps, TableRow, makeStyles, Theme } from '@material-ui/core';
 
-import { RowColorCondition } from './models';
+import { ColumnConfiguration, RowColorCondition } from './models';
 
 const useStyles = makeStyles<Theme>(() => {
   return {
@@ -25,6 +25,7 @@ type Props = {
   row;
   rowColorConditions: Array<RowColorCondition>;
   columnIds: Array<string>;
+  columnConfiguration?: ColumnConfiguration;
 } & TableRowProps;
 
 const Row = React.memo<Props>(
@@ -73,7 +74,8 @@ const Row = React.memo<Props>(
       equals(prevProps.row, nextProps.row) &&
       equals(prevProps.className, nextProps.className) &&
       equals(previousRowColors, nextRowColors) &&
-      equals(prevProps.columnIds, nextProps.columnIds)
+      equals(prevProps.columnIds, nextProps.columnIds) &&
+      equals(prevProps.columnConfiguration, nextProps.columnConfiguration)
     );
   },
 );

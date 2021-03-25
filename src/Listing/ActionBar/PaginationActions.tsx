@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { useTranslation } from 'react-i18next';
+
 import { makeStyles } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import FirstPageIcon from '@material-ui/icons/FirstPage';
@@ -8,11 +10,17 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import { TablePaginationActionsProps } from '@material-ui/core/TablePagination/TablePaginationActions';
 
+import {
+  labelFirstPage,
+  labelLastPage,
+  labelNextPage,
+  labelPreviousPage,
+} from '../translatedLabels';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexShrink: 0,
     color: theme.palette.text.secondary,
-    marginLeft: theme.spacing(2.5),
   },
 }));
 
@@ -23,52 +31,56 @@ const PaginationActions = ({
   count,
 }: TablePaginationActionsProps): JSX.Element => {
   const classes = useStyles();
+  const { t } = useTranslation();
 
-  const handleFirstPageButtonClick = (event) => {
+  const changeToFirstPage = (event) => {
     onChangePage(event, 0);
   };
 
-  const handleBackButtonClick = (event) => {
+  const changeToPreviousPage = (event) => {
     onChangePage(event, page - 1);
   };
 
-  const handleNextButtonClick = (event) => {
+  const changeToNextPage = (event) => {
     onChangePage(event, page + 1);
   };
 
   const lastPage = Math.ceil(count / rowsPerPage) - 1;
 
-  const handleLastPageButtonClick = (event) => {
+  const isFirstPage = page === 0;
+  const isLastPage = page >= lastPage;
+
+  const changeToLastPage = (event) => {
     onChangePage(event, Math.max(0, lastPage));
   };
 
   return (
     <div className={classes.root}>
       <IconButton
-        onClick={handleFirstPageButtonClick}
-        disabled={page === 0}
-        aria-label="First Page"
+        onClick={changeToFirstPage}
+        disabled={isFirstPage}
+        aria-label={t(labelFirstPage)}
       >
         <FirstPageIcon />
       </IconButton>
       <IconButton
-        onClick={handleBackButtonClick}
-        disabled={page === 0}
-        aria-label="Previous Page"
+        onClick={changeToPreviousPage}
+        disabled={isFirstPage}
+        aria-label={t(labelPreviousPage)}
       >
         <KeyboardArrowLeft />
       </IconButton>
       <IconButton
-        onClick={handleNextButtonClick}
-        disabled={page >= lastPage}
-        aria-label="Next Page"
+        onClick={changeToNextPage}
+        disabled={isLastPage}
+        aria-label={t(labelNextPage)}
       >
         <KeyboardArrowRight />
       </IconButton>
       <IconButton
-        onClick={handleLastPageButtonClick}
-        disabled={page >= lastPage}
-        aria-label="Last Page"
+        onClick={changeToLastPage}
+        disabled={isLastPage}
+        aria-label={t(labelLastPage)}
       >
         <LastPageIcon />
       </IconButton>

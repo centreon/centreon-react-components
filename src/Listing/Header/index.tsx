@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { equals, indexOf, move, path, prop } from 'ramda';
+import { equals, indexOf, map, move, path, prop } from 'ramda';
 import {
   DndContext,
   PointerSensor,
@@ -21,7 +21,7 @@ import {
 } from '@material-ui/core';
 
 import Checkbox from '../Checkbox';
-import { Props as ListingProps } from '..';
+import { getVisibleColumns, Props as ListingProps } from '..';
 
 import SortableHeaderItem from './SortableHeaderItem';
 
@@ -97,7 +97,10 @@ const ListingHeader = ({
     const oldIndex = indexOf(draggedColumnId, columnIds);
     const newIndex = indexOf(id, columnIds);
 
-    onColumnSort?.(move(oldIndex, newIndex, columns));
+    const sortedColumns = move(oldIndex, newIndex, columns);
+    const sortedIds = map(prop('id'), sortedColumns);
+
+    onColumnSort?.(sortedIds);
     setDraggedColumnId(undefined);
   };
 
@@ -126,7 +129,10 @@ const ListingHeader = ({
                 />
               </HeaderCell>
             )}
-            {columns.map((column) => (
+            {getVisibleColumns({
+              columns,
+              columnConfiguration,
+            }).map((column) => (
               <SortableHeaderItem
                 key={column.id}
                 columnConfiguration={columnConfiguration}
