@@ -23,18 +23,16 @@ interface StylesProps {
 }
 
 const useStyles = makeStyles<Theme, StylesProps>((theme) => ({
-  dragHandle: ({ isDragging }) => ({
+  dragHandle: ({ isDragging }: StylesProps) => ({
     display: 'flex',
     cursor: isDragging ? 'grabbing' : 'grab',
   }),
-  item: ({ isDragging, transform, transition, isSorting }) => {
-    return {
-      opacity: isDragging ? 0.5 : 1,
-      transition: isSorting ? transition : undefined,
-      zIndex: isDragging ? theme.zIndex.tooltip : undefined,
-      transform: isSorting ? CSS.Translate.toString(transform) : undefined,
-    };
-  },
+  item: ({ isDragging, transform, transition, isSorting }: StylesProps) => ({
+    opacity: isDragging ? 0.5 : 1,
+    transition: isSorting ? transition : undefined,
+    zIndex: isDragging ? theme.zIndex.tooltip : undefined,
+    transform: isSorting ? CSS.Translate.toString(transform) : undefined,
+  }),
 }));
 
 type Props = Pick<
@@ -62,7 +60,7 @@ const SortableHeaderItem = ({
   } = useSortable({ id });
 
   const classes = useStyles({
-    transition,
+    transition: transition || undefined,
     isDragging,
     transform,
     isSorting,
