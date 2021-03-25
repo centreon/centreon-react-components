@@ -4,7 +4,7 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS, Transform } from '@dnd-kit/utilities';
 import clsx from 'clsx';
 
-import DragIndicatorIcon from '@material-ui/icons/MoreVert';
+import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 import { makeStyles, TableSortLabel, Theme } from '@material-ui/core';
 
 import { Column } from '../models';
