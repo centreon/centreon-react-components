@@ -1,14 +1,18 @@
 import * as React from 'react';
 
-import { equals, indexOf, move, path, prop } from 'ramda';
+import { equals, find, indexOf, isNil, move, path, prop, propEq } from 'ramda';
 import {
-  closestCorners,
   DndContext,
+  DragOverlay,
   PointerSensor,
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
-import { SortableContext } from '@dnd-kit/sortable';
+import {
+  horizontalListSortingStrategy,
+  SortableContext,
+} from '@dnd-kit/sortable';
+import { restrictToHorizontalAxis } from '@dnd-kit/modifiers';
 
 import {
   TableHead,
@@ -20,8 +24,10 @@ import {
 
 import Checkbox from '../Checkbox';
 import { getVisibleColumns, Props as ListingProps } from '..';
+import { Column } from '../models';
 
-import SortableHeaderItem from './SortableHeaderItem';
+import SortableHeaderCell from './SortableCell';
+import SortableHeaderCellContent from './SortableCell/Content';
 
 const height = 28;
 
@@ -90,6 +96,10 @@ const ListingHeader = ({
   };
 
   const endDrag = ({ over }) => {
+    if (isNil(over)) {
+      return;
+    }
+
     const { id } = over;
     const selectedColumnIds = columnConfiguration?.selectedColumnIds as Array<string>;
 
@@ -102,34 +112,42 @@ const ListingHeader = ({
     setDraggedColumnId(undefined);
   };
 
+  const getColumnById = (id: string): Column => {
+    return find(propEq('id', id), columns) as Column;
+  };
+
   return (
-    <TableHead className={classes.row} component="div">
-      <TableRow className={classes.row} component="div">
-        <DndContext
-          sensors={sensors}
-          onDragStart={startDrag}
-          onDragCancel={cancelDrag}
-          onDragEnd={endDrag}
-          collisionDetection={closestCorners}
-        >
-          <SortableContext items={columnIds}>
-            {checkable && (
-              <HeaderCell component="div">
-                <Checkbox
-                  inputProps={{ 'aria-label': 'Select all' }}
-                  indeterminate={
-                    selectedRowCount > 0 && selectedRowCount < rowCount
-                  }
-                  checked={selectedRowCount === rowCount}
-                  onChange={onSelectAllClick}
-                />
-              </HeaderCell>
-            )}
+    <DndContext
+      modifiers={[restrictToHorizontalAxis]}
+      sensors={sensors}
+      onDragStart={startDrag}
+      onDragCancel={cancelDrag}
+      onDragEnd={endDrag}
+    >
+      <TableHead className={classes.row} component="div">
+        <TableRow className={classes.row} component="div">
+          {checkable && (
+            <HeaderCell component="div">
+              <Checkbox
+                inputProps={{ 'aria-label': 'Select all' }}
+                indeterminate={
+                  selectedRowCount > 0 && selectedRowCount < rowCount
+                }
+                checked={selectedRowCount === rowCount}
+                onChange={onSelectAllClick}
+              />
+            </HeaderCell>
+          )}
+
+          <SortableContext
+            items={columnIds}
+            strategy={horizontalListSortingStrategy}
+          >
             {getVisibleColumns({
               columns,
               columnConfiguration,
             }).map((column) => (
-              <SortableHeaderItem
+              <SortableHeaderCell
                 key={column.id}
                 columnConfiguration={columnConfiguration}
                 column={column}
@@ -139,9 +157,21 @@ const ListingHeader = ({
               />
             ))}
           </SortableContext>
-        </DndContext>
-      </TableRow>
-    </TableHead>
+        </TableRow>
+      </TableHead>
+      <DragOverlay>
+        {draggedColumnId && (
+          <SortableHeaderCellContent
+            column={getColumnById(draggedColumnId)}
+            columnConfiguration={columnConfiguration}
+            sortField={sortField}
+            sortOrder={sortOrder}
+            onSort={onSort}
+            isDragging
+          />
+        )}
+      </DragOverlay>
+    </DndContext>
   );
 };
 

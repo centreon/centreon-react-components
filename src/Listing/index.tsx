@@ -2,6 +2,7 @@ import React, { useState, useRef, RefObject } from 'react';
 
 import { equals, isNil, prop, propEq } from 'ramda';
 import { useTranslation } from 'react-i18next';
+import { useDndContext } from '@dnd-kit/core';
 
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import {

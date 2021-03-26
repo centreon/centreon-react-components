@@ -33,12 +33,14 @@
   "dependencies": {
     "@centreon/ui-context": "github:centreon/ui-context",
     "@dnd-kit/core": "^1.1.0",
+    "@dnd-kit/modifiers": "^1.0.5",
     "@dnd-kit/sortable": "^1.0.2",
     "@dnd-kit/utilities": "^1.0.2",
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.57",
     "@material-ui/styles": "^4.11.3",
+    "@visx/visx": "^1.7.2",
     "axios": "^0.21.1",
     "clsx": "^1.1.1",
     "dayjs": "^1.10.4",
@@ -52,6 +54,7 @@
     "react-files": "^2.4.8",
     "react-i18next": "^11.8.10",
     "react-router-dom": "^5.2.0",
+    "react-spring": "^9.0.0",
     "resize-observer-polyfill": "^1.5.1",
     "ts.data.json": "^1.7.0",
     "ulog": "^2.0.0-beta.18"
