@@ -34,6 +34,7 @@ const useStyles = makeStyles<Theme, StylesProps>((theme) => ({
     zIndex: isDragging ? theme.zIndex.tooltip : undefined,
     transform: isSorting ? CSS.Translate.toString(transform) : undefined,
     display: 'flex',
+    maxWidth: isDragging ? 100 : undefined,
   }),
 }));
 
@@ -89,7 +90,6 @@ const SortableHeaderItem = ({
       className={clsx([cellClasses.cell, classes.item])}
       ref={sortableRef}
     >
-      {/* <div className={classes.item}> */}
       {columnConfiguration?.sortable && (
         <div className={classes.dragHandle} {...listeners} {...attributes}>
           <DragIndicatorIcon fontSize="small" />
@@ -107,7 +107,6 @@ const SortableHeaderItem = ({
           <HeaderLabel>{column.label}</HeaderLabel>
         </TableSortLabel>
       )}
-      {/* </div> */}
     </HeaderCell>
   );
 };

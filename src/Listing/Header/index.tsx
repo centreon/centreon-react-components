@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { equals, indexOf, move, path, prop } from 'ramda';
 import {
+  closestCorners,
   DndContext,
   PointerSensor,
   useSensor,
@@ -109,6 +110,7 @@ const ListingHeader = ({
           onDragStart={startDrag}
           onDragCancel={cancelDrag}
           onDragEnd={endDrag}
+          collisionDetection={closestCorners}
         >
           <SortableContext items={columnIds}>
             {checkable && (
