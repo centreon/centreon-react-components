@@ -1,7 +1,7 @@
 import React from 'react';
 
 import clsx from 'clsx';
-import { equals, isNil } from 'ramda';
+import { equals, isNil, not } from 'ramda';
 
 import {
   TextField as MuiTextField,
@@ -108,7 +108,7 @@ const TextField = React.forwardRef(
         inputProps={{
           'aria-label': ariaLabel,
           className: clsx(classes.input, {
-            [classes.noLabelInput]: !label && isSizeEqualTo(Size.compact),
+            [classes.noLabelInput]: !label && not(isSizeEqualTo(Size.compact)),
             [classes.small]: isSizeEqualTo(Size.small),
             [classes.compact]: isSizeEqualTo(Size.compact),
           }),
