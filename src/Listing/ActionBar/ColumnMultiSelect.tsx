@@ -39,6 +39,10 @@ const ColumnMultiSelect = ({
     onSelectColumns?.(updatedColumns.map(prop('id')));
   };
 
+  const resetColumns = () => {
+    onSelectColumns?.(columns.map(prop('id')));
+  };
+
   return (
     <IconPopoverMultiSelect
       title={t(labelAddColumns)}
@@ -47,6 +51,7 @@ const ColumnMultiSelect = ({
       label={t(labelColumns)}
       onChange={selectColumnIds}
       icon={<ColumnIcon />}
+      onReset={resetColumns}
     />
   );
 };

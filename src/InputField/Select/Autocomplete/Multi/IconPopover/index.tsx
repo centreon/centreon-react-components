@@ -1,15 +1,35 @@
 import * as React from 'react';
 
-import { ClickAwayListener, Paper, Popper, useTheme } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
+import { isNil } from 'ramda';
+
+import {
+  Button,
+  ClickAwayListener,
+  makeStyles,
+  Paper,
+  Popper,
+  useTheme,
+} from '@material-ui/core';
+import IconReset from '@material-ui/icons/RotateLeft';
 
 import IconButton from '../../../../../Button/Icon';
 import MultiAutocompleteField, {
   Props as MultiAutocompleteFieldProps,
 } from '..';
 
+import { labelReset } from './translatedLabels';
+
+const useStyles = makeStyles((theme) => ({
+  button: {
+    fontSize: theme.typography.caption.fontSize,
+  },
+}));
+
 type Props = MultiAutocompleteFieldProps & {
   icon: JSX.Element;
   title: string;
+  onReset?: () => void;
 };
 
 const IconPopoverMultiAutocomplete = ({
@@ -19,9 +39,13 @@ const IconPopoverMultiAutocomplete = ({
   title,
   onChange,
   value,
+  onReset,
   ...props
 }: Props): JSX.Element => {
   const theme = useTheme();
+  const classes = useStyles();
+  const { t } = useTranslation();
+
   const [anchorEl, setAnchorEl] = React.useState();
 
   const isOpen = Boolean(anchorEl);
@@ -57,6 +81,18 @@ const IconPopoverMultiAutocomplete = ({
           placement="bottom-start"
         >
           <Paper>
+            {!isNil(onReset) && (
+              <Button
+                className={classes.button}
+                startIcon={<IconReset />}
+                size="small"
+                color="primary"
+                fullWidth
+                onClick={onReset}
+              >
+                {t(labelReset)}
+              </Button>
+            )}
             <MultiAutocompleteField
               onClose={close}
               label={label}

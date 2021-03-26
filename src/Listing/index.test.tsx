@@ -216,7 +216,6 @@ describe('Listing', () => {
         columns={columns}
         rows={rows}
         columnConfiguration={{
-          selectable: true,
           sortable: false,
           selectedColumnIds: columns.map(prop('id')),
         }}

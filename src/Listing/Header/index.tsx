@@ -1,16 +1,13 @@
 import * as React from 'react';
 
-import { equals, indexOf, map, move, path, prop } from 'ramda';
+import { equals, indexOf, move, path, prop } from 'ramda';
 import {
   DndContext,
   PointerSensor,
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
-import {
-  horizontalListSortingStrategy,
-  SortableContext,
-} from '@dnd-kit/sortable';
+import { SortableContext } from '@dnd-kit/sortable';
 
 import {
   TableHead,
@@ -93,14 +90,14 @@ const ListingHeader = ({
 
   const endDrag = ({ over }) => {
     const { id } = over;
+    const selectedColumnIds = columnConfiguration?.selectedColumnIds as Array<string>;
 
-    const oldIndex = indexOf(draggedColumnId, columnIds);
-    const newIndex = indexOf(id, columnIds);
+    const oldIndex = indexOf(draggedColumnId, selectedColumnIds);
+    const newIndex = indexOf(id, selectedColumnIds);
 
-    const sortedColumns = move(oldIndex, newIndex, columns);
-    const sortedIds = map(prop('id'), sortedColumns);
+    const sortedColumnIds = move(oldIndex, newIndex, selectedColumnIds);
 
-    onColumnSort?.(sortedIds);
+    onColumnSort?.(sortedColumnIds);
     setDraggedColumnId(undefined);
   };
 
@@ -113,10 +110,7 @@ const ListingHeader = ({
           onDragCancel={cancelDrag}
           onDragEnd={endDrag}
         >
-          <SortableContext
-            items={columnIds}
-            strategy={horizontalListSortingStrategy}
-          >
+          <SortableContext items={columnIds}>
             {checkable && (
               <HeaderCell component="div">
                 <Checkbox

@@ -1,6 +1,6 @@
 import React, { useState, useRef, RefObject } from 'react';
 
-import { equals, flip, includes, isNil, prop, propSatisfies } from 'ramda';
+import { equals, isNil, prop, propEq } from 'ramda';
 import { useTranslation } from 'react-i18next';
 
 import { makeStyles, Theme } from '@material-ui/core/styles';
@@ -32,20 +32,19 @@ import {
 } from './models';
 import ListingActionBar from './ActionBar';
 
-const isIn = flip(includes);
-const idIsIn = (ids: Array<string>) => propSatisfies(isIn(ids), 'id');
-
 const getVisibleColumns = ({
   columnConfiguration,
   columns,
 }: Pick<Props<unknown>, 'columnConfiguration' | 'columns'>): Array<Column> => {
-  const columnIds = columns.map(prop('id'));
+  const selectedColumnIds = columnConfiguration?.selectedColumnIds;
 
-  const selectedIds = columnConfiguration?.selectable
-    ? columnConfiguration.selectedColumnIds
-    : columnIds;
+  if (isNil(selectedColumnIds)) {
+    return columns;
+  }
 
-  return columns.filter(idIsIn(selectedIds as Array<string>));
+  return selectedColumnIds.map((id) =>
+    columns.find(propEq('id', id)),
+  ) as Array<Column>;
 };
 
 const loadingIndicatorHeight = 3;
@@ -117,7 +116,6 @@ export interface Props<TRow> {
 
 const defaultColumnConfiguration = {
   sortable: false,
-  selectable: false,
 };
 
 const Listing = <TRow extends { id: RowId }>({

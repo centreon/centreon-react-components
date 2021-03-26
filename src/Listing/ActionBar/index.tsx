@@ -71,7 +71,7 @@ const ListingActionBar = ({
   return (
     <div className={classes.container}>
       <div className={classes.actions}>{actions}</div>
-      {columnConfiguration?.selectable && (
+      {columnConfiguration?.selectedColumnIds && (
         <ColumnMultiSelect
           columns={columns}
           columnConfiguration={columnConfiguration}

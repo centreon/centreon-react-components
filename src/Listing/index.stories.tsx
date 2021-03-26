@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { prop, propEq } from 'ramda';
+import { prop } from 'ramda';
 
 import { makeStyles, Button } from '@material-ui/core';
 import { grey } from '@material-ui/core/colors';
@@ -130,26 +130,20 @@ export const withActions = (): JSX.Element => <Story actions={actions} />;
 export const withoutCheckboxes = (): JSX.Element => <Story checkable={false} />;
 
 const ListingWithSortableColumns = (): JSX.Element => {
-  const [sortedColumnIds, setSortedColumnIds] = React.useState<Array<string>>(
-    defaultColumns.map(prop('id')),
-  );
+  const defaultColumnIds = defaultColumns.map(prop('id'));
+
   const [selectedColumnIds, setSelectedColumnIds] = React.useState<
     Array<string>
-  >(defaultColumns.map(prop('id')));
+  >(defaultColumnIds);
 
   return (
     <Story
       columnConfiguration={{
         sortable: true,
-        selectable: true,
         selectedColumnIds,
       }}
-      columns={
-        sortedColumnIds.map((id) =>
-          defaultColumns.find(propEq('id', id)),
-        ) as Array<Column>
-      }
-      onColumnSort={setSortedColumnIds}
+      columns={defaultColumns}
+      onColumnSort={setSelectedColumnIds}
       onSelectColumns={setSelectedColumnIds}
     />
   );

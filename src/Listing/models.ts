@@ -40,7 +40,6 @@ export type RowId = number | string;
 export interface ColumnConfiguration {
   sortable: boolean;
   selectedColumnIds?: Array<string>;
-  selectable: boolean;
 }
 
 export { ColumnType };

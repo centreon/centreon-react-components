@@ -26,12 +26,14 @@ const useStyles = makeStyles<Theme, StylesProps>((theme) => ({
   dragHandle: ({ isDragging }: StylesProps) => ({
     display: 'flex',
     cursor: isDragging ? 'grabbing' : 'grab',
+    outline: 'none',
   }),
   item: ({ isDragging, transform, transition, isSorting }: StylesProps) => ({
     opacity: isDragging ? 0.5 : 1,
     transition: isSorting ? transition : undefined,
     zIndex: isDragging ? theme.zIndex.tooltip : undefined,
     transform: isSorting ? CSS.Translate.toString(transform) : undefined,
+    display: 'flex',
   }),
 }));
 
@@ -87,6 +89,7 @@ const SortableHeaderItem = ({
       className={clsx([cellClasses.cell, classes.item])}
       ref={sortableRef}
     >
+      {/* <div className={classes.item}> */}
       {columnConfiguration?.sortable && (
         <div className={classes.dragHandle} {...listeners} {...attributes}>
           <DragIndicatorIcon fontSize="small" />
@@ -104,6 +107,7 @@ const SortableHeaderItem = ({
           <HeaderLabel>{column.label}</HeaderLabel>
         </TableSortLabel>
       )}
+      {/* </div> */}
     </HeaderCell>
   );
 };
