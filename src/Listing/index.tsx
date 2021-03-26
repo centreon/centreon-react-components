@@ -91,7 +91,6 @@ export interface Props<TRow> {
   currentPage?: number;
   columns: Array<Column>;
   columnConfiguration?: ColumnConfiguration;
-  onColumnSort?: (sortedColumnIds: Array<string>) => void;
   onSelectColumns?: (selectedColumnIds: Array<string>) => void;
   rowColorConditions?: Array<RowColorCondition>;
   limit?: number;
@@ -123,7 +122,6 @@ const Listing = <TRow extends { id: RowId }>({
   limit = 10,
   columns,
   columnConfiguration = defaultColumnConfiguration,
-  onColumnSort,
   onSelectColumns,
   rows = [],
   currentPage = 0,
@@ -298,7 +296,7 @@ const Listing = <TRow extends { id: RowId }>({
               rowCount={limit - emptyRows}
               columns={columns}
               columnConfiguration={columnConfiguration}
-              onColumnSort={onColumnSort}
+              onSelectColumns={onSelectColumns}
             />
 
             <TableBody

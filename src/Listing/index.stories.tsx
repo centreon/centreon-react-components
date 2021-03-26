@@ -143,7 +143,6 @@ const ListingWithSortableColumns = (): JSX.Element => {
         selectedColumnIds,
       }}
       columns={defaultColumns}
-      onColumnSort={setSelectedColumnIds}
       onSelectColumns={setSelectedColumnIds}
     />
   );

@@ -9,6 +9,7 @@ import {
   makeStyles,
   Paper,
   Popper,
+  PopperPlacementType,
   useTheme,
 } from '@material-ui/core';
 import IconReset from '@material-ui/icons/RotateLeft';
@@ -30,6 +31,7 @@ type Props = MultiAutocompleteFieldProps & {
   icon: JSX.Element;
   title: string;
   onReset?: () => void;
+  popperPlacement?: PopperPlacementType;
 };
 
 const IconPopoverMultiAutocomplete = ({
@@ -40,6 +42,7 @@ const IconPopoverMultiAutocomplete = ({
   onChange,
   value,
   onReset,
+  popperPlacement = 'bottom-start',
   ...props
 }: Props): JSX.Element => {
   const theme = useTheme();
@@ -78,7 +81,7 @@ const IconPopoverMultiAutocomplete = ({
           style={{ zIndex: theme.zIndex.tooltip }}
           open={isOpen}
           anchorEl={anchorEl}
-          placement="bottom-start"
+          placement={popperPlacement}
         >
           <Paper>
             {!isNil(onReset) && (

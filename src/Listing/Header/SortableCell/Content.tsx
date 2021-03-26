@@ -8,6 +8,10 @@ import { Column } from '../../models';
 import HeaderLabel from '../Label';
 
 const useStyles = makeStyles<Theme, Pick<Props, 'isDragging'>>(() => ({
+  content: {
+    display: 'flex',
+    alignItems: 'center',
+  },
   dragHandle: ({ isDragging }) => ({
     display: 'flex',
     cursor: isDragging ? 'grabbing' : 'grab',
@@ -50,7 +54,7 @@ const SortableHeaderCellContent = React.forwardRef(
     };
 
     return (
-      <div style={{ display: 'flex', alignItems: 'center' }} ref={ref}>
+      <div className={classes.content} ref={ref}>
         {columnConfiguration?.sortable && (
           <div className={classes.dragHandle} {...props}>
             <DragIndicatorIcon fontSize="small" />

@@ -58,7 +58,7 @@ type Props = Pick<
   | 'onSort'
   | 'columns'
   | 'checkable'
-  | 'onColumnSort'
+  | 'onSelectColumns'
   | 'columnConfiguration'
   | 'totalRows'
 > & {
@@ -76,7 +76,7 @@ const ListingHeader = ({
   columns,
   columnConfiguration,
   onSort,
-  onColumnSort,
+  onSelectColumns,
   checkable,
 }: Props): JSX.Element => {
   const classes = useStyles();
@@ -108,7 +108,7 @@ const ListingHeader = ({
 
     const sortedColumnIds = move(oldIndex, newIndex, selectedColumnIds);
 
-    onColumnSort?.(sortedColumnIds);
+    onSelectColumns?.(sortedColumnIds);
     setDraggedColumnId(undefined);
   };
 
@@ -164,9 +164,6 @@ const ListingHeader = ({
           <SortableHeaderCellContent
             column={getColumnById(draggedColumnId)}
             columnConfiguration={columnConfiguration}
-            sortField={sortField}
-            sortOrder={sortOrder}
-            onSort={onSort}
             isDragging
           />
         )}
@@ -180,6 +177,7 @@ const MemoizedListingHeader = React.memo(
   (prevProps, nextProps) =>
     equals(prevProps.sortField, nextProps.sortField) &&
     equals(prevProps.sortOrder, nextProps.sortOrder) &&
+    equals(prevProps.sortField, nextProps.sortField) &&
     equals(prevProps.selectedRowCount, nextProps.selectedRowCount) &&
     equals(prevProps.rowCount, nextProps.rowCount) &&
     equals(prevProps.columns, nextProps.columns) &&

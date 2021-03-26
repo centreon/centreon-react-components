@@ -52,6 +52,7 @@ const ColumnMultiSelect = ({
       onChange={selectColumnIds}
       icon={<ColumnIcon />}
       onReset={resetColumns}
+      popperPlacement="bottom-end"
     />
   );
 };

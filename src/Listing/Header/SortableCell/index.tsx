@@ -17,20 +17,25 @@ interface StylesProps {
   isDragging: boolean;
   transition?: string;
   transform: Transform | null;
+  isSorting: boolean;
 }
 
 const useStyles = makeStyles<Theme, StylesProps>(() => ({
-  item: ({ isDragging, transform, transition }: StylesProps) => ({
-    opacity: isDragging ? 0.5 : 1,
+  item: ({ isDragging, transform, transition, isSorting }: StylesProps) => ({
+    opacity: isSorting ? 0.5 : 1,
     transition: isDragging ? transition : undefined,
-    transform: isDragging ? CSS.Translate.toString(transform) : undefined,
+    transform: isDragging ? CSS.Transform.toString(transform) : undefined,
     display: 'flex',
   }),
 }));
 
 type Props = Pick<
   ListingProps<unknown>,
-  'onSort' | 'sortOrder' | 'sortField' | 'columnConfiguration'
+  | 'onSort'
+  | 'sortOrder'
+  | 'sortField'
+  | 'columnConfiguration'
+  | 'onSelectColumns'
 > & { column: Column };
 
 const SortableHeaderCell = ({
@@ -49,11 +54,13 @@ const SortableHeaderCell = ({
     transition,
     transform,
     isDragging,
+    isSorting,
   } = useSortable({ id });
 
   const classes = useStyles({
     transition: transition || undefined,
     isDragging,
+    isSorting,
     transform,
   });
   const cellClasses = useCellStyles({ listingCheckable: true });
