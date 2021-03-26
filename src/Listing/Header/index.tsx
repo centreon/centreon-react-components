@@ -175,7 +175,6 @@ const ListingHeader = ({
 const MemoizedListingHeader = React.memo(
   ListingHeader,
   (prevProps, nextProps) =>
-    equals(prevProps.sortField, nextProps.sortField) &&
     equals(prevProps.sortOrder, nextProps.sortOrder) &&
     equals(prevProps.sortField, nextProps.sortField) &&
     equals(prevProps.selectedRowCount, nextProps.selectedRowCount) &&
