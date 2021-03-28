@@ -13,7 +13,7 @@ import { Column } from '../models';
 
 type Props = Pick<
   ListingProps<unknown>,
-  'columns' | 'columnConfiguration' | 'onSelectColumns'
+  'columns' | 'columnConfiguration' | 'onSelectColumns' | 'onResetColumns'
 >;
 
 const toSelectEntries = (columns: Array<Column>): Array<SelectEntry> => {
@@ -27,6 +27,7 @@ const ColumnMultiSelect = ({
   columns,
   columnConfiguration,
   onSelectColumns,
+  onResetColumns,
 }: Props): JSX.Element => {
   const { t } = useTranslation();
 
@@ -39,10 +40,6 @@ const ColumnMultiSelect = ({
     onSelectColumns?.(updatedColumns.map(prop('id')));
   };
 
-  const resetColumns = () => {
-    onSelectColumns?.(columns.map(prop('id')));
-  };
-
   return (
     <IconPopoverMultiSelect
       title={t(labelAddColumns)}
@@ -51,7 +48,7 @@ const ColumnMultiSelect = ({
       label={t(labelColumns)}
       onChange={selectColumnIds}
       icon={<ColumnIcon />}
-      onReset={resetColumns}
+      onReset={onResetColumns}
       popperPlacement="bottom-end"
     />
   );

@@ -39,6 +39,7 @@ type Props = Pick<
   | 'columns'
   | 'columnConfiguration'
   | 'onSelectColumns'
+  | 'onResetColumns'
 >;
 
 const ListingActionBar = ({
@@ -51,6 +52,7 @@ const ListingActionBar = ({
   limit,
   columns,
   columnConfiguration,
+  onResetColumns,
   onSelectColumns,
 }: Props): JSX.Element => {
   const { t } = useTranslation();
@@ -76,6 +78,7 @@ const ListingActionBar = ({
           columns={columns}
           columnConfiguration={columnConfiguration}
           onSelectColumns={onSelectColumns}
+          onResetColumns={onResetColumns}
         />
       )}
       {paginated && (

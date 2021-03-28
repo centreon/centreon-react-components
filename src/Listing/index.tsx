@@ -2,7 +2,6 @@ import React, { useState, useRef, RefObject } from 'react';
 
 import { equals, isNil, prop, propEq } from 'ramda';
 import { useTranslation } from 'react-i18next';
-import { useDndContext } from '@dnd-kit/core';
 
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import {
@@ -92,6 +91,7 @@ export interface Props<TRow> {
   columns: Array<Column>;
   columnConfiguration?: ColumnConfiguration;
   onSelectColumns?: (selectedColumnIds: Array<string>) => void;
+  onResetColumns?: () => void;
   rowColorConditions?: Array<RowColorCondition>;
   limit?: number;
   loading?: boolean;
@@ -122,6 +122,7 @@ const Listing = <TRow extends { id: RowId }>({
   limit = 10,
   columns,
   columnConfiguration = defaultColumnConfiguration,
+  onResetColumns,
   onSelectColumns,
   rows = [],
   currentPage = 0,
@@ -261,6 +262,7 @@ const Listing = <TRow extends { id: RowId }>({
             actions={actions}
             onLimitChange={onLimitChange}
             onSelectColumns={onSelectColumns}
+            onResetColumns={onResetColumns}
             onPaginate={onPaginate}
             paginated={paginated}
             currentPage={currentPage}

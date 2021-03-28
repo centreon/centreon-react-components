@@ -136,6 +136,10 @@ const ListingWithSortableColumns = (): JSX.Element => {
     Array<string>
   >(defaultColumnIds);
 
+  const resetColumns = (): void => {
+    setSelectedColumnIds(defaultColumnIds);
+  };
+
   return (
     <Story
       columnConfiguration={{
@@ -144,6 +148,7 @@ const ListingWithSortableColumns = (): JSX.Element => {
       }}
       columns={defaultColumns}
       onSelectColumns={setSelectedColumnIds}
+      onResetColumns={resetColumns}
     />
   );
 };
