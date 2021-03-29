@@ -60,7 +60,7 @@ const SortableHeaderCellContent = React.forwardRef(
             <DragIndicatorIcon fontSize="small" />
           </div>
         )}
-        {column.sortable === false ? (
+        {not(column.sortable) ? (
           <HeaderLabel>{column.label}</HeaderLabel>
         ) : (
           <TableSortLabel
