@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { equals, find, indexOf, isNil, move, path, prop, propEq } from 'ramda';
+import { equals, find, indexOf, isNil, move, path, propEq } from 'ramda';
 import {
   DndContext,
   DragOverlay,
@@ -23,7 +23,7 @@ import {
 } from '@material-ui/core';
 
 import Checkbox from '../Checkbox';
-import { getVisibleColumns, Props as ListingProps } from '..';
+import { Props as ListingProps } from '..';
 import { Column } from '../models';
 
 import SortableHeaderCell from './SortableCell';
