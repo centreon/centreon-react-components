@@ -15,11 +15,9 @@ import { HeaderCell } from '..';
 import SortableHeaderCellContent from './Content';
 
 interface StylesProps {
-  isDragging: boolean;
   transition?: string;
   transform: Transform | null;
   isSorting: boolean;
-  isOver: boolean;
 }
 
 const useStyles = makeStyles<Theme, StylesProps>(() => ({
