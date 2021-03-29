@@ -45,7 +45,7 @@ const SortableHeaderCellContent = React.forwardRef(
     const columnSortField = column.sortField || column.id;
 
     const sort = (): void => {
-      const isDesc = columnSortField === sortField && sortOrder === 'desc';
+      const isDesc = and(equals(columnSortField, sortField), equals(sortOrder, 'desc'));
 
       onSort?.({
         sortOrder: isDesc ? 'asc' : 'desc',
