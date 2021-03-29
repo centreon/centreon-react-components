@@ -55,7 +55,6 @@ const SortableHeaderCell = ({
     setNodeRef: sortableRef,
     transition,
     transform,
-    isDragging,
     isSorting,
   } = useSortable({ id });
 
