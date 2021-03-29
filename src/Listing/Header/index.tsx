@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { equals, find, indexOf, isNil, move, path, propEq } from 'ramda';
+import { equals, find, indexOf, isNil, move, path, prop, propEq } from 'ramda';
 import {
   DndContext,
   DragOverlay,
@@ -84,7 +84,7 @@ const ListingHeader = ({
     columnConfiguration,
   });
 
-  const selectedColumnIds = columnConfiguration?.selectedColumnIds as Array<string>;
+  const visibleColumnIds = visibleColumns.map(prop('id'));
 
   const [draggingColumnId, setDraggingColumnId] = React.useState<string>();
 
@@ -103,10 +103,10 @@ const ListingHeader = ({
 
     const { id } = over;
 
-    const fromIndex = indexOf(draggingColumnId, selectedColumnIds);
-    const toIndex = indexOf(id, selectedColumnIds);
+    const fromIndex = indexOf(draggingColumnId, visibleColumnIds);
+    const toIndex = indexOf(id, visibleColumnIds);
 
-    const updatedColumnIds = move(fromIndex, toIndex, selectedColumnIds);
+    const updatedColumnIds = move(fromIndex, toIndex, visibleColumnIds);
 
     onSelectColumns?.(updatedColumnIds);
     setDraggingColumnId(undefined);
@@ -137,7 +137,7 @@ const ListingHeader = ({
             </HeaderCell>
           )}
 
-          <SortableContext items={selectedColumnIds}>
+          <SortableContext items={visibleColumnIds}>
             {visibleColumns.map((column) => (
               <SortableHeaderCell
                 key={column.id}
