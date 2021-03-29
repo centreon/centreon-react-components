@@ -61,7 +61,6 @@ const SortableHeaderCell = ({
 
   const classes = useStyles({
     transition: transition || undefined,
-    isDragging,
     isSorting,
     transform,
   });
