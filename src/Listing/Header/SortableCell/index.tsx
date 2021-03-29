@@ -3,6 +3,7 @@ import * as React from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS, Transform } from '@dnd-kit/utilities';
 import clsx from 'clsx';
+import { equals } from 'ramda';
 
 import { makeStyles, Theme } from '@material-ui/core';
 

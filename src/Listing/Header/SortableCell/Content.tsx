@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import { and, equals, not } from 'ramda';
+
 import { makeStyles, TableSortLabel, Theme } from '@material-ui/core';
 import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 
@@ -45,7 +47,10 @@ const SortableHeaderCellContent = React.forwardRef(
     const columnSortField = column.sortField || column.id;
 
     const sort = (): void => {
-      const isDesc = and(equals(columnSortField, sortField), equals(sortOrder, 'desc'));
+      const isDesc = and(
+        equals(columnSortField, sortField),
+        equals(sortOrder, 'desc'),
+      );
 
       onSort?.({
         sortOrder: isDesc ? 'asc' : 'desc',
