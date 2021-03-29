@@ -24,7 +24,7 @@ export interface Column {
   compact?: boolean;
 }
 
-enum ColumnType {
+export enum ColumnType {
   string = 0,
   component = 1,
 }
@@ -42,4 +42,4 @@ export interface ColumnConfiguration {
   selectedColumnIds?: Array<string>;
 }
 
-export { ColumnType };
+export type SortOrder = 'asc' | 'desc';

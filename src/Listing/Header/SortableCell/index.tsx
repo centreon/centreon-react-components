@@ -19,15 +19,18 @@ interface StylesProps {
   transition?: string;
   transform: Transform | null;
   isSorting: boolean;
+  isOver: boolean;
 }
 
 const useStyles = makeStyles<Theme, StylesProps>(() => ({
-  item: ({ isDragging, transform, transition, isSorting }: StylesProps) => ({
-    opacity: isSorting ? 0.5 : 1,
-    transition: isDragging ? transition : undefined,
-    transform: isDragging ? CSS.Transform.toString(transform) : undefined,
-    display: 'flex',
-  }),
+  item: ({ transform, transition, isSorting }: StylesProps) => {
+    return {
+      opacity: isSorting ? 0.5 : 1,
+      transition: transition || undefined,
+      transform: CSS.Translate.toString(transform),
+      display: 'flex',
+    };
+  },
 }));
 
 type Props = Pick<

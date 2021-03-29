@@ -8,11 +8,7 @@ import {
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
-import {
-  horizontalListSortingStrategy,
-  SortableContext,
-} from '@dnd-kit/sortable';
-import { restrictToHorizontalAxis } from '@dnd-kit/modifiers';
+import { SortableContext } from '@dnd-kit/sortable';
 
 import {
   TableHead,
@@ -23,7 +19,7 @@ import {
 } from '@material-ui/core';
 
 import Checkbox from '../Checkbox';
-import { Props as ListingProps } from '..';
+import { getVisibleColumns, Props as ListingProps } from '..';
 import { Column } from '../models';
 
 import SortableHeaderCell from './SortableCell';
@@ -83,52 +79,47 @@ const ListingHeader = ({
 
   const sensors = useSensors(useSensor(PointerSensor));
 
-  const [draggedColumnId, setDraggedColumnId] = React.useState<string>();
-  const [draggingColumnIds, setDraggingColumnIds] = React.useState<
-    Array<string>
-  >(columnConfiguration?.selectedColumnIds || []);
+  const visibleColumns = getVisibleColumns({
+    columns,
+    columnConfiguration,
+  });
+
+  const selectedColumnIds = columnConfiguration?.selectedColumnIds as Array<string>;
+
+  const [draggingColumnId, setDraggingColumnId] = React.useState<string>();
 
   const startDrag = (event) => {
-    setDraggedColumnId(path<string>(['active', 'id'], event));
+    setDraggingColumnId(path<string>(['active', 'id'], event));
   };
 
   const cancelDrag = () => {
-    setDraggedColumnId(undefined);
+    setDraggingColumnId(undefined);
   };
 
-  const overDrag = ({ over }) => {
+  const endDrag = ({ over }) => {
     if (isNil(over)) {
       return;
     }
 
     const { id } = over;
 
-    const oldIndex = indexOf(draggedColumnId, draggingColumnIds);
-    const newIndex = indexOf(id, draggingColumnIds);
+    const fromIndex = indexOf(draggingColumnId, selectedColumnIds);
+    const toIndex = indexOf(id, selectedColumnIds);
 
-    const sortedColumnIds = move(oldIndex, newIndex, draggingColumnIds);
+    const updatedColumnIds = move(fromIndex, toIndex, selectedColumnIds);
 
-    setDraggingColumnIds(sortedColumnIds);
-  };
-
-  const endDrag = () => {
-    onSelectColumns?.(draggingColumnIds);
-    setDraggedColumnId(undefined);
+    onSelectColumns?.(updatedColumnIds);
+    setDraggingColumnId(undefined);
   };
 
   const getColumnById = (id: string): Column => {
     return find(propEq('id', id), columns) as Column;
   };
-
-  const getColumns = () => draggingColumnIds.map(getColumnById);
-
   return (
     <DndContext
-      modifiers={[restrictToHorizontalAxis]}
       sensors={sensors}
       onDragStart={startDrag}
       onDragCancel={cancelDrag}
-      onDragOver={overDrag}
       onDragEnd={endDrag}
     >
       <TableHead className={classes.row} component="div">
@@ -146,11 +137,8 @@ const ListingHeader = ({
             </HeaderCell>
           )}
 
-          <SortableContext
-            items={draggingColumnIds}
-            strategy={horizontalListSortingStrategy}
-          >
-            {getColumns().map((column) => (
+          <SortableContext items={selectedColumnIds}>
+            {visibleColumns.map((column) => (
               <SortableHeaderCell
                 key={column.id}
                 columnConfiguration={columnConfiguration}
@@ -164,9 +152,9 @@ const ListingHeader = ({
         </TableRow>
       </TableHead>
       <DragOverlay>
-        {draggedColumnId && (
+        {draggingColumnId && (
           <SortableHeaderCellContent
-            column={getColumnById(draggedColumnId)}
+            column={getColumnById(draggingColumnId)}
             columnConfiguration={columnConfiguration}
             isDragging
           />

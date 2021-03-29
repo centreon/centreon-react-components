@@ -29,6 +29,7 @@ import {
   ColumnConfiguration,
   RowColorCondition,
   RowId,
+  SortOrder,
 } from './models';
 import ListingActionBar from './ActionBar';
 
@@ -98,7 +99,7 @@ export interface Props<TRow> {
   loadingDataMessage?: string;
   paginated?: boolean;
   selectedRows?: Array<TRow>;
-  sortOrder?: 'asc' | 'desc';
+  sortOrder?: SortOrder;
   sortField?: string;
   rows?: Array<TRow>;
   totalRows?: number;

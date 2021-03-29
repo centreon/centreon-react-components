@@ -65,9 +65,8 @@ const SortableHeaderCellContent = React.forwardRef(
             <DragIndicatorIcon fontSize="small" />
           </div>
         )}
-        {not(column.sortable) ? (
-          <HeaderLabel>{column.label}</HeaderLabel>
-        ) : (
+
+        {column.sortable ? (
           <TableSortLabel
             aria-label={`Column ${column.label}`}
             active={sortField === columnSortField}
@@ -76,6 +75,8 @@ const SortableHeaderCellContent = React.forwardRef(
           >
             <HeaderLabel>{column.label}</HeaderLabel>
           </TableSortLabel>
+        ) : (
+          <HeaderLabel>{column.label}</HeaderLabel>
         )}
       </div>
     );
