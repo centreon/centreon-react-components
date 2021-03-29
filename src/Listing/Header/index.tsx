@@ -84,8 +84,9 @@ const ListingHeader = ({
   const sensors = useSensors(useSensor(PointerSensor));
 
   const [draggedColumnId, setDraggedColumnId] = React.useState<string>();
-
-  const columnIds = columns.map(prop('id'));
+  const [draggingColumnIds, setDraggingColumnIds] = React.useState<
+    Array<string>
+  >(columnConfiguration?.selectedColumnIds || []);
 
   const startDrag = (event) => {
     setDraggedColumnId(path<string>(['active', 'id'], event));
@@ -95,20 +96,23 @@ const ListingHeader = ({
     setDraggedColumnId(undefined);
   };
 
-  const endDrag = ({ over }) => {
+  const overDrag = ({ over }) => {
     if (isNil(over)) {
       return;
     }
 
     const { id } = over;
-    const selectedColumnIds = columnConfiguration?.selectedColumnIds as Array<string>;
 
-    const oldIndex = indexOf(draggedColumnId, selectedColumnIds);
-    const newIndex = indexOf(id, selectedColumnIds);
+    const oldIndex = indexOf(draggedColumnId, draggingColumnIds);
+    const newIndex = indexOf(id, draggingColumnIds);
 
-    const sortedColumnIds = move(oldIndex, newIndex, selectedColumnIds);
+    const sortedColumnIds = move(oldIndex, newIndex, draggingColumnIds);
 
-    onSelectColumns?.(sortedColumnIds);
+    setDraggingColumnIds(sortedColumnIds);
+  };
+
+  const endDrag = () => {
+    onSelectColumns?.(draggingColumnIds);
     setDraggedColumnId(undefined);
   };
 
@@ -116,12 +120,15 @@ const ListingHeader = ({
     return find(propEq('id', id), columns) as Column;
   };
 
+  const getColumns = () => draggingColumnIds.map(getColumnById);
+
   return (
     <DndContext
       modifiers={[restrictToHorizontalAxis]}
       sensors={sensors}
       onDragStart={startDrag}
       onDragCancel={cancelDrag}
+      onDragOver={overDrag}
       onDragEnd={endDrag}
     >
       <TableHead className={classes.row} component="div">
@@ -140,13 +147,10 @@ const ListingHeader = ({
           )}
 
           <SortableContext
-            items={columnIds}
+            items={draggingColumnIds}
             strategy={horizontalListSortingStrategy}
           >
-            {getVisibleColumns({
-              columns,
-              columnConfiguration,
-            }).map((column) => (
+            {getColumns().map((column) => (
               <SortableHeaderCell
                 key={column.id}
                 columnConfiguration={columnConfiguration}
