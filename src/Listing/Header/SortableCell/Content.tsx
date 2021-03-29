@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { and, equals, not } from 'ramda';
+import { and, equals } from 'ramda';
 
 import { makeStyles, TableSortLabel, Theme } from '@material-ui/core';
 import DragIndicatorIcon from '@material-ui/icons/DragIndicator';

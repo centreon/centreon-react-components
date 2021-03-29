@@ -163,7 +163,7 @@ describe('Listing', () => {
     expect(onSelectRows).toHaveBeenCalledWith([]);
   });
 
-  it.only('sorts on on column id when the column header is clicked and sortField is not defined', () => {
+  it('sorts on on column id when the column header is clicked and sortField is not defined', () => {
     const columnWithoutSortField = columns[0];
 
     const { getByLabelText } = render(
