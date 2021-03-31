@@ -25,8 +25,8 @@ class Navigation extends Component {
   state = {
     activeSecondLevel: null,
     doubleClickedLevel: null,
-    navigatedPageId: false,
     hrefOfIframe: false,
+    navigatedPageId: false,
   };
 
   componentDidMount() {
@@ -80,8 +80,8 @@ class Navigation extends Component {
   onNavigate = (id, url) => {
     const { onNavigate } = this.props;
     this.setState({
-      navigatedPageId: id,
       hrefOfIframe: false,
+      navigatedPageId: id,
     });
     onNavigate(id, url);
   };
@@ -152,6 +152,8 @@ class Navigation extends Component {
                     styles.iconmoon,
                     styles[`icon-${firstLevel.icon}`],
                   )}
+                  component={RouterLink}
+                  to={this.getUrlFromEntry(firstLevel)}
                   onClick={(e) => {
                     if (doubleClickedLevel) {
                       this.setState({
@@ -166,16 +168,14 @@ class Navigation extends Component {
                     const target = e.target;
                     this.setState(
                       {
-                        hrefOfIframe: false,
                         doubleClickedLevel: firstLevel,
+                        hrefOfIframe: false,
                       },
                       () => {
                         target.click();
                       },
                     );
                   }}
-                  component={RouterLink}
-                  to={this.getUrlFromEntry(firstLevel)}
                 >
                   <span className={clsx(styles['menu-item-name'])}>
                     {firstLevel.label}
@@ -224,19 +224,19 @@ class Navigation extends Component {
                             [styles['img-none']]: secondLevel.groups.length < 1,
                           },
                         )}
+                        component={RouterLink}
+                        to={this.getUrlFromEntry(secondLevel)}
                         onClick={(e) => {
                           if (secondLevel.groups.length > 0) {
                             e.preventDefault(); // do not redirect if level 2 has children
                             this.activateSecondLevel(secondLevel.page);
                           } else {
                             this.setState({
-                              navigatedPageId: secondLevel.page,
                               hrefOfIframe: false,
+                              navigatedPageId: secondLevel.page,
                             });
                           }
                         }}
-                        component={RouterLink}
-                        to={this.getUrlFromEntry(secondLevel)}
                       >
                         {secondLevel.label}
                       </StyledLink>
@@ -291,14 +291,14 @@ class Navigation extends Component {
                                             styles['collapsed-item-level-link'],
                                             styles[`color-${firstLevel.color}`],
                                           )}
-                                          onClick={() => {
-                                            this.setState({
-                                              navigatedPageId: thirdLevel.page,
-                                              hrefOfIframe: false,
-                                            });
-                                          }}
                                           component={RouterLink}
                                           to={this.getUrlFromEntry(thirdLevel)}
+                                          onClick={() => {
+                                            this.setState({
+                                              hrefOfIframe: false,
+                                              navigatedPageId: thirdLevel.page,
+                                            });
+                                          }}
                                         >
                                           {thirdLevel.label}
                                         </StyledLink>

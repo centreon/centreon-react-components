@@ -4,8 +4,8 @@ import { makeStyles } from '@material-ui/styles';
 const useStyles = makeStyles(() => ({
   container: {
     display: 'grid',
-    gridTemplateRows: '1fr',
     gridTemplateColumns: '1fr auto',
+    gridTemplateRows: '1fr',
   },
   content: {
     gridArea: (panelDynamicAndOpen) =>
@@ -19,9 +19,9 @@ const useStyles = makeStyles(() => ({
 
 interface Props {
   children: JSX.Element;
-  panel?: JSX.Element;
-  open?: boolean;
   fixed?: boolean;
+  open?: boolean;
+  panel?: JSX.Element;
 }
 
 const WithPanel = ({

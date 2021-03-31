@@ -9,7 +9,7 @@ describe('ActionBar', () => {
     const mockCancel = jest.fn();
 
     const { getByText } = render(
-      <ActionBar onCancel={mockCancel} labelCancel="Exit" />,
+      <ActionBar labelCancel="Exit" onCancel={mockCancel} />,
     );
 
     act(() => {
@@ -29,9 +29,9 @@ describe('ActionBar', () => {
     const { getByText } = render(
       <ActionBar
         isLastPage={false}
-        page={1}
-        labelPrevious="Custom previous"
         labelNext="Custom next"
+        labelPrevious="Custom previous"
+        page={1}
       />,
     );
 
@@ -43,9 +43,9 @@ describe('ActionBar', () => {
     const { getByText } = render(
       <ActionBar
         isLastPage
-        page={1}
-        labelPrevious="Custom previous"
         labelFinish="Custom finish"
+        labelPrevious="Custom previous"
+        page={1}
       />,
     );
 
@@ -55,7 +55,7 @@ describe('ActionBar', () => {
 
   it('displays custom cancel button label when wizard can be canceled', () => {
     const { getByText } = render(
-      <ActionBar onCancel={mockFn} labelCancel="Custom cancel" />,
+      <ActionBar labelCancel="Custom cancel" onCancel={mockFn} />,
     );
 
     expect(getByText('Custom cancel')).toBeInTheDocument();

@@ -11,7 +11,7 @@ export default { title: 'Wizard' };
 export const oneStep = () => (
   <Wizard open>
     <Page>
-      <Typography variant="h5" align="center">
+      <Typography align="center" variant="h5">
         Step 1
       </Typography>
     </Page>
@@ -21,17 +21,17 @@ export const oneStep = () => (
 export const threeSteps = () => (
   <Wizard open>
     <Page label="step 1">
-      <Typography variant="h5" align="center">
+      <Typography align="center" variant="h5">
         Step 1
       </Typography>
     </Page>
     <Page label="step 2">
-      <Typography variant="h5" align="center">
+      <Typography align="center" variant="h5">
         Step 2
       </Typography>
     </Page>
     <Page label="step3">
-      <Typography variant="h5" align="center">
+      <Typography align="center" variant="h5">
         Step 3
       </Typography>
     </Page>
@@ -42,23 +42,23 @@ export const threeStepsWithCustomLabels = () => (
   <Wizard
     open
     actionBarProps={{
-      labelPrevious: 'Previous step',
-      labelNext: 'Next step',
       labelFinish: 'Finish wizard',
+      labelNext: 'Next step',
+      labelPrevious: 'Previous step',
     }}
   >
     <Page label="step 1">
-      <Typography variant="h5" align="center">
+      <Typography align="center" variant="h5">
         Step 1
       </Typography>
     </Page>
     <Page label="step 2">
-      <Typography variant="h5" align="center">
+      <Typography align="center" variant="h5">
         Step 2
       </Typography>
     </Page>
     <Page label="step3">
-      <Typography variant="h5" align="center">
+      <Typography align="center" variant="h5">
         Step 3
       </Typography>
     </Page>
@@ -66,19 +66,19 @@ export const threeStepsWithCustomLabels = () => (
 );
 
 export const fullHeight = () => (
-  <Wizard open fullHeight>
+  <Wizard fullHeight open>
     <Page>
-      <Typography variant="h5" align="center">
+      <Typography align="center" variant="h5">
         Step 1
       </Typography>
     </Page>
     <Page>
-      <Typography variant="h5" align="center">
+      <Typography align="center" variant="h5">
         Step 2
       </Typography>
     </Page>
     <Page>
-      <Typography variant="h5" align="center">
+      <Typography align="center" variant="h5">
         Step 3
       </Typography>
     </Page>
@@ -88,17 +88,17 @@ export const fullHeight = () => (
 export const smallWidth = () => (
   <Wizard open width="xs">
     <Page>
-      <Typography variant="h5" align="center">
+      <Typography align="center" variant="h5">
         Step 1
       </Typography>
     </Page>
     <Page>
-      <Typography variant="h5" align="center">
+      <Typography align="center" variant="h5">
         Step 2
       </Typography>
     </Page>
     <Page>
-      <Typography variant="h5" align="center">
+      <Typography align="center" variant="h5">
         Step 3
       </Typography>
     </Page>
@@ -109,23 +109,23 @@ export const withCustomExitAlertLabels = () => (
   <Wizard
     open
     exitConfirmProps={{
-      labelTitle: 'Exit wizard ?',
-      labelMessage: "Wizard's progress will not be saved",
       labelConfirm: 'Exit',
+      labelMessage: "Wizard's progress will not be saved",
+      labelTitle: 'Exit wizard ?',
     }}
   >
     <Page>
-      <Typography variant="h5" align="center">
+      <Typography align="center" variant="h5">
         Step 1
       </Typography>
     </Page>
     <Page>
-      <Typography variant="h5" align="center">
+      <Typography align="center" variant="h5">
         Step 2
       </Typography>
     </Page>
     <Page>
-      <Typography variant="h5" align="center">
+      <Typography align="center" variant="h5">
         Step 3
       </Typography>
     </Page>
@@ -138,7 +138,7 @@ const FirstStep = ({ disableNextOnSendingRequests }) => {
   }, []);
 
   return (
-    <Typography variant="h5" align="center">
+    <Typography align="center" variant="h5">
       Sending request...
     </Typography>
   );
@@ -154,7 +154,7 @@ export const stepWithSendingRequest = () => (
       <FirstStep />
     </Page>
     <Page>
-      <Typography variant="h5" align="center">
+      <Typography align="center" variant="h5">
         Step 2
       </Typography>
     </Page>

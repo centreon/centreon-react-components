@@ -30,9 +30,9 @@ class ExtensionDeletePopup extends React.Component {
           <div className={clsx(styles.container__row)}>
             <div className={clsx(styles['container__col-xs-6'])}>
               <Button
-                label="Delete"
                 buttonType="regular"
                 color="red"
+                label="Delete"
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -42,9 +42,9 @@ class ExtensionDeletePopup extends React.Component {
             </div>
             <div className={clsx(styles['container__col-xs-6'], ['text-left'])}>
               <Button
-                label="Cancel"
                 buttonType="regular"
                 color="gray"
+                label="Cancel"
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();

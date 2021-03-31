@@ -62,7 +62,7 @@ class SliderContent extends Component {
     const slides = images.map((image, index) => {
       const isActive = currentIndex === index;
       return (
-        <ContentSliderItem key={index} image={image} isActive={isActive} />
+        <ContentSliderItem image={image} isActive={isActive} key={index} />
       );
     });
 
@@ -70,7 +70,7 @@ class SliderContent extends Component {
       const defaultImage =
         type === 'widget' ? defaultImageWidget : defaultImageModule;
 
-      return [<ContentSliderItem key={0} image={defaultImage} isActive />];
+      return [<ContentSliderItem isActive image={defaultImage} key={0} />];
     }
 
     return slides;
@@ -127,9 +127,9 @@ class SliderContent extends Component {
             )}
           </div>
           <ContentSliderIndicators
-            images={images}
             currentIndex={currentIndex}
             handleDotClick={this.handleDotClick}
+            images={images}
           />
         </div>
         {children}

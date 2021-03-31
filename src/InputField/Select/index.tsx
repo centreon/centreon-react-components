@@ -17,31 +17,31 @@ import {
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) => ({
+  compact: {
+    fontSize: 'x-small',
+    padding: theme.spacing(0.5),
+  },
   noLabelInput: {
     padding: theme.spacing(1.5),
-  },
-  compact: {
-    padding: theme.spacing(0.5),
-    fontSize: 'x-small',
   },
 }));
 
 export interface SelectEntry {
+  color?: string;
   id: number | string;
   name: string;
-  color?: string;
-  url?: string;
   type?: 'header';
+  url?: string;
 }
 
 type Props = {
-  options: Array<SelectEntry>;
-  onChange;
-  selectedOptionId: number | string;
-  label?: string;
-  error?: string;
-  compact?: boolean;
   ariaLabel?: string;
+  compact?: boolean;
+  error?: string;
+  label?: string;
+  onChange;
+  options: Array<SelectEntry>;
+  selectedOptionId: number | string;
 } & Omit<SelectProps, 'error'>;
 
 const SelectField = ({
@@ -70,13 +70,16 @@ const SelectField = ({
 
   return (
     <FormControl
-      variant="filled"
-      size="small"
       error={!isNil(error)}
       fullWidth={fullWidth}
+      size="small"
+      variant="filled"
     >
       {label && <InputLabel>{label}</InputLabel>}
       <Select
+        disableUnderline
+        displayEmpty
+        fullWidth={fullWidth}
         inputProps={{
           'aria-label': ariaLabel,
           className: clsx({
@@ -85,14 +88,11 @@ const SelectField = ({
           }),
           ...inputProps,
         }}
-        value={selectedOptionId}
-        onChange={changeOption}
-        disableUnderline
-        fullWidth={fullWidth}
-        displayEmpty
         renderValue={(id) => {
           return getOption(id)?.name;
         }}
+        value={selectedOptionId}
+        onChange={changeOption}
         {...props}
       >
         {options
@@ -107,7 +107,7 @@ const SelectField = ({
             }
 
             return (
-              <MenuItem key={key} value={id} style={{ backgroundColor: color }}>
+              <MenuItem key={key} style={{ backgroundColor: color }} value={id}>
                 {name}
               </MenuItem>
             );

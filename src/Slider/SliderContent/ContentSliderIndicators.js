@@ -14,9 +14,9 @@ const ContentSliderIndicators = ({ images, currentIndex, handleDotClick }) => {
       {images.map((image, i) => (
         <span
           className={clsx(styles[i === currentIndex ? 'active' : 'dot'])}
-          onClick={handleDotClick}
           data-index={i}
           key={i}
+          onClick={handleDotClick}
         />
       ))}
     </div>

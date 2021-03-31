@@ -37,18 +37,18 @@ const FormPage = ({ children, page, validateForm }) => {
 };
 
 const useWizardStyles = makeStyles((theme) => ({
-  fullHeight: {
-    height: '100%',
-  },
   dialogContent: {
+    backgroundColor: theme.palette.grey[100],
     display: 'flex',
     padding: 0,
-    backgroundColor: theme.palette.grey[100],
   },
   form: {
     display: 'flex',
-    flexDirection: 'column',
     flex: 1,
+    flexDirection: 'column',
+  },
+  fullHeight: {
+    height: '100%',
   },
 }));
 
@@ -154,9 +154,9 @@ const Wizard = (props) => {
   return (
     <>
       <Dialog
+        fullWidth
         classes={{ paper: fullHeight ? classes.fullHeight : null }}
         maxWidth={width}
-        fullWidth
         open={open}
         onClose={handleClose}
       >
@@ -165,8 +165,8 @@ const Wizard = (props) => {
         )}
         <DialogContent className={classes.dialogContent}>
           <Formik
-            initialValues={values}
             enableReinitialize={false}
+            initialValues={values}
             validate={validate}
             validationSchema={validationSchema()}
             onSubmit={handleSubmit}
@@ -180,36 +180,36 @@ const Wizard = (props) => {
               return (
                 <Form
                   className={classes.form}
-                  onSubmit={bag.handleSubmit}
                   onKeyPress={(keyEvent) => {
                     if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
                       keyEvent.preventDefault();
                     }
                   }}
+                  onSubmit={bag.handleSubmit}
                 >
                   <FormPage page={page} validateForm={bag.validateForm}>
                     {cloneElement(activePage, {
+                      disableNextOnSendingRequests,
                       errors: bag.errors,
                       handleBlur: bag.handleBlur,
                       handleChange: bag.handleChange,
                       handleSubmit: bag.handleSubmit,
-                      onPrevious: handlePrevious,
                       onNext: handleNext,
+                      onPrevious: handlePrevious,
+                      setFieldError: bag.setFieldError,
                       setFieldTouched: bag.setFieldTouched,
                       setFieldValue: bag.setFieldValue,
-                      setFieldError: bag.setFieldError,
+                      setValues: bag.setValues,
                       submitForm: bag.submitForm,
                       touched: bag.touched,
                       values: bag.values,
-                      disableNextOnSendingRequests,
-                      setValues: bag.setValues,
                     })}
                   </FormPage>
                   {!activePage.props.noActionBar && (
                     <ActionBar
                       disabledNext={disabledNext}
-                      page={page}
                       isLastPage={isLastPage}
+                      page={page}
                       onPrevious={handlePrevious}
                       {...actionBarProps}
                     />
@@ -231,25 +231,25 @@ const Wizard = (props) => {
 };
 
 Wizard.propTypes = {
-  open: PropTypes.bool.isRequired,
-  onClose: PropTypes.func,
-  initialValues: PropTypes.objectOf(PropTypes.any),
-  onSubmit: PropTypes.func,
-  width: PropTypes.string,
-  fullHeight: PropTypes.bool,
   actionBarProps: PropTypes.objectOf(PropTypes.any),
-  exitConfirmProps: PropTypes.objectOf(PropTypes.any),
   children: PropTypes.node.isRequired,
+  exitConfirmProps: PropTypes.objectOf(PropTypes.any),
+  fullHeight: PropTypes.bool,
+  initialValues: PropTypes.objectOf(PropTypes.any),
+  onClose: PropTypes.func,
+  onSubmit: PropTypes.func,
+  open: PropTypes.bool.isRequired,
+  width: PropTypes.string,
 };
 
 Wizard.defaultProps = {
-  onClose: null,
-  initialValues: {},
-  onSubmit: null,
-  fullHeight: false,
-  width: 'md',
   actionBarProps: null,
   exitConfirmProps: null,
+  fullHeight: false,
+  initialValues: {},
+  onClose: null,
+  onSubmit: null,
+  width: 'md',
 };
 
 export const Page = ({ children, ...props }) => (
@@ -261,13 +261,13 @@ export const Page = ({ children, ...props }) => (
 );
 
 Page.propTypes = {
-  label: PropTypes.string,
   children: PropTypes.node,
+  label: PropTypes.string,
 };
 
 Page.defaultProps = {
-  label: null,
   children: null,
+  label: null,
 };
 
 export default Wizard;

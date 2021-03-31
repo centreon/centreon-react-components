@@ -24,10 +24,6 @@ const label = 'Connected Autocomplete';
 const placeholder = 'Type here...';
 
 const optionsData = {
-  result: [
-    { id: 0, name: 'My Option 1' },
-    { id: 1, name: 'My Option 2' },
-  ],
   meta: {
     pagination: {
       limit: 2,
@@ -35,6 +31,10 @@ const optionsData = {
       total: 20,
     },
   },
+  result: [
+    { id: 0, name: 'My Option 1' },
+    { id: 1, name: 'My Option 2' },
+  ],
 };
 
 const baseEndpoint = 'endpoint';
@@ -45,10 +45,10 @@ const getEndpoint = (parameters): string => {
 const renderSingleAutocompleteField = (): RenderResult =>
   render(
     <SingleAutocompleteField
-      label={label}
-      initialPage={1}
-      getEndpoint={getEndpoint}
       field="host.name"
+      getEndpoint={getEndpoint}
+      initialPage={1}
+      label={label}
       placeholder="Type here..."
     />,
   );

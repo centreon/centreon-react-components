@@ -17,58 +17,58 @@ import IconButton from '../Button/Icon';
 type StylesProps = Pick<Props, 'headerBackgroundColor' | 'width'>;
 
 const useStyles = makeStyles<Theme, StylesProps>((theme) => ({
-  container: {
-    height: '100%',
-    display: 'grid',
-    gridTemplate: 'auto auto 1fr / 1fr',
-  },
-  header: {
-    gridArea: '1 / 1 / 2 / 1',
-    padding: theme.spacing(1),
-    display: 'grid',
-    gridTemplateColumns: '1fr auto',
-    alignItems: 'center',
-    backgroundColor: ({ headerBackgroundColor }) => headerBackgroundColor,
-  },
-  divider: {
-    gridArea: '2 / 1 / 3 / 1',
-  },
   body: {
-    gridArea: '3 / 1 / 4 / 1',
     display: 'grid',
+    gridArea: '3 / 1 / 4 / 1',
     gridTemplateRows: 'auto 1fr',
     height: '100%',
     width: ({ width }) => width,
+  },
+  container: {
+    display: 'grid',
+    gridTemplate: 'auto auto 1fr / 1fr',
+    height: '100%',
+  },
+  content: {
+    bottom: 0,
+    left: 0,
+    overflow: 'auto',
+    position: 'absolute',
+    right: 0,
+    top: 0,
   },
   contentContainer: {
     backgroundColor: theme.palette.background.default,
     position: 'relative',
   },
-  content: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    top: 0,
-    overflow: 'auto',
+  divider: {
+    gridArea: '2 / 1 / 3 / 1',
+  },
+  header: {
+    alignItems: 'center',
+    backgroundColor: ({ headerBackgroundColor }) => headerBackgroundColor,
+    display: 'grid',
+    gridArea: '1 / 1 / 2 / 1',
+    gridTemplateColumns: '1fr auto',
+    padding: theme.spacing(1),
   },
 }));
 
 export interface Tab {
-  tab: JSX.Element;
   id: number;
+  tab: JSX.Element;
 }
 
 interface Props {
   header: React.ReactElement;
-  selectedTab: React.ReactElement;
-  tabs?: Array<JSX.Element>;
-  selectedTabId?: number;
-  onTabSelect?: (event, id: number) => void;
-  onClose?: () => void;
-  labelClose?: string;
-  width?: number;
   headerBackgroundColor?: string;
+  labelClose?: string;
+  onClose?: () => void;
+  onTabSelect?: (event, id: number) => void;
+  selectedTab: React.ReactElement;
+  selectedTabId?: number;
+  tabs?: Array<JSX.Element>;
+  width?: number;
 }
 
 const Panel = ({
@@ -82,26 +82,26 @@ const Panel = ({
   width = 550,
   headerBackgroundColor,
 }: Props): JSX.Element => {
-  const classes = useStyles({ width, headerBackgroundColor });
+  const classes = useStyles({ headerBackgroundColor, width });
 
   return (
     <Slide
-      direction="left"
       in
+      direction="left"
       timeout={{
         enter: 150,
         exit: 50,
       }}
     >
-      <Paper elevation={2} className={classes.container}>
+      <Paper className={classes.container} elevation={2}>
         {header && (
           <>
             <div className={classes.header}>
               {header}
               {onClose && (
                 <IconButton
-                  title={labelClose}
                   ariaLabel={labelClose}
+                  title={labelClose}
                   onClick={onClose}
                 >
                   <IconClose color="action" />
@@ -112,13 +112,13 @@ const Panel = ({
           </>
         )}
         <div className={classes.body}>
-          <AppBar position="static" color="default">
+          <AppBar color="default" position="static">
             {!isEmpty(tabs) && (
               <Tabs
-                variant="fullWidth"
-                value={selectedTabId}
                 indicatorColor="primary"
                 textColor="primary"
+                value={selectedTabId}
+                variant="fullWidth"
                 onChange={onTabSelect}
               >
                 {tabs.map((tab) => tab)}

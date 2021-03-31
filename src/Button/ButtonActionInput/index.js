@@ -22,7 +22,7 @@ const ButtonActionInput = ({
   );
   return (
     <span className={cn} onClick={onClick}>
-      <IconAction iconColor={iconColor || ''} iconActionType={buttonIconType} />
+      <IconAction iconActionType={buttonIconType} iconColor={iconColor || ''} />
     </span>
   );
 };
