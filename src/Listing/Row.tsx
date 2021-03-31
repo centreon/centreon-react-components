@@ -29,10 +29,10 @@ const useStyles = (rowColorConditions): (() => Record<string, string>) =>
 
     return {
       row: {
-        cursor: 'pointer',
         '&:hover': {
           backgroundColor: fade(theme.palette.primary.main, 0.08),
         },
+        cursor: 'pointer',
       },
       ...rowColorClasses,
     };
@@ -65,11 +65,11 @@ const Row = React.memo<Props>(
 
     return (
       <TableRow
-        tabIndex={tabIndex}
-        onMouseOver={onMouseOver}
         className={clsx([classes.row, classes[rowColor?.name]])}
-        onFocus={onFocus}
+        tabIndex={tabIndex}
         onClick={onClick}
+        onFocus={onFocus}
+        onMouseOver={onMouseOver}
       >
         {children}
       </TableRow>

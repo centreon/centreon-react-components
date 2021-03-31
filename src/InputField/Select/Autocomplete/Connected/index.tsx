@@ -19,8 +19,8 @@ import useIntersectionObserver from '../../../../utils/useIntersectionObserver';
 import { ListingModel } from '../../../..';
 
 export interface ConnectedAutoCompleteFieldProps {
-  getEndpoint: ({ search, page }) => string;
   field: string;
+  getEndpoint: ({ search, page }) => string;
   initialPage: number;
 }
 
@@ -28,8 +28,8 @@ type SearchDebounce = (value: string) => void;
 
 const useStyles = makeStyles((theme) => ({
   checkbox: {
-    padding: 0,
     marginRight: theme.spacing(1),
+    padding: 0,
   },
 }));
 
@@ -72,10 +72,10 @@ const ConnectedAutocompleteField = (
     };
 
     const lastItemElementRef = useIntersectionObserver({
+      action: () => setPage(page + 1),
+      loading: sending,
       maxPage,
       page,
-      loading: sending,
-      action: () => setPage(page + 1),
     });
 
     const getSearchOption = (value: string) => {
@@ -96,8 +96,8 @@ const ConnectedAutocompleteField = (
         if (page === initialPage) {
           loadOptions({
             endpoint: getEndpoint({
-              search: getSearchOption(value),
               page: initialPage,
+              search: getSearchOption(value),
             }),
           });
         }
@@ -125,10 +125,10 @@ const ConnectedAutocompleteField = (
 
       const checkbox = (
         <Checkbox
-          color="primary"
-          size="small"
           checked={selected}
           className={classes.checkbox}
+          color="primary"
+          size="small"
         />
       );
 
@@ -147,7 +147,7 @@ const ConnectedAutocompleteField = (
             )}
           </div>
           {isLastElement && page > 1 && sending && (
-            <div style={{ width: '100%', textAlign: 'center' }}>
+            <div style={{ textAlign: 'center', width: '100%' }}>
               <CircularProgress size={theme.spacing(2.5)} />
             </div>
           )}
@@ -164,20 +164,20 @@ const ConnectedAutocompleteField = (
       }
 
       loadOptions({
-        endpoint: getEndpoint({ search: getSearchOption(searchValue), page }),
+        endpoint: getEndpoint({ page, search: getSearchOption(searchValue) }),
         loadMore: page > 1,
       });
     }, [optionsOpen, page]);
 
     return (
       <AutocompleteField
-        onOpen={openOptions}
-        onClose={closeOptions}
-        options={options}
-        onTextChange={changeText}
-        loading={sending}
-        renderOption={renderOptions}
         filterOptions={(opt) => opt}
+        loading={sending}
+        options={options}
+        renderOption={renderOptions}
+        onClose={closeOptions}
+        onOpen={openOptions}
+        onTextChange={changeText}
         {...props}
       />
     );

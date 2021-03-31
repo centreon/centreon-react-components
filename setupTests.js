@@ -4,12 +4,12 @@ import registerRequireContextHook from 'babel-plugin-require-context-hook/regist
 registerRequireContextHook();
 
 document.createRange = () => ({
-  setStart: () => {},
-  setEnd: () => {},
   commonAncestorContainer: {
     nodeName: 'BODY',
     ownerDocument: document,
   },
+  setEnd: () => {},
+  setStart: () => {},
 });
 
 global.IntersectionObserver = class IntersectionObserver {

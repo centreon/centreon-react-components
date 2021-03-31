@@ -18,14 +18,11 @@ import TextField from '../../Text';
 import { SelectEntry } from '..';
 
 const useStyles = makeStyles((theme) => ({
-  loadingIndicator: {
-    textAlign: 'center',
-  },
   input: {
-    '&:before': {
+    '&:after': {
       borderBottom: 0,
     },
-    '&:after': {
+    '&:before': {
       borderBottom: 0,
     },
     '&:hover:before': {
@@ -35,11 +32,14 @@ const useStyles = makeStyles((theme) => ({
   inputEndAdornment: {
     paddingBottom: '19px',
   },
+  loadingIndicator: {
+    textAlign: 'center',
+  },
   options: {
+    alignItems: 'center',
     display: 'grid',
     gridAutoFlow: 'column',
     gridGap: theme.spacing(1),
-    alignItems: 'center',
   },
 }));
 
@@ -58,14 +58,14 @@ type DisableClearable = boolean;
 type FreeSolo = boolean;
 
 export type Props = {
+  displayOptionThumbnail?: boolean;
+  endAdornment?: React.ReactElement;
+  error?: string;
+  label: string;
   loading?: boolean;
   onTextChange?;
-  label: string;
   placeholder?: string;
-  endAdornment?: React.ReactElement;
-  displayOptionThumbnail?: boolean;
   required?: boolean;
-  error?: string;
 } & Omit<
   AutocompleteProps<SelectEntry, Multiple, DisableClearable, FreeSolo>,
   'renderInput'
@@ -89,37 +89,15 @@ const AutocompleteField = ({
 
   return (
     <Autocomplete
-      size="small"
-      options={options}
-      loading={loading}
       classes={{ inputRoot: classes.input }}
       getOptionLabel={(option: SelectEntry): string => option.name}
-      loadingText={<LoadingIndicator />}
       getOptionSelected={equals}
-      renderOption={(option) => {
-        return (
-          <div className={classes.options}>
-            {displayOptionThumbnail && (
-              <img alt={option.name} src={option.url} height={20} width={20} />
-            )}
-
-            <Typography>{option.name}</Typography>
-          </div>
-        );
-      }}
+      loading={loading}
+      loadingText={<LoadingIndicator />}
+      options={options}
       renderInput={(params): JSX.Element => (
         <TextField
           {...params}
-          label={label}
-          placeholder={placeholder}
-          onChange={onTextChange}
-          value={inputValue || ''}
-          inputProps={{
-            ...params.inputProps,
-            'aria-label': label,
-          }}
-          required={required}
-          error={error}
           InputProps={{
             ...params.InputProps,
             endAdornment: (
@@ -136,8 +114,30 @@ const AutocompleteField = ({
               </>
             ),
           }}
+          error={error}
+          inputProps={{
+            ...params.inputProps,
+            'aria-label': label,
+          }}
+          label={label}
+          placeholder={placeholder}
+          required={required}
+          value={inputValue || ''}
+          onChange={onTextChange}
         />
       )}
+      renderOption={(option) => {
+        return (
+          <div className={classes.options}>
+            {displayOptionThumbnail && (
+              <img alt={option.name} height={20} src={option.url} width={20} />
+            )}
+
+            <Typography>{option.name}</Typography>
+          </div>
+        );
+      }}
+      size="small"
       {...props}
     />
   );

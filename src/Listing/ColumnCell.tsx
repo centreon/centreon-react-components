@@ -16,9 +16,9 @@ import { Column, ColumnType, ComponentColumnProps } from './models';
 
 const BodyTableCell = withStyles((theme) => ({
   root: {
-    paddingTop: theme.spacing(0.5),
     paddingBottom: theme.spacing(0.5),
     paddingRight: theme.spacing(0.5),
+    paddingTop: theme.spacing(0.5),
   },
 }))(TableCell);
 
@@ -27,19 +27,19 @@ const useStyles = makeStyles<Theme, { listingCheckable: boolean }>((theme) => ({
     paddingLeft: theme.spacing(listingCheckable ? 0 : 1.5),
   }),
   truncated: {
+    maxWidth: 150,
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    maxWidth: 150,
     whiteSpace: 'nowrap',
   },
 }));
 
 interface Props {
-  row;
   column: Column;
-  listingCheckable: boolean;
-  isRowSelected: boolean;
   isRowHovered: boolean;
+  isRowSelected: boolean;
+  listingCheckable: boolean;
+  row;
 }
 
 const ColumnCell = ({
@@ -68,15 +68,15 @@ const ColumnCell = ({
       return (
         <BodyTableCell
           align="left"
-          style={{ width: width || 'auto' }}
           className={classes.cell}
           colSpan={colSpan}
+          style={{ width: width || 'auto' }}
         >
           {isTruncated && (
             <Tooltip title={formattedString}>
               <Typography
-                variant="body2"
                 className={clsx({ [classes.truncated]: isTruncated })}
+                variant="body2"
               >
                 {formattedString}
               </Typography>
@@ -101,6 +101,7 @@ const ColumnCell = ({
       return (
         <BodyTableCell
           align="left"
+          className={classes.cell}
           style={{ width: width || 'auto' }}
           onClick={(e): void => {
             if (!clickable) {
@@ -109,12 +110,11 @@ const ColumnCell = ({
             e.preventDefault();
             e.stopPropagation();
           }}
-          className={classes.cell}
         >
           <Component
-            row={row}
-            isSelected={isRowSelected}
             isHovered={isRowHovered}
+            isSelected={isRowSelected}
+            row={row}
           />
         </BodyTableCell>
       );
