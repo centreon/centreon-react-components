@@ -13,8 +13,8 @@ export interface LocaleDateTimeFormat {
   format: (dateFormat: FormatParameters) => string;
   toDate: (date: Date | string) => string;
   toDateTime: (date: Date | string) => string;
-  toTime: (date: Date | string) => string;
   toIsoString: (date: Date) => string;
+  toTime: (date: Date | string) => string;
 }
 
 const dateTimeFormat = 'L HH:mm';
@@ -58,7 +58,7 @@ const useLocaleDateTimeFormat = (): LocaleDateTimeFormat => {
     return `${new Date(date).toISOString().substring(0, 19)}Z`;
   };
 
-  return { format, toDateTime, toDate, toTime, toIsoString };
+  return { format, toDate, toDateTime, toIsoString, toTime };
 };
 
 export default useLocaleDateTimeFormat;

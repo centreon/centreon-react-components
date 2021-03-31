@@ -9,9 +9,16 @@ import {
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const ExpansionPanelSummary = withStyles((theme) => ({
+  content: {
+    '&$expanded': {
+      margin: theme.spacing(1, 0),
+    },
+    flexGrow: 0,
+    margin: theme.spacing(1, 0),
+  },
+  expanded: {},
+  focused: {},
   root: {
-    padding: theme.spacing(0, 3, 0, 2),
-    minHeight: 'auto',
     '&$expanded': {
       minHeight: 'auto',
     },
@@ -19,16 +26,9 @@ const ExpansionPanelSummary = withStyles((theme) => ({
       backgroundColor: 'unset',
     },
     justifyContent: 'flex-start',
+    minHeight: 'auto',
+    padding: theme.spacing(0, 3, 0, 2),
   },
-  content: {
-    margin: theme.spacing(1, 0),
-    '&$expanded': {
-      margin: theme.spacing(1, 0),
-    },
-    flexGrow: 0,
-  },
-  focused: {},
-  expanded: {},
 }))(AccordionSummary);
 
 const ExpansionPanelDetails = withStyles((theme) => ({
@@ -38,10 +38,10 @@ const ExpansionPanelDetails = withStyles((theme) => ({
 }))(AccordionDetails);
 
 export interface FiltersProps {
-  expandable?: boolean;
   expandLabel?: string;
-  filters: React.ReactElement;
+  expandable?: boolean;
   expandableFilters?: React.ReactElement;
+  filters: React.ReactElement;
   onExpandTransitionFinish?: (expanded: boolean) => void;
 }
 
@@ -67,14 +67,14 @@ const Filters = React.forwardRef(
         onTransitionEnd={() => onExpandTransitionFinish?.(expanded)}
       >
         <ExpansionPanelSummary
+          IconButtonProps={{ onClick: toggleExpanded }}
           expandIcon={
             expandable && (
-              <ExpandMoreIcon color="primary" aria-label={expandLabel} />
+              <ExpandMoreIcon aria-label={expandLabel} color="primary" />
             )
           }
-          IconButtonProps={{ onClick: toggleExpanded }}
-          style={{ cursor: 'default' }}
           ref={ref as React.RefObject<HTMLDivElement>}
+          style={{ cursor: 'default' }}
         >
           {filters}
         </ExpansionPanelSummary>

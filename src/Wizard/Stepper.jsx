@@ -10,15 +10,15 @@ import StepLabel from '@material-ui/core/StepLabel';
 import StepIcon from './StepIcon';
 
 const useStyles = makeStyles((theme) => ({
-  stepper: {
-    padding: '18px 16px 14px 16px',
-    backgroundColor: theme.palette.grey[200],
-  },
   label: {
     '& .MuiStepLabel-alternativeLabel': {
-      marginTop: '4px',
       fontSize: '0.8rem',
+      marginTop: '4px',
     },
+  },
+  stepper: {
+    backgroundColor: theme.palette.grey[200],
+    padding: '18px 16px 14px 16px',
   },
 }));
 
@@ -27,17 +27,17 @@ const Stepper = ({ activeStep, children }) => {
 
   return (
     <MaterialStepper
-      className={classes.stepper}
       alternativeLabel
       activeStep={activeStep}
+      className={classes.stepper}
     >
       {React.Children.toArray(children).map((child, index) => (
         <Step key={child.props.label || index}>
           <StepLabel
+            StepIconComponent={StepIcon}
             classes={{
               alternativeLabel: classes.label,
             }}
-            StepIconComponent={StepIcon}
           >
             {child.props.label ? child.props.label : null}
           </StepLabel>

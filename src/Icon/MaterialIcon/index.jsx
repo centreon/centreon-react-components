@@ -3,10 +3,10 @@ import { styled } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 
 const Wrapper = styled('span')(() => ({
-  display: 'inline-block',
-  verticalAlign: 'middle',
-  height: 24,
   color: '#707070',
+  display: 'inline-block',
+  height: 24,
+  verticalAlign: 'middle',
 }));
 
 const MaterialIcon = ({ children, ...props }) => (

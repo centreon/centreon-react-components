@@ -5,7 +5,7 @@ import TextField from '.';
 export default { title: 'InputField/Text' };
 
 export const withLabelAndHelperText = (): JSX.Element => (
-  <TextField label="name" helperText="choose a name for current object" />
+  <TextField helperText="choose a name for current object" label="name" />
 );
 
 export const withPlaceholderOnly = (): JSX.Element => (

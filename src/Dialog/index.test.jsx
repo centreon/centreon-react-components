@@ -7,9 +7,9 @@ describe('Dialog', () => {
     const { getByText } = render(
       <Dialog
         open
-        labelTitle="title"
         labelCancel="cancel"
         labelConfirm="confirm"
+        labelTitle="title"
         onCancel={jest.fn()}
         onConfirm={jest.fn()}
       >

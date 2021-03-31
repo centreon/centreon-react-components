@@ -8,10 +8,10 @@ import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    position: 'sticky',
+    borderTop: `1px solid ${theme.palette.grey[300]}`,
     bottom: 0,
     padding: '0px 10px',
-    borderTop: `1px solid ${theme.palette.grey[300]}`,
+    position: 'sticky',
   },
 }));
 
@@ -39,16 +39,16 @@ const ActionBar = ({
   return (
     <Grid
       container
-      direction="row"
-      justify="space-between"
       alignItems="center"
       className={classes.container}
+      direction="row"
+      justify="space-between"
     >
       <Grid item>
         {onCancel && (
           <Button
-            type="button"
             color="primary"
+            type="button"
             onClick={(event) => onCancel(event, 'cancel')}
             onKeyPress={preventEnterKey}
           >
@@ -60,8 +60,8 @@ const ActionBar = ({
       <Grid item>
         {page > 0 && (
           <Button
-            type="button"
             color="primary"
+            type="button"
             onClick={onPrevious}
             onKeyPress={preventEnterKey}
           >
@@ -71,9 +71,9 @@ const ActionBar = ({
 
         {isLastPage ? (
           <Button
-            type="submit"
             color="primary"
             disabled={disabledNext}
+            type="submit"
             onClick={onFinish}
             onKeyPress={preventEnterKey}
           >
@@ -81,10 +81,10 @@ const ActionBar = ({
           </Button>
         ) : (
           <Button
-            type="submit"
             color="primary"
-            onClick={onNext}
             disabled={disabledNext}
+            type="submit"
+            onClick={onNext}
             onKeyPress={preventEnterKey}
           >
             {labelNext}
@@ -97,30 +97,30 @@ const ActionBar = ({
 
 ActionBar.propTypes = {
   disabledNext: PropTypes.bool,
-  page: PropTypes.number,
   isLastPage: PropTypes.bool,
-  onCancel: PropTypes.func,
-  onPrevious: PropTypes.func,
-  onNext: PropTypes.func,
-  onFinish: PropTypes.func,
   labelCancel: PropTypes.string,
-  labelPrevious: PropTypes.string,
-  labelNext: PropTypes.string,
   labelFinish: PropTypes.string,
+  labelNext: PropTypes.string,
+  labelPrevious: PropTypes.string,
+  onCancel: PropTypes.func,
+  onFinish: PropTypes.func,
+  onNext: PropTypes.func,
+  onPrevious: PropTypes.func,
+  page: PropTypes.number,
 };
 
 ActionBar.defaultProps = {
   disabledNext: false,
-  page: 0,
   isLastPage: true,
-  onCancel: null,
-  onPrevious: null,
-  onNext: null,
-  onFinish: null,
   labelCancel: 'Cancel',
-  labelPrevious: 'Previous',
-  labelNext: 'Next',
   labelFinish: 'Finish',
+  labelNext: 'Next',
+  labelPrevious: 'Previous',
+  onCancel: null,
+  onFinish: null,
+  onNext: null,
+  onPrevious: null,
+  page: 0,
 };
 
 export default ActionBar;

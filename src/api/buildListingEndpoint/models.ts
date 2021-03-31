@@ -2,8 +2,8 @@ import { QueryParameter } from '../../queryParameters/models';
 
 export interface BuildListingEndpointParameters {
   baseEndpoint?: string;
-  parameters: Parameters;
   customQueryParameters?: Array<QueryParameter>;
+  parameters: Parameters;
 }
 
 export interface SearchMatch {
@@ -12,16 +12,16 @@ export interface SearchMatch {
 }
 
 export interface Parameters {
-  sort?: SortQueryParameterValue;
-  page?: number;
-  limit?: number;
-  search?: SearchParameter;
   customQueryParameters?: Array<QueryParameter>;
+  limit?: number;
+  page?: number;
+  search?: SearchParameter;
+  sort?: SortQueryParameterValue;
 }
 
 export interface SearchParameter {
-  regex?: RegexSearchParameter;
   lists?: Array<ListsSearchParameter>;
+  regex?: RegexSearchParameter;
 }
 
 export interface ListsSearchQueryParameterValue {
@@ -33,8 +33,8 @@ export interface SortQueryParameterValue {
 }
 
 export interface RegexSearchParameter {
-  value: string;
   fields: Array<string>;
+  value: string;
 }
 
 export interface ListsSearchParameter {

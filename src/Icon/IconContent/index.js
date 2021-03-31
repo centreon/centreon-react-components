@@ -15,7 +15,6 @@ const IconContent = ({
   customClass,
 }) => (
   <span
-    style={loading ? { top: '20%' } : {}}
     className={clsx(
       styles['content-icon'],
       { [styles[`content-icon-${iconContentType}`]]: true },
@@ -23,6 +22,7 @@ const IconContent = ({
       styles[loading ? 'loading-animation' : ''],
       styles[customClass || ''],
     )}
+    style={loading ? { top: '20%' } : {}}
     onClick={onClick}
   />
 );

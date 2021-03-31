@@ -9,33 +9,33 @@ import RoundedInvertedIcon from '../RoundedInvertedIcon';
 const RoundedInvertedPowerSettings = RoundedInvertedIcon(PowerSettings);
 
 const DisablingMaterialIcon = styled(MaterialIcon)(() => ({
-  display: 'inline-block',
-  verticalAlign: 'middle',
-  height: 23,
-  width: 23,
-  position: 'relative',
   '&::after': {
-    content: "''",
-    position: 'absolute',
-    width: 2,
-    height: 30,
     background: '#7f7f7f',
-    transform: 'rotate(140deg)',
+    content: "''",
+    height: 30,
     left: 9,
+    position: 'absolute',
     top: -2,
+    transform: 'rotate(140deg)',
+    width: 2,
     zIndex: 1,
   },
   '&::before': {
-    content: "''",
-    position: 'absolute',
-    width: 4,
-    height: 30,
     background: '#fff',
-    transform: 'rotate(140deg)',
+    content: "''",
+    height: 30,
     left: 9,
+    position: 'absolute',
     top: -3,
+    transform: 'rotate(140deg)',
+    width: 4,
     zIndex: 1,
   },
+  display: 'inline-block',
+  height: 23,
+  position: 'relative',
+  verticalAlign: 'middle',
+  width: 23,
 }));
 
 const IconPowerSettings = (props) => (

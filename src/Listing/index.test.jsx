@@ -11,27 +11,27 @@ describe('Table', () => {
 
   const columnConfiguration = [
     {
+      getFormattedString: ({ name }) => name,
       id: 'name',
       label: 'name',
-      type: ColumnType.string,
-      getFormattedString: ({ name }) => name,
       sortable: true,
+      type: ColumnType.string,
     },
     {
+      getFormattedString: ({ description }) => description,
       id: 'description',
       label: 'description',
-      type: ColumnType.string,
-      getFormattedString: ({ description }) => description,
-      sortable: true,
       sortField: 'descriptionField',
+      sortable: true,
+      type: ColumnType.string,
     },
   ];
 
   const tableData = [
-    { id: 0, name: 'My First Row', description: 'first row description' },
-    { id: 1, name: 'My Second Row', description: 'second row description' },
-    { id: 2, name: 'My Third Row', description: 'third row description' },
-    { id: 3, name: 'My Fourth Row', description: 'fourth row description' },
+    { description: 'first row description', id: 0, name: 'My First Row' },
+    { description: 'second row description', id: 1, name: 'My Second Row' },
+    { description: 'third row description', id: 2, name: 'My Third Row' },
+    { description: 'fourth row description', id: 3, name: 'My Fourth Row' },
   ];
   const onSelectRows = jest.fn();
   const onSort = jest.fn();
@@ -39,12 +39,12 @@ describe('Table', () => {
   const oneHundredElements = new Array(100).fill(0);
 
   const oneHundredTableData = [...oneHundredElements].map((_, index) => ({
+    active: index % 2 === 0,
+    description: `Entity ${index}`,
+    disableCheckbox: index % 4 === 0,
     id: index,
     name: `E${index}`,
-    description: `Entity ${index}`,
-    active: index % 2 === 0,
     selected: index % 3 === 0,
-    disableCheckbox: index % 4 === 0,
   }));
 
   const PaginationTable = () => {
@@ -53,14 +53,14 @@ describe('Table', () => {
 
     return (
       <Table
-        onSort={onSort}
         columnConfiguration={columnConfiguration}
+        currentPage={page}
+        limit={limit}
         tableData={oneHundredTableData}
         totalRows={oneHundredTableData.length}
-        limit={limit}
-        currentPage={page}
         onPaginate={(_, value) => setPage(value)}
         onPaginationLimitChanged={({ target }) => setLimit(target.value)}
+        onSort={onSort}
       />
     );
   };
@@ -68,10 +68,10 @@ describe('Table', () => {
   it('selects a row when the corresponding checkbox is clicked', () => {
     const { container } = render(
       <Table
-        onSelectRows={onSelectRows}
+        checkable
         columnConfiguration={columnConfiguration}
         tableData={tableData}
-        checkable
+        onSelectRows={onSelectRows}
       />,
     );
 
@@ -90,11 +90,11 @@ describe('Table', () => {
 
     const { container } = render(
       <Table
-        onSelectRows={onSelectRows}
-        columnConfiguration={columnConfiguration}
-        tableData={tableData}
-        selectedRows={selectedRows}
         checkable
+        columnConfiguration={columnConfiguration}
+        selectedRows={selectedRows}
+        tableData={tableData}
+        onSelectRows={onSelectRows}
       />,
     );
     const firstRowCheckbox = getAllCheckboxes(container)[1];
@@ -107,11 +107,11 @@ describe('Table', () => {
   it('selects all rows when the "select all" checkbox is clicked', () => {
     const { container } = render(
       <Table
-        onSelectRows={onSelectRows}
+        checkable
         columnConfiguration={columnConfiguration}
         tableData={tableData}
         totalRows={4}
-        checkable
+        onSelectRows={onSelectRows}
       />,
     );
 
@@ -125,11 +125,11 @@ describe('Table', () => {
   it('unselects all rows when all rows are selected and the "select all" checkbox is clicked', () => {
     const { container } = render(
       <Table
-        onSelectRows={onSelectRows}
-        columnConfiguration={columnConfiguration}
-        tableData={tableData}
-        selectedRows={tableData}
         checkable
+        columnConfiguration={columnConfiguration}
+        selectedRows={tableData}
+        tableData={tableData}
+        onSelectRows={onSelectRows}
       />,
     );
 
@@ -144,11 +144,11 @@ describe('Table', () => {
     const selectedRows = tableData.filter(({ id }) => id % 2 === 0);
     const { container } = render(
       <Table
-        onSelectRows={onSelectRows}
-        columnConfiguration={columnConfiguration}
-        tableData={tableData}
-        selectedRows={selectedRows}
         checkable
+        columnConfiguration={columnConfiguration}
+        selectedRows={selectedRows}
+        tableData={tableData}
+        onSelectRows={onSelectRows}
       />,
     );
 
@@ -164,9 +164,9 @@ describe('Table', () => {
 
     const { getByLabelText } = render(
       <Table
-        onSort={onSort}
         columnConfiguration={columnConfiguration}
         tableData={tableData}
+        onSort={onSort}
       />,
     );
 
@@ -183,9 +183,9 @@ describe('Table', () => {
 
     const { getByLabelText } = render(
       <Table
-        onSort={onSort}
         columnConfiguration={columnConfiguration}
         tableData={tableData}
+        onSort={onSort}
       />,
     );
 
