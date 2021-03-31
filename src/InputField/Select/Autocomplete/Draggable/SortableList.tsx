@@ -10,13 +10,13 @@ const SortableList = SortableContainer(
       <div>
         {items.map((tag, index) => (
           <SortableItem
-            key={`${tag.name}_${index.toString()}`}
-            index={index}
-            deleteValue={deleteValue}
-            name={tag.name}
             createOption={tag.createOption}
+            deleteValue={deleteValue}
             idx={index}
+            index={index}
             isSorting={isSorting}
+            key={`${tag.name}_${index.toString()}`}
+            name={tag.name}
           />
         ))}
       </div>

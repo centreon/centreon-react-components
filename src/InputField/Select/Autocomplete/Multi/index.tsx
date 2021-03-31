@@ -8,8 +8,8 @@ import { SelectEntry } from '../..';
 
 const useStyles = makeStyles((theme) => ({
   checkbox: {
-    padding: 0,
     marginRight: theme.spacing(1),
+    padding: 0,
   },
   tag: {
     fontSize: theme.typography.pxToRem(10),
@@ -55,16 +55,16 @@ const MultiAutocompleteField = ({
 
   return (
     <Autocomplete
-      multiple
       disableCloseOnSelect
+      multiple
       renderOption={(option, { selected }): JSX.Element => (
         <>
           {displayCheckboxOption && (
             <Checkbox
-              color="primary"
-              size="small"
               checked={selected}
               className={classes.checkbox}
+              color="primary"
+              size="small"
             />
           )}
           <Typography>{option.name}</Typography>

@@ -24,41 +24,44 @@ import ColumnCell, { BodyTableCell } from './ColumnCell';
 const loadingIndicatorHeight = 3;
 
 const useStyles = makeStyles<Theme>((theme) => ({
-  paperElement: {
-    width: '100%',
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    background: 'none',
-  },
   actionBar: {
-    display: 'flex',
     alignItems: 'center',
+    display: 'flex',
   },
   actions: {
     padding: theme.spacing(1),
   },
+  loadingIndicator: {
+    height: loadingIndicatorHeight,
+    width: '100%',
+  },
   paginationElement: {
-    marginLeft: 'auto',
     display: 'flex',
     flexDirection: 'row-reverse',
+    marginLeft: 'auto',
     padding: 0,
   },
-  loadingIndicator: {
+  paperElement: {
+    background: 'none',
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
     width: '100%',
-    height: loadingIndicatorHeight,
   },
 }));
 
 type RowId = number | string;
 
 export interface Props {
+  Actions?: JSX.Element;
   checkable?: boolean;
-  disableRowCheckCondition?;
-  currentPage?;
   columnConfiguration;
+  currentPage?;
+  disableRowCheckCondition?;
   emptyDataMessage?: string;
-  rowColorConditions?;
+  expanded?: boolean;
+  getId?: (row) => RowId;
+  innerScrollDisabled?: boolean;
   labelDisplayedRows?: (fromToCount) => string;
   labelRowsPerPage?: string;
   limit?: number;
@@ -69,16 +72,13 @@ export interface Props {
   onRowClick?: (row) => void;
   onSelectRows?: (rows) => void;
   onSort?: (sortParams) => void;
-  getId?: (row) => RowId;
   paginated?: boolean;
+  rowColorConditions?;
   selectedRows?;
-  sorto?: 'asc' | 'desc';
   sortf?: string;
+  sorto?: 'asc' | 'desc';
   tableData?;
   totalRows?;
-  Actions?: JSX.Element;
-  innerScrollDisabled?: boolean;
-  expanded?: boolean;
 }
 
 const Listing = ({
@@ -118,10 +118,10 @@ const Listing = ({
   const classes = useStyles();
 
   useResizeObserver({
-    ref: paperRef,
     onResize: () => {
       setTableTopOffset(getCumulativeOffset(paperRef.current));
     },
+    ref: paperRef,
   });
 
   const selectedRowsInclude = (row): boolean => {
@@ -213,49 +213,49 @@ const Listing = ({
           <div className={classes.actions}>{Actions}</div>
           {paginated ? (
             <StyledPagination
-              className={classes.paginationElement}
-              rowsPerPageOptions={[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
-              labelDisplayedRows={labelDisplayedRows}
-              labelRowsPerPage={labelRowsPerPage}
-              colSpan={3}
-              count={totalRows}
-              rowsPerPage={limit}
-              page={currentPage}
+              ActionsComponent={PaginationActions}
               SelectProps={{
                 native: true,
               }}
+              className={classes.paginationElement}
+              colSpan={3}
+              count={totalRows}
+              labelDisplayedRows={labelDisplayedRows}
+              labelRowsPerPage={labelRowsPerPage}
+              page={currentPage}
+              rowsPerPage={limit}
+              rowsPerPageOptions={[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]}
               onChangePage={onPaginate}
               onChangeRowsPerPage={onLimitChanged}
-              ActionsComponent={PaginationActions}
             />
           ) : null}
         </div>
         <Paper
-          style={{
-            overflow: 'auto',
-            maxHeight: tableMaxHeight(),
-          }}
-          elevation={1}
           square
+          elevation={1}
+          style={{
+            maxHeight: tableMaxHeight(),
+            overflow: 'auto',
+          }}
         >
-          <Table size="small" stickyHeader>
+          <Table stickyHeader size="small">
             <ListingHeader
+              checkable={checkable}
+              headColumns={columnConfiguration}
               numSelected={selectedRows.length}
               order={sorto}
-              checkable={checkable}
               orderBy={sortf}
-              onSelectAllClick={selectAllRows}
-              onRequestSort={handleRequestSort}
-              rowCount={limit - emptyRows}
-              headColumns={columnConfiguration}
               ref={tableHeaderElement as RefObject<HTMLTableSectionElement>}
+              rowCount={limit - emptyRows}
+              onRequestSort={handleRequestSort}
+              onSelectAllClick={selectAllRows}
             />
 
             <TableBody
-              onMouseLeave={clearHoveredRow}
               style={{
                 position: 'relative',
               }}
+              onMouseLeave={clearHoveredRow}
             >
               {tableData.map((row) => {
                 const isRowSelected = isSelected(row);
@@ -263,44 +263,44 @@ const Listing = ({
 
                 return (
                   <ListingRow
-                    tabIndex={-1}
+                    isHovered={isRowHovered}
+                    isSelected={isRowSelected}
                     key={getId(row)}
-                    onMouseOver={(): void => hoverRow(row)}
-                    onFocus={(): void => hoverRow(row)}
+                    row={row}
+                    rowColorConditions={rowColorConditions}
+                    tabIndex={-1}
                     onClick={(): void => {
                       onRowClick(row);
                     }}
-                    isHovered={isRowHovered}
-                    isSelected={isRowSelected}
-                    row={row}
-                    rowColorConditions={rowColorConditions}
+                    onFocus={(): void => hoverRow(row)}
+                    onMouseOver={(): void => hoverRow(row)}
                   >
                     {checkable ? (
                       <BodyTableCell
                         align="left"
-                        onClick={(event): void => selectRow(event, row)}
                         padding="checkbox"
+                        onClick={(event): void => selectRow(event, row)}
                       >
                         <Checkbox
-                          size="small"
-                          color="primary"
                           checked={isRowSelected}
+                          color="primary"
+                          disabled={disableRowCheckCondition(row)}
                           inputProps={{
                             'aria-label': `Select row ${getId(row)}`,
                           }}
-                          disabled={disableRowCheckCondition(row)}
+                          size="small"
                         />
                       </BodyTableCell>
                     ) : null}
 
                     {columnConfiguration.map((column) => (
                       <ColumnCell
-                        key={`${getId(row)}-${column.id}`}
                         column={column}
-                        row={row}
-                        listingCheckable={checkable}
-                        isRowSelected={isRowSelected}
                         isRowHovered={isRowHovered}
+                        isRowSelected={isRowSelected}
+                        key={`${getId(row)}-${column.id}`}
+                        listingCheckable={checkable}
+                        row={row}
                       />
                     ))}
                   </ListingRow>
@@ -309,8 +309,8 @@ const Listing = ({
               {tableData.length < 1 && (
                 <TableRow tabIndex={-1}>
                   <BodyTableCell
-                    colSpan={columnConfiguration.length + 1}
                     align="center"
+                    colSpan={columnConfiguration.length + 1}
                   >
                     {loading ? <ListingLoadingSkeleton /> : emptyDataMessage}
                   </BodyTableCell>

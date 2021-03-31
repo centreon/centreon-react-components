@@ -12,12 +12,12 @@ import {
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) => ({
+  compact: {
+    fontSize: 'x-small',
+    padding: theme.spacing(1),
+  },
   noLabelInput: {
     padding: theme.spacing(1.5),
-  },
-  compact: {
-    padding: theme.spacing(1),
-    fontSize: 'x-small',
   },
   transparent: {
     backgroundColor: 'transparent',
@@ -25,9 +25,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface OptionalLabelInputAdornmentProps {
+  children: React.ReactNode;
   label?: React.ReactNode;
   position: 'end' | 'start';
-  children: React.ReactNode;
 }
 
 const OptionalLabelInputAdornment = ({
@@ -45,11 +45,11 @@ const OptionalLabelInputAdornment = ({
 };
 
 export type Props = {
-  StartAdornment?: React.SFC;
   EndAdornment?: React.SFC;
-  error?: string;
-  compact?: boolean;
+  StartAdornment?: React.SFC;
   ariaLabel?: string;
+  compact?: boolean;
+  error?: string;
   transparent?: boolean;
 } & Omit<TextFieldProps, 'variant' | 'size' | 'error'>;
 
@@ -67,13 +67,11 @@ const TextField = ({
 
   return (
     <MuiTextField
-      label={label}
-      error={!isNil(error)}
-      helperText={error}
       InputProps={{
         className: clsx({
           [classes.transparent]: transparent,
         }),
+        disableUnderline: true,
         endAdornment: EndAdornment && (
           <OptionalLabelInputAdornment label={label} position="end">
             <EndAdornment />
@@ -84,8 +82,9 @@ const TextField = ({
             <StartAdornment />
           </OptionalLabelInputAdornment>
         ),
-        disableUnderline: true,
       }}
+      error={!isNil(error)}
+      helperText={error}
       inputProps={{
         'aria-label': ariaLabel,
         className: clsx({
@@ -93,8 +92,9 @@ const TextField = ({
           [classes.compact]: compact,
         }),
       }}
-      variant="filled"
+      label={label}
       size="small"
+      variant="filled"
       {...rest}
     />
   );

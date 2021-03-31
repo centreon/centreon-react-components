@@ -15,8 +15,8 @@ import LastPageIcon from '@material-ui/icons/LastPage';
 
 const styles = (theme) => ({
   root: {
-    flexShrink: 0,
     color: theme.palette.text.secondary,
+    flexShrink: 0,
     marginLeft: theme.spacing(2.5),
   },
 });
@@ -47,16 +47,16 @@ class PaginationActions extends Component {
     return (
       <div className={classes.root}>
         <IconButton
-          onClick={this.handleFirstPageButtonClick}
-          disabled={page === 0}
           aria-label="First Page"
+          disabled={page === 0}
+          onClick={this.handleFirstPageButtonClick}
         >
           {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
         </IconButton>
         <IconButton
-          onClick={this.handleBackButtonClick}
-          disabled={page === 0}
           aria-label="Previous Page"
+          disabled={page === 0}
+          onClick={this.handleBackButtonClick}
         >
           {theme.direction === 'rtl' ? (
             <KeyboardArrowRight />
@@ -65,9 +65,9 @@ class PaginationActions extends Component {
           )}
         </IconButton>
         <IconButton
-          onClick={this.handleNextButtonClick}
-          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
           aria-label="Next Page"
+          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+          onClick={this.handleNextButtonClick}
         >
           {theme.direction === 'rtl' ? (
             <KeyboardArrowLeft />
@@ -76,9 +76,9 @@ class PaginationActions extends Component {
           )}
         </IconButton>
         <IconButton
-          onClick={this.handleLastPageButtonClick}
-          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
           aria-label="Last Page"
+          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+          onClick={this.handleLastPageButtonClick}
         >
           {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
         </IconButton>
@@ -88,11 +88,11 @@ class PaginationActions extends Component {
 }
 
 PaginationActions.propTypes = {
+  classes: PropTypes.object.isRequired,
   count: PropTypes.number.isRequired,
   page: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
   theme: PropTypes.object.isRequired,
-  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles, { withTheme: true })(PaginationActions);

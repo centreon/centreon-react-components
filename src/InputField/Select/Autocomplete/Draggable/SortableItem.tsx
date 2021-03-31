@@ -7,9 +7,6 @@ import { Chip, makeStyles, lighten } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
-  tag: {
-    margin: theme.spacing(0.5),
-  },
   createdTag: {
     backgroundColor: lighten(theme.palette.primary.main, 0.7),
   },
@@ -19,6 +16,9 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.easeOut,
     }),
   },
+  tag: {
+    margin: theme.spacing(0.5),
+  },
 }));
 
 const SortableItem = SortableElement(
@@ -27,16 +27,16 @@ const SortableItem = SortableElement(
 
     return (
       <Chip
-        size="small"
-        label={name}
+        clickable
         className={clsx(
           classes.tag,
           createOption && classes.createdTag,
           isSorting && classes.sorting,
         )}
-        clickable
-        onDelete={() => deleteValue(idx)}
         deleteIcon={<CloseIcon />}
+        label={name}
+        size="small"
+        onDelete={() => deleteValue(idx)}
       />
     );
   },

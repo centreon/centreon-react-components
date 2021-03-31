@@ -5,22 +5,22 @@ export interface ComponentColumnProps {
 }
 
 export interface Column {
+  Component?: (props: ComponentColumnProps) => JSX.Element | null;
+  clickable?: boolean;
+  disablePadding?: boolean;
+  getColSpan?: (isSelected) => number | undefined;
+  getFormattedString?: (row) => string | null;
+  getHiddenCondition?: (isSelected) => boolean;
+  getRenderComponentCondition?: (row) => boolean;
+  getRenderComponentOnRowUpdateCondition?: (row) => boolean;
+  getTruncateCondition?: (isSelected) => boolean;
+  hasHoverableComponent?: boolean;
   id: string;
   label: string;
-  type: ColumnType;
-  Component?: (props: ComponentColumnProps) => JSX.Element | null;
-  hasHoverableComponent?: boolean;
-  clickable?: boolean;
-  width?: number | string;
-  getFormattedString?: (row) => string | null;
-  getColSpan?: (isSelected) => number | undefined;
-  getTruncateCondition?: (isSelected) => boolean;
-  getHiddenCondition?: (isSelected) => boolean;
-  disablePadding?: boolean;
-  sortable?: boolean;
   sortField?: string;
-  getRenderComponentOnRowUpdateCondition?: (row) => boolean;
-  getRenderComponentCondition?: (row) => boolean;
+  sortable?: boolean;
+  type: ColumnType;
+  width?: number | string;
 }
 
 enum ColumnType {
@@ -29,9 +29,9 @@ enum ColumnType {
 }
 
 export interface RowColorCondition {
-  name: string;
-  condition: (row) => boolean;
   color: string;
+  condition: (row) => boolean;
+  name: string;
 }
 
 export { ColumnType };

@@ -27,14 +27,14 @@ const HeaderTypography = withStyles({
 })(Typography);
 
 interface Props {
+  checkable: boolean;
+  headColumns;
+  numSelected: number;
+  onRequestSort: (event, property) => void;
   onSelectAllClick: (event) => void;
   order?: 'desc' | 'asc';
   orderBy?: string;
-  numSelected: number;
   rowCount: number;
-  headColumns;
-  checkable: boolean;
-  onRequestSort: (event, property) => void;
 }
 
 const ListingHeader = React.forwardRef(
@@ -65,11 +65,11 @@ const ListingHeader = React.forwardRef(
           {checkable ? (
             <HeaderCell padding="checkbox">
               <Checkbox
-                size="small"
-                color="primary"
-                inputProps={{ 'aria-label': 'Select all' }}
-                indeterminate={numSelected > 0 && numSelected < rowCount}
                 checked={numSelected === rowCount}
+                color="primary"
+                indeterminate={numSelected > 0 && numSelected < rowCount}
+                inputProps={{ 'aria-label': 'Select all' }}
+                size="small"
                 onChange={onSelectAllClick}
               />
             </HeaderCell>
@@ -77,11 +77,11 @@ const ListingHeader = React.forwardRef(
 
           {headColumns.map((column) => (
             <HeaderCell
-              key={column.id}
               align={column.numeric ? 'left' : 'inherit'}
+              className={classes.cell}
+              key={column.id}
               padding={column.disablePadding ? 'none' : 'default'}
               sortDirection={orderBy === column.id ? order : false}
-              className={classes.cell}
             >
               {column.sortable === false ? (
                 <HeaderTypography variant="body2">
@@ -89,8 +89,8 @@ const ListingHeader = React.forwardRef(
                 </HeaderTypography>
               ) : (
                 <TableSortLabel
-                  aria-label={`Column ${column.label}`}
                   active={orderBy === getSortField(column)}
+                  aria-label={`Column ${column.label}`}
                   direction={order || 'desc'}
                   onClick={createSortHandler(getSortField(column))}
                 >
