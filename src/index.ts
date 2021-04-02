@@ -30,11 +30,14 @@ export { default as DraggableAutocompleteField } from './InputField/Select/Autoc
 export { default as DraggableConnectedAutocompleteField } from './InputField/Select/Autocomplete/Draggable/MultiConnected';
 export { default as SearchField } from './InputField/Search';
 export { default as RegexpHelpTooltip } from './InputField/Search/RegexpHelpTooltip';
-export { default as TextField } from './InputField/Text';
 
-export type { SelectEntry } from './InputField/Select';
-export { default as SelectField } from './InputField/Select';
-export { default as IconPopoverAutocompleteField } from './InputField/Select/Autocomplete/Multi/IconPopover';
+export { default as TextField } from './InputField/Text';
+export {
+  Props as TextFieldProps,
+} from './InputField/Text';
+
+export type { SelectEntry, SelectField } from './InputField/Select';
+export { default as IconPopoverMultiSelectField } from './InputField/Select/IconPopover';
 
 export { default as Logo } from './Logo';
 export { default as LogoMini } from './Logo/LogoMini';
