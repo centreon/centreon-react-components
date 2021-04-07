@@ -14,7 +14,6 @@ import {
 import IconClose from '@material-ui/icons/Clear';
 
 import IconButton from '../Button/Icon';
-import useResizeObserver from '../Listing/useResizeObserver';
 
 type StylesProps = Pick<Props, 'headerBackgroundColor' | 'width'>;
 
