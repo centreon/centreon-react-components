@@ -117,6 +117,7 @@ const Panel = React.forwardRef<HTMLDivElement, Props>(
 
     React.useEffect(() => {
       window.addEventListener('resize', resizeWindow);
+
       return () => {
         window.removeEventListener('resize', resizeWindow);
       };
