@@ -32,11 +32,9 @@ export { default as SearchField } from './InputField/Search';
 export { default as RegexpHelpTooltip } from './InputField/Search/RegexpHelpTooltip';
 
 export { default as TextField } from './InputField/Text';
-export {
-  Props as TextFieldProps,
-} from './InputField/Text';
+export { Props as TextFieldProps } from './InputField/Text';
 
-export type { SelectEntry, SelectField } from './InputField/Select';
+export type { SelectEntry, default as SelectField } from './InputField/Select';
 export { default as IconPopoverMultiSelectField } from './InputField/Select/IconPopover';
 
 export { default as Logo } from './Logo';
