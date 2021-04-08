@@ -32,7 +32,7 @@ export { default as SearchField } from './InputField/Search';
 export { default as RegexpHelpTooltip } from './InputField/Search/RegexpHelpTooltip';
 
 export { default as TextField } from './InputField/Text';
-export { Props as TextFieldProps } from './InputField/Text';
+export type { Props as TextFieldProps } from './InputField/Text';
 
 export type { SelectEntry } from './InputField/Select';
 export { default as SelectField } from './InputField/Select';
