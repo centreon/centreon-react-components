@@ -111,6 +111,7 @@ export { default as SubmenuItem } from './Submenu/SubmenuHeader/SubmenuItem';
 
 export { default as MultiSelectEntries } from './MultiSelectEntries';
 export { default as SectionPanel, MemoizedSectionPanel } from './Panel/Section';
+export { default as Tab } from './Panel/Tab';
 
 export { default as StatusChip } from './StatusChip';
 export type { Props as StatusChipProps } from './StatusChip';
@@ -151,4 +152,4 @@ export type {
 } from './api/buildListingEndpoint/models';
 
 export { default as useMemoComponent } from './utils/useMemoComponent';
-export { default as Tab } from './Panel/Tab';
+export { default as MenuSkeleton } from './MenuSkeleton';
