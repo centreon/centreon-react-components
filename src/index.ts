@@ -151,3 +151,4 @@ export type {
 } from './api/buildListingEndpoint/models';
 
 export { default as useMemoComponent } from './utils/useMemoComponent';
+export { default as Tab } from './Panel/Tab';
