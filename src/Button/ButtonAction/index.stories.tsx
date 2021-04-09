@@ -6,7 +6,7 @@ import ButtonAction from '.';
 
 export default { title: 'Button/Action' };
 
-export const deleteAction = () => (
+export const deleteAction = (): JSX.Element => (
   <ButtonAction
     buttonActionType="delete"
     buttonIconType="delete"

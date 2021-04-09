@@ -11,13 +11,22 @@ import IconAction from '../../Icon/IconAction';
 
 import styles from './button-action-input.scss';
 
+export interface ButtonActionInputProps {
+  buttonColor?: string;
+  buttonIconType?: string;
+  buttonPosition?: string;
+  iconColor?: string;
+  onClick: () => void;
+  title?: string;
+}
+
 const ButtonActionInput = ({
   buttonIconType,
-  onClick,
   buttonColor,
   iconColor,
   buttonPosition,
-}) => {
+  onClick,
+}: ButtonActionInputProps): JSX.Element => {
   const cn = clsx(
     styles['button-action-input'],
     styles[buttonColor || ''],

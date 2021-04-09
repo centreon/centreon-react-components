@@ -11,6 +11,15 @@ import IconAction from '../../Icon/IconAction';
 
 import styles from './button-action.scss';
 
+export interface ButtonActionProps {
+  buttonActionType?: string;
+  buttonIconType?: string;
+  customPosition?: string;
+  iconColor: string;
+  onClick: () => void;
+  title?: string;
+}
+
 const ButtonAction = ({
   buttonActionType,
   buttonIconType,
@@ -18,7 +27,7 @@ const ButtonAction = ({
   iconColor,
   title,
   customPosition,
-}) => {
+}: ButtonActionProps): JSX.Element => {
   const cn = clsx(
     styles['button-action'],
     {
