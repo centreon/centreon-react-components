@@ -106,7 +106,7 @@ const AutocompleteField = ({
 }: Props): JSX.Element => {
   const classes = useStyles();
 
-  const areSelectEntriesEqual = (a, b) => {
+  const areSelectEntriesEqual = (option, value) => {
     const identifyingProps = ['id', 'name'];
 
     return equals(pick(identifyingProps, a), pick(identifyingProps, b));
