@@ -109,7 +109,10 @@ const AutocompleteField = ({
   const areSelectEntriesEqual = (option, value) => {
     const identifyingProps = ['id', 'name'];
 
-    return equals(pick(identifyingProps, option), pick(identifyingProps, value));
+    return equals(
+      pick(identifyingProps, option),
+      pick(identifyingProps, value),
+    );
   };
 
   return (
