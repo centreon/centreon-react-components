@@ -35,7 +35,7 @@ const useLocaleDateTimeFormat = (): LocaleDateTimeFormat => {
     const dayjsDate = dayjs(date);
     const timezoneDate = equals(timezone, 'UTC')
       ? dayjsDate.utc()
-      : dayjs(date).tz(timezone);
+      : dayjsDate.tz(timezone);
 
     return timezoneDate.locale(normalizedLocale).format(formatString);
   };
