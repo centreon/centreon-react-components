@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 
-import { equals, not } from 'ramda';
+import { equals, length, not, pluck } from 'ramda';
 
 import { TableRowProps, TableRow, makeStyles, Theme } from '@material-ui/core';
 
@@ -80,7 +80,14 @@ const Row = React.memo<RowProps>(
       visibleColumns: nextVisibleColumns,
     } = nextProps;
 
-    if (not(equals(previousVisibleColumns, nextVisibleColumns))) {
+    if (
+      not(
+        equals(
+          pluck('id', previousVisibleColumns),
+          pluck('id', nextVisibleColumns),
+        ),
+      )
+    ) {
       return false;
     }
 
@@ -112,9 +119,11 @@ const IntersectionRow = (props: Props): JSX.Element => {
   const { isInViewport, setElement } = useViewportIntersection();
   const classes = useStyles();
 
+  const getFirstCellElement = () => rowRef.current?.firstChild?.firstChild;
+
   React.useEffect(() => {
-    setElement(rowRef.current?.firstChild?.firstChild as HTMLDivElement);
-  }, [rowRef.current?.firstChild?.firstChild]);
+    setElement(getFirstCellElement() as HTMLDivElement);
+  }, [getFirstCellElement()]);
 
   return (
     <div className={classes.intersectionRow} ref={rowRef}>
