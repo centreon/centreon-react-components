@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Tooltip from '@material-ui/core/Tooltip';
-import CheckIcon from '@material-ui/icons/Check';
-import SaveIcon from '@material-ui/icons/Save';
+import CheckIcon from '@material-ui/icons/esm/Check';
+import SaveIcon from '@material-ui/icons/esm/Save';
 
 const SaveButton = ({ succeeded, loading, tooltipLabel, ...rest }) => {
   const ButtonContent = () => {

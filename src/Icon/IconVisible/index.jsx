@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Visibility from '@material-ui/icons/Visibility';
+import Visibility from '@material-ui/icons/esm/Visibility';
 
 import MaterialIcon from '../MaterialIcon';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import DoneIcon from '@material-ui/icons/Done';
+import DoneIcon from '@material-ui/icons/esm/Done';
 
 import MaterialIcon from '../MaterialIcon';
 

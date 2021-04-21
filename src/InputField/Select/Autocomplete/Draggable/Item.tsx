@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { DraggableSyntheticListeners } from '@dnd-kit/core';
 
 import { Chip, lighten, makeStyles } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
+import CloseIcon from '@material-ui/icons/esm/Close';
 
 import { ItemProps } from './SortableItem';
 

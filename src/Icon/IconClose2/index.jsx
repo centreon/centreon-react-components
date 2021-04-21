@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import Close from '@material-ui/icons/Close';
+import Close from '@material-ui/icons/esm/Close';
 import { styled } from '@material-ui/core/styles';
 
 import MaterialIcon from '../MaterialIcon';

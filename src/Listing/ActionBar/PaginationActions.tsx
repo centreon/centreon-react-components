@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next';
 
 import { makeStyles } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import LastPageIcon from '@material-ui/icons/LastPage';
+import FirstPageIcon from '@material-ui/icons/esm/FirstPage';
+import KeyboardArrowLeft from '@material-ui/icons/esm/KeyboardArrowLeft';
+import KeyboardArrowRight from '@material-ui/icons/esm/KeyboardArrowRight';
+import LastPageIcon from '@material-ui/icons/esm/LastPage';
 import { TablePaginationActionsProps } from '@material-ui/core/TablePagination/TablePaginationActions';
 
 import {

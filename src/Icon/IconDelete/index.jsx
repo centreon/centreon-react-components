@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Delete from '@material-ui/icons/Delete';
+import Delete from '@material-ui/icons/esm/Delete';
 
 import MaterialIcon from '../MaterialIcon';
 

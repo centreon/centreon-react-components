@@ -13,7 +13,7 @@ import {
   PopperPlacementType,
   useTheme,
 } from '@material-ui/core';
-import IconReset from '@material-ui/icons/RotateLeft';
+import IconReset from '@material-ui/icons/esm/RotateLeft';
 
 import IconButton from '../../../Button/Icon';
 import Option from '../Option';

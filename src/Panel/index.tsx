@@ -11,7 +11,7 @@ import {
   Tabs,
   Theme,
 } from '@material-ui/core';
-import IconClose from '@material-ui/icons/Clear';
+import IconClose from '@material-ui/icons/esm/Clear';
 
 import IconButton from '../Button/Icon';
 

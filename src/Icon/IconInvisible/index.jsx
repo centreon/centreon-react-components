@@ -1,6 +1,6 @@
 import React from 'react';
 
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import VisibilityOff from '@material-ui/icons/esm/VisibilityOff';
 
 import MaterialIcon from '../MaterialIcon';
 

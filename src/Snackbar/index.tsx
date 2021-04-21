@@ -5,7 +5,7 @@ import {
   IconButton,
   makeStyles,
 } from '@material-ui/core';
-import IconClose from '@material-ui/icons/Close';
+import IconClose from '@material-ui/icons/esm/Close';
 import { Alert } from '@material-ui/lab';
 
 import Severity from './Severity';

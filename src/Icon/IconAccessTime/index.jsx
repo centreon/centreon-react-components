@@ -1,6 +1,6 @@
 import React from 'react';
 
-import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import AccessTimeIcon from '@material-ui/icons/esm/AccessTime';
 
 import MaterialIcon from '../MaterialIcon';
 

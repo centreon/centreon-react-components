@@ -3,8 +3,8 @@ import * as React from 'react';
 import { isNil, cond, T } from 'ramda';
 
 import { Tooltip, makeStyles, IconButton } from '@material-ui/core';
-import IconHelp from '@material-ui/icons/HelpOutline';
-import IconClose from '@material-ui/icons/HighlightOff';
+import IconHelp from '@material-ui/icons/esm/HelpOutline';
+import IconClose from '@material-ui/icons/esm/HighlightOff';
 
 const useStyles = makeStyles((theme) => ({
   buttonClose: {

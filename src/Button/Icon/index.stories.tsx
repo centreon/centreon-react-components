@@ -1,6 +1,6 @@
 import React from 'react';
 
-import AccessibilityIcon from '@material-ui/icons/Accessibility';
+import AccessibilityIcon from '@material-ui/icons/esm/Accessibility';
 
 import IconButton from '.';
 

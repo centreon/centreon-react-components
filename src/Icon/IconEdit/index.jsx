@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { styled } from '@material-ui/core/styles';
-import Edit from '@material-ui/icons/Edit';
+import Edit from '@material-ui/icons/esm/Edit';
 
 import MaterialIcon from '../MaterialIcon';
 

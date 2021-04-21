@@ -10,7 +10,7 @@ import {
   withStyles,
   ListItem,
 } from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ExpandMoreIcon from '@material-ui/icons/esm/ExpandMore';
 
 const useStyles = makeStyles((theme) => ({
   details: {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import RefreshIcon from '@material-ui/icons/Refresh';
+import RefreshIcon from '@material-ui/icons/esm/Refresh';
 
 import MaterialIcon from '../MaterialIcon';
 

@@ -3,7 +3,7 @@ import * as React from 'react';
 import { isNil } from 'ramda';
 
 import { List, ListItem, makeStyles, Slide, Paper } from '@material-ui/core';
-import ForwardIcon from '@material-ui/icons/ArrowForwardIos';
+import ForwardIcon from '@material-ui/icons/esm/ArrowForwardIos';
 
 import Panel from '..';
 import ContentWithCircularLoading from '../../ContentWithCircularProgress';

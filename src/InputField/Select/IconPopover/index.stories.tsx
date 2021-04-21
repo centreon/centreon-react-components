@@ -1,6 +1,6 @@
 import React from 'react';
 
-import EditIcon from '@material-ui/icons/Edit';
+import EditIcon from '@material-ui/icons/esm/Edit';
 
 import IconPopoverMultiAutocompleteField from '.';
 

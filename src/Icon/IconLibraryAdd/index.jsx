@@ -1,6 +1,6 @@
 import React from 'react';
 
-import LibraryAdd from '@material-ui/icons/LibraryAdd';
+import LibraryAdd from '@material-ui/icons/esm/LibraryAdd';
 
 import MaterialIcon from '../MaterialIcon';
 
