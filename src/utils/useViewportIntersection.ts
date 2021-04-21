@@ -1,11 +1,11 @@
 import * as React from 'react';
 
-interface GraphIntersectionState {
+interface ViewportIntersectionState {
   isInViewport: boolean;
   setElement: React.Dispatch<React.SetStateAction<HTMLElement | null>>;
 }
 
-export const useViewportIntersection = (): GraphIntersectionState => {
+export const useViewportIntersection = (): ViewportIntersectionState => {
   const [entry, setEntry] = React.useState<IntersectionObserverEntry | null>(
     null,
   );
