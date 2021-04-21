@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 
-import { equals, length, not, pluck } from 'ramda';
+import { equals, not, pluck } from 'ramda';
 
 import { TableRowProps, TableRow, makeStyles, Theme } from '@material-ui/core';
 
