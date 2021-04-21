@@ -5,7 +5,6 @@ import * as React from 'react';
 import { equals, not } from 'ramda';
 
 import { TableRowProps, TableRow, makeStyles, Theme } from '@material-ui/core';
-import { Skeleton } from '@material-ui/lab';
 
 import { useViewportIntersection } from '../utils/useViewportIntersection';
 
@@ -52,20 +51,8 @@ const Row = React.memo<RowProps>(
     onMouseOver,
     onFocus,
     onClick,
-    isInViewport,
-    visibleColumns,
   }: RowProps): JSX.Element => {
     const classes = useStyles();
-
-    if (not(isInViewport)) {
-      return (
-        <>
-          {visibleColumns.map(({ id }) => (
-            <Skeleton className={classes.skeleton} key={id} variant="rect" />
-          ))}
-        </>
-      );
-    }
 
     return (
       <TableRow
@@ -84,12 +71,18 @@ const Row = React.memo<RowProps>(
     const {
       row: previousRow,
       rowColorConditions: previousRowColorConditions,
+      visibleColumns: previousVisibleColumns,
     } = prevProps;
     const {
       row: nextRow,
       rowColorConditions: nextRowColorConditions,
       isInViewport: nextIsInViewport,
+      visibleColumns: nextVisibleColumns,
     } = nextProps;
+
+    if (not(equals(previousVisibleColumns, nextVisibleColumns))) {
+      return false;
+    }
 
     if (not(nextIsInViewport)) {
       return true;
