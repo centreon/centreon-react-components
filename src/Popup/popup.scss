@@ -1,7 +1,7 @@
-@import '../global-sass-files/variables';
-@import '../global-sass-files/mixins';
-@import '../global-sass-files/helpers';
-@import '../global-sass-files/grid';
+@import '../global-sass-files/variables.module';
+@import '../global-sass-files/mixins.module';
+@import '../global-sass-files/helpers.module';
+@import '../global-sass-files/grid.module';
 
 // Extensions popup
 .popup { 

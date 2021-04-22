@@ -13,7 +13,7 @@ import Popup from '../Popup';
 import IconClose from '../Icon/IconClose';
 
 import FileUploadItem from './FileUploadItem';
-import styles from './file-upload.scss';
+import styles from './file-upload.module.scss';
 
 class FileUpload extends Component {
   state = {

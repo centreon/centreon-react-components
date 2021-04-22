@@ -19,7 +19,7 @@ import { styled } from '@material-ui/styles';
 
 import BoundingBox from '../BoundingBox';
 
-import styles from './navigation.scss';
+import styles from './navigation.module.scss';
 
 const StyledLink = styled(Link)(() => ({
   textDecoration: 'none',

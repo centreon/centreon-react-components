@@ -1,6 +1,6 @@
-@import './mixins';
+@import 'mixins.module';
 @import './containers';
-@import './helpers';
+@import 'helpers.module';
 
 // Custom grid
 $grid__bp-xs: 220;

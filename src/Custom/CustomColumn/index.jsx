@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 
 import clsx from 'clsx';
 
-import styles from '../../global-sass-files/_grid.scss';
+import styles from '../../global-sass-files/_grid.module.scss';
 
 class CustomColumn extends Component {
   render() {

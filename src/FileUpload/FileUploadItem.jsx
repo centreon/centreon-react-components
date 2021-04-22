@@ -8,7 +8,7 @@ import React, { Component } from 'react';
 
 import clsx from 'clsx';
 
-import styles from './file-upload.scss';
+import styles from './file-upload.module.scss';
 
 class FileUploadItem extends Component {
   render() {

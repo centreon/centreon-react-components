@@ -3,7 +3,7 @@ import React from 'react';
 
 import clsx from 'clsx';
 
-import styles from '../global-sass-files/_grid.scss';
+import styles from '../global-sass-files/_grid.module.scss';
 
 import TopFilters from '.';
 
