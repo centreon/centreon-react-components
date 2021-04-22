@@ -31,7 +31,7 @@
     "react-dom": "^17.0.2"
   },
   "dependencies": {
-    "@centreon/ui-context": "github:centreon/ui-context",
+    "@centreon/ui-context": "github:centreon/ui-context#21.04.x",
     "@dnd-kit/core": "^1.1.0",
     "@dnd-kit/modifiers": "^1.0.5",
     "@dnd-kit/sortable": "^1.0.2",
@@ -63,7 +63,7 @@
     "@babel/preset-env": "^7.13.12",
     "@babel/preset-react": "^7.12.13",
     "@babel/preset-typescript": "^7.13.0",
-    "@centreon/frontend-core": "github:centreon/frontend-core",
+    "@centreon/frontend-core": "github:centreon/frontend-core#21.04.x",
     "@storybook/addon-essentials": "^6.1.21",
     "@storybook/addon-storyshots": "^6.1.21",
     "@storybook/addon-storyshots-puppeteer": "^6.1.21",
