@@ -5,7 +5,7 @@ import React from 'react';
 
 import clsx from 'clsx';
 
-import styles from './popup.scss';
+import styles from './popup.module.scss';
 
 const Popup = ({ popupType, children, customClass }) => {
   return (

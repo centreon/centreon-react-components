@@ -6,7 +6,7 @@ import React from 'react';
 
 import clsx from 'clsx';
 
-import styles from '../Popup/popup.scss';
+import styles from '../Popup/popup.module.scss';
 import Popup from '../Popup';
 import Title from '../Title';
 import MessageInfo from '../Message/MessageInfo';
