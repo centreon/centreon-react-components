@@ -11,7 +11,7 @@ import Logo from '../Logo';
 import LogoMini from '../Logo/LogoMini';
 import Navigation from '../Navigation';
 
-import styles from './sidebar.scss';
+import styles from './sidebar.module.scss';
 
 class Sidebar extends Component {
   state = {
