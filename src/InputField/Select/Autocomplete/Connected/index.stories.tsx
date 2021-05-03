@@ -6,7 +6,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { buildListingEndpoint } from '../../../..';
 
 import SingleConnectedAutocompleteField from './Single';
-import MultiConnectedAutocompleteField from './Multi/index';
+import MultiConnectedAutocompleteField from './Multi';
 
 export default { title: 'InputField/Autocomplete/Connected' };
 
