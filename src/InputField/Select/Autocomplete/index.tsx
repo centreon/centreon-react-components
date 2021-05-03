@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { equals, pick } from 'ramda';
 import clsx from 'clsx';
+import { useTranslation } from 'react-i18next';
 
 import {
   makeStyles,
@@ -17,6 +18,7 @@ import {
 import Option from '../Option';
 import TextField from '../../Text';
 import { SelectEntry } from '..';
+import { searchLabel } from '../../translatedLabels';
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -106,7 +108,7 @@ export type Props = {
 const AutocompleteField = ({
   options,
   label,
-  placeholder = '',
+  placeholder,
   loading = false,
   onTextChange = (): void => undefined,
   endAdornment = undefined,
@@ -119,6 +121,7 @@ const AutocompleteField = ({
   ...props
 }: Props): JSX.Element => {
   const classes = useStyles();
+  const { t } = useTranslation();
 
   const areSelectEntriesEqual = (option, value) => {
     const identifyingProps = ['id', 'name'];
@@ -162,7 +165,7 @@ const AutocompleteField = ({
         'aria-label': label,
       }}
       label={label}
-      placeholder={placeholder}
+      placeholder={placeholder || t(searchLabel)}
       required={required}
       value={inputValue || ''}
       onChange={onTextChange}
