@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { equals, pick } from 'ramda';
+import clsx from 'clsx';
 
 import {
   makeStyles,
@@ -28,10 +29,6 @@ const useStyles = makeStyles((theme) => ({
     '&:hover:before': {
       borderBottom: 0,
     },
-    '&[class*="MuiFilledInput-root"]': {
-      paddingTop: theme.spacing(2),
-    },
-    paddingTop: theme.spacing(1),
   },
   inputEndAdornment: {
     paddingBottom: '19px',
@@ -49,6 +46,19 @@ const useStyles = makeStyles((theme) => ({
   inputLabelShrink: {
     '&&': {
       maxWidth: '90%',
+    },
+  },
+  inputWithLabel: {
+    '&[class*="MuiFilledInput-root"]': {
+      paddingTop: theme.spacing(2),
+    },
+    paddingTop: theme.spacing(1),
+  },
+  inputWithoutLabel: {
+    '&[class*="MuiFilledInput-root"][class*="MuiFilledInput-marginDense"]': {
+      paddingBottom: theme.spacing(0.75),
+      paddingRight: theme.spacing(1),
+      paddingTop: theme.spacing(0.75),
     },
   },
   loadingIndicator: {
@@ -77,10 +87,12 @@ type DisableClearable = boolean;
 type FreeSolo = boolean;
 
 export type Props = {
+  autoFocus?: boolean;
   displayOptionThumbnail?: boolean;
+  displayPopupIcon?: boolean;
   endAdornment?: React.ReactElement;
   error?: string;
-  label: string;
+  label?: string;
   loading?: boolean;
   onTextChange?;
   placeholder?: string;
@@ -102,6 +114,8 @@ const AutocompleteField = ({
   displayOptionThumbnail = false,
   required = false,
   error,
+  displayPopupIcon = true,
+  autoFocus = false,
   ...props
 }: Props): JSX.Element => {
   const classes = useStyles();
@@ -115,55 +129,63 @@ const AutocompleteField = ({
     );
   };
 
+  const renderInput = (params): JSX.Element => (
+    <TextField
+      {...params}
+      InputLabelProps={{
+        classes: {
+          marginDense: classes.inputLabel,
+          shrink: classes.inputLabelShrink,
+        },
+      }}
+      InputProps={{
+        ...params.InputProps,
+
+        endAdornment: (
+          <>
+            {endAdornment && (
+              <InputAdornment
+                classes={{ root: classes.inputEndAdornment }}
+                position="end"
+              >
+                {endAdornment}
+              </InputAdornment>
+            )}
+            {params.InputProps.endAdornment}
+          </>
+        ),
+      }}
+      autoFocus={autoFocus}
+      error={error}
+      inputProps={{
+        ...params.inputProps,
+        'aria-label': label,
+      }}
+      label={label}
+      placeholder={placeholder}
+      required={required}
+      value={inputValue || ''}
+      onChange={onTextChange}
+    />
+  );
+
   return (
     <Autocomplete
+      disableClearable
       classes={{
         groupLabel: classes.inputLabel,
-        inputRoot: classes.input,
+        inputRoot: clsx([
+          classes.input,
+          label ? classes.inputWithLabel : classes.inputWithoutLabel,
+        ]),
       }}
+      forcePopupIcon={displayPopupIcon}
       getOptionLabel={(option: SelectEntry): string => option.name}
       getOptionSelected={areSelectEntriesEqual}
       loading={loading}
       loadingText={<LoadingIndicator />}
       options={options}
-      renderInput={(params): JSX.Element => (
-        <TextField
-          {...params}
-          InputLabelProps={{
-            classes: {
-              marginDense: classes.inputLabel,
-              shrink: classes.inputLabelShrink,
-            },
-          }}
-          InputProps={{
-            ...params.InputProps,
-
-            endAdornment: (
-              <>
-                {endAdornment && (
-                  <InputAdornment
-                    classes={{ root: classes.inputEndAdornment }}
-                    position="end"
-                  >
-                    {endAdornment}
-                  </InputAdornment>
-                )}
-                {params.InputProps.endAdornment}
-              </>
-            ),
-          }}
-          error={error}
-          inputProps={{
-            ...params.inputProps,
-            'aria-label': label,
-          }}
-          label={label}
-          placeholder={placeholder}
-          required={required}
-          value={inputValue || ''}
-          onChange={onTextChange}
-        />
-      )}
+      renderInput={renderInput}
       renderOption={(option) => {
         return (
           <div className={classes.options}>
