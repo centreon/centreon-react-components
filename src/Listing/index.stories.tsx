@@ -96,7 +96,6 @@ const Story = ({
   return (
     <div className={classes.listing}>
       <Listing
-        checkable
         columns={columns}
         currentPage={0}
         disableRowCheckCondition={(row): boolean => row.disableCheckbox}
