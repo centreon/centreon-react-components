@@ -383,7 +383,7 @@ const Listing = <TRow extends { id: RowId }>({
                   <Cell
                     align="center"
                     className={classes.emptyDataCell}
-                    disableRowCondition={disableRowCondition}
+                    disableRowCondition={() => false}
                     isRowHovered={false}
                     style={{
                       gridColumn: `auto / span ${columns.length + 1}`,
