@@ -5,7 +5,7 @@ import React from 'react';
 
 import clsx from 'clsx';
 
-import styles from './action-icons.scss';
+import styles from './action-icons.module.scss';
 
 const IconAction = ({
   iconActionType,
