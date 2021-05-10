@@ -5,7 +5,7 @@ import React from 'react';
 
 import clsx from 'clsx';
 
-import styles from './icon-number.scss';
+import styles from './icon-number.module.scss';
 
 const IconNumber = ({ iconColor, iconType, iconNumber }) => {
   return (

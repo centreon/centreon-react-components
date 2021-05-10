@@ -7,7 +7,7 @@ import React from 'react';
 
 import clsx from 'clsx';
 
-import styles from './icon-header.scss';
+import styles from './icon-header.module.scss';
 
 const IconHeader = ({ iconType, iconName, style, onClick, children }) => {
   return (
