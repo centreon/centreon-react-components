@@ -26,14 +26,14 @@ type Multiple = boolean;
 type DisableClearable = boolean;
 type FreeSolo = boolean;
 
-export type Props = Omit<
-  AutocompleteProps,
-  'renderTags' | 'renderOption' | 'multiple'
-> &
-  Omit<
-    UseAutocompleteProps<SelectEntry, Multiple, DisableClearable, FreeSolo>,
-    'multiple'
-  >;
+export interface Props
+  extends Omit<AutocompleteProps, 'renderTags' | 'renderOption' | 'multiple'>,
+    Omit<
+      UseAutocompleteProps<SelectEntry, Multiple, DisableClearable, FreeSolo>,
+      'multiple'
+    > {
+  disableSortedOptions?: boolean;
+}
 
 const MultiAutocompleteField = (props: Props): JSX.Element => {
   const classes = useStyles();
