@@ -14,6 +14,21 @@
   font-style: normal;
 }
 
+.iconmoonicon {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 // Menu
 .menu {
   &-items {
@@ -51,26 +66,35 @@
           &:before {
             content: "\e904";
             color: rgba(0, 159, 152, 1);
+            @extend .iconmoonicon
           }
           &:hover:before {
             content: "\e904";
             color: $white-color;
+            @extend .iconmoonicon
+
           }
         }
         &-monitoring {
           &:before {
             content: "\e907";
             color: rgba(136, 189, 35, 1);
+            @extend .iconmoonicon
+
+
           }
           &:hover:before {
             content: "\e907";
             color: $white-color;
+
           }
         }
         &-reporting {
           &:before {
             content: "\e909";
             color: rgba(255, 162, 0, 1);
+            @extend .iconmoonicon
+
           }
           &:hover:before {
             content: "\e909";
@@ -81,6 +105,8 @@
           &:before {
             content: "\e902";
             color: rgba(0, 159, 233, 1);
+            @extend .iconmoonicon
+
           }
           &:hover:before {
             content: "\e902";
@@ -91,6 +117,8 @@
           &:before {
             content: "\e900";
             color: rgba(43, 45,132, 1);
+            @extend .iconmoonicon
+
           }
           &:hover:before {
             content: "\e900";
