@@ -58,9 +58,7 @@ const theme = createMuiTheme({
 type Props = Omit<ThemeProviderProps, 'theme'>;
 
 const ThemeProvider = ({ children, ...rest }: Props): JSX.Element => (
-  <MuiThemeProvider theme={theme} {...rest}>
-    {children}
-  </MuiThemeProvider>
+  <MuiThemeProvider theme={theme}>{children}</MuiThemeProvider>
 );
 
 export default ThemeProvider;
