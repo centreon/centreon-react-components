@@ -10,7 +10,7 @@ import clsx from 'clsx';
 
 import miniLogo from '../../../img/centreon-logo-mini.svg';
 
-import styles from './logo-mini.scss';
+import styles from './logo-mini.module.scss';
 
 class LogoMini extends Component {
   render() {

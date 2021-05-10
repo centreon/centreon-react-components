@@ -11,7 +11,7 @@ import clsx from 'clsx';
 
 import logo from '../../img/centreon.png';
 
-import styles from './logo.scss';
+import styles from './logo.module.scss';
 
 class Logo extends Component {
   render() {
