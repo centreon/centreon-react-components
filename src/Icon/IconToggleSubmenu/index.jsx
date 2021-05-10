@@ -7,7 +7,7 @@ import React from 'react';
 
 import clsx from 'clsx';
 
-import styles from './icon-toggle-submenu.scss';
+import styles from './icon-toggle-submenu.module.scss';
 
 const IconToggleSubmenu = ({
   iconType,

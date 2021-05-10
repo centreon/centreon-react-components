@@ -7,7 +7,7 @@ import React from 'react';
 
 import clsx from 'clsx';
 
-import styles from './close-icon.scss';
+import styles from './close-icon.module.scss';
 
 const IconClose = ({ iconType, iconPosition, onClick, customStyle }) => (
   <span
