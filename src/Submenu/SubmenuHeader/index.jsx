@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 
 import clsx from 'clsx';
 
-import styles from './submenu.scss';
+import styles from './submenu.module.scss';
 
 class SubmenuHeader extends Component {
   render() {
