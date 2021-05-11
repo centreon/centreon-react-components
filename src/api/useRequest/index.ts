@@ -1,15 +1,16 @@
 import * as React from 'react';
 
+import 'ulog';
 import axios from 'axios';
-import { pathOr, cond, T, defaultTo, always } from 'ramda';
-import ulog from 'ulog';
+import { pathOr, defaultTo } from 'ramda';
+import anylogger from 'anylogger';
 import { JsonDecoder } from 'ts.data.json';
 
 import useCancelTokenSource from '../useCancelTokenSource';
 import Severity from '../../Snackbar/Severity';
 import useSnackbar from '../../Snackbar/useSnackbar';
 
-const log = ulog('API Request');
+const log = anylogger('API Request');
 
 export interface RequestParams<TResult> {
   decoder?: JsonDecoder.Decoder<TResult>;
