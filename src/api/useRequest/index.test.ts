@@ -125,7 +125,6 @@ describe(useRequest, () => {
 
     await act(async () => {
       result.current.sendRequest().catch((error) => {
-        console.log(error);
         expect(true).toEqual(true);
       });
     });
