@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import axios from 'axios';
-import { pathOr, cond, T, defaultTo } from 'ramda';
+import { pathOr, cond, T, defaultTo, always } from 'ramda';
 import ulog from 'ulog';
 import { JsonDecoder } from 'ts.data.json';
 
@@ -39,6 +39,7 @@ const useRequest = <TResult>({
   }, []);
 
   const showErrorMessage = (error): void => {
+    log.error(error);
     const message = defaultTo(
       pathOr(defaultFailureMessage, ['response', 'data', 'message']),
       getErrorMessage,
@@ -61,12 +62,12 @@ const useRequest = <TResult>({
         return data;
       })
       .catch((error) => {
-        log.error(error);
+        if (axios.isCancel(error)) {
+          log.warn(error);
+          return error;
+        }
 
-        cond([
-          [axios.isCancel, T],
-          [T, showErrorMessage],
-        ])(error);
+        showErrorMessage(error);
 
         throw error;
       })
