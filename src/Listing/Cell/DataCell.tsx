@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { equals } from 'ramda';
+import { equals, props } from 'ramda';
 
 import { makeStyles, Tooltip, Typography, Theme } from '@material-ui/core';
 
@@ -15,6 +15,7 @@ import Cell from '.';
 
 interface Props {
   column: Column;
+  disableRowCondition: (row) => boolean;
   isRowHovered: boolean;
   isRowSelected: boolean;
   listingCheckable: boolean;
@@ -44,6 +45,7 @@ const DataCell = ({
   isRowSelected,
   isRowHovered,
   rowColorConditions,
+  disableRowCondition,
 }: Props): JSX.Element | null => {
   const classes = useStyles({ listingCheckable });
 
@@ -51,6 +53,7 @@ const DataCell = ({
     align: 'left' as const,
     className: classes.cell,
     compact: column.compact,
+    disableRowCondition,
     isRowHovered,
     row,
     rowColorConditions,
@@ -134,6 +137,7 @@ const MemoizedDataCell = React.memo<Props>(
     const previousRenderComponentCondition = previousColumn.getRenderComponentCondition?.(
       previousRow,
     );
+    const previousRowMemoProps = previousColumn.rowMemoProps;
     const previousIsComponentHovered =
       previousHasHoverableComponent && previousIsRowHovered;
     const previousFormattedString = previousColumn.getFormattedString?.(
@@ -159,10 +163,11 @@ const MemoizedDataCell = React.memo<Props>(
     const nextRenderComponentCondition = nextColumn.getRenderComponentCondition?.(
       nextRow,
     );
+    const nextRowMemoProps = nextColumn.rowMemoProps;
     const nextIsComponentHovered =
       nextHasHoverableComponent && nextIsRowHovered;
 
-    const nextFormatttedString = nextColumn.getFormattedString?.(nextRow);
+    const nextFormattedString = nextColumn.getFormattedString?.(nextRow);
 
     const nextColSpan = nextColumn.getColSpan?.(nextIsRowSelected);
 
@@ -188,18 +193,28 @@ const MemoizedDataCell = React.memo<Props>(
       return true;
     }
 
+    const previousRowProps = previousRowMemoProps
+      ? props(previousRowMemoProps, previousRow)
+      : previousRow;
+    const nextRowProps = nextRowMemoProps
+      ? props(nextRowMemoProps, nextRow)
+      : nextRow;
+
     return (
       equals(previousIsComponentHovered, nextIsComponentHovered) &&
       equals(previousIsRowHovered, nextIsRowHovered) &&
-      equals(previousFormattedString, nextFormatttedString) &&
+      equals(previousFormattedString, nextFormattedString) &&
       equals(previousColSpan, nextColSpan) &&
       equals(previousIsTruncated, nextIsTruncated) &&
       equals(previousHiddenCondition, nextHiddenCondition) &&
       equals(
-        previousRenderComponentOnRowUpdate && previousRow,
-        nextRenderComponentOnRowUpdate && nextRow,
+        previousRenderComponentOnRowUpdate && previousRowProps,
+        nextRenderComponentOnRowUpdate && nextRowProps,
       ) &&
-      equals(previousRow, nextRow) &&
+      equals(
+        previousFormattedString ?? previousRowProps,
+        nextFormattedString ?? nextRowProps,
+      ) &&
       equals(prevRowColors, nextRowColors)
     );
   },

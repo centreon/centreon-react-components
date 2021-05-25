@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     fontSize: theme.typography.body1.fontSize,
   },
   noLabelInput: {
-    padding: theme.spacing(1.25),
+    padding: theme.spacing(1),
   },
   small: {
     fontSize: 'small',
@@ -104,6 +104,7 @@ const TextField = React.forwardRef(
         error={!isNil(error)}
         helperText={error}
         inputProps={{
+          ...rest.inputProps,
           'aria-label': ariaLabel,
           className: clsx(classes.input, {
             [classes.noLabelInput]: !label && not(isSizeEqualTo(Size.compact)),
